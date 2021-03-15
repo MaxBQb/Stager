@@ -1,6 +1,10 @@
 package main.stager;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 
 public class ThemeController {
     private static int DARK_THEME = R.style.Theme_AppCompat;
@@ -14,8 +18,10 @@ public class ThemeController {
      * (Обычно вызывается в onCreate)
      * @param activity Активность (обычно это this)
      */
-    public static void restoreTheme(Activity activity) {
-        activity.setTheme(theme(getTheme(activity)));
+    public static Boolean restoreTheme(Activity activity) {
+        boolean currentTheme = getTheme(activity);
+        activity.setTheme(theme(currentTheme));
+        return currentTheme;
     }
 
     // Возвращает текущую тему
@@ -28,8 +34,7 @@ public class ThemeController {
     public static void setTheme(Activity activity, Boolean darkTheme) {
         Settings.setSettings(activity)
                 .putBoolean(Settings.THEME, darkTheme)
-                .apply();
-        activity.setTheme(theme(darkTheme));
-        activity.recreate();
+                .commit();
+        activity.navigateUpTo(new Intent(activity, MainActivity.class));
     }
 }

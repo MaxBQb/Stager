@@ -401,3 +401,4 @@ obj/
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,linux,android,androidstudio,gradle,java,firebase,jetbrains
+/app/google-services.json

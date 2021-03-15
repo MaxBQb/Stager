@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Registration">
+
+
+    <TextView
+        android:id="@+id/welcome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/greeting"
+        android:textSize="40sp"
+        android:gravity="center"
+        />
+
+    <EditText
+        android:id="@+id/nickname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_a_name"
+        android:layout_below="@id/welcome"
+        android:inputType="textPersonName"
+        />
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/email"
+        android:layout_below="@id/nickname"
+        android:inputType="textWebEmailAddress"
+        />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/password"
+        android:layout_below="@id/email"
+        android:inputType="textPassword"
+        />
+
+    <TextView
+        android:id="@+id/info_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/info_email"
+        android:textSize="18sp"
+        android:layout_below="@id/password"
+        />
+
+    <TextView
+        android:id="@+id/restore_acc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/restore_acc_info"
+        android:textSize="18sp"
+        android:layout_below="@id/info_email"
+        />
+
+    <Button
+        android:id="@+id/restore_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_baseline_key"
+        android:drawableStart="@drawable/ic_baseline_key"
+        android:text="@string/btn_restore_acc"
+        android:layout_below="@id/restore_acc"
+        android:layout_alignRight="@id/restore_acc"
+        android:layout_alignEnd="@id/restore_acc"
+        />
+
+    <Button
+        android:id="@+id/success_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:drawableLeft="@drawable/ic_baseline_check"
+        android:drawableStart="@drawable/ic_baseline_check"
+        android:text="@string/btn_success"
+        android:onClick="onClickRegistration"
+        />
+</RelativeLayout>

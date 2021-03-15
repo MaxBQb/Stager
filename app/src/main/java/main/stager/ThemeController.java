@@ -1,5 +1,6 @@
 package main.stager;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 
@@ -9,11 +10,11 @@ public class ThemeController {
      * (Обычно вызывается в onCreate)
      * @param activity Активность (обычно это this)
      */
-    public static void restoreTheme(AppCompatActivity activity) {
+    public static void restoreTheme(Activity activity) {
 
         // Считаем настройки
-        SharedPreferences settings = activity.getSharedPreferences(Settings.SETTINGS, 0);
-        String current_theme = settings.getString(Settings.THEME, Settings.THEME_DEFAULT);
+        String current_theme = Settings.getSettings(activity)
+                                       .getString(Settings.THEME, Settings.THEME_DEFAULT);
 
         // Применим тему
         switch (current_theme) {

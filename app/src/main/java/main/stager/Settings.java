@@ -2,15 +2,12 @@ package main.stager;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import java.util.Set;
-
 public class Settings extends AppCompatActivity {
-    // SETTINGS name
-    public static final String SETTINGS = "__settings__";
 
     // Themes
     public static final String THEME = "__theme__";
@@ -19,6 +16,7 @@ public class Settings extends AppCompatActivity {
     public static final String THEME_DEFAULT = THEME_LIGHT;
 
     // Hidden
+    private static final String _SETTINGS = "__settings__";
     private static final String _PARENT = "__PARENT_ACTIVITY_CLASS__";
 
     @Override
@@ -26,6 +24,10 @@ public class Settings extends AppCompatActivity {
         ThemeController.restoreTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+    }
+
+    public static SharedPreferences getSettings(Activity activity) {
+        return activity.getSharedPreferences(Settings._SETTINGS, 0);
     }
 
     /** Открывает окно настроек

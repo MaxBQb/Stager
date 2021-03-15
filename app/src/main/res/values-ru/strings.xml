@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">В пути</string>
+    <string name="settings_activity_label">Настройки</string>
+    <string name="switchThemeLabelLight">Светлая Тема</string>
+    <string name="switchThemeLabelDark">Тёмная Тема</string>
+</resources>

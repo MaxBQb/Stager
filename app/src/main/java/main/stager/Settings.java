@@ -21,9 +21,14 @@ public class Settings extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ThemeController.restoreTheme(this);
+        boolean currentTheme = ThemeController.restoreTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        Switch themeSwitch = ((Switch)findViewById(R.id.switchTheme));
+        themeSwitch.setText(currentTheme ?
+                R.string.switchThemeLabelDark :
+                R.string.switchThemeLabelLight);
+        themeSwitch.setChecked(currentTheme);
     }
 
     public static SharedPreferences getSettings(Activity activity) {

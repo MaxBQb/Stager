@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Stager</string>
     <string name="settings_activity_label">Settings</string>
+    <string name="switchThemeLabelLight">Light Theme</string>
+    <string name="switchThemeLabelDark">Dark Theme</string>
 </resources>

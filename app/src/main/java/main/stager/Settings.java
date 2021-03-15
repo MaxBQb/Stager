@@ -6,14 +6,14 @@ import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Switch;
+
 
 public class Settings extends AppCompatActivity {
 
     // Themes
-    public static final String THEME = "__theme__";
-    public static final String THEME_DARK = "__theme_dark__";
-    public static final String THEME_LIGHT = "__theme_light__";
-    public static final String THEME_DEFAULT = THEME_LIGHT;
+    public static final String THEME = "__THEME__";
 
     // Hidden
     private static final String _SETTINGS = "__settings__";
@@ -28,6 +28,10 @@ public class Settings extends AppCompatActivity {
 
     public static SharedPreferences getSettings(Activity activity) {
         return activity.getSharedPreferences(Settings._SETTINGS, 0);
+    }
+
+    public static SharedPreferences.Editor setSettings(Activity activity) {
+        return getSettings(activity).edit();
     }
 
     /** Открывает окно настроек
@@ -65,5 +69,10 @@ public class Settings extends AppCompatActivity {
             e.printStackTrace();
         }
         return intent;
+    }
+
+    public void toggleTheme(View view) {
+        Boolean new_theme = !ThemeController.getTheme(this);
+        ThemeController.setTheme(this, new_theme);
     }
 }

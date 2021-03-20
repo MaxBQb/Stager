@@ -4,6 +4,7 @@
     <string name="enter_a_name">Please, enter your name</string>
     <string name="email">E-mail</string>
     <string name="password">Enter your password</string>
+    <string name="password_check">Enter your password again</string>
     <string name="info_email">Email is only needed to restore your account</string>
     <string name="restore_acc_info">Have you already used our app?</string>
     <string name="btn_restore_acc">Restore account</string>

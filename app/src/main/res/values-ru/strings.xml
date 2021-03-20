@@ -5,6 +5,7 @@
     <string name="enter_a_name">Пожалуйста, введите свое имя</string>
     <string name="email">Почта</string>
     <string name="password">Введите ваш пароль</string>
+    <string name="password_check">Введите ваш пароль повторно</string>
     <string name="info_email">Почта нужна для восстановления вашего аккаунта</string>
     <string name="restore_acc_info">Вы уже использовали наше приложение?</string>
     <string name="btn_restore_acc">Восстановить аккаунт</string>

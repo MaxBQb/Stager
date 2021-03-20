@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">В пути</string>
-    <string name="greeting">Добро пожаловать!</string>
+    <string name="welcome_at_registration">Регистрация</string>
     <string name="enter_a_name">Пожалуйста, введите свое имя</string>
     <string name="email">Почта</string>
     <string name="password">Введите ваш пароль</string>
@@ -10,6 +10,7 @@
     <string name="restore_acc_info">Вы уже использовали наше приложение?</string>
     <string name="btn_restore_acc">Восстановить аккаунт</string>
     <string name="btn_success">Продолжить</string>
+    <string name="btn_back">Назад</string>
     <string name="settings_activity_label">Настройки</string>
     <string name="switchThemeLabelLight">Светлая Тема</string>
     <string name="switchThemeLabelDark">Тёмная Тема</string>

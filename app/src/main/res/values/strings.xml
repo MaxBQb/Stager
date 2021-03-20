@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Stager</string>
-    <string name="greeting">Welcome!</string>
+    <string name="welcome_at_registration">Registration</string>
     <string name="enter_a_name">Please, enter your name</string>
     <string name="email">E-mail</string>
     <string name="password">Enter your password</string>
@@ -9,6 +9,7 @@
     <string name="restore_acc_info">Have you already used our app?</string>
     <string name="btn_restore_acc">Restore account</string>
     <string name="btn_success">Continue</string>
+    <string name="btn_back">Back</string>
     <string name="settings_activity_label">Settings</string>
     <string name="switchThemeLabelLight">Light Theme</string>
     <string name="switchThemeLabelDark">Dark Theme</string>

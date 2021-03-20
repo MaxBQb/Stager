@@ -9,10 +9,10 @@
     <string name="password_check">Повторите пароль</string>
     <string name="forget_password">Забыли пароль?</string>
     <string name="btn_restore_acc">Восстановить аккаунт</string>
-    <string name="registration">Впервые у нас?</string>
+    <string name="registration">Еще нет аккаунта?</string>
     <string name="btn_registration">Регистрация</string>
     <string name="btn_success">Продолжить</string>
-    <string name="btn_back">Назад</string>
+    <string name="btn_sign_in">Вход</string>
     <string name="settings_activity_label">Настройки</string>
     <string name="switchThemeLabelLight">Светлая Тема</string>
     <string name="switchThemeLabelDark">Тёмная Тема</string>

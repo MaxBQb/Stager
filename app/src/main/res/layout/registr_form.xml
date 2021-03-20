@@ -112,5 +112,5 @@
         android:drawableStart="@drawable/ic_baseline_arrow_back"
         android:drawableLeft="@drawable/ic_baseline_arrow_back"
         android:onClick="onClickRegistration"
-        android:text="@string/btn_back" />
+        android:text="@string/btn_sign_in" />
 </RelativeLayout>

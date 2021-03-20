@@ -8,10 +8,10 @@
     <string name="password_check">Repeat your password</string>
     <string name="forget_password">Forget the password?</string>
     <string name="btn_restore_acc">Restore account</string>
-    <string name="registration">For the first time with us?</string>
+    <string name="registration">Don`t have an account yet?</string>
     <string name="btn_registration">Registration</string>
     <string name="btn_success">Continue</string>
-    <string name="btn_back">Back</string>
+    <string name="btn_sign_in">Sign in</string>
     <string name="settings_activity_label">Settings</string>
     <string name="switchThemeLabelLight">Light Theme</string>
     <string name="switchThemeLabelDark">Dark Theme</string>

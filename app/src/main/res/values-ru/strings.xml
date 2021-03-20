@@ -2,13 +2,15 @@
 <resources>
     <string name="app_name">В пути</string>
     <string name="welcome_at_registration">Регистрация</string>
+    <string name="welcome_at_log_in">Добро пожаловать!</string>
     <string name="enter_a_name">Имя</string>
     <string name="email">Почта</string>
     <string name="password">Пароль</string>
     <string name="password_check">Повторите пароль</string>
-    <string name="info_email">Почта нужна для восстановления вашего аккаунта</string>
-    <string name="restore_acc_info">Вы уже использовали наше приложение?</string>
+    <string name="forget_password">Забыли пароль?</string>
     <string name="btn_restore_acc">Восстановить аккаунт</string>
+    <string name="registration">Впервые у нас?</string>
+    <string name="btn_registration">Регистрация</string>
     <string name="btn_success">Продолжить</string>
     <string name="btn_back">Назад</string>
     <string name="settings_activity_label">Настройки</string>

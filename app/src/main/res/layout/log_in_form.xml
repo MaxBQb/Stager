@@ -65,15 +65,15 @@
 
     <TextView
         android:id="@+id/forget_password"
-        android:layout_width="212dp"
-        android:layout_height="56dp"
+        android:layout_width="214dp"
+        android:layout_height="43dp"
         android:layout_below="@+id/password"
         android:layout_alignStart="@+id/password"
         android:layout_alignLeft="@+id/password"
         android:layout_marginStart="0dp"
         android:layout_marginLeft="0dp"
-        android:layout_marginTop="21dp"
-        android:gravity="center"
+        android:layout_marginTop="33dp"
+        android:gravity="left"
         android:text="@string/forget_password"
         android:textSize="20sp" />
 
@@ -95,8 +95,8 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="209dp"
-        android:layout_height="47dp"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
         android:layout_below="@+id/forget_password"
         android:layout_alignStart="@+id/forget_password"
         android:layout_alignLeft="@+id/forget_password"

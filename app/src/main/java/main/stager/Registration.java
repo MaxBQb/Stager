@@ -1,8 +1,10 @@
 package main.stager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -19,49 +21,61 @@ import com.google.firebase.auth.FirebaseUser;
 //import com.google.firebase.database.FirebaseDatabase;
 
 public class Registration extends AppCompatActivity {
-
-    private EditText nickname, email, hash;
-    private FirebaseAuth mAuth;
+//    private EditText nickname, email, hash;
+//    private FirebaseAuth mAuth;
+    private Button btn_sign_in;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ThemeController.restoreTheme(this);
+        //ThemeController.restoreTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registr_form);
+//        addListenerOnButton();
         init();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        FirebaseUser cUser = mAuth.getCurrentUser();
-        if (cUser != null) {
-            Toast.makeText(this, "User not null", Toast.LENGTH_SHORT).show();
-        }
-        else
-            Toast.makeText(this, "User null", Toast.LENGTH_SHORT).show();
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        FirebaseUser cUser = mAuth.getCurrentUser();
+//        if (cUser != null) {
+//            Toast.makeText(this, "User not null", Toast.LENGTH_SHORT).show();
+//        }
+//        else
+//            Toast.makeText(this, "User null", Toast.LENGTH_SHORT).show();
+//    }
 
     private void init() {
-        nickname = findViewById(R.id.nickname);
-        email = findViewById(R.id.email);
-        hash = findViewById(R.id.password);
-        mAuth = FirebaseAuth.getInstance();
+//        nickname = findViewById(R.id.nickname);
+//        email = findViewById(R.id.email);
+//        hash = findViewById(R.id.password);
+//        mAuth = FirebaseAuth.getInstance();
+
+        btn_sign_in = findViewById(R.id.sign_in);
+        btn_sign_in.setOnClickListener(
+                v -> {
+                    finish();
+//                    Intent intent = new Intent(".Authorization");
+//                    startActivity(intent);
+                }
+        );
+
+        //register = findViewById(R.id.success_btn);;
     }
 
-    public void onClickRegistration(View view) {
-        if (!TextUtils.isEmpty(email.getText().toString()))
-            mAuth.createUserWithEmailAndPassword(email.getText().toString(), hash.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(getApplicationContext(), "User SignUp Successful", Toast.LENGTH_SHORT).show();
-                    }
-                    else
-                        Toast.makeText(getApplicationContext(), "User SignUp Failed", Toast.LENGTH_SHORT).show();
-                }
-            });
-    }
+//    public void onClickRegistration(View view) {
+//        if (!TextUtils.isEmpty(email.getText().toString()))
+//            mAuth.createUserWithEmailAndPassword(email.getText().toString(), hash.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//                @Override
+//                public void onComplete(@NonNull Task<AuthResult> task) {
+//                    if (task.isSuccessful()) {
+//                        Toast.makeText(getApplicationContext(), "User SignUp Successful", Toast.LENGTH_SHORT).show();
+//                    }
+//                    else
+//                        Toast.makeText(getApplicationContext(), "User SignUp Failed", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//    }
 
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {

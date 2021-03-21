@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".Authorization">
 
     <TextView
         android:id="@+id/welcome_at_log_in"
@@ -78,7 +79,7 @@
         android:textSize="20sp" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btn_registration"
         android:layout_width="170dp"
         android:layout_height="48dp"
         android:layout_below="@+id/forget_password"

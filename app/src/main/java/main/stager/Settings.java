@@ -17,15 +17,21 @@ public class Settings extends AppCompatActivity {
         ThemeController.restoreTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        // Собираем настройки из фрагментов (пока 1)
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.settings_container, new SettingsFragment())
                 .commit();
+
+        // Добавляем реакции на изменение различных опций
         PreferenceManager.getDefaultSharedPreferences(this)
                 .registerOnSharedPreferenceChangeListener(this::bindOptionChanges);
     }
 
     private void bindOptionChanges(SharedPreferences prefs, String key) {
+
+        // Смена темы
         if (getString(R.string.Settings__Theme).equals(key)) {
             Boolean dark_theme = prefs.getBoolean(key, false);
             prefs.edit().commit(); // Гарантирия сохранности

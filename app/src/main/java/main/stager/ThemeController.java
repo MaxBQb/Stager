@@ -35,6 +35,6 @@ public class ThemeController {
         Settings.setSettings(activity)
                 .putBoolean(Settings.THEME, darkTheme)
                 .commit();
-        activity.navigateUpTo(new Intent(activity, MainActivity.class));
+        Runtime.getRuntime().exit(0);
     }
 }

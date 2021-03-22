@@ -24,7 +24,7 @@ public class ThemeController {
     // Возвращает текущую тему
     public static Boolean getTheme(Activity activity) {
         return PreferenceManager.getDefaultSharedPreferences(activity)
-                                .getBoolean(Settings.THEME, false);
+                                .getBoolean(activity.getString(R.string.Settings__Theme), false);
     }
 
     // Выполняет необходимые для применения темы действия

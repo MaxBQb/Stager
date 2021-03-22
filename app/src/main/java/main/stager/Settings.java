@@ -4,19 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
 
 public class Settings extends AppCompatActivity {
-
-    // Themes
-    public static final String THEME = "dark_theme";
-
-    // Hidden
-    private static final String _SETTINGS = "__settings__";
     private static final String _PARENT = "__PARENT_ACTIVITY_CLASS__";
 
     @Override
@@ -33,12 +26,10 @@ public class Settings extends AppCompatActivity {
     }
 
     private void bindOptionChanges(SharedPreferences prefs, String key) {
-        switch (key) {
-            case Settings.THEME:
-                Boolean dark_theme = prefs.getBoolean(key, false);
-                prefs.edit().commit(); // Гарантирия сохранности
-                ThemeController.updateTheme();
-                break;
+        if (getString(R.string.Settings__Theme).equals(key)) {
+            Boolean dark_theme = prefs.getBoolean(key, false);
+            prefs.edit().commit(); // Гарантирия сохранности
+            ThemeController.updateTheme();
         }
     }
 

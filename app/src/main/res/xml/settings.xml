@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory app:title="@string/settings_category_appearance">
         <SwitchPreferenceCompat
             app:key="@string/Settings__Theme"
             app:title="@string/settings_appearance_theme_label"
+            android:icon="@drawable/ic_baseline_color_lens_24"
             app:summaryOn="@string/settings_appearance_theme_dark_summary"
             app:summaryOff="@string/settings_appearance_theme_light_summary"
             app:defaultValue="false"/>
+
         <ListPreference
             app:key="@string/Settings__Locale"
             app:title="@string/settings_appearance_locale_label"
+            app:icon="@drawable/ic_baseline_language_24"
             app:entries="@array/locales_names"
             app:entryValues="@array/locales"
             />

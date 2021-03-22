@@ -35,12 +35,6 @@
 
         <activity android:name=".Registration"
             android:label="@string/btn_registration">
-
-            <intent-filter>
-                <action android:name=".Registration" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-
         </activity>
 
     </application>

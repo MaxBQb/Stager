@@ -15,7 +15,8 @@
 
     <!-- Settings -->
     <string name="settings_activity_label">Settings</string>
-    <string name="switchThemeLabelLight">Light Theme</string>
-    <string name="switchThemeLabelDark">Dark Theme</string>
+    <string name="settings_appearance_theme_label">Dark theme</string>
+    <string name="settings_appearance_theme_dark_summary">Current theme: Dark</string>
+    <string name="settings_appearance_theme_light_summary">Current theme: Light</string>
     <string name="settings_category_appearance">Appearance</string>
 </resources>

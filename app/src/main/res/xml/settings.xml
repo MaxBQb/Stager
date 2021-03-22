@@ -4,7 +4,9 @@
     <PreferenceCategory app:title="@string/settings_category_appearance">
         <SwitchPreferenceCompat
             app:key="dark_theme"
-            app:title="@string/switchThemeLabelLight"
+            app:title="@string/settings_appearance_theme_label"
+            app:summaryOn="@string/settings_appearance_theme_dark_summary"
+            app:summaryOff="@string/settings_appearance_theme_light_summary"
             app:defaultValue="false"/>
     </PreferenceCategory>
 </PreferenceScreen>

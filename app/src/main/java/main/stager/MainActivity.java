@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
-                Settings.openSettings(this);
+                SettingsActivity.openSettings(this);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

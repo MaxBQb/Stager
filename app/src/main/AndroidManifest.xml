@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Stager">
 
-        <activity android:name=".Settings"
+        <activity android:name=".SettingsActivity"
             android:label="@string/settings_activity_label"
             android:parentActivityName=".MainActivity">
 

@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
 
-public class Settings extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity {
     private static final String _PARENT = "__PARENT_ACTIVITY_CLASS__";
 
     @Override
@@ -43,8 +43,8 @@ public class Settings extends AppCompatActivity {
      * @param activity куда вернуться
      */
     public static void openSettings(Activity activity) {
-        Intent intent = new Intent(activity, Settings.class);
-        intent.putExtra(_PARENT, Settings.class.getName());
+        Intent intent = new Intent(activity, SettingsActivity.class);
+        intent.putExtra(_PARENT, SettingsActivity.class.getName());
         activity.startActivity(intent);
     }
 

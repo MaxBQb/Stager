@@ -14,6 +14,7 @@
             app:key="@string/Settings__Locale"
             app:title="@string/settings_appearance_locale_label"
             app:icon="@drawable/ic_baseline_language_24"
+            app:summary="@string/settings_appearance_locale_summary"
             app:entries="@array/locales_names"
             app:entryValues="@array/locales"
             />

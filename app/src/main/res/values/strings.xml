@@ -20,4 +20,6 @@
     <string name="settings_appearance_theme_light_summary">Current theme: Light</string>
     <string name="settings_category_appearance">Appearance</string>
     <string name="settings_appearance_locale_label">Language</string>
+    <string name="settings_appearance_locale_summary" formatted="true">
+        Current language: %1$s</string>
 </resources>

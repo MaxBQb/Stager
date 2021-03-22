@@ -1,10 +1,7 @@
 package main.stager;
 
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
+import androidx.preference.PreferenceManager;
 
 public class ThemeController {
     private static int DARK_THEME = R.style.Theme_AppCompat;
@@ -26,15 +23,12 @@ public class ThemeController {
 
     // Возвращает текущую тему
     public static Boolean getTheme(Activity activity) {
-        return Settings.getSettings(activity)
-                       .getBoolean(Settings.THEME, false);
+        return PreferenceManager.getDefaultSharedPreferences(activity)
+                                .getBoolean(Settings.THEME, false);
     }
 
-    // Устанавливает текущую тему
-    public static void setTheme(Activity activity, Boolean darkTheme) {
-        Settings.setSettings(activity)
-                .putBoolean(Settings.THEME, darkTheme)
-                .commit();
+    // Выполняет необходимые для применения темы действия
+    public static void updateTheme() {
         Runtime.getRuntime().exit(0);
     }
 }

@@ -4,16 +4,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 
 public class Settings extends AppCompatActivity {
 
     // Themes
-    public static final String THEME = "__THEME__";
+    public static final String THEME = "dark_theme";
 
     // Hidden
     private static final String _SETTINGS = "__settings__";
@@ -28,14 +28,18 @@ public class Settings extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.settings_container, new SettingsFragment())
                 .commit();
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .registerOnSharedPreferenceChangeListener(this::bindOptionChanges);
     }
 
-    public static SharedPreferences getSettings(Activity activity) {
-        return activity.getSharedPreferences(Settings._SETTINGS, 0);
-    }
-
-    public static SharedPreferences.Editor setSettings(Activity activity) {
-        return getSettings(activity).edit();
+    private void bindOptionChanges(SharedPreferences prefs, String key) {
+        switch (key) {
+            case Settings.THEME:
+                Boolean dark_theme = prefs.getBoolean(key, false);
+                prefs.edit().commit(); // Гарантирия сохранности
+                ThemeController.updateTheme();
+                break;
+        }
     }
 
     /** Открывает окно настроек
@@ -73,10 +77,5 @@ public class Settings extends AppCompatActivity {
             e.printStackTrace();
         }
         return intent;
-    }
-
-    public void toggleTheme(View view) {
-        Boolean new_theme = !ThemeController.getTheme(this);
-        ThemeController.setTheme(this, new_theme);
     }
 }

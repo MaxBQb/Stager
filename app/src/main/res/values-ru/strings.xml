@@ -13,7 +13,10 @@
     <string name="btn_registration">Регистрация</string>
     <string name="btn_success">Продолжить</string>
     <string name="btn_sign_in">Вход</string>
+
+    <!-- Настройки -->
     <string name="settings_activity_label">Настройки</string>
     <string name="switchThemeLabelLight">Светлая Тема</string>
     <string name="switchThemeLabelDark">Тёмная Тема</string>
+    <string name="settings_category_appearance">Внешний вид</string>
 </resources>

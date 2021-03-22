@@ -12,7 +12,10 @@
     <string name="btn_registration">Registration</string>
     <string name="btn_success">Continue</string>
     <string name="btn_sign_in">Sign in</string>
+
+    <!-- Settings -->
     <string name="settings_activity_label">Settings</string>
     <string name="switchThemeLabelLight">Light Theme</string>
     <string name="switchThemeLabelDark">Dark Theme</string>
+    <string name="settings_category_appearance">Appearance</string>
 </resources>

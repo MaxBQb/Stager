@@ -22,6 +22,7 @@ public class Authorization extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ThemeController.restoreTheme(this);
+        LocaleController.restoreLocale(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.log_in_form);
         init();

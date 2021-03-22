@@ -3,4 +3,7 @@
     <string name="Settings__Theme" translatable="false">
         Stager.main.settings.appearance.theme
     </string>
+    <string name="Settings__Locale" translatable="false">
+        Stager.main.settings.appearance.locale
+    </string>
 </resources>

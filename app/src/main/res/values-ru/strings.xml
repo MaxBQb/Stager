@@ -20,4 +20,5 @@
     <string name="settings_appearance_theme_dark_summary">Текущая тема: Тёмная</string>
     <string name="settings_appearance_theme_light_summary">Текущая тема: Светлая</string>
     <string name="settings_category_appearance">Внешний вид</string>
+    <string name="settings_appearance_locale_label">Язык</string>
 </resources>

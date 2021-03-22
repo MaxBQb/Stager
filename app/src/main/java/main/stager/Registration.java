@@ -23,6 +23,7 @@ public class Registration extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ThemeController.restoreTheme(this);
+        LocaleController.restoreLocale(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registr_form);
         init();

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
@@ -15,6 +16,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ThemeController.restoreTheme(this);
+        LocaleController.restoreLocale(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
@@ -36,6 +38,13 @@ public class SettingsActivity extends AppCompatActivity {
             Boolean dark_theme = prefs.getBoolean(key, false);
             prefs.edit().commit(); // Гарантирия сохранности
             ThemeController.updateTheme();
+        }
+
+        // Смена языка
+        if (getString(R.string.Settings__Locale).equals(key)) {
+            String locale = prefs.getString(key, "en");
+            prefs.edit().commit(); // Гарантирия сохранности
+            LocaleController.updateLocale();
         }
     }
 
@@ -74,5 +83,4 @@ public class SettingsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return intent;
-    }
-}
+    }}

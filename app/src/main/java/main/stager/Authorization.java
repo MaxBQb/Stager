@@ -25,8 +25,13 @@ public class Authorization extends AppCompatActivity {
         LocaleController.restoreLocale(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.log_in_form);
-        init();
 
+        // App label set static
+        // But main activity label must be set dynamically
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setTitle(R.string.btn_sign_in);
+
+        init();
     }
 
     private void init() {

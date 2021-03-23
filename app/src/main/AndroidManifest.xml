@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="main.stager">
-
     <application
         android:name=".StagerApplication"
         android:allowBackup="true"
@@ -14,24 +13,20 @@
         <activity android:name=".SettingsActivity"
             android:label="@string/settings_activity_label"
             android:parentActivityName=".MainActivity">
-
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity"/>
-
         </activity>
 
         <activity android:name=".MainActivity">
         </activity>
 
-        <activity android:name=".Authorization"
-            android:label="@string/btn_sign_in">
-
+        <activity android:name=".Authorization">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
         </activity>
 
         <activity android:name=".Registration"
@@ -39,5 +34,4 @@
         </activity>
 
     </application>
-
 </manifest>

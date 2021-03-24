@@ -4,19 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends SmartActivity {
     private static final String _PARENT = "__PARENT_ACTIVITY_CLASS__";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ThemeController.restoreTheme(this);
-        LocaleController.restoreLocale(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
@@ -83,4 +79,5 @@ public class SettingsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return intent;
-    }}
+    }
+}

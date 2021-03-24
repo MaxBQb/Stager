@@ -5,24 +5,19 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class Authorization extends AppCompatActivity {
+public class Authorization extends SmartActivity {
     private EditText edEmail, edPassword;
     private FirebaseAuth fbAuth;
     private Button btnRegistration, btnContinue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ThemeController.restoreTheme(this);
-        LocaleController.restoreLocale(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.log_in_form);
 

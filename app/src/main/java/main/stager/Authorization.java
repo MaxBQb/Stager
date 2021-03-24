@@ -18,6 +18,13 @@ public class Authorization extends SmartActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        fbAuth = FirebaseAuth.getInstance();
+
+        if (fbAuth.getCurrentUser() != null) {
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.log_in_form);
 
@@ -32,8 +39,6 @@ public class Authorization extends SmartActivity {
     private void init() {
         edEmail = findViewById(R.id.email);
         edPassword = findViewById(R.id.password);
-
-        fbAuth = FirebaseAuth.getInstance();
 
         onClickRegistration();
         onClickSignIn();

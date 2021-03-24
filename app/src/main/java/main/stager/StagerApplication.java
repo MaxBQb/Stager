@@ -23,6 +23,6 @@ public class StagerApplication extends Application {
     // Поодержка динамической смены языка на уровне приложения
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(LocaleController.onAttach(base));
+        super.attachBaseContext(LocaleController.restoreLocale(base));
     }
 }

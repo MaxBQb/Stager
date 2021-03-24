@@ -11,14 +11,9 @@ import java.util.Locale;
 
 public class LocaleController {
 
-    // Обновление языка на уровне приложения
-    public static Context onAttach(Context context) {
+    // Обновление языка из сохранённых предпочтнений
+    public static Context restoreLocale(Context context) {
         return setLocale(context, getLocale(context));
-    }
-
-    // Обновление языка на уровне активности
-    public static void restoreLocale(Context context) {
-        onAttach(context);
     }
 
     // Выполняет необходимые для применения языка действия
@@ -51,7 +46,6 @@ public class LocaleController {
         return context.createConfigurationContext(configuration);
     }
 
-    @SuppressWarnings("deprecation")
     private static Context updateResourcesLegacy(Context context, String language) {
         Locale locale = new Locale(language);
         Locale.setDefault(locale);

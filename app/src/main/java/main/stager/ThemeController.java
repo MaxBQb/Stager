@@ -12,13 +12,11 @@ public class ThemeController {
     }
 
     /** Меняет тему на указанную в настройках
-     * (Обычно вызывается в onCreate)
      * @param activity Активность (обычно это this)
      */
-    public static Boolean restoreTheme(Activity activity) {
+    public static void restoreTheme(Activity activity) {
         boolean currentTheme = getTheme(activity);
         activity.setTheme(theme(currentTheme));
-        return currentTheme;
     }
 
     // Возвращает текущую тему

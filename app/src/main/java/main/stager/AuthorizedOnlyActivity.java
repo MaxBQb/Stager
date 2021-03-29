@@ -11,6 +11,11 @@ public abstract class AuthorizedOnlyActivity extends SmartActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO: Prevent unauthorized access
+
+        if (savedInstanceState == null)
+            savedInstanceState = new Bundle();
+        savedInstanceState.putBoolean(SHOW_ACTION_BAR, false);
+
         super.onCreate(savedInstanceState);
     }
 

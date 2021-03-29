@@ -11,29 +11,30 @@ import java.util.Locale;
 
 public class LocaleController {
 
-    // Обновление языка из сохранённых предпочтнений
+    /** Обновление языка из сохранённых предпочтнений */
     public static Context restoreLocale(Context context) {
         return setLocale(context, getLocale(context));
     }
 
-    // Выполняет необходимые для применения языка действия
+    /** Выполняет необходимые для применения языка действия */
     public static void updateLocale() {
         Runtime.getRuntime().exit(0);
     }
 
-    // Устанавливает язык
+    /** Устанавливает язык */
     private static Context setLocale(Context context, String language) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             return updateResources(context, language);
         return updateResourcesLegacy(context, language);
     }
 
-    // Получить сохранённый язык
+    /** Получить сохранённый язык */
     private static String getLocale(Context context) {
         return androidx.preference.PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(context.getString(R.string.Settings__Locale), Locale.getDefault().getLanguage());
     }
 
+    /** Обновить локаль для новых API 24+*/
     @TargetApi(Build.VERSION_CODES.N)
     private static Context updateResources(Context context, String language) {
         Locale locale = new Locale(language);
@@ -46,6 +47,7 @@ public class LocaleController {
         return context.createConfigurationContext(configuration);
     }
 
+    /** Обновить локаль для API 23 и ниже */
     private static Context updateResourcesLegacy(Context context, String language) {
         Locale locale = new Locale(language);
         Locale.setDefault(locale);

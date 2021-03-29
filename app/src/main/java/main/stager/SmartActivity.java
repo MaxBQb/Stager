@@ -12,7 +12,8 @@ public abstract class SmartActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ThemeController.restoreTheme(this, savedInstanceState.getBoolean(SHOW_ACTION_BAR));
+        ThemeController.restoreTheme(this, savedInstanceState == null
+                || savedInstanceState.getBoolean(SHOW_ACTION_BAR, true));
         LocaleController.restoreLocale(this);
         super.onCreate(savedInstanceState);
     }

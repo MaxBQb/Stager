@@ -22,4 +22,9 @@
     <string name="settings_appearance_locale_label">Language</string>
     <string name="settings_appearance_locale_summary" formatted="true">
         Current language: %1$s</string>
+
+    <!-- StagesList -->
+    <string name="stages_list_activity_label" formatted="true">
+        Stages of \'%1$s\'</string>
+    <string name="stages_list_activity_untitled_action">Untitled</string>
 </resources>

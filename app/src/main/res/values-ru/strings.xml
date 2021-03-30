@@ -23,4 +23,9 @@
     <string name="settings_appearance_locale_label">Язык</string>
     <string name="settings_appearance_locale_summary" formatted="true">
         Текущий язык: %1$s</string>
+
+    <!-- Список этапов -->
+    <string name="stages_list_activity_label" formatted="true">
+        Этапы \'%1$s\'"</string>
+    <string name="stages_list_activity_untitled_action">Без названия</string>
 </resources>

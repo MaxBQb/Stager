@@ -9,17 +9,24 @@ import main.stager.adapters.StageItemRecyclerViewAdapter;
 import main.stager.model.UserAction;
 
 public class StagesListActivity extends AuthorizedOnlyActivity {
+    static public final String ARG_ACTION_NAME = "Stager.stages_list_activity.param_action_name";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stages_list);
+        String actionName = getString(R.string.stages_list_activity_untitled_action);
+        try {
+            actionName = getIntent().getExtras().getString(ARG_ACTION_NAME);
+        } catch (NullPointerException ignore) {}
+        setTitle(getString(R.string.stages_list_activity_label, actionName));
 
         if (mAuth.getCurrentUser() == null) return;
 
         mRef.child("users")
             .child(mAuth.getUid())
-            .child("actions").child("first_action").get()
+            .child("actions").child(actionName).get()
             .addOnCompleteListener((Task<DataSnapshot> task) -> {
                 if (!task.isSuccessful()) {
                     Log.e("firebase", "Error getting data", task.getException());

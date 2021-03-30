@@ -28,4 +28,5 @@
     <string name="stages_list_activity_label" formatted="true">
         Этапы \'%1$s\'"</string>
     <string name="stages_list_activity_untitled_action">Без названия</string>
+    <string name="stages_list_activity_no_items_message">Стадий пока нет..</string>
 </resources>

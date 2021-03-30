@@ -32,10 +32,15 @@ public class StagesListActivity extends AuthorizedOnlyActivity {
                     Log.e("firebase", "Error getting data", task.getException());
                 } else {
                     UserAction ua = task.getResult().getValue(UserAction.class);
+                    boolean isStagesListEmpty = (ua == null || ua.getStages() == null || ua.getStages().isEmpty());
                     getSupportFragmentManager()
                             .beginTransaction()
-                            .replace(R.id.stages_container, ListFragment.newInstance(
-                                    new StageItemRecyclerViewAdapter(ua.getStages())
+                            .replace(R.id.stages_container, isStagesListEmpty ?
+                                    NoItemsFillerFragment.newInstance(
+                                        getString(R.string.stages_list_activity_no_items_message)
+                                    ) : ListFragment.newInstance(
+                                        new StageItemRecyclerViewAdapter(ua.getStages()
+                                    )
                             )).commit();
                 }
         });

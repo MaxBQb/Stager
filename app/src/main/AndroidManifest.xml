@@ -10,9 +10,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Stager">
-        <activity android:name=".StagesListActivity"
-            android:label="@string/stages_list_activity_label">
-        </activity>
+
+        <activity
+            android:name=".StagesListActivity"
+            android:label="@string/stages_list_activity_label" />
+
         <activity
             android:name=".SettingsActivity"
             android:label="@string/settings_activity_label"
@@ -21,7 +23,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".MainActivity"></activity>
+
+        <activity android:name=".MainActivity" />
+
         <activity
             android:name=".Authorization"
             android:noHistory="true">
@@ -32,10 +36,12 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".Registration"
             android:label="@string/btn_registration"
-            android:noHistory="true"></activity>
+            android:noHistory="true" />
+
     </application>
 
 </manifest>

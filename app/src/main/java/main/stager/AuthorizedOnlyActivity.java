@@ -7,6 +7,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import androidx.annotation.NonNull;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public abstract class AuthorizedOnlyActivity extends SmartActivity {
 
     // Firebase
@@ -20,6 +24,11 @@ public abstract class AuthorizedOnlyActivity extends SmartActivity {
             startActivity(new Intent(this, Authorization.class));
             finish();
         }
+
+        if (savedInstanceState == null)
+            savedInstanceState = new Bundle();
+        savedInstanceState.putBoolean(SHOW_ACTION_BAR, false);
+
         super.onCreate(savedInstanceState);
     }
 

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_about_me">
+
+    <fragment
+        android:id="@+id/nav_about_me"
+        android:name="main.stager.ui.about_me.AboutMeFragment"
+        android:label="@string/about_me"
+        tools:layout="@layout/fragment_about_me" />
+
+    <fragment
+        android:id="@+id/nav_my_contacts"
+        android:name="main.stager.ui.my_contacts.MyContactsFragment"
+        android:label="@string/my_contacts"
+        tools:layout="@layout/fragment_my_contacts" />
+
+    <fragment
+        android:id="@+id/nav_my_actions"
+        android:name="main.stager.ui.my_actions.MyActionsFragment"
+        android:label="@string/my_actions"
+        tools:layout="@layout/fragment_my_actions" />
+</navigation>

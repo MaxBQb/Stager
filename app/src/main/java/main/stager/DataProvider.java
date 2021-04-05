@@ -1,8 +1,17 @@
 package main.stager;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import java.util.ArrayList;
+import java.util.List;
+
+import main.stager.model.UserAction;
 
 public class DataProvider {
     private static DataProvider instance;
@@ -25,9 +34,39 @@ public class DataProvider {
         return mAuth.getCurrentUser() != null;
     }
 
-    public DatabaseReference getAction(String name) {
-        return mRef.child("users")
+    public DatabaseReference getActions() {
+        return mRef.child("actions")
+                .child(mAuth.getUid());
+    }
+
+    public DatabaseReference getAction(String key) {
+        return mRef.child("actions")
                 .child(mAuth.getUid())
-                .child("actions").child(name).child("data");
+                .child(key);
+    }
+
+    public DatabaseReference getStages(String key) {
+        return mRef.child("stages")
+                .child(mAuth.getUid())
+                .child(key);
+    }
+
+    public static <T> ValueEventListener getListChangesListener(MutableLiveData<List<T>> liveList, Class<T> className) {
+        return new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists())
+                    return;
+                List<T> lst = new ArrayList<T>();
+                for (DataSnapshot postSnapshot: snapshot.getChildren())
+                    lst.add(postSnapshot.getValue(className));
+                liveList.postValue(lst);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Do nothing :)
+            }
+        };
     }
 }

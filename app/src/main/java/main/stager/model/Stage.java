@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Stage {
-    @Getter
-    private UserAction.Status currentStatus;
+    @Getter private Status currentStatus;
     @Getter private String name;
+    @Getter private TriggerType trigger;
 }

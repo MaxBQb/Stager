@@ -14,17 +14,20 @@ import main.stager.SmartActivity;
 
 public class StagesListFragment extends Fragment {
     static public final String ARG_ACTION_NAME = "Stager.stages_list.param_action_name";
+    static public final String ARG_ACTION_KEY = "Stager.stages_list.param_action_key";
     private String mActionName;
+    private String mActionKey;
     private StagesListViewModel viewModel;
 
     public StagesListFragment() {
         // Required empty public constructor
     }
 
-    public static StagesListFragment newInstance(String actionName) {
+    public static StagesListFragment newInstance(String key, String actionName) {
         StagesListFragment fragment = new StagesListFragment();
         Bundle args = new Bundle();
         args.putString(ARG_ACTION_NAME, actionName);
+        args.putString(ARG_ACTION_KEY, key);
         fragment.setArguments(args);
         return fragment;
     }
@@ -32,9 +35,13 @@ public class StagesListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mActionName = getArguments() != null ?
-            getArguments().getString(ARG_ACTION_NAME) :
-            getString(R.string.stages_list_activity_untitled_action);
+        if (getArguments() != null) {
+            mActionName = getArguments().getString(ARG_ACTION_NAME);
+            mActionKey = getArguments().getString(ARG_ACTION_KEY);
+        } else {
+            mActionName = getString(R.string.stages_list_activity_untitled_action);
+            mActionKey = "";
+        }
     }
 
     @Override
@@ -53,7 +60,13 @@ public class StagesListFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
 
-        viewModel.getStages(mActionName).observe(getViewLifecycleOwner(), adapter::setValues);
+        viewModel.getStages(mActionKey).observe(getViewLifecycleOwner(), adapter::setValues);
+        viewModel.getActionName(mActionKey, mActionName).observe(getViewLifecycleOwner(),
+                (String text) -> {
+                    ((SmartActivity)getActivity())
+                            .getSupportActionBar()
+                            .setTitle(getString(R.string.stages_list_activity_label, text));
+        });
         return view;
     }
 }

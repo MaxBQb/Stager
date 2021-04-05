@@ -2,6 +2,7 @@ package main.stager.ui.activity_stages;
 
 import main.stager.R;
 import main.stager.model.Stage;
+import main.stager.model.Status;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -36,17 +37,17 @@ public class StageItemRecyclerViewAdapter
         holder.mItem = mValues.get(position);
         holder.mContentView.setText(holder.mItem.getName());
         switch (holder.mItem.getCurrentStatus()) {
-            case ABORTED:
+            case Status.ABORTED:
                 holder.mStatusView.setImageResource(
                         R.drawable.ic_stage_status_abort);
                 break;
 
-            case SUCCEED:
+            case Status.SUCCEED:
                 holder.mStatusView.setImageResource(
                         R.drawable.ic_stage_status_succes);
                 break;
 
-            case WAITING:
+            case Status.WAITING:
                 holder.mStatusView.setImageResource(
                         R.drawable.ic_stage_status_wait);
                 break;

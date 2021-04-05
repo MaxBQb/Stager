@@ -7,27 +7,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import androidx.annotation.NonNull;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 public abstract class AuthorizedOnlyActivity extends SmartActivity {
 
     // Firebase
-    protected FirebaseAuth mAuth;
-    protected DatabaseReference mRef;
+    protected static DataProvider dataProvider = DataProvider.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mAuth = FirebaseAuth.getInstance();
 
         // Предотвращаем доступ неавторизованных пользователей
-        if (mAuth.getCurrentUser() == null) {
+        if (!dataProvider.isAuthorized()) {
             startActivity(new Intent(this, Authorization.class));
             finish();
-        } else {
-            FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-            mRef = mDatabase.getReference("stager-main-db");
         }
         super.onCreate(savedInstanceState);
     }

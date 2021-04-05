@@ -10,6 +10,6 @@ public class MainActivity extends AuthorizedOnlyActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (mAuth.getCurrentUser() == null) return;
+        if (!dataProvider.isAuthorized()) return;
     }
 }

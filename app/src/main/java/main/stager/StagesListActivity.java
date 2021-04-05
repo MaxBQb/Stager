@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.util.Log;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
-
 import main.stager.adapters.StageItemRecyclerViewAdapter;
 import main.stager.model.UserAction;
 
@@ -22,11 +21,9 @@ public class StagesListActivity extends AuthorizedOnlyActivity {
         } catch (NullPointerException ignore) {}
         setTitle(getString(R.string.stages_list_activity_label, actionName));
 
-        if (mAuth.getCurrentUser() == null) return;
+        if (!dataProvider.isAuthorized()) return;
 
-        mRef.child("users")
-            .child(mAuth.getUid())
-            .child("actions").child(actionName).child("data").get()
+       dataProvider.getAction(actionName).get()
             .addOnCompleteListener((Task<DataSnapshot> task) -> {
                 if (!task.isSuccessful()) {
                     Log.e("firebase", "Error getting data", task.getException());

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,11 +21,7 @@ public class StageItemRecyclerViewAdapter
         extends RecyclerView.Adapter<StageItemRecyclerViewAdapter.ViewHolder>
         implements Serializable {
 
-    private final List<Stage> mValues;
-
-    public StageItemRecyclerViewAdapter(List<Stage> items) {
-        mValues = items;
-    }
+    private List<Stage> mValues = new ArrayList<Stage>();
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -54,6 +51,11 @@ public class StageItemRecyclerViewAdapter
                         R.drawable.ic_stage_status_wait);
                 break;
         }
+    }
+
+    public void setValues(List<Stage> values) {
+        mValues = values;
+        notifyDataSetChanged();
     }
 
     @Override

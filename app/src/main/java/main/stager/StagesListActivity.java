@@ -26,7 +26,7 @@ public class StagesListActivity extends AuthorizedOnlyActivity {
 
         mRef.child("users")
             .child(mAuth.getUid())
-            .child("actions").child(actionName).get()
+            .child("actions").child(actionName).child("data").get()
             .addOnCompleteListener((Task<DataSnapshot> task) -> {
                 if (!task.isSuccessful()) {
                     Log.e("firebase", "Error getting data", task.getException());

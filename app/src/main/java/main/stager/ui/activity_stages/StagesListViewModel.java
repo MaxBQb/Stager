@@ -10,6 +10,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import main.stager.DataProvider;
@@ -25,25 +26,11 @@ public class StagesListViewModel extends AndroidViewModel {
         stages = new MutableLiveData<>();
     }
 
-    public LiveData<List<Stage>> getStages(String actionName) {
-        if (stages.getValue() == null) {
-            dataProvider.getAction(actionName).addValueEventListener(
-                    new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (!snapshot.exists())
-                                return;
-                            UserAction ua = snapshot.getValue(UserAction.class);
-                            if (ua != null)
-                                stages.postValue(ua.getStages());
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {}
-                    }
+    public LiveData<List<Stage>> getStages(String key) {
+        if (stages.getValue() == null)
+            dataProvider.getStages(key).addValueEventListener(
+                DataProvider.getListChangesListener(stages, Stage.class)
             );
-        }
         return stages;
     }
-
 }

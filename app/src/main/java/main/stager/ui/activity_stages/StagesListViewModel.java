@@ -1,4 +1,4 @@
-package main.stager;
+package main.stager.ui.activity_stages;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -11,6 +11,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
+
+import main.stager.DataProvider;
 import main.stager.model.Stage;
 import main.stager.model.UserAction;
 
@@ -29,11 +31,11 @@ public class StagesListViewModel extends AndroidViewModel {
                     new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.exists()) {
-                                UserAction ua = snapshot.getValue(UserAction.class);
-                                if (ua != null)
-                                    stages.postValue(ua.getStages());
-                            }
+                            if (!snapshot.exists())
+                                return;
+                            UserAction ua = snapshot.getValue(UserAction.class);
+                            if (ua != null)
+                                stages.postValue(ua.getStages());
                         }
 
                         @Override

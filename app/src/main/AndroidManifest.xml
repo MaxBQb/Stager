@@ -12,10 +12,6 @@
         android:theme="@style/Theme.Stager">
 
         <activity
-            android:name=".StagesListActivity"
-            android:label="@string/stages_list_activity_label" />
-
-        <activity
             android:name=".SettingsActivity"
             android:label="@string/settings_activity_label"
             android:parentActivityName=".MainActivity">

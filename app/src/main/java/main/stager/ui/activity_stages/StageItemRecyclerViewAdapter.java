@@ -1,4 +1,4 @@
-package main.stager.adapters;
+package main.stager.ui.activity_stages;
 
 import main.stager.R;
 import main.stager.model.Stage;

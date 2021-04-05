@@ -133,12 +133,7 @@ public class Registration extends SmartActivity {
 
     protected boolean isOnline() {
         String cs = Context.CONNECTIVITY_SERVICE;
-        ConnectivityManager cm = (ConnectivityManager)
-                getSystemService(cs);
-        if (cm.getActiveNetworkInfo() == null) {
-            return false;
-        } else {
-            return true;
-        }
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(cs);
+        return cm.getActiveNetworkInfo() != null;
     }
 }

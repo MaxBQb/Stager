@@ -49,15 +49,32 @@ public class DataProvider {
                 .child(key);
     }
 
-    public static <T> ValueEventListener getListChangesListener(MutableLiveData<List<T>> liveList, Class<T> className) {
+    public interface IListItemModifier {
+        public Object modify(Object item, DataSnapshot postSnapshot);
+    }
+
+    public static <T> ValueEventListener getListChangesListener(MutableLiveData<List<T>> liveList,
+                                                                Class<T> className) {
+        return getListChangesListener(liveList, className, null);
+    }
+
+    public static <T> ValueEventListener getListChangesListener(MutableLiveData<List<T>> liveList,
+                                                                Class<T> className,
+                                                                IListItemModifier modifier
+                                                                ) {
         return new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!snapshot.exists())
                     return;
                 List<T> lst = new ArrayList<>();
-                for (DataSnapshot postSnapshot: snapshot.getChildren())
-                    lst.add(postSnapshot.getValue(className));
+                T item;
+                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                    item = postSnapshot.getValue(className);
+                    if (modifier != null)
+                        item = (T) modifier.modify(item, postSnapshot);
+                    lst.add(item);
+                }
                 liveList.postValue(lst);
             }
 

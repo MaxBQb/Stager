@@ -1,4 +1,4 @@
-package main.stager.ui.activity_stages;
+package main.stager.ui.action_stages;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -6,7 +6,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
-import java.io.Serializable;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import main.stager.R;
@@ -16,13 +18,13 @@ import main.stager.model.Stage;
  * {@link RecyclerView.Adapter} для отображения {@link Stage}.
  */
 public class StageItemRecyclerViewAdapter
-        extends RecyclerView.Adapter<StageItemRecyclerViewAdapter.ViewHolder>
-        implements Serializable {
+        extends RecyclerView.Adapter<StageItemRecyclerViewAdapter.ViewHolder> {
 
-    private List<Stage> mValues = new ArrayList<Stage>();
+    private List<Stage> mValues = new ArrayList<>();
 
+    @NotNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_stage_item,
                         parent, false);
@@ -70,8 +72,8 @@ public class StageItemRecyclerViewAdapter
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mContentView = (TextView) view.findViewById(R.id.content);
-            mStatusView = (ImageView) view.findViewById(R.id.stage_status);
+            mContentView = view.findViewById(R.id.content);
+            mStatusView = view.findViewById(R.id.stage_status);
         }
     }
 }

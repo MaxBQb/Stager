@@ -1,4 +1,4 @@
-package main.stager.ui.activity_stages;
+package main.stager.ui.action_stages;
 
 import android.app.Application;
 import androidx.annotation.NonNull;

@@ -1,16 +1,16 @@
-package main.stager.ui.my_actions;
+package main.stager.ui.actions;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import main.stager.R;
 import main.stager.model.UserAction;
 
@@ -20,10 +20,11 @@ import main.stager.model.UserAction;
 public class ActionItemRecyclerViewAdapter
         extends RecyclerView.Adapter<ActionItemRecyclerViewAdapter.ViewHolder> {
 
-    private List<UserAction> mValues = new ArrayList<UserAction>();
+    private List<UserAction> mValues = new ArrayList<>();
 
+    @NotNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_stage_item,
                         parent, false);
@@ -71,8 +72,8 @@ public class ActionItemRecyclerViewAdapter
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mContentView = (TextView) view.findViewById(R.id.content);
-            mStatusView = (ImageView) view.findViewById(R.id.stage_status);
+            mContentView = view.findViewById(R.id.content);
+            mStatusView = view.findViewById(R.id.stage_status);
         }
     }
 }

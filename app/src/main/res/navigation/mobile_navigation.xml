@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/nav_my_actions"
-        android:name="main.stager.ui.my_actions.MyActionsFragment"
+        android:name="main.stager.ui.actions.ActionsListFragment"
         android:label="@string/my_actions"
         tools:layout="@layout/fragment_my_actions" />
 </navigation>

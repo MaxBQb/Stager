@@ -1,4 +1,4 @@
-package main.stager.ui.my_actions;
+package main.stager.ui.actions;
 
 import android.app.Application;
 
@@ -10,11 +10,11 @@ import java.util.List;
 import main.stager.DataProvider;
 import main.stager.model.UserAction;
 
-public class MyActionsViewModel extends AndroidViewModel {
+public class ActionsListViewModel extends AndroidViewModel {
     private static DataProvider dataProvider = DataProvider.getInstance();
     private MutableLiveData<List<UserAction>> actions;
 
-    public MyActionsViewModel(@NonNull Application application) {
+    public ActionsListViewModel(@NonNull Application application) {
         super(application);
         actions = new MutableLiveData<>();
     }

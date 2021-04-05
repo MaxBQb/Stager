@@ -1,6 +1,5 @@
-package main.stager.ui.activity_stages;
+package main.stager.ui.action_stages;
 
-import android.content.Context;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -51,22 +50,20 @@ public class StagesListFragment extends Fragment {
         ((SmartActivity)getActivity())
                 .getSupportActionBar()
                 .setTitle(getString(R.string.stages_list_activity_label, mActionName));
-        viewModel = (new ViewModelProvider(this)).get(StagesListViewModel.class);
+
+        viewModel = new ViewModelProvider(this).get(StagesListViewModel.class);
         StageItemRecyclerViewAdapter adapter = new StageItemRecyclerViewAdapter();
 
-        Context context = view.getContext();
         RecyclerView recyclerView = (RecyclerView) view;
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
 
         viewModel.getStages(mActionKey).observe(getViewLifecycleOwner(), adapter::setValues);
         viewModel.getActionName(mActionKey, mActionName).observe(getViewLifecycleOwner(),
-                (String text) -> {
-                    ((SmartActivity)getActivity())
-                            .getSupportActionBar()
-                            .setTitle(getString(R.string.stages_list_activity_label, text));
-        });
+                (String text) -> ((SmartActivity)getActivity())
+                        .getSupportActionBar()
+                        .setTitle(getString(R.string.stages_list_activity_label, text)));
         return view;
     }
 }

@@ -11,8 +11,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.stager.model.UserAction;
-
 public class DataProvider {
     private static DataProvider instance;
     private FirebaseAuth mAuth;
@@ -57,7 +55,7 @@ public class DataProvider {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!snapshot.exists())
                     return;
-                List<T> lst = new ArrayList<T>();
+                List<T> lst = new ArrayList<>();
                 for (DataSnapshot postSnapshot: snapshot.getChildren())
                     lst.add(postSnapshot.getValue(className));
                 liveList.postValue(lst);

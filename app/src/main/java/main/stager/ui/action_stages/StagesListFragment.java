@@ -18,18 +18,6 @@ public class StagesListFragment extends Fragment {
     private String mActionKey;
     private StagesListViewModel viewModel;
 
-    public StagesListFragment() {
-        // Required empty public constructor
-    }
-
-    public static StagesListFragment newInstance(String key, String actionName) {
-        StagesListFragment fragment = new StagesListFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_ACTION_NAME, actionName);
-        args.putString(ARG_ACTION_KEY, key);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

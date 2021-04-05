@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import main.stager.R;
@@ -18,9 +21,14 @@ public class ActionsListFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         viewModel = new ViewModelProvider(this).get(ActionsListViewModel.class);
-        ActionItemRecyclerViewAdapter adapter = new ActionItemRecyclerViewAdapter();
 
         View view = inflater.inflate(R.layout.fragment_list, container, false);
+        NavHostFragment navHostFragment = (NavHostFragment) getActivity()
+                .getSupportFragmentManager()
+                .findFragmentById(R.id.nav_host_fragment);
+        ActionItemRecyclerViewAdapter adapter = new ActionItemRecyclerViewAdapter(
+                navHostFragment.getNavController()
+        );
         RecyclerView recyclerView = (RecyclerView) view;
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setHasFixedSize(true);

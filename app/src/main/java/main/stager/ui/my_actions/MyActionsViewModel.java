@@ -1,19 +1,29 @@
 package main.stager.ui.my_actions;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+import java.util.List;
+import main.stager.DataProvider;
+import main.stager.model.UserAction;
 
-public class MyActionsViewModel extends ViewModel {
+public class MyActionsViewModel extends AndroidViewModel {
+    private static DataProvider dataProvider = DataProvider.getInstance();
+    private MutableLiveData<List<UserAction>> actions;
 
-    private MutableLiveData<String> mText;
-
-    public MyActionsViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is my actions fragment");
+    public MyActionsViewModel(@NonNull Application application) {
+        super(application);
+        actions = new MutableLiveData<>();
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<List<UserAction>> getActions() {
+        if (actions.getValue() == null)
+            dataProvider.getActions().addValueEventListener(
+                    DataProvider.getListChangesListener(actions, UserAction.class)
+            );
+        return actions;
     }
 }

@@ -29,4 +29,15 @@
         Этапы \'%1$s\'"</string>
     <string name="stages_list_activity_untitled_action">Без названия</string>
     <string name="stages_list_activity_no_items_message">Стадий пока нет..</string>
+
+    <!-- Боковое меню -->
+    <string name="title_activity_side_bar">Боковое меню</string>
+    <string name="navigation_drawer_open">Открыть навигационную панель</string>
+    <string name="navigation_drawer_close">Закрыть навигационную панель</string>
+    <string name="nav_header_title">Имя пользователя</string>
+    <string name="nav_header_desc">Навигационный заголовок</string>
+    <string name="action_settings">Настройки</string>
+    <string name="about_me">Обо мне</string>
+    <string name="my_contacts">Контакты</string>
+    <string name="my_actions">Этапы</string>
 </resources>

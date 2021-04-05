@@ -40,7 +40,7 @@ public class StagesListFragment extends Fragment {
             mActionKey = getArguments().getString(ARG_ACTION_KEY);
         } else {
             mActionName = getString(R.string.stages_list_activity_untitled_action);
-            mActionKey = "action_id";
+            mActionKey = "";
         }
     }
 
@@ -61,6 +61,12 @@ public class StagesListFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         viewModel.getStages(mActionKey).observe(getViewLifecycleOwner(), adapter::setValues);
+        viewModel.getActionName(mActionKey, mActionName).observe(getViewLifecycleOwner(),
+                (String text) -> {
+                    ((SmartActivity)getActivity())
+                            .getSupportActionBar()
+                            .setTitle(getString(R.string.stages_list_activity_label, text));
+        });
         return view;
     }
 }

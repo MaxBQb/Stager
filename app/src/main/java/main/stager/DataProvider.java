@@ -11,6 +11,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.stager.model.UserAction;
+
 public class DataProvider {
     private static DataProvider instance;
     private FirebaseAuth mAuth;
@@ -35,6 +37,12 @@ public class DataProvider {
     public DatabaseReference getActions() {
         return mRef.child("actions")
                 .child(mAuth.getUid());
+    }
+
+    public DatabaseReference getAction(String key) {
+        return mRef.child("actions")
+                .child(mAuth.getUid())
+                .child(key);
     }
 
     public DatabaseReference getStages(String key) {

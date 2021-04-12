@@ -6,13 +6,20 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.EditText;
+import android.widget.Toast;
+import main.stager.DataProvider;
 import main.stager.R;
+import main.stager.model.Status;
+import main.stager.model.UserAction;
 
 public class AddActionFragment extends Fragment {
 
@@ -21,6 +28,7 @@ public class AddActionFragment extends Fragment {
     }
 
     private AddActionViewModel mViewModel;
+    private EditText inputName;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,6 +43,7 @@ public class AddActionFragment extends Fragment {
         ((AppCompatActivity) getActivity())
                 .getSupportActionBar()
                 .setHomeAsUpIndicator(R.drawable.ic_close);
+        inputName = view.findViewById(R.id.add_action_input_name);
         return view;
     }
 
@@ -46,10 +55,37 @@ public class AddActionFragment extends Fragment {
     }
 
     @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.save_changes) {
+            save_changes();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void save_changes() {
+        String name = inputName.getText().toString().trim();
+        if (name.isEmpty()) {
+            Toast.makeText(getContext(),
+                    getString(R.string.add_action_error_message,
+                            getString(R.string.add_action_error_message_reason_noname)
+                    ), Toast.LENGTH_LONG).show();
+            return;
+        }
+        DataProvider.getInstance().addAction(new UserAction(Status.WAITING, name));
+        go_back();
+    }
+
+    private void go_back() {
+        ((NavHostFragment) getActivity()
+                .getSupportFragmentManager()
+                .findFragmentById(R.id.nav_host_fragment))
+                .getNavController().navigateUp();
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(AddActionViewModel.class);
-        // TODO: Use the ViewModel
     }
-
 }

@@ -1,11 +1,14 @@
 package main.stager.ui.add_action;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -20,9 +23,26 @@ public class AddActionFragment extends Fragment {
     private AddActionViewModel mViewModel;
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_add_action, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_action, container, false);
+        ((AppCompatActivity) getActivity())
+                .getSupportActionBar()
+                .setHomeAsUpIndicator(R.drawable.ic_close);
+        return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.item_edit_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.findItem(R.id.action_settings).setVisible(false);
     }
 
     @Override

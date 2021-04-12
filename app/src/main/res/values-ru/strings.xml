@@ -43,4 +43,8 @@
 
     <!-- Добавить мероприятие -->
     <string name="add_action_label">Новое мероприятие</string>
+    <string name="add_action_input_hint">Заголовок</string>
+
+    <!-- Меню редактирования чего-либо -->
+    <string name="item_edit_menu_save_changes_title">Сохранить</string>
 </resources>

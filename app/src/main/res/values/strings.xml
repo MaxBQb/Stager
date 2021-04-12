@@ -39,4 +39,11 @@
     <string name="about_me">About me</string>
     <string name="my_contacts">Contacts</string>
     <string name="my_actions">Actions</string>
+
+    <!-- About me -->
+    <string name="my_acc">My account</string>
+    <string name="exit_in_acc">Log out of account</string>
+    <string name="change_pass">Сhange your password?</string>
+    <string name="btn_change_pass">Change</string>
+
 </resources>

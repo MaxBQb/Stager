@@ -40,4 +40,10 @@
     <string name="about_me">Обо мне</string>
     <string name="my_contacts">Контакты</string>
     <string name="my_actions">Этапы</string>
+
+    <!-- Обо мне -->
+    <string name="my_acc">Мой аккаунт</string>
+    <string name="exit_in_acc">Выход из аккаунта</string>
+    <string name="change_pass">Хотите сменить пароль?</string>
+    <string name="btn_change_pass">Сменить</string>
 </resources>

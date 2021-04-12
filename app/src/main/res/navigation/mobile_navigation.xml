@@ -25,12 +25,22 @@
         <action
             android:id="@+id/transition_actions_list_to_action_stages_list"
             app:destination="@id/action_stages" />
+        <action
+            android:id="@+id/transition_actions_list_to_add_action"
+            app:destination="@id/add_action" />
     </fragment>
 
     <fragment
         android:id="@+id/action_stages"
         android:name="main.stager.ui.action_stages.StagesListFragment"
-        tools:layout="@layout/fragment_list"
+        tools:layout="@layout/fragment_action_stages"
+        />
+
+    <fragment
+        android:id="@+id/add_action"
+        android:label="@string/add_action_label"
+        android:name="main.stager.ui.add_action.AddActionFragment"
+        tools:layout="@layout/fragment_add_action"
         />
 
 </navigation>

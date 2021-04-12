@@ -40,4 +40,7 @@
     <string name="about_me">Обо мне</string>
     <string name="my_contacts">Контакты</string>
     <string name="my_actions">Этапы</string>
+
+    <!-- Добавить мероприятие -->
+    <string name="add_action_label">Новое мероприятие</string>
 </resources>

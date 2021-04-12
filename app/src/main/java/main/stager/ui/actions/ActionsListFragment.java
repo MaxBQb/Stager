@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,19 +21,25 @@ public class ActionsListFragment extends Fragment {
 
         viewModel = new ViewModelProvider(this).get(ActionsListViewModel.class);
 
-        View view = inflater.inflate(R.layout.fragment_list, container, false);
-        NavHostFragment navHostFragment = (NavHostFragment) getActivity()
+        View view = inflater.inflate(R.layout.fragment_actions, container, false);
+        NavController navController = ((NavHostFragment) getActivity()
                 .getSupportFragmentManager()
-                .findFragmentById(R.id.nav_host_fragment);
+                .findFragmentById(R.id.nav_host_fragment))
+                .getNavController();
         ActionItemRecyclerViewAdapter adapter = new ActionItemRecyclerViewAdapter(
-                navHostFragment.getNavController()
+                navController
         );
-        RecyclerView recyclerView = (RecyclerView) view;
+        RecyclerView recyclerView = view.findViewById(R.id.list);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
 
         viewModel.getActions().observe(getViewLifecycleOwner(), adapter::setValues);
+
+        view.findViewById(R.id.btn_add_action).setOnClickListener(v ->
+            navController.navigate(R.id.transition_actions_list_to_add_action)
+        );
+
         return view;
     }
 }

@@ -4,8 +4,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class AboutMeViewModel extends ViewModel {
+import main.stager.DataProvider;
 
+public class AboutMeViewModel extends ViewModel {
+    private static DataProvider dataProvider = DataProvider.getInstance();
     private MutableLiveData<String> mText;
 
     public AboutMeViewModel() {

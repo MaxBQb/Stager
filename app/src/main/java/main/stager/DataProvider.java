@@ -11,6 +11,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.stager.model.Stage;
 import main.stager.model.UserAction;
 
 public class DataProvider {
@@ -35,14 +36,11 @@ public class DataProvider {
     }
 
     public DatabaseReference getActions() {
-        return mRef.child("actions")
-                .child(mAuth.getUid());
+        return mRef.child("actions").child(mAuth.getUid());
     }
 
     public DatabaseReference getAction(String key) {
-        return mRef.child("actions")
-                .child(mAuth.getUid())
-                .child(key);
+        return getActions().child(key);
     }
 
     public String addAction(UserAction ua) {
@@ -51,10 +49,20 @@ public class DataProvider {
         return key;
     }
 
+    public String addStage(String actionName, Stage stage) {
+        String key = getStages(actionName).push().getKey();
+        getStage(actionName, key).setValue(stage);
+        return key;
+    }
+
     public DatabaseReference getStages(String key) {
         return mRef.child("stages")
                 .child(mAuth.getUid())
                 .child(key);
+    }
+
+    public DatabaseReference getStage(String actionName, String key) {
+        return getStages(actionName).child(key);
     }
 
     public interface IListItemModifier {
@@ -73,7 +81,7 @@ public class DataProvider {
         return new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (!snapshot.exists())
+                if (!snapshot.exists() && snapshot.getChildrenCount() == 0)
                     return;
                 List<T> lst = new ArrayList<>();
                 T item;

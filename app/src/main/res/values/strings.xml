@@ -46,6 +46,12 @@
     <string name="add_action_error_message">Unable to create new action: %s</string>
     <string name="add_action_error_message_reason_noname">missing title</string>
 
+    <!-- Add action stage -->
+    <string name="add_action_stage_label">Next stage</string>
+    <string name="add_action_stage_input_hint">Title</string>
+    <string name="add_action_stage_error_message">Unable to create new stage: %s</string>
+    <string name="add_action_stage_error_message_reason_noname">missing title</string>
+
     <!-- Item edit menu -->
     <string name="item_edit_menu_save_changes_title">Save</string>
 </resources>

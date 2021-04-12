@@ -47,6 +47,12 @@
     <string name="add_action_error_message">Невозможно создать мероприятие: %s</string>
     <string name="add_action_error_message_reason_noname">отсутствует название</string>
 
+    <!-- Добавить этап мероприятия -->
+    <string name="add_action_stage_label">Очередной этап</string>
+    <string name="add_action_stage_input_hint">Заголовок</string>
+    <string name="add_action_stage_error_message">Невозможно создать стадию: %s</string>
+    <string name="add_action_stage_error_message_reason_noname">отсутствует название</string>
+
     <!-- Меню редактирования чего-либо -->
     <string name="item_edit_menu_save_changes_title">Сохранить</string>
 </resources>

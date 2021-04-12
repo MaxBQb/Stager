@@ -21,14 +21,6 @@ public class MainActivity extends AuthorizedOnlyActivity {
 
         if (!dataProvider.isAuthorized()) return;
 
-//        ((Button) findViewById(R.id.btn_log_out)).setOnClickListener(
-//                v -> {
-//                    mAuth.signOut();
-//                    finish();
-//                    startActivity(new Intent(this, Authorization.class));
-//                }
-//        );
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

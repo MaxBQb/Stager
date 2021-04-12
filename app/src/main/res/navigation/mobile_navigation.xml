@@ -21,7 +21,7 @@
         android:id="@+id/nav_my_actions"
         android:name="main.stager.ui.actions.ActionsListFragment"
         android:label="@string/my_actions"
-        tools:layout="@layout/fragment_my_actions">
+        tools:layout="@layout/fragment_actions">
         <action
             android:id="@+id/transition_actions_list_to_action_stages_list"
             app:destination="@id/action_stages" />

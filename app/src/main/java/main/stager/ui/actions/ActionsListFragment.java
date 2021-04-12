@@ -22,14 +22,14 @@ public class ActionsListFragment extends Fragment {
 
         viewModel = new ViewModelProvider(this).get(ActionsListViewModel.class);
 
-        View view = inflater.inflate(R.layout.fragment_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_actions, container, false);
         NavHostFragment navHostFragment = (NavHostFragment) getActivity()
                 .getSupportFragmentManager()
                 .findFragmentById(R.id.nav_host_fragment);
         ActionItemRecyclerViewAdapter adapter = new ActionItemRecyclerViewAdapter(
                 navHostFragment.getNavController()
         );
-        RecyclerView recyclerView = (RecyclerView) view;
+        RecyclerView recyclerView = view.findViewById(R.id.list);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);

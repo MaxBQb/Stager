@@ -34,7 +34,7 @@ public class StagesListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_action_stages, container, false);
         ((SmartActivity)getActivity())
                 .getSupportActionBar()
                 .setTitle(getString(R.string.stages_list_activity_label, mActionName));
@@ -42,7 +42,7 @@ public class StagesListFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(StagesListViewModel.class);
         StageItemRecyclerViewAdapter adapter = new StageItemRecyclerViewAdapter();
 
-        RecyclerView recyclerView = (RecyclerView) view;
+        RecyclerView recyclerView = view.findViewById(R.id.list);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);

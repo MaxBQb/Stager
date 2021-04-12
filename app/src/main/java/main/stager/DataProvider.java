@@ -65,8 +65,24 @@ public class DataProvider {
         return getStages(actionName).child(key);
     }
 
+    public DatabaseReference getUserInfo() {
+        return mRef.child("user_info").child(mAuth.getUid());
+    }
+
+    public DatabaseReference getUserName() {
+        return getUserInfo().child("name");
+    }
+
+    public DatabaseReference getUserDescription() {
+        return getUserInfo().child("description");
+    }
+
     public interface IListItemModifier {
         public Object modify(Object item, DataSnapshot postSnapshot);
+    }
+
+    public interface IModifier {
+        public Object modify(Object item, DataSnapshot snapshot);
     }
 
     public static <T> ValueEventListener getListChangesListener(MutableLiveData<List<T>> liveList,
@@ -81,7 +97,7 @@ public class DataProvider {
         return new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (!snapshot.exists() && snapshot.getChildrenCount() == 0)
+                if (!snapshot.exists())
                     return;
                 List<T> lst = new ArrayList<>();
                 T item;
@@ -100,4 +116,31 @@ public class DataProvider {
             }
         };
     }
+
+    public static <T> ValueEventListener getValueChangesListener(MutableLiveData<T> live,
+                                                                Class<T> className,
+                                                                IModifier modifier) {
+        return new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists())
+                    return;
+                T item = snapshot.getValue(className);
+                if (modifier != null)
+                    item = (T) modifier.modify(item, snapshot);
+                live.postValue(item);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Do nothing :)
+            }
+        };
+    }
+
+    public static <T> ValueEventListener getValueChangesListener(MutableLiveData<T> live,
+                                                                 Class<T> className) {
+        return getValueChangesListener(live, className, null);
+    }
+
 }

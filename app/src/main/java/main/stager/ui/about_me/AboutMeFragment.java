@@ -13,7 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 
+import main.stager.ChangeListeners.OnLostFocus;
 import main.stager.DataProvider;
 import main.stager.MainActivity;
 import main.stager.R;
@@ -36,16 +38,18 @@ public class AboutMeFragment extends Fragment {
         viewModel.getText().observe(getViewLifecycleOwner(), input_name::setText);
         viewModel.getDescription().observe(getViewLifecycleOwner(), input_description::setText);
 
-        input_name.setOnFocusChangeListener((View v, boolean hasFocus) -> {
-            if (hasFocus) return;
-            DataProvider.getInstance().getUserName()
-                    .setValue(((EditText)v).getText().toString());
+        input_name.setOnFocusChangeListener(new OnLostFocus() {
+            @Override
+            public DatabaseReference getDataRef(DataProvider dp) {
+                return dp.getUserName();
+            }
         });
 
-        input_description.setOnFocusChangeListener((View v, boolean hasFocus) -> {
-            if (hasFocus) return;
-            DataProvider.getInstance().getUserDescription()
-                    .setValue(((EditText)v).getText().toString());
+        input_description.setOnFocusChangeListener(new OnLostFocus() {
+            @Override
+            public DatabaseReference getDataRef(DataProvider dp) {
+                return dp.getUserDescription();
+            }
         });
 
         return root;

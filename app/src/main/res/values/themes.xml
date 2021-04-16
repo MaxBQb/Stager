@@ -8,9 +8,13 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.Stager.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+
+    <style name="Theme.Stager.Light.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/purple_500</item>
+    </style>
+
+    <style name="Theme.Stager.Light.DarkActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/purple_500</item>
     </style>
 
     <style name="Theme.Stager.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

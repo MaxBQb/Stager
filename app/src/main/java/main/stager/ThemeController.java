@@ -6,8 +6,8 @@ import androidx.preference.PreferenceManager;
 public class ThemeController {
     private static int DARK_THEME = R.style.Theme_AppCompat;
     private static int DARK_THEME_NO_ACTIONBAR = R.style.Theme_AppCompat_NoActionBar;
-    private static int LIGHT_THEME = R.style.Theme_AppCompat_Light_DarkActionBar;
-    private static int LIGHT_THEME_NO_ACTIONBAR = R.style.Theme_AppCompat_Light_NoActionBar;
+    private static int LIGHT_THEME = R.style.Theme_Stager_Light_DarkActionBar;
+    private static int LIGHT_THEME_NO_ACTIONBAR = R.style.Theme_Stager_Light_NoActionBar;
 
     private static int theme(boolean darkTheme, boolean showActionBar) {
         return showActionBar ? (darkTheme ? DARK_THEME : LIGHT_THEME) :

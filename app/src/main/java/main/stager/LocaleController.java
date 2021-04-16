@@ -18,11 +18,6 @@ public class LocaleController {
         setLocale(context, getLocale(context));
     }
 
-    /** Выполняет необходимые для применения языка действия */
-    public static void updateLocale() {
-        Runtime.getRuntime().exit(0);
-    }
-
     /** Устанавливает язык */
     private static void setLocale(Context context, String language) {
         Lingver.getInstance().setLocale(context, language);

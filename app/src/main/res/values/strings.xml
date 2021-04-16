@@ -14,7 +14,7 @@
     <string name="btn_sign_in">Sign in</string>
 
     <!-- Settings -->
-    <string name="settings_activity_label">Settings</string>
+    <string name="settings_label">Settings</string>
     <string name="settings_appearance_theme_label">Dark theme</string>
     <string name="settings_appearance_theme_dark_summary">Current theme: Dark</string>
     <string name="settings_appearance_theme_light_summary">Current theme: Light</string>

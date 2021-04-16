@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import androidx.annotation.NonNull;
+import androidx.navigation.fragment.NavHostFragment;
 
 public abstract class AuthorizedOnlyActivity extends SmartActivity {
 
@@ -40,7 +41,9 @@ public abstract class AuthorizedOnlyActivity extends SmartActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() != R.id.action_settings)
             return super.onOptionsItemSelected(item);
-        SettingsActivity.openSettings(this);
+        ((NavHostFragment)getSupportFragmentManager()
+            .findFragmentById(R.id.nav_host_fragment))
+            .getNavController().navigate(R.id.transition_settings);
         return true;
     }
 }

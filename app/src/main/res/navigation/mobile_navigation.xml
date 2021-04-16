@@ -4,6 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/nav_about_me">
+    <action android:id="@+id/transition_settings"
+            app:destination="@id/settings"/>
+
+    <fragment
+        android:id="@+id/settings"
+        android:name="main.stager.SettingsFragment"
+        android:label="@string/settings_label"
+        />
 
     <fragment
         android:id="@+id/nav_about_me"

@@ -15,7 +15,7 @@
     <string name="btn_sign_in">Вход</string>
 
     <!-- Настройки -->
-    <string name="settings_activity_label">Настройки</string>
+    <string name="settings_label">Настройки</string>
     <string name="settings_appearance_theme_label">Тёмная тема</string>
     <string name="settings_appearance_theme_dark_summary">Текущая тема: Тёмная</string>
     <string name="settings_appearance_theme_light_summary">Текущая тема: Светлая</string>

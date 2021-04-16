@@ -33,9 +33,4 @@ public class ThemeController {
                                 .getBoolean(activity.getString(R.string.Settings__Theme), false);
     }
 
-    /** Выполняет необходимые для применения темы действия
-     */
-    public static void updateTheme() {
-        Runtime.getRuntime().exit(0);
-    }
 }

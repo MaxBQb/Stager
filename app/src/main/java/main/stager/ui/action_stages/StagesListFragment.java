@@ -1,28 +1,20 @@
 package main.stager.ui.action_stages;
 
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.rockerhieu.rvadapter.states.StatesRecyclerViewAdapter;
-
 import main.stager.R;
 import main.stager.SmartActivity;
+import main.stager.StagerExtendableListFragment;
 import main.stager.ui.add_action_stage.AddStageFragment;
 
-public class StagesListFragment extends Fragment {
+public class StagesListFragment extends StagerExtendableListFragment<StagesListViewModel, StageItemRecyclerViewAdapter> {
     static public final String ARG_ACTION_NAME = "Stager.stages_list.param_action_name";
     static public final String ARG_ACTION_KEY = "Stager.stages_list.param_action_key";
     private String mActionName;
     private String mActionKey;
-    private StagesListViewModel viewModel;
 
 
     @Override
@@ -38,40 +30,43 @@ public class StagesListFragment extends Fragment {
     }
 
     @Override
+    protected Class<StagesListViewModel> getViewModelType() {
+        return StagesListViewModel.class;
+    }
+
+    @Override
+    protected Class<StageItemRecyclerViewAdapter> getAdapterType() {
+        return StageItemRecyclerViewAdapter.class;
+    }
+
+    @Override
+    protected int getViewBaseLayoutId() {
+        return R.layout.fragment_action_stages;
+    }
+
+    @Override
+    protected void setObservers() {
+        super.setObservers();
+        viewModel.getStages(mActionKey).observe(getViewLifecycleOwner(), adapter::setValues);
+        viewModel.getActionName(mActionKey, mActionName).observe(getViewLifecycleOwner(),
+                (String text) -> ((AppCompatActivity)getActivity())
+                                 .getSupportActionBar()
+                                 .setTitle(getString(R.string.StagesFragment_label, text)));
+    }
+
+    @Override
+    protected void onButtonAddClicked(View v) {
+        Bundle args = new Bundle();
+        args.putString(AddStageFragment.ARG_ACTION_KEY, mActionKey);
+        navigator.navigate(R.id.transition_action_stages_to_add_stage, args);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_action_stages, container, false);
         ((SmartActivity)getActivity())
                 .getSupportActionBar()
                 .setTitle(getString(R.string.StagesFragment_label, mActionName));
-
-        viewModel = new ViewModelProvider(this).get(StagesListViewModel.class);
-        NavController navController = ((NavHostFragment) getActivity()
-                .getSupportFragmentManager()
-                .findFragmentById(R.id.nav_host_fragment))
-                .getNavController();
-        StageItemRecyclerViewAdapter adapter = new StageItemRecyclerViewAdapter();
-
-        RecyclerView recyclerView = view.findViewById(R.id.list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        recyclerView.setHasFixedSize(true);
-        StatesRecyclerViewAdapter srvAdapter = new StatesRecyclerViewAdapter(adapter,
-                null, null, null
-        );
-        recyclerView.setAdapter(srvAdapter);
-
-        viewModel.getStages(mActionKey).observe(getViewLifecycleOwner(), adapter::setValues);
-        viewModel.getActionName(mActionKey, mActionName).observe(getViewLifecycleOwner(),
-                (String text) -> ((SmartActivity)getActivity())
-                        .getSupportActionBar()
-                        .setTitle(getString(R.string.StagesFragment_label, text)));
-
-        view.findViewById(R.id.button_list_add).setOnClickListener(v -> {
-            Bundle args = new Bundle();
-            args.putString(AddStageFragment.ARG_ACTION_KEY, mActionKey);
-            navController.navigate(R.id.transition_action_stages_to_add_stage, args);
-        });
-
-        return view;
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 }

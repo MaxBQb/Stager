@@ -31,6 +31,7 @@ public class AboutMeFragment extends Fragment {
                 v -> {
                     FirebaseAuth.getInstance().signOut();
                     startActivity(new Intent(this.getActivity(), MainActivity.class));
+                    this.getActivity().finish();
                 }
         );
         EditText input_name = root.findViewById(R.id.personName);

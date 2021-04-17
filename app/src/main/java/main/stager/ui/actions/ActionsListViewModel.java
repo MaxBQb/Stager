@@ -2,16 +2,15 @@ package main.stager.ui.actions;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.database.DataSnapshot;
 import java.util.List;
 import main.stager.DataProvider;
+import main.stager.StagerViewModel;
 import main.stager.model.UserAction;
 
-public class ActionsListViewModel extends AndroidViewModel {
-    private static DataProvider dataProvider = DataProvider.getInstance();
+public class ActionsListViewModel extends StagerViewModel {
     private MutableLiveData<List<UserAction>> actions;
 
     public ActionsListViewModel(@NonNull Application application) {
@@ -20,13 +19,20 @@ public class ActionsListViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<UserAction>> getActions() {
+        return getActions(null);
+    }
+
+    public LiveData<List<UserAction>> getActions(DataProvider.OnError onError) {
         if (actions.getValue() == null)
             dataProvider.getActions().addValueEventListener(
-                    DataProvider.getListChangesListener(actions, UserAction.class,
-                            (Object ua, DataSnapshot snapshot) -> {
-                                ((UserAction)ua).setKey(snapshot.getKey());
-                                return ua;
-                            }));
+                    new DataProvider.ValueListEventListener<UserAction>(actions, UserAction.class, onError) {
+                        @Override
+                        public UserAction modify(UserAction ua, DataSnapshot snapshot) {
+                            ua.setKey(snapshot.getKey());
+                            return ua;
+                        }
+                    }
+            );
         return actions;
     }
 }

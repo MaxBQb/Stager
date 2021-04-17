@@ -17,6 +17,8 @@ import android.widget.TextView;
 import com.rockerhieu.rvadapter.states.StatesRecyclerViewAdapter;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
 
+import java.util.List;
+
 
 public abstract class StagerListFragment<TVM extends ViewModel, TA extends Adapter> extends Fragment {
     protected TVM viewModel;
@@ -30,6 +32,7 @@ public abstract class StagerListFragment<TVM extends ViewModel, TA extends Adapt
     // Основное
     protected NavController navigator;
     protected RecyclerView rv;
+    protected StatesRecyclerViewAdapter srvAdapter;
     protected View view;
 
     // Режимы отображения
@@ -62,7 +65,7 @@ public abstract class StagerListFragment<TVM extends ViewModel, TA extends Adapt
     }
 
     protected View getEmptyView() {
-        return getLayoutInflater().inflate(R.layout.fragment_no_items_filler, rv, false);
+        return getLayoutInflater().inflate(R.layout.empty_list_view, rv, false);
     }
 
     protected View getErrorView() {
@@ -70,7 +73,7 @@ public abstract class StagerListFragment<TVM extends ViewModel, TA extends Adapt
     }
 
     protected View getLoadingView() {
-        return null;
+        return getLayoutInflater().inflate(R.layout.loading_list_view, rv, false);
     }
 
     private void setNNText(View v, @IdRes int id, String text) {
@@ -84,9 +87,24 @@ public abstract class StagerListFragment<TVM extends ViewModel, TA extends Adapt
         emptyView = getEmptyView();
         errorView = getErrorView();
         loadingView = getLoadingView();
-        setNNText(emptyView, R.id.no_items_fragment_message, "Oops");
-        setNNText(errorView, R.id.no_items_fragment_message, "Oops");
-        setNNText(loadingView, R.id.no_items_fragment_message, "Oops");
+        setNNText(emptyView, R.id.empty_list_view_message, "empty");
+        setNNText(errorView, R.id.empty_list_view_message, "error");
+        setNNText(loadingView, R.id.loading_list_view_message, "loading");
+    }
+
+    protected void onError(String reason) {
+        srvAdapter.setState(StatesRecyclerViewAdapter.STATE_ERROR);
+    }
+
+    protected void onError() {
+        onError(null);
+    }
+
+    protected void reactState(List<?> list) {
+        if (list == null || list.isEmpty())
+            srvAdapter.setState(StatesRecyclerViewAdapter.STATE_EMPTY);
+        else
+            srvAdapter.setState(StatesRecyclerViewAdapter.STATE_NORMAL);
     }
 
     protected void setObservers() {}
@@ -101,12 +119,11 @@ public abstract class StagerListFragment<TVM extends ViewModel, TA extends Adapt
         adapter = createAdapter();
         rv = getRecyclerView();
         prepareViews();
-        StatesRecyclerViewAdapter srvAdapter = new StatesRecyclerViewAdapter(
-                adapter, loadingView, emptyView, errorView
-        );
+        srvAdapter = new StatesRecyclerViewAdapter(adapter, loadingView, emptyView, errorView);
         rv.setAdapter(srvAdapter);
         setObservers();
         setEventListeners();
+        srvAdapter.setState(StatesRecyclerViewAdapter.STATE_LOADING);
         return view;
     }
 }

@@ -1,8 +1,14 @@
 package main.stager.ui.actions;
 
 import android.view.View;
+
+import androidx.lifecycle.LiveData;
+
+import java.util.List;
+
 import main.stager.R;
 import main.stager.StagerExtendableListFragment;
+import main.stager.model.UserAction;
 
 public class ActionsListFragment extends StagerExtendableListFragment<ActionsListViewModel, ActionItemRecyclerViewAdapter> {
     @Override
@@ -23,7 +29,9 @@ public class ActionsListFragment extends StagerExtendableListFragment<ActionsLis
     @Override
     protected void setObservers() {
         super.setObservers();
-        viewModel.getActions().observe(getViewLifecycleOwner(), adapter::setValues);
+        LiveData<List<UserAction>> ld = viewModel.getActions(this::onError);
+        ld.observe(getViewLifecycleOwner(), adapter::setValues);
+        ld.observe(getViewLifecycleOwner(), this::reactState);
     }
 
     @Override

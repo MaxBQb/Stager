@@ -2,12 +2,19 @@ package main.stager.ui.action_stages;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.List;
+
 import main.stager.R;
 import main.stager.SmartActivity;
 import main.stager.StagerExtendableListFragment;
+import main.stager.model.Stage;
+import main.stager.model.UserAction;
 import main.stager.ui.add_action_stage.AddStageFragment;
 
 public class StagesListFragment extends StagerExtendableListFragment<StagesListViewModel, StageItemRecyclerViewAdapter> {
@@ -47,7 +54,10 @@ public class StagesListFragment extends StagerExtendableListFragment<StagesListV
     @Override
     protected void setObservers() {
         super.setObservers();
-        viewModel.getStages(mActionKey).observe(getViewLifecycleOwner(), adapter::setValues);
+        LiveData<List<Stage>> ld = viewModel.getStages(mActionKey, this::onError);
+        ld.observe(getViewLifecycleOwner(), this::reactState);
+        ld.observe(getViewLifecycleOwner(), adapter::setValues);
+
         viewModel.getActionName(mActionKey, mActionName).observe(getViewLifecycleOwner(),
                 (String text) -> ((AppCompatActivity)getActivity())
                                  .getSupportActionBar()

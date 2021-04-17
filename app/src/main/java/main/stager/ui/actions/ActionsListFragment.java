@@ -11,6 +11,9 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.rockerhieu.rvadapter.states.StatesRecyclerViewAdapter;
+
 import main.stager.R;
 
 public class ActionsListFragment extends Fragment {
@@ -32,7 +35,10 @@ public class ActionsListFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.list);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(adapter);
+        StatesRecyclerViewAdapter srvAdapter = new StatesRecyclerViewAdapter(adapter,
+                null, null, null
+        );
+        recyclerView.setAdapter(srvAdapter);
 
         viewModel.getActions().observe(getViewLifecycleOwner(), adapter::setValues);
 

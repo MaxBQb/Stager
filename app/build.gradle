@@ -53,4 +53,6 @@ dependencies {
 
     testCompileOnly 'org.projectlombok:lombok:1.18.18'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.18'
+
+    implementation 'com.rockerhieu:rv-adapter-states:1.2'
 }

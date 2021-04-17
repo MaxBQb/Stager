@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.rockerhieu.rvadapter.states.StatesRecyclerViewAdapter;
+
 import main.stager.R;
 import main.stager.SmartActivity;
 import main.stager.ui.add_action_stage.AddStageFragment;
@@ -52,7 +55,10 @@ public class StagesListFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.list);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(adapter);
+        StatesRecyclerViewAdapter srvAdapter = new StatesRecyclerViewAdapter(adapter,
+                null, null, null
+        );
+        recyclerView.setAdapter(srvAdapter);
 
         viewModel.getStages(mActionKey).observe(getViewLifecycleOwner(), adapter::setValues);
         viewModel.getActionName(mActionKey, mActionName).observe(getViewLifecycleOwner(),

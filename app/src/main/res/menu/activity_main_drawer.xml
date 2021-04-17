@@ -7,14 +7,14 @@
         <item
             android:id="@+id/nav_about_me"
             android:icon="@drawable/ic_menu_user"
-            android:title="@string/about_me" />
+            android:title="@string/SideBarActivity_NavigationItem_AboutMe" />
         <item
             android:id="@+id/nav_my_contacts"
             android:icon="@drawable/ic_menu_contacts"
-            android:title="@string/my_contacts" />
+            android:title="@string/SideBarActivity_NavigationItem_MyContacts" />
         <item
             android:id="@+id/nav_my_actions"
             android:icon="@drawable/ic_menu_actions"
-            android:title="@string/my_actions" />
+            android:title="@string/SideBarActivity_NavigationItem_MyActions" />
     </group>
 </menu>

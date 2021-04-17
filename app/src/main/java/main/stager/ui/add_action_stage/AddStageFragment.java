@@ -67,8 +67,8 @@ public class AddStageFragment extends Fragment {
         String name = inputName.getText().toString().trim();
         if (name.isEmpty()) {
             Toast.makeText(getContext(),
-                    getString(R.string.add_action_error_message,
-                            getString(R.string.add_action_error_message_reason_noname)
+                    getString(R.string.AddAction_ErrorMessage,
+                            getString(R.string.AddAction_ErrorMessage_ReasonNoName)
                     ), Toast.LENGTH_LONG).show();
             return;
         }

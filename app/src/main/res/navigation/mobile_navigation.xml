@@ -10,25 +10,25 @@
     <fragment
         android:id="@+id/settings"
         android:name="main.stager.SettingsFragment"
-        android:label="@string/settings_label"
+        android:label="@string/Settings_label"
         />
 
     <fragment
         android:id="@+id/nav_about_me"
         android:name="main.stager.ui.about_me.AboutMeFragment"
-        android:label="@string/about_me"
+        android:label="@string/SideBarActivity_NavigationItem_AboutMe"
         tools:layout="@layout/fragment_about_me" />
 
     <fragment
         android:id="@+id/nav_my_contacts"
         android:name="main.stager.ui.my_contacts.MyContactsFragment"
-        android:label="@string/my_contacts"
+        android:label="@string/SideBarActivity_NavigationItem_MyContacts"
         tools:layout="@layout/fragment_my_contacts" />
 
     <fragment
         android:id="@+id/nav_my_actions"
         android:name="main.stager.ui.actions.ActionsListFragment"
-        android:label="@string/my_actions"
+        android:label="@string/SideBarActivity_NavigationItem_MyActions"
         tools:layout="@layout/fragment_actions">
         <action
             android:id="@+id/transition_actions_list_to_action_stages_list"
@@ -49,14 +49,14 @@
 
     <fragment
         android:id="@+id/add_action"
-        android:label="@string/add_action_label"
+        android:label="@string/AddAction_title"
         android:name="main.stager.ui.add_action.AddActionFragment"
         tools:layout="@layout/fragment_add_action"
         />
 
     <fragment
         android:id="@+id/add_action_stage"
-        android:label="@string/add_action_stage_label"
+        android:label="@string/AddActionStage_title"
         android:name="main.stager.ui.add_action_stage.AddStageFragment"
         tools:layout="@layout/fragment_add_action_stage"
         />

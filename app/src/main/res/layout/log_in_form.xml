@@ -21,7 +21,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:gravity="center"
-                android:text="@string/welcome_at_log_in"
+                android:text="@string/AuthorizationActivity_TextView_title_Greeting"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"  />
 
             <EditText
@@ -34,7 +34,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="20dp"
-                android:hint="@string/email"
+                android:hint="@string/RegistrationActivity_EditText_label_UserEmail"
                 android:inputType="textWebEmailAddress" />
 
             <EditText
@@ -47,7 +47,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="20dp"
-                android:hint="@string/password"
+                android:hint="@string/RegistrationActivity_EditText_label_UserPassword"
                 android:inputType="textPassword" />
         </RelativeLayout>
 
@@ -69,7 +69,7 @@
                 android:layout_weight="1"
                 android:layout_marginRight="10dp"
                 android:layout_marginEnd="10dp"
-                android:text="@string/forget_password"
+                android:text="@string/AuthorizationActivity_TextView_label_ForgotPassword"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
             <Button
@@ -79,7 +79,7 @@
                 android:layout_weight="1"
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
-                android:text="@string/btn_restore_acc"
+                android:text="@string/AuthorizationActivity_Button_RestoreAccount"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
         </LinearLayout>
 
@@ -101,7 +101,7 @@
                 android:layout_weight="1"
                 android:layout_marginRight="10dp"
                 android:layout_marginEnd="10dp"
-                android:text="@string/registration"
+                android:text="@string/AuthorizationActivity_TextView_title_Register"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
             <Button
@@ -111,7 +111,7 @@
                 android:layout_weight="1"
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
-                android:text="@string/btn_registration"
+                android:text="@string/AuthorizationActivity_Button_Register"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
         </LinearLayout>
 
@@ -125,7 +125,7 @@
             android:gravity="center"
             android:drawableStart="@drawable/ic_baseline_check"
             android:drawableLeft="@drawable/ic_baseline_check"
-            android:text="@string/btn_success"
+            android:text="@string/RegistrationActivity_Button_Register"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
     </RelativeLayout>
 </androidx.core.widget.NestedScrollView>

@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_marginTop="10dp"
-            android:text="@string/my_acc"
+            android:text="@string/AboutMeFragment_TextView_title_MyAccount"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
         <EditText
@@ -60,7 +60,7 @@
                 android:layout_weight="1"
                 android:layout_marginRight="10dp"
                 android:layout_marginEnd="10dp"
-                android:text="@string/change_pass"
+                android:text="@string/AboutMeFragment_TextView_label_ChangePassword"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
             <Button
@@ -70,7 +70,7 @@
                 android:layout_weight="1"
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
-                android:text="@string/btn_change_pass"
+                android:text="@string/AboutMeFragment_Button_ChangePassword"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
 
 
@@ -86,7 +86,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="@string/exit_in_acc"
+            android:text="@string/AboutMeFragment_Button_ExitInAccount"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
     </RelativeLayout>
 

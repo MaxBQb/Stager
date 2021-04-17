@@ -32,7 +32,7 @@ public class Authorization extends SmartActivity {
 
         // Устанавливает название активности, вместо названия приложения
         if (getSupportActionBar() != null)
-            getSupportActionBar().setTitle(R.string.btn_sign_in);
+            getSupportActionBar().setTitle(R.string.RegistrationActivity_Button_SignIn);
 
         init();
     }

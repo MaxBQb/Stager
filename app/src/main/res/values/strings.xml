@@ -1,63 +1,65 @@
 <resources>
-    <string name="app_name">Stager</string>
-    <string name="welcome_at_registration">Registration</string>
-    <string name="welcome_at_log_in">Welcome!</string>
-    <string name="enter_a_name">Name</string>
-    <string name="email">E-mail</string>
-    <string name="password">Password</string>
-    <string name="password_check">Repeat your password</string>
-    <string name="forget_password">Forget the password?</string>
-    <string name="btn_restore_acc">Restore account</string>
-    <string name="registration">Don`t have an account yet?</string>
-    <string name="btn_registration">Registration</string>
-    <string name="btn_success">Continue</string>
-    <string name="btn_sign_in">Sign in</string>
+    <string name="Application_title">Stager</string>
+
+    <!-- Registration -->
+    <string name="RegistrationActivity_TextView_title_Greeting">Registration</string>
+    <string name="RegistrationActivity_EditText_label_UserName">Name</string>
+    <string name="RegistrationActivity_EditText_label_UserEmail">E-mail</string>
+    <string name="RegistrationActivity_EditText_label_UserPassword">Password</string>
+    <string name="RegistrationActivity_EditText_label_UserPasswordCheck">Repeat your password</string>
+    <string name="RegistrationActivity_Button_Register">Continue</string>
+    <string name="RegistrationActivity_Button_SignIn">Sign in</string>
+
+    <!-- Authorization -->
+    <string name="AuthorizationActivity_TextView_title_Greeting">Welcome!</string>
+    <string name="AuthorizationActivity_TextView_label_ForgotPassword">Forgot the password?</string>
+    <string name="AuthorizationActivity_TextView_title_Register">Don`t have an account yet?</string>
+    <string name="AuthorizationActivity_Button_RestoreAccount">Restore account</string>
+    <string name="AuthorizationActivity_Button_Register">Registration</string>
 
     <!-- Settings -->
-    <string name="settings_label">Settings</string>
-    <string name="settings_appearance_theme_label">Dark theme</string>
-    <string name="settings_appearance_theme_dark_summary">Current theme: Dark</string>
-    <string name="settings_appearance_theme_light_summary">Current theme: Light</string>
-    <string name="settings_category_appearance">Appearance</string>
-    <string name="settings_appearance_locale_label">Language</string>
-    <string name="settings_appearance_locale_summary" formatted="true">
-        Current language: %1$s</string>
+    <string name="Settings_label">Settings</string>
+    <string name="Settings_Category_title_Appearance">Appearance</string>
+        <string name="Settings_Appearance_label_Theme">Dark theme</string>
+        <string name="Settings_Appearance_Switch_summaryOn_DarkMode">Current theme: Dark</string>
+        <string name="Settings_Appearance_Switch_summaryOff_LightMode">Current theme: Light</string>
+        <string name="Settings_Appearance_List_label_Locale">Language</string>
+        <string name="Settings_Appearance_List_summary_Locale" formatted="true">
+            Current language: %1$s</string>
 
     <!-- StagesList -->
-    <string name="stages_list_activity_label" formatted="true">
+    <string name="StagesFragment_label" formatted="true">
         Stages of \'%1$s\'</string>
-    <string name="stages_list_activity_untitled_action">Untitled</string>
-    <string name="stages_list_activity_no_items_message">No stages yet..</string>
+    <string name="StagesFragment_ActivityList_UntitledAction">Untitled</string>
+    <string name="StagesFragment_ActivityList_NoItemsMessage">No stages yet..</string>
 
-    <!-- SideBar menu -->
-    <string name="title_activity_side_bar">SideBar</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">User name</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
-    <string name="about_me">About me</string>
-    <string name="my_contacts">Contacts</string>
-    <string name="my_actions">Actions</string>
+    <!-- SideBar -->
+    <string name="SideBarActivity_title">SideBar</string>
+    <string name="SideBarActivity_TextView_label">User name</string>
+    <string name="SideBarActivity_ImageView_UserPicture">Navigation header</string>
+    <string name="SideBarActivity_ActionSettings">Settings</string>
+    <string name="SideBarActivity_NavigationItem_AboutMe">About me</string>
+    <string name="SideBarActivity_NavigationItem_MyContacts">Contacts</string>
+    <string name="SideBarActivity_NavigationItem_MyActions">Actions</string>
 
     <!-- About me -->
-    <string name="my_acc">My account</string>
-    <string name="exit_in_acc">Log out of account</string>
-    <string name="change_pass">Сhange your password?</string>
-    <string name="btn_change_pass">Change</string>
+    <string name="AboutMeFragment_TextView_title_MyAccount">My account</string>
+    <string name="AboutMeFragment_TextView_label_ChangePassword">Сhange your password?</string>
+    <string name="AboutMeFragment_Button_ChangePassword">Change</string>
+    <string name="AboutMeFragment_Button_ExitInAccount">Log out of account</string>
 
     <!-- Add action -->
-    <string name="add_action_label">New action</string>
-    <string name="add_action_input_hint">Title</string>
-    <string name="add_action_error_message">Unable to create new action: %s</string>
-    <string name="add_action_error_message_reason_noname">missing title</string>
+    <string name="AddAction_title">New action</string>
+    <string name="AddAction_EditText_hint_context">Title</string>
+    <string name="AddAction_ErrorMessage">Unable to create new action: %s</string>
+    <string name="AddAction_ErrorMessage_ReasonNoName">missing title</string>
 
     <!-- Add action stage -->
-    <string name="add_action_stage_label">Next stage</string>
-    <string name="add_action_stage_input_hint">Title</string>
-    <string name="add_action_stage_error_message">Unable to create new stage: %s</string>
-    <string name="add_action_stage_error_message_reason_noname">missing title</string>
+    <string name="AddActionStage_title">Next stage</string>
+    <string name="AddActionStage_EditText_InputHint">Title</string>
+    <string name="AddActionStage_ErrorMessage">Unable to create new stage: %s</string>
+    <string name="AddActionStage_ErrorMessage_ReasonNoName">missing title</string>
 
     <!-- Item edit menu -->
-    <string name="item_edit_menu_save_changes_title">Save</string>
+    <string name="ItemEditMenu_title_SaveChanges">Save</string>
 </resources>

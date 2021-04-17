@@ -29,7 +29,7 @@ public class StagesListFragment extends Fragment {
             mActionName = getArguments().getString(ARG_ACTION_NAME);
             mActionKey = getArguments().getString(ARG_ACTION_KEY);
         } else {
-            mActionName = getString(R.string.stages_list_activity_untitled_action);
+            mActionName = getString(R.string.StagesFragment_ActivityList_UntitledAction);
             mActionKey = "";
         }
     }
@@ -40,7 +40,7 @@ public class StagesListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_action_stages, container, false);
         ((SmartActivity)getActivity())
                 .getSupportActionBar()
-                .setTitle(getString(R.string.stages_list_activity_label, mActionName));
+                .setTitle(getString(R.string.StagesFragment_label, mActionName));
 
         viewModel = new ViewModelProvider(this).get(StagesListViewModel.class);
         NavController navController = ((NavHostFragment) getActivity()
@@ -58,7 +58,7 @@ public class StagesListFragment extends Fragment {
         viewModel.getActionName(mActionKey, mActionName).observe(getViewLifecycleOwner(),
                 (String text) -> ((SmartActivity)getActivity())
                         .getSupportActionBar()
-                        .setTitle(getString(R.string.stages_list_activity_label, text)));
+                        .setTitle(getString(R.string.StagesFragment_label, text)));
 
         view.findViewById(R.id.btn_add_action_stage).setOnClickListener(v -> {
             Bundle args = new Bundle();

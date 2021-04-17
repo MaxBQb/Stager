@@ -15,7 +15,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:gravity="center"
-            android:text="@string/welcome_at_registration"
+            android:text="@string/RegistrationActivity_TextView_title_Greeting"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <EditText
@@ -28,7 +28,7 @@
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="20dp"
-            android:hint="@string/enter_a_name"
+            android:hint="@string/RegistrationActivity_EditText_label_UserName"
             android:inputType="textPersonName" />
 
         <EditText
@@ -41,7 +41,7 @@
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="20dp"
-            android:hint="@string/email"
+            android:hint="@string/RegistrationActivity_EditText_label_UserEmail"
             android:inputType="textWebEmailAddress" />
 
         <EditText
@@ -54,7 +54,7 @@
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="20dp"
-            android:hint="@string/password"
+            android:hint="@string/RegistrationActivity_EditText_label_UserPassword"
             android:inputType="textPassword" />
 
         <EditText
@@ -67,7 +67,7 @@
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="20dp"
-            android:hint="@string/password_check"
+            android:hint="@string/RegistrationActivity_EditText_label_UserPasswordCheck"
             android:inputType="textPassword" />
 
         <LinearLayout
@@ -89,7 +89,7 @@
                 android:layout_marginEnd="10dp"
                 android:drawableStart="@drawable/ic_baseline_arrow_back"
                 android:drawableLeft="@drawable/ic_baseline_arrow_back"
-                android:text="@string/btn_sign_in" />
+                android:text="@string/RegistrationActivity_Button_SignIn" />
 
             <Button
                 android:id="@+id/success_btn"
@@ -100,7 +100,7 @@
                 android:layout_marginStart="10dp"
                 android:drawableStart="@drawable/ic_baseline_check"
                 android:drawableLeft="@drawable/ic_baseline_check"
-                android:text="@string/btn_success" />
+                android:text="@string/RegistrationActivity_Button_Register" />
 
         </LinearLayout>
 

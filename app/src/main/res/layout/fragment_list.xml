@@ -9,5 +9,4 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".ui.action_stages.StagesListFragment"
-    tools:listitem="@layout/fragment_stage_item" />
+    tools:listitem="@layout/fragment_list_item" />

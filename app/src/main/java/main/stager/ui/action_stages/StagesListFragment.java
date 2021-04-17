@@ -60,7 +60,7 @@ public class StagesListFragment extends Fragment {
                         .getSupportActionBar()
                         .setTitle(getString(R.string.StagesFragment_label, text)));
 
-        view.findViewById(R.id.btn_add_action_stage).setOnClickListener(v -> {
+        view.findViewById(R.id.button_list_add).setOnClickListener(v -> {
             Bundle args = new Bundle();
             args.putString(AddStageFragment.ARG_ACTION_KEY, mActionKey);
             navController.navigate(R.id.transition_action_stages_to_add_stage, args);

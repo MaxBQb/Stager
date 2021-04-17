@@ -12,28 +12,24 @@
         android:padding="4dp">
 
         <ImageView
-            android:id="@+id/stage_status"
+            android:id="@+id/item_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/ic_stage_status_wait" />
+            android:layout_alignParentRight="true" />
 
         <TextView
-            android:id="@+id/content"
+            android:id="@+id/item_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="9dp"
-            android:layout_toStartOf="@+id/stage_status"
-            android:layout_toLeftOf="@+id/stage_status"
+            android:layout_toStartOf="@+id/item_icon"
+            android:layout_toLeftOf="@+id/item_icon"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
-            android:text="Status"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:maxLines="1"
             android:ellipsize="end" />
-
     </RelativeLayout>
-
 </androidx.cardview.widget.CardView>

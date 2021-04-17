@@ -36,7 +36,7 @@ public class ActionsListFragment extends Fragment {
 
         viewModel.getActions().observe(getViewLifecycleOwner(), adapter::setValues);
 
-        view.findViewById(R.id.btn_add_action).setOnClickListener(v ->
+        view.findViewById(R.id.button_list_add).setOnClickListener(v ->
             navController.navigate(R.id.transition_actions_list_to_add_action)
         );
 

@@ -32,7 +32,7 @@ public class ActionItemRecyclerViewAdapter
     @Override
     public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_stage_item,
+                .inflate(R.layout.fragment_list_item,
                         parent, false);
         return new ViewHolder(view);
     }
@@ -88,8 +88,8 @@ public class ActionItemRecyclerViewAdapter
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mContentView = view.findViewById(R.id.content);
-            mStatusView = view.findViewById(R.id.stage_status);
+            mContentView = view.findViewById(R.id.item_name);
+            mStatusView = view.findViewById(R.id.item_icon);
         }
     }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -20,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter;
 import java.util.List;
 
 
-public abstract class StagerListFragment<TVM extends ViewModel, TA extends Adapter> extends Fragment {
+public abstract class StagerListFragment<TVM extends ViewModel, TA extends Adapter, T> extends Fragment {
     protected TVM viewModel;
     protected TA adapter;
 
@@ -32,6 +33,7 @@ public abstract class StagerListFragment<TVM extends ViewModel, TA extends Adapt
     // Основное
     protected NavController navigator;
     protected RecyclerView rv;
+    protected LiveData<List<T>> list;
     protected StatesRecyclerViewAdapter srvAdapter;
     protected View view;
 
@@ -49,6 +51,8 @@ public abstract class StagerListFragment<TVM extends ViewModel, TA extends Adapt
             return null;
         }
     }
+
+    protected abstract LiveData<List<T>> getList(DataProvider.OnError onError);
 
     protected RecyclerView getRecyclerView() {
         RecyclerView recyclerView = view.findViewById(R.id.list);
@@ -96,10 +100,6 @@ public abstract class StagerListFragment<TVM extends ViewModel, TA extends Adapt
         srvAdapter.setState(StatesRecyclerViewAdapter.STATE_ERROR);
     }
 
-    protected void onError() {
-        onError(null);
-    }
-
     protected void reactState(List<?> list) {
         if (list == null || list.isEmpty())
             srvAdapter.setState(StatesRecyclerViewAdapter.STATE_EMPTY);
@@ -107,7 +107,9 @@ public abstract class StagerListFragment<TVM extends ViewModel, TA extends Adapt
             srvAdapter.setState(StatesRecyclerViewAdapter.STATE_NORMAL);
     }
 
-    protected void setObservers() {}
+    protected void setObservers() {
+        list.observe(getViewLifecycleOwner(), this::reactState);
+    }
     protected void setEventListeners() {}
 
     @Override
@@ -121,6 +123,7 @@ public abstract class StagerListFragment<TVM extends ViewModel, TA extends Adapt
         prepareViews();
         srvAdapter = new StatesRecyclerViewAdapter(adapter, loadingView, emptyView, errorView);
         rv.setAdapter(srvAdapter);
+        list = getList(this::onError);
         setObservers();
         setEventListeners();
         srvAdapter.setState(StatesRecyclerViewAdapter.STATE_LOADING);

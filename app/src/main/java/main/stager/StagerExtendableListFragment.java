@@ -6,8 +6,8 @@ import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
 import java.lang.reflect.InvocationTargetException;
 
-public abstract class StagerExtendableListFragment<TVM extends ViewModel, TA extends Adapter>
-        extends StagerListFragment<TVM, TA> {
+public abstract class StagerExtendableListFragment<TVM extends ViewModel, TA extends Adapter, T>
+        extends StagerListFragment<TVM, TA, T> {
 
     protected abstract void onButtonAddClicked(View v);
 

@@ -6,11 +6,13 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
+import main.stager.DataProvider;
 import main.stager.R;
 import main.stager.StagerExtendableListFragment;
 import main.stager.model.UserAction;
 
-public class ActionsListFragment extends StagerExtendableListFragment<ActionsListViewModel, ActionItemRecyclerViewAdapter> {
+public class ActionsListFragment extends
+        StagerExtendableListFragment<ActionsListViewModel, ActionItemRecyclerViewAdapter, UserAction> {
     @Override
     protected Class<ActionsListViewModel> getViewModelType() {
         return ActionsListViewModel.class;
@@ -27,11 +29,14 @@ public class ActionsListFragment extends StagerExtendableListFragment<ActionsLis
     }
 
     @Override
+    protected LiveData<List<UserAction>> getList(DataProvider.OnError onError) {
+        return viewModel.getActions(onError);
+    }
+
+    @Override
     protected void setObservers() {
         super.setObservers();
-        LiveData<List<UserAction>> ld = viewModel.getActions(this::onError);
-        ld.observe(getViewLifecycleOwner(), adapter::setValues);
-        ld.observe(getViewLifecycleOwner(), this::reactState);
+        list.observe(getViewLifecycleOwner(), adapter::setValues);
     }
 
     @Override

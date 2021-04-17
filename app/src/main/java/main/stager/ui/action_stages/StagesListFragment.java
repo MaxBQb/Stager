@@ -7,17 +7,16 @@ import androidx.lifecycle.LiveData;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import java.util.List;
-
+import main.stager.DataProvider;
 import main.stager.R;
 import main.stager.SmartActivity;
 import main.stager.StagerExtendableListFragment;
 import main.stager.model.Stage;
-import main.stager.model.UserAction;
 import main.stager.ui.add_action_stage.AddStageFragment;
 
-public class StagesListFragment extends StagerExtendableListFragment<StagesListViewModel, StageItemRecyclerViewAdapter> {
+public class StagesListFragment
+        extends StagerExtendableListFragment<StagesListViewModel, StageItemRecyclerViewAdapter, Stage> {
     static public final String ARG_ACTION_NAME = "Stager.stages_list.param_action_name";
     static public final String ARG_ACTION_KEY = "Stager.stages_list.param_action_key";
     private String mActionName;
@@ -52,12 +51,14 @@ public class StagesListFragment extends StagerExtendableListFragment<StagesListV
     }
 
     @Override
+    protected LiveData<List<Stage>> getList(DataProvider.OnError onError) {
+        return viewModel.getStages(mActionKey, onError);
+    }
+
+    @Override
     protected void setObservers() {
         super.setObservers();
-        LiveData<List<Stage>> ld = viewModel.getStages(mActionKey, this::onError);
-        ld.observe(getViewLifecycleOwner(), this::reactState);
-        ld.observe(getViewLifecycleOwner(), adapter::setValues);
-
+        list.observe(getViewLifecycleOwner(), adapter::setValues);
         viewModel.getActionName(mActionKey, mActionName).observe(getViewLifecycleOwner(),
                 (String text) -> ((AppCompatActivity)getActivity())
                                  .getSupportActionBar()

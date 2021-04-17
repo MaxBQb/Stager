@@ -8,14 +8,14 @@
         android:id="@+id/loading_list_view_message"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
+        android:gravity="center"
     />
     <ProgressBar
         android:id="@+id/loading_list_view_progress"
         android:layout_centerInParent="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
+        android:theme="@style/Widget.MaterialComponents.CircularProgressIndicator"
         />
 </RelativeLayout>
 

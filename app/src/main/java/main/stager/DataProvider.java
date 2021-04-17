@@ -7,7 +7,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,70 +77,72 @@ public class DataProvider {
         return getUserInfo().child("description");
     }
 
-    public interface IListItemModifier {
-        public Object modify(Object item, DataSnapshot postSnapshot);
+    public interface OnError {
+        void react(String reason);
     }
 
-    public interface IModifier {
-        public Object modify(Object item, DataSnapshot snapshot);
-    }
+    public static class ValueListEventListener<T> extends AValueEventListener {
+        protected MutableLiveData<List<T>> liveList;
+        protected Class<T> className;
 
-    public static <T> ValueEventListener getListChangesListener(MutableLiveData<List<T>> liveList,
-                                                                Class<T> className) {
-        return getListChangesListener(liveList, className, null);
-    }
+        public ValueListEventListener(MutableLiveData<List<T>> liveList, Class<T> className, OnError onError) {
+            this.liveList = liveList;
+            this.className = className;
+            this.onError = onError;
+        }
 
-    public static <T> ValueEventListener getListChangesListener(MutableLiveData<List<T>> liveList,
-                                                                Class<T> className,
-                                                                IListItemModifier modifier
-                                                                ) {
-        return new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (!snapshot.exists())
-                    return;
-                List<T> lst = new ArrayList<>();
-                T item;
-                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-                    item = postSnapshot.getValue(className);
-                    if (modifier != null)
-                        item = (T) modifier.modify(item, postSnapshot);
-                    lst.add(item);
-                }
-                liveList.postValue(lst);
+        public ValueListEventListener(MutableLiveData<List<T>> liveList, Class<T> className) {
+            this(liveList, className, null);
+        }
+
+        protected T modify(T item, DataSnapshot snapshot) { return item; }
+
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            if (!snapshot.exists()) {
+                liveList.postValue(null);
+                return;
             }
+            List<T> lst = new ArrayList<>();
+            for (DataSnapshot postSnapshot: snapshot.getChildren())
+                lst.add(modify(postSnapshot.getValue(className), postSnapshot));
+            liveList.postValue(lst);
+        }
+    };
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Do nothing :)
-            }
-        };
-    }
+    public static class ValueEventListener<T> extends AValueEventListener {
+        protected MutableLiveData<T> live;
+        protected Class<T> className;
 
-    public static <T> ValueEventListener getValueChangesListener(MutableLiveData<T> live,
-                                                                Class<T> className,
-                                                                IModifier modifier) {
-        return new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (!snapshot.exists())
-                    return;
-                T item = snapshot.getValue(className);
-                if (modifier != null)
-                    item = (T) modifier.modify(item, snapshot);
-                live.postValue(item);
-            }
+        public ValueEventListener(MutableLiveData<T> live, Class<T> className, OnError onError) {
+            this.live = live;
+            this.className = className;
+            this.onError = onError;
+        }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Do nothing :)
-            }
-        };
-    }
+        public ValueEventListener(MutableLiveData<T> live, Class<T> className) {
+            this(live, className, null);
+        }
 
-    public static <T> ValueEventListener getValueChangesListener(MutableLiveData<T> live,
-                                                                 Class<T> className) {
-        return getValueChangesListener(live, className, null);
-    }
+        protected T modify(T item, DataSnapshot snapshot) { return item; }
+
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            live.postValue(snapshot.exists() ?
+                    modify(snapshot.getValue(className), snapshot):
+                    null
+            );
+        }
+    };
+
+    public abstract static class AValueEventListener implements com.google.firebase.database.ValueEventListener {
+        protected OnError onError;
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+            if (onError != null)
+                onError.react(error.getMessage());
+        }
+    };
 
 }

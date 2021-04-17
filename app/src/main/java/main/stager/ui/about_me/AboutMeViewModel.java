@@ -2,12 +2,12 @@ package main.stager.ui.about_me;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import main.stager.DataProvider;
+import main.stager.StagerViewModel;
 
-public class AboutMeViewModel extends AndroidViewModel {
+public class AboutMeViewModel extends StagerViewModel {
     private static DataProvider dataProvider = DataProvider.getInstance();
     private MutableLiveData<String> mName;
     private MutableLiveData<String> mDescription;
@@ -21,7 +21,7 @@ public class AboutMeViewModel extends AndroidViewModel {
     public LiveData<String> getText() {
         if (mName.getValue() == null)
             dataProvider.getUserName().addValueEventListener(
-                    DataProvider.getValueChangesListener(mName, String.class)
+                    new DataProvider.ValueEventListener<String>(mName, String.class)
             );
         return mName;
     }
@@ -29,7 +29,7 @@ public class AboutMeViewModel extends AndroidViewModel {
     public LiveData<String> getDescription() {
         if (mDescription.getValue() == null)
             dataProvider.getUserDescription().addValueEventListener(
-                    DataProvider.getValueChangesListener(mDescription, String.class)
+                    new DataProvider.ValueEventListener<String>(mDescription, String.class)
             );
         return mDescription;
     }

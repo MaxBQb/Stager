@@ -63,4 +63,9 @@
 
     <!-- Меню редактирования чего-либо -->
     <string name="ItemEditMenu_title_SaveChanges">Сохранить</string>
+
+    <!-- Общее для списков -->
+    <string name="CommonList_EmptyListView_TextView_text">Тут ничего нет</string>
+    <string name="CommonList_LoadingListView_TextView_text">Загрузка...</string>
+    <string name="CommonList_ErrorListView_TextView_text">Произошла ошибка: %s</string>
 </resources>

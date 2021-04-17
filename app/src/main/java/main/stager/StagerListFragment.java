@@ -73,12 +73,25 @@ public abstract class StagerListFragment<TVM extends ViewModel, TA extends Adapt
     }
 
     protected View getErrorView() {
-        return null;
+        return getLayoutInflater().inflate(R.layout.error_list_view, rv, false);
     }
 
     protected View getLoadingView() {
         return getLayoutInflater().inflate(R.layout.loading_list_view, rv, false);
     }
+
+    protected String getEmptyText() {
+        return getString(R.string.CommonList_EmptyListView_TextView_text);
+    }
+
+    protected String getErrorText(String reason) {
+        return getString(R.string.CommonList_ErrorListView_TextView_text, reason);
+    }
+
+    protected String getLoadingText() {
+        return getString(R.string.CommonList_LoadingListView_TextView_text);
+    }
+
 
     private void setNNText(View v, @IdRes int id, String text) {
         if (v == null) return;
@@ -91,12 +104,13 @@ public abstract class StagerListFragment<TVM extends ViewModel, TA extends Adapt
         emptyView = getEmptyView();
         errorView = getErrorView();
         loadingView = getLoadingView();
-        setNNText(emptyView, R.id.empty_list_view_message, "empty");
-        setNNText(errorView, R.id.empty_list_view_message, "error");
-        setNNText(loadingView, R.id.loading_list_view_message, "loading");
+        setNNText(emptyView, R.id.empty_list_view_message, getEmptyText());
+        setNNText(errorView, R.id.error_list_view_message, getErrorText(null));
+        setNNText(loadingView, R.id.loading_list_view_message, getLoadingText());
     }
 
     protected void onError(String reason) {
+        setNNText(errorView, R.id.error_list_view_message, getErrorText(reason));
         srvAdapter.setState(StatesRecyclerViewAdapter.STATE_ERROR);
     }
 
@@ -110,6 +124,7 @@ public abstract class StagerListFragment<TVM extends ViewModel, TA extends Adapt
     protected void setObservers() {
         list.observe(getViewLifecycleOwner(), this::reactState);
     }
+
     protected void setEventListeners() {}
 
     @Override

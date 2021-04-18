@@ -28,7 +28,19 @@ public class DataProvider {
     public DataProvider() {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
+        db.setPersistenceEnabled(true);
         mRef = db.getReference("stager-main-db");
+        keepSynced();
+    }
+
+    private void keepSynced() {
+        DatabaseReference[] sync = new DatabaseReference[]{
+                getActions(),
+                getAllStages()
+        };
+
+        for (DatabaseReference dr: sync)
+            dr.keepSynced(true);
     }
 
     public boolean isAuthorized() {
@@ -55,10 +67,12 @@ public class DataProvider {
         return key;
     }
 
+    public DatabaseReference getAllStages() {
+        return mRef.child("stages").child(mAuth.getUid());
+    }
+
     public DatabaseReference getStages(String key) {
-        return mRef.child("stages")
-                .child(mAuth.getUid())
-                .child(key);
+        return getAllStages().child(key);
     }
 
     public DatabaseReference getStage(String actionName, String key) {

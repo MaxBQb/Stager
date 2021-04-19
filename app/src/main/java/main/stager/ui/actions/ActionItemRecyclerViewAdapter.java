@@ -1,6 +1,5 @@
 package main.stager.ui.actions;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import org.jetbrains.annotations.NotNull;
 import main.stager.R;
 import main.stager.StagerListAdapter;
 import main.stager.model.UserAction;
-import main.stager.ui.action_stages.StagesListFragment;
 
 /**
  * {@link RecyclerView.Adapter} для отображения {@link UserAction}.
@@ -20,10 +18,6 @@ import main.stager.ui.action_stages.StagesListFragment;
 public class ActionItemRecyclerViewAdapter
         extends StagerListAdapter<UserAction, ActionItemRecyclerViewAdapter.ViewHolder> {
     private NavController nav;
-
-    public ActionItemRecyclerViewAdapter(NavController nav) {
-        this.nav = nav;
-    }
 
     @NotNull
     @Override
@@ -54,16 +48,8 @@ public class ActionItemRecyclerViewAdapter
                         R.drawable.ic_stage_status_wait);
                 break;
         }
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UserAction ua = holder.mItem;
-                Bundle args = new Bundle();
-                args.putString(StagesListFragment.ARG_ACTION_NAME, ua.getName());
-                args.putString(StagesListFragment.ARG_ACTION_KEY, ua.getKey());
-                nav.navigate(R.id.transition_actions_list_to_action_stages_list, args);
-            }
-        });
+        holder.mView.setOnClickListener(v -> onItemClickListener
+                .onItemClick(holder.mItem, position));
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -1,9 +1,9 @@
-package main.stager.ChangeListeners;
+package main.stager.utils.ChangeListeners;
 
 import android.view.View;
 import android.widget.TextView;
 import com.google.firebase.database.DatabaseReference;
-import main.stager.DataProvider;
+import main.stager.utils.DataProvider;
 
 // Update DB <- info
 public abstract class OnLostFocus implements View.OnFocusChangeListener {

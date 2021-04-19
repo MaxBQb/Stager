@@ -1,4 +1,4 @@
-package main.stager;
+package main.stager.Base;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.navigation.fragment.NavHostFragment;
+
+import main.stager.Authorization;
+import main.stager.utils.DataProvider;
+import main.stager.R;
 
 public abstract class AuthorizedOnlyActivity extends SmartActivity {
 

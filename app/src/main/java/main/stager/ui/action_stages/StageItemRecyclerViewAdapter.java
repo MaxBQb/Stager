@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import org.jetbrains.annotations.NotNull;
 import main.stager.R;
-import main.stager.StagerListAdapter;
+import main.stager.list.StagerListAdapter;
 import main.stager.model.Stage;
 
 /**

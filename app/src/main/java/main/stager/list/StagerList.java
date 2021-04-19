@@ -1,4 +1,4 @@
-package main.stager;
+package main.stager.list;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
@@ -12,9 +12,13 @@ import android.widget.TextView;
 import com.rockerhieu.rvadapter.states.StatesRecyclerViewAdapter;
 import java.util.List;
 
+import main.stager.utils.DataProvider;
+import main.stager.R;
+import main.stager.Base.StagerVMFragment;
+
 public abstract class StagerList<TVM extends ViewModel,
                                  TA extends StagerListAdapter<T,
-                                         ? extends RecyclerView.ViewHolder>,
+                                                                          ? extends RecyclerView.ViewHolder>,
                                  T> extends StagerVMFragment<TVM> {
     protected TA adapter;
 
@@ -108,11 +112,13 @@ public abstract class StagerList<TVM extends ViewModel,
 
     @Override
     protected void setObservers() {
+        super.setObservers();
         list.observe(getViewLifecycleOwner(), this::reactState);
     }
 
     @Override
     protected void setEventListeners() {
+        super.setEventListeners();
         adapter.setOnItemClickListener(this::onItemClick);
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -130,6 +136,7 @@ public abstract class StagerList<TVM extends ViewModel,
 
     @Override
     protected void prepareFragmentComponents() {
+        super.prepareFragmentComponents();
         adapter = createAdapter();
         rv = getRecyclerView();
         prepareViews();

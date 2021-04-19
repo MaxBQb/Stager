@@ -1,12 +1,14 @@
-package main.stager;
+package main.stager.list;
 
 import android.view.View;
 import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
 
+import main.stager.R;
+
 public abstract class StagerExtendableList<TVM extends ViewModel,
                                            TA extends StagerListAdapter<T,
-                                           ? extends RecyclerView.ViewHolder>,
+                                                                                      ? extends RecyclerView.ViewHolder>,
                                            T> extends StagerList<TVM, TA, T> {
 
     // Listeners

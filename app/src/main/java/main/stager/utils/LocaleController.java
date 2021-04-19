@@ -1,9 +1,11 @@
-package main.stager;
+package main.stager.utils;
 
 import android.app.Application;
 import android.content.Context;
 import com.yariksoffice.lingver.Lingver;
 import java.util.Locale;
+
+import main.stager.R;
 
 
 public class LocaleController {

@@ -9,12 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import java.util.List;
-import main.stager.DataProvider;
+import main.stager.utils.DataProvider;
 import main.stager.R;
-import main.stager.SmartActivity;
-import main.stager.StagerExtendableList;
+import main.stager.Base.SmartActivity;
+import main.stager.list.StagerExtendableList;
 import main.stager.model.Stage;
-import main.stager.ui.add_action_stage.AddStageFragment;
+import main.stager.ui.add_item.add_action_stage.AddStageFragment;
 
 public class StagesListFragment
         extends StagerExtendableList<StagesListViewModel, StageItemRecyclerViewAdapter, Stage> {

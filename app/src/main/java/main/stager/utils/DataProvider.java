@@ -1,4 +1,4 @@
-package main.stager;
+package main.stager.utils;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
@@ -129,7 +129,7 @@ public class DataProvider {
                 lst.add(modify(postSnapshot.getValue(className), postSnapshot));
             liveList.postValue(lst);
         }
-    };
+    }
 
     public static class ValueEventListener<T> extends AValueEventListener<T> {
         protected MutableLiveData<T> live;
@@ -158,7 +158,7 @@ public class DataProvider {
                     null
             );
         }
-    };
+    }
 
     public abstract static class AValueEventListener<T> implements com.google.firebase.database.ValueEventListener {
         protected OnError onError;
@@ -174,6 +174,5 @@ public class DataProvider {
                 ((FBModel)item).setKey(snapshot.getKey());
             return item;
         }
-    };
-
+    }
 }

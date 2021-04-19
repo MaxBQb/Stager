@@ -10,6 +10,8 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 
+import main.stager.Base.AuthorizedOnlyActivity;
+
 public class MainActivity extends AuthorizedOnlyActivity {
 
     private AppBarConfiguration mAppBarConfiguration;

@@ -6,8 +6,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.database.DataSnapshot;
 import java.util.List;
-import main.stager.DataProvider;
-import main.stager.StagerViewModel;
+import main.stager.utils.DataProvider;
+import main.stager.Base.StagerViewModel;
 import main.stager.model.UserAction;
 
 public class ActionsListViewModel extends StagerViewModel {

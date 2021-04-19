@@ -1,4 +1,4 @@
-package main.stager;
+package main.stager.Base;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,16 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.LayoutRes;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-public abstract class StagerVMFragment<TVM extends ViewModel> extends Fragment {
-    protected TVM viewModel;
+import main.stager.R;
 
+public abstract class StagerFragment extends Fragment {
     // Требует переопределения
-    protected abstract Class<TVM> getViewModelType();
     protected abstract @LayoutRes int getViewBaseLayoutId();
 
     // Основное
@@ -29,7 +26,6 @@ public abstract class StagerVMFragment<TVM extends ViewModel> extends Fragment {
                 .getNavController();
     }
 
-    protected void setObservers() {}
     protected void setEventListeners() {}
     protected void prepareFragmentComponents() {}
 
@@ -38,9 +34,7 @@ public abstract class StagerVMFragment<TVM extends ViewModel> extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(getViewBaseLayoutId(), container, false);
         navigator = getNavigator();
-        viewModel = new ViewModelProvider(this).get(getViewModelType());
         prepareFragmentComponents();
-        setObservers();
         setEventListeners();
         return view;
     }

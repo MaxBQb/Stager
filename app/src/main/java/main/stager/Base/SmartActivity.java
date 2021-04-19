@@ -1,7 +1,10 @@
-package main.stager;
+package main.stager.Base;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+
+import main.stager.utils.LocaleController;
+import main.stager.utils.ThemeController;
 
 
 /**

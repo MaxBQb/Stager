@@ -91,6 +91,7 @@ public class DataProvider {
         return getUserInfo().child("description");
     }
 
+    @FunctionalInterface
     public interface OnError {
         void react(String reason);
     }

@@ -19,18 +19,14 @@ public class AboutMeViewModel extends StagerViewModel {
     }
 
     public LiveData<String> getText() {
-        if (mName.getValue() == null)
-            dataProvider.getUserName().addValueEventListener(
-                    new DataProvider.ValueEventListener<String>(mName, String.class)
-            );
-        return mName;
+        return getData(mName, () -> dataProvider.getUserName().addValueEventListener(
+            new DataProvider.ValueEventListener<>(mName, String.class)
+        ));
     }
 
     public LiveData<String> getDescription() {
-        if (mDescription.getValue() == null)
-            dataProvider.getUserDescription().addValueEventListener(
-                    new DataProvider.ValueEventListener<String>(mDescription, String.class)
-            );
-        return mDescription;
+        return getData(mDescription, () -> dataProvider.getUserDescription().addValueEventListener(
+            new DataProvider.ValueEventListener<>(mDescription, String.class)
+        ));
     }
 }

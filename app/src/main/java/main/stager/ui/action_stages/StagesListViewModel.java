@@ -21,29 +21,23 @@ public class StagesListViewModel extends StagerViewModel {
         actionName = new MutableLiveData<>();
     }
 
-    public LiveData<List<Stage>> getStages(String key) {
-        return getStages(key, null);
-    }
-
     public LiveData<List<Stage>> getStages(String key, DataProvider.OnError onError) {
-        if (stages.getValue() == null)
-            dataProvider.getStages(key).addValueEventListener(
-                    new DataProvider.ValueListEventListener<Stage>(stages, Stage.class, onError)
-            );
-        return stages;
+        return getData(stages, () -> dataProvider.getStages(key).addValueEventListener(
+            new DataProvider.ValueListEventListener<>(stages, Stage.class, onError)
+        ));
     }
 
     public LiveData<String> getActionName(String key, String defaultValue) {
-        if (actionName.getValue() == null)
-            dataProvider.getAction(key).addValueEventListener(new DataProvider.AValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (!snapshot.exists())
-                            return;
-                        UserAction ua = snapshot.getValue(UserAction.class);
-                        actionName.postValue(ua != null ? ua.getName() : defaultValue);
-                    }
-            });
-        return actionName;
+        return getData(actionName, () -> dataProvider.getAction(key).addValueEventListener(
+            new DataProvider.AValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (!snapshot.exists())
+                        return;
+                    UserAction ua = snapshot.getValue(UserAction.class);
+                    actionName.postValue(ua != null ? ua.getName() : defaultValue);
+                }
+            }
+        ));
     }
 }

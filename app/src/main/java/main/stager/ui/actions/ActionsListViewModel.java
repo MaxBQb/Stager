@@ -18,21 +18,15 @@ public class ActionsListViewModel extends StagerViewModel {
         actions = new MutableLiveData<>();
     }
 
-    public LiveData<List<UserAction>> getActions() {
-        return getActions(null);
-    }
-
     public LiveData<List<UserAction>> getActions(DataProvider.OnError onError) {
-        if (actions.getValue() == null)
-            dataProvider.getActions().addValueEventListener(
-                    new DataProvider.ValueListEventListener<UserAction>(actions, UserAction.class, onError) {
-                        @Override
-                        public UserAction modify(UserAction ua, DataSnapshot snapshot) {
-                            ua.setKey(snapshot.getKey());
-                            return ua;
-                        }
-                    }
-            );
-        return actions;
+        return getData(actions, () -> dataProvider.getActions().addValueEventListener(
+            new DataProvider.ValueListEventListener<UserAction>(actions, UserAction.class, onError) {
+                @Override
+                public UserAction modify(UserAction ua, DataSnapshot snapshot) {
+                    ua.setKey(snapshot.getKey());
+                    return ua;
+                }
+            }
+        ));
     }
 }

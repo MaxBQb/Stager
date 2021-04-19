@@ -41,7 +41,7 @@
     <string name="SideBarActivity_ActionSettings">Настройки</string>
     <string name="SideBarActivity_NavigationItem_AboutMe">Обо мне</string>
     <string name="SideBarActivity_NavigationItem_MyContacts">Контакты</string>
-    <string name="SideBarActivity_NavigationItem_MyActions">Этапы</string>
+    <string name="SideBarActivity_NavigationItem_MyActions">Мероприятия</string>
 
     <!-- Обо мне -->
     <string name="AboutMeFragment_TextView_title_MyAccount">Мой аккаунт</string>

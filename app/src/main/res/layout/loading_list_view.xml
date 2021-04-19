@@ -4,18 +4,24 @@
     android:layout_height="fill_parent"
     android:layout_width="fill_parent"
     android:gravity="center">
-    <TextView
-        android:id="@+id/loading_list_view_message"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-    />
+
     <ProgressBar
         android:id="@+id/loading_list_view_progress"
-        android:layout_centerInParent="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:theme="@style/Widget.MaterialComponents.CircularProgressIndicator"
-        />
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"
+        android:maxHeight="150dp"
+        android:minHeight="150dp"
+        android:indeterminateTint="#F1A307" />
+
+    <TextView
+        android:id="@+id/loading_list_view_message"
+        android:layout_below="@+id/loading_list_view_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:gravity="center_horizontal" />
 </RelativeLayout>
 

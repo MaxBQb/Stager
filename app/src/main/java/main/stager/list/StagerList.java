@@ -99,6 +99,7 @@ public abstract class StagerList<TVM extends ViewModel,
     }
 
     protected void onError(String reason) {
+        if (!isSafe()) return;
         setNNText(errorView, R.id.error_list_view_message, getErrorText(reason));
         srvAdapter.setState(StatesRecyclerViewAdapter.STATE_ERROR);
     }

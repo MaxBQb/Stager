@@ -40,7 +40,7 @@
 
     <fragment
         android:id="@+id/action_stages"
-        android:name="main.stager.ui.action_stages.StagesListFragment"
+        android:name="main.stager.ui.edit_item.edit_action.StagesListFragment"
         tools:layout="@layout/fragment_action_stages">
         <action
             android:id="@+id/transition_action_stages_to_add_stage"

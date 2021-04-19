@@ -1,4 +1,4 @@
-package main.stager.ui.action_stages;
+package main.stager.ui.edit_item.edit_action;
 
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -8,7 +8,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+
+import com.google.firebase.database.DatabaseReference;
+
 import java.util.List;
+
+import main.stager.utils.ChangeListeners.OnLostFocusDBUpdater;
 import main.stager.utils.DataProvider;
 import main.stager.R;
 import main.stager.Base.SmartActivity;
@@ -22,6 +28,7 @@ public class StagesListFragment
     static public final String ARG_ACTION_KEY = "Stager.stages_list.param_action_key";
     private String mActionName;
     private String mActionKey;
+    private EditText editActionName;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,10 +72,15 @@ public class StagesListFragment
     protected void setObservers() {
         super.setObservers();
         list.observe(getViewLifecycleOwner(), adapter::setValues);
-        viewModel.getActionName(mActionKey, mActionName).observe(getViewLifecycleOwner(),
-                (String text) -> ((AppCompatActivity)getActivity())
-                                 .getSupportActionBar()
-                                 .setTitle(getString(R.string.StagesFragment_label, text)));
+        viewModel.getActionName(mActionKey, "").observe(getViewLifecycleOwner(),
+        (String text) -> {
+            editActionName.setText(text);
+            if (text.isEmpty())
+                text = getString(R.string.StagesFragment_ActivityList_UntitledAction);
+            ((AppCompatActivity)getActivity())
+                            .getSupportActionBar()
+                            .setTitle(getString(R.string.StagesFragment_label, text));
+        });
     }
 
     @Override
@@ -84,11 +96,23 @@ public class StagesListFragment
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    protected void prepareFragmentComponents() {
+        super.prepareFragmentComponents();
         ((SmartActivity)getActivity())
                 .getSupportActionBar()
                 .setTitle(getString(R.string.StagesFragment_label, mActionName));
-        return super.onCreateView(inflater, container, savedInstanceState);
+        editActionName = view.findViewById(R.id.edit_action_input_name);
+        editActionName.setText(mActionName);
+    }
+
+    @Override
+    protected void setEventListeners() {
+        super.setEventListeners();
+        editActionName.setOnFocusChangeListener(new OnLostFocusDBUpdater() {
+            @Override
+            public DatabaseReference getDataRef(DataProvider dp) {
+                return dp.getActionName(mActionKey);
+            }
+        });
     }
 }

@@ -1,4 +1,4 @@
-package main.stager.ui.action_stages;
+package main.stager.ui.edit_item.edit_action;
 
 import android.view.LayoutInflater;
 import android.view.View;

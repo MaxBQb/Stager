@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.action_stages.StagesListFragment">
+    tools:context=".ui.edit_item.edit_action.StagesListFragment"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/edit_action_input_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/StagesFragment_ActivityList_UntitledAction" />
 
     <include layout="@layout/fragment_extendable_list"/>
 

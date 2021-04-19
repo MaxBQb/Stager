@@ -10,7 +10,7 @@ import main.stager.utils.DataProvider;
 import main.stager.R;
 import main.stager.list.StagerExtendableList;
 import main.stager.model.UserAction;
-import main.stager.ui.action_stages.StagesListFragment;
+import main.stager.ui.edit_item.edit_action.StagesListFragment;
 
 public class ActionsListFragment extends
         StagerExtendableList<ActionsListViewModel, ActionItemRecyclerViewAdapter, UserAction> {

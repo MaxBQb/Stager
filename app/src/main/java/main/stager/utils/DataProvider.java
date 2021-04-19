@@ -65,6 +65,10 @@ public class DataProvider {
         return getActions().child(key);
     }
 
+    public DatabaseReference getActionName(@NotNull String key) {
+        return getActions().child(key).child("name");
+    }
+
     public String addAction(UserAction ua) {
         String key = getActions().push().getKey();
         getAction(key).setValue(ua);

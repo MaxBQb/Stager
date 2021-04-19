@@ -1,4 +1,4 @@
-package main.stager.ui.action_stages;
+package main.stager.ui.edit_item.edit_action;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -32,14 +32,14 @@ public class StagesListViewModel extends StagerViewModel {
     }
 
     public LiveData<String> getActionName(String key, String defaultValue) {
-        return getData(actionName, () -> dataProvider.getAction(key).addValueEventListener(
-            new DataProvider.AValueEventListener<UserAction>() {
+        return getData(actionName, () -> dataProvider.getActionName(key).addValueEventListener(
+            new DataProvider.ValueEventListener<String>(actionName, String.class) {
                 @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (!snapshot.exists())
-                        return;
-                    UserAction ua = snapshot.getValue(UserAction.class);
-                    actionName.postValue(ua != null ? ua.getName() : defaultValue);
+                protected String modify(String item, DataSnapshot snapshot) {
+                    String t = super.modify(item, snapshot);
+                    if (t == null || t.trim().isEmpty())
+                        return defaultValue;
+                    return t.trim();
                 }
             }
         ));

@@ -7,6 +7,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import main.stager.model.FBModel;
@@ -32,6 +35,14 @@ public class DataProvider {
         keepSynced();
     }
 
+    /** Path safe, not null uid
+     * @return uid or empty string
+     */
+    public @NotNull String getUID() {
+        String uid = mAuth.getUid();
+        return uid == null ? "" : uid;
+    }
+
     private void keepSynced() {
         DatabaseReference[] sync = new DatabaseReference[]{
                 getActions(),
@@ -47,10 +58,10 @@ public class DataProvider {
     }
 
     public DatabaseReference getActions() {
-        return mRef.child("actions").child(mAuth.getUid());
+        return mRef.child("actions").child(getUID());
     }
 
-    public DatabaseReference getAction(String key) {
+    public DatabaseReference getAction(@NotNull String key) {
         return getActions().child(key);
     }
 
@@ -60,35 +71,35 @@ public class DataProvider {
         return key;
     }
 
-    public String addStage(String actionName, Stage stage) {
+    public String addStage(@NotNull String actionName, Stage stage) {
         String key = getStages(actionName).push().getKey();
         getStage(actionName, key).setValue(stage);
         return key;
     }
 
     public DatabaseReference getAllStages() {
-        return mRef.child("stages").child(mAuth.getUid());
+        return mRef.child("stages").child(getUID());
     }
 
-    public DatabaseReference getStages(String key) {
+    public DatabaseReference getStages(@NotNull String key) {
         return getAllStages().child(key);
     }
 
-    public DatabaseReference getStage(String actionName, String key) {
+    public DatabaseReference getStage(@NotNull String actionName, @NotNull String key) {
         return getStages(actionName).child(key);
     }
 
-    public void deleteStage(String actionName, String key) {
+    public void deleteStage(@NotNull String actionName, @NotNull String key) {
         getStage(actionName, key).removeValue();
     }
 
-    public void deleteAction(String key) {
+    public void deleteAction(@NotNull String key) {
         getStages(key).removeValue();
         getAction(key).removeValue();
     }
 
     public DatabaseReference getUserInfo() {
-        return mRef.child("user_info").child(mAuth.getUid());
+        return mRef.child("user_info").child(getUID());
     }
 
     public DatabaseReference getUserName() {

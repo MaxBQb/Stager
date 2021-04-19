@@ -6,7 +6,7 @@ import com.google.firebase.database.DatabaseReference;
 import main.stager.utils.DataProvider;
 
 // Update DB <- info
-public abstract class OnLostFocus implements View.OnFocusChangeListener {
+public abstract class OnLostFocusDBUpdater implements View.OnFocusChangeListener {
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
             if (hasFocus) return;

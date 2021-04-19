@@ -6,13 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 import org.jetbrains.annotations.NotNull;
-import java.util.ArrayList;
-import java.util.List;
 import main.stager.R;
+import main.stager.StagerListAdapter;
 import main.stager.model.UserAction;
 import main.stager.ui.action_stages.StagesListFragment;
 
@@ -20,8 +18,7 @@ import main.stager.ui.action_stages.StagesListFragment;
  * {@link RecyclerView.Adapter} для отображения {@link UserAction}.
  */
 public class ActionItemRecyclerViewAdapter
-        extends RecyclerView.Adapter<ActionItemRecyclerViewAdapter.ViewHolder> {
-    private List<UserAction> mValues = new ArrayList<>();
+        extends StagerListAdapter<UserAction, ActionItemRecyclerViewAdapter.ViewHolder> {
     private NavController nav;
 
     public ActionItemRecyclerViewAdapter(NavController nav) {
@@ -67,16 +64,6 @@ public class ActionItemRecyclerViewAdapter
                 nav.navigate(R.id.transition_actions_list_to_action_stages_list, args);
             }
         });
-    }
-
-    public void setValues(List<UserAction> values) {
-        mValues = values;
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public int getItemCount() {
-        return mValues.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

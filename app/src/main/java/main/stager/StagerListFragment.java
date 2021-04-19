@@ -16,12 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.rockerhieu.rvadapter.states.StatesRecyclerViewAdapter;
-import androidx.recyclerview.widget.RecyclerView.Adapter;
-
 import java.util.List;
 
 
-public abstract class StagerListFragment<TVM extends ViewModel, TA extends Adapter, T> extends Fragment {
+public abstract class StagerListFragment<TVM extends ViewModel, TA extends StagerListAdapter, T> extends Fragment {
     protected TVM viewModel;
     protected TA adapter;
 

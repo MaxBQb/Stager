@@ -6,21 +6,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
 import main.stager.R;
+import main.stager.StagerListAdapter;
 import main.stager.model.Stage;
 
 /**
  * {@link RecyclerView.Adapter} для отображения {@link Stage}.
  */
 public class StageItemRecyclerViewAdapter
-        extends RecyclerView.Adapter<StageItemRecyclerViewAdapter.ViewHolder> {
-
-    private List<Stage> mValues = new ArrayList<>();
+        extends StagerListAdapter<Stage, StageItemRecyclerViewAdapter.ViewHolder> {
 
     @NotNull
     @Override
@@ -51,16 +46,6 @@ public class StageItemRecyclerViewAdapter
                         R.drawable.ic_stage_status_wait);
                 break;
         }
-    }
-
-    public void setValues(List<Stage> values) {
-        mValues = values;
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public int getItemCount() {
-        return mValues.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

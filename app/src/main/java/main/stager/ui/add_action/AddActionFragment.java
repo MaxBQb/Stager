@@ -1,33 +1,22 @@
 package main.stager.ui.add_action;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
-
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 import main.stager.DataProvider;
 import main.stager.R;
+import main.stager.StagerFragment;
 import main.stager.model.Status;
 import main.stager.model.UserAction;
 
-public class AddActionFragment extends Fragment {
+public class AddActionFragment extends StagerFragment {
 
-    public static AddActionFragment newInstance() {
-        return new AddActionFragment();
-    }
-
-    private AddActionViewModel mViewModel;
     private EditText inputName;
 
     @Override
@@ -37,14 +26,17 @@ public class AddActionFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_add_action, container, false);
+    protected int getViewBaseLayoutId() {
+        return R.layout.fragment_add_action;
+    }
+
+    @Override
+    protected void prepareFragmentComponents() {
+        super.prepareFragmentComponents();
         ((AppCompatActivity) getActivity())
                 .getSupportActionBar()
                 .setHomeAsUpIndicator(R.drawable.ic_close);
         inputName = view.findViewById(R.id.add_action_input_name);
-        return view;
     }
 
     @Override
@@ -73,19 +65,6 @@ public class AddActionFragment extends Fragment {
             return;
         }
         DataProvider.getInstance().addAction(new UserAction(Status.WAITING, name));
-        go_back();
-    }
-
-    private void go_back() {
-        ((NavHostFragment) getActivity()
-                .getSupportFragmentManager()
-                .findFragmentById(R.id.nav_host_fragment))
-                .getNavController().navigateUp();
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(AddActionViewModel.class);
+        navigator.navigateUp();
     }
 }

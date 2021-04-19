@@ -11,6 +11,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.stager.model.FBModel;
 import main.stager.model.Stage;
 import main.stager.model.UserAction;
 
@@ -96,7 +97,7 @@ public class DataProvider {
         void react(String reason);
     }
 
-    public static class ValueListEventListener<T> extends AValueEventListener {
+    public static class ValueListEventListener<T> extends AValueEventListener<T> {
         protected MutableLiveData<List<T>> liveList;
         protected Class<T> className;
 
@@ -109,8 +110,6 @@ public class DataProvider {
         public ValueListEventListener(MutableLiveData<List<T>> liveList, Class<T> className) {
             this(liveList, className, null);
         }
-
-        protected T modify(T item, DataSnapshot snapshot) { return item; }
 
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -125,7 +124,7 @@ public class DataProvider {
         }
     };
 
-    public static class ValueEventListener<T> extends AValueEventListener {
+    public static class ValueEventListener<T> extends AValueEventListener<T> {
         protected MutableLiveData<T> live;
         protected Class<T> className;
 
@@ -139,7 +138,11 @@ public class DataProvider {
             this(live, className, null);
         }
 
-        protected T modify(T item, DataSnapshot snapshot) { return item; }
+        protected T modify(T item, DataSnapshot snapshot) {
+            if (item instanceof FBModel)
+                ((FBModel)item).setKey(snapshot.getKey());
+            return item;
+        }
 
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -150,13 +153,19 @@ public class DataProvider {
         }
     };
 
-    public abstract static class AValueEventListener implements com.google.firebase.database.ValueEventListener {
+    public abstract static class AValueEventListener<T> implements com.google.firebase.database.ValueEventListener {
         protected OnError onError;
 
         @Override
         public void onCancelled(@NonNull DatabaseError error) {
             if (onError != null)
                 onError.react(error.getMessage());
+        }
+
+        protected T modify(T item, DataSnapshot snapshot) {
+            if (item instanceof FBModel)
+                ((FBModel)item).setKey(snapshot.getKey());
+            return item;
         }
     };
 

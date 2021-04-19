@@ -29,7 +29,7 @@ public class StagesListViewModel extends StagerViewModel {
 
     public LiveData<String> getActionName(String key, String defaultValue) {
         return getData(actionName, () -> dataProvider.getAction(key).addValueEventListener(
-            new DataProvider.AValueEventListener() {
+            new DataProvider.AValueEventListener<UserAction>() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (!snapshot.exists())

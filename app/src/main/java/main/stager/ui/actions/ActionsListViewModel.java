@@ -23,6 +23,7 @@ public class ActionsListViewModel extends StagerViewModel {
             new DataProvider.ValueListEventListener<UserAction>(actions, UserAction.class, onError) {
                 @Override
                 public UserAction modify(UserAction ua, DataSnapshot snapshot) {
+                    ua = super.modify(ua, snapshot);
                     ua.setKey(snapshot.getKey());
                     return ua;
                 }

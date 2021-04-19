@@ -1,11 +1,8 @@
 package main.stager;
 
 import android.view.View;
-
-import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.navigation.NavController;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import java.lang.reflect.InvocationTargetException;
 
@@ -14,9 +11,8 @@ public abstract class StagerExtendableList<TVM extends ViewModel,
                                            ? extends RecyclerView.ViewHolder>,
                                            T> extends StagerList<TVM, TA, T> {
 
+    // Listeners
     protected abstract void onButtonAddClicked(View v);
-
-    public void onItemSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int pos, int direction) {}
 
     @Override
     protected TA createAdapter() {
@@ -36,17 +32,5 @@ public abstract class StagerExtendableList<TVM extends ViewModel,
     protected void setEventListeners() {
         super.setEventListeners();
         view.findViewById(R.id.button_list_add).setOnClickListener(this::onButtonAddClicked);
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
-                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                onItemSwiped(viewHolder, viewHolder.getAdapterPosition(), direction);
-            }
-        }).attachToRecyclerView(rv);
     }
 }

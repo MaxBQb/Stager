@@ -3,12 +3,14 @@ package main.stager;
 import android.os.Bundle;
 import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -42,6 +44,10 @@ public abstract class StagerList<TVM extends ViewModel,
     protected View emptyView;
     protected View errorView;
     protected View loadingView;
+
+    // Listeners
+    protected void onItemClick(T item, int pos) {}
+    public void onItemSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int pos, int direction) {}
 
     protected TA createAdapter() {
         try {
@@ -122,14 +128,24 @@ public abstract class StagerList<TVM extends ViewModel,
             srvAdapter.setState(StatesRecyclerViewAdapter.STATE_NORMAL);
     }
 
-    protected void onItemClick(T item, int pos) {}
-
     protected void setObservers() {
         list.observe(getViewLifecycleOwner(), this::reactState);
     }
 
     protected void setEventListeners() {
         adapter.setOnItemClickListener(this::onItemClick);
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                onItemSwiped(viewHolder, viewHolder.getAdapterPosition(), direction);
+            }
+        }).attachToRecyclerView(rv);
     }
 
     @Override

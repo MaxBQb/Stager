@@ -108,11 +108,13 @@ public abstract class StagerList<TVM extends ViewModel,
 
     @Override
     protected void setObservers() {
+        super.setObservers();
         list.observe(getViewLifecycleOwner(), this::reactState);
     }
 
     @Override
     protected void setEventListeners() {
+        super.setEventListeners();
         adapter.setOnItemClickListener(this::onItemClick);
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -130,6 +132,7 @@ public abstract class StagerList<TVM extends ViewModel,
 
     @Override
     protected void prepareFragmentComponents() {
+        super.prepareFragmentComponents();
         adapter = createAdapter();
         rv = getRecyclerView();
         prepareViews();

@@ -71,7 +71,8 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="20dp"
             android:hint="@string/RegistrationActivity_EditText_label_UserPasswordCheck"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:nextFocusForward="@+id/success_btn"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -102,7 +103,8 @@
                 android:layout_marginStart="10dp"
                 android:drawableStart="@drawable/ic_baseline_check"
                 android:drawableLeft="@drawable/ic_baseline_check"
-                android:text="@string/RegistrationActivity_Button_Register" />
+                android:text="@string/RegistrationActivity_Button_Register"
+                android:focusableInTouchMode="true"/>
 
         </LinearLayout>
 

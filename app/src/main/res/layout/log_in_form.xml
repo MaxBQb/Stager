@@ -6,13 +6,9 @@
     tools:context=".Authorization" >
 
     <RelativeLayout
+        android:id="@+id/RelativeLayout_input"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
-
-        <RelativeLayout
-            android:id="@+id/RelativeLayout_input"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
 
             <TextView
                 android:id="@+id/welcome_at_log_in"
@@ -49,8 +45,9 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="20dp"
                 android:hint="@string/RegistrationActivity_EditText_label_UserPassword"
-                android:inputType="textPassword" />
-        </RelativeLayout>
+                android:inputType="textPassword"
+                android:nextFocusForward="@+id/success_btn"
+                android:nextFocusDown="@+id/success_btn" />
 
 
         <LinearLayout
@@ -62,7 +59,7 @@
             android:layout_marginBottom="10dp"
             android:gravity="center"
             android:orientation="horizontal"
-            android:layout_below="@+id/RelativeLayout_input">
+            android:layout_below="@+id/password">
 
             <TextView
                 android:id="@+id/forget_password"
@@ -128,7 +125,8 @@
             android:drawableStart="@drawable/ic_baseline_check"
             android:drawableLeft="@drawable/ic_baseline_check"
             android:text="@string/RegistrationActivity_Button_Register"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:focusableInTouchMode="true"
+            />
     </RelativeLayout>
 </androidx.core.widget.NestedScrollView>

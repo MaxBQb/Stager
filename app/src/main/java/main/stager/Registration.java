@@ -36,8 +36,8 @@ public class Registration extends SmartActivity {
         edPasswordCheck = findViewById(R.id.check_password);
 
         // Регистрация аккаунта
-        findViewById(R.id.success_btn).setOnClickListener(
-                v -> onClickRegistration()
+        findViewById(R.id.success_btn).setOnFocusChangeListener(
+                (v, hasFocus) -> onClickRegistration()
         );
 
         // Переход на вход

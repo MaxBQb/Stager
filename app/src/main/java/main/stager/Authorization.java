@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Patterns;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -54,8 +55,8 @@ public class Authorization extends SmartActivity {
 
     private void signIn() {
         // Вход в аккаунт
-        findViewById(R.id.success_btn).setOnClickListener(
-                v -> {
+        findViewById(R.id.success_btn).setOnFocusChangeListener(
+                (v, hasFocus) -> {
                     String email = edEmail.getText().toString();
                     String password = edPassword.getText().toString();
 

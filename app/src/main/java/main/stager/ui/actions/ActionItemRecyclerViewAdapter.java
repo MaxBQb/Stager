@@ -5,7 +5,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 import org.jetbrains.annotations.NotNull;
 import main.stager.R;
@@ -17,7 +16,6 @@ import main.stager.model.UserAction;
  */
 public class ActionItemRecyclerViewAdapter
         extends StagerListAdapter<UserAction, ActionItemRecyclerViewAdapter.ViewHolder> {
-    private NavController nav;
 
     @NotNull
     @Override
@@ -48,8 +46,7 @@ public class ActionItemRecyclerViewAdapter
                         R.drawable.ic_stage_status_wait);
                 break;
         }
-        holder.mView.setOnClickListener(v -> onItemClickListener
-                .onItemClick(holder.mItem, position));
+        bindOnItemClickListener(holder.mView, holder.mItem, position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

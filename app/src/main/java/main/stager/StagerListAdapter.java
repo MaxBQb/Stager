@@ -1,6 +1,6 @@
 package main.stager;
 
-import androidx.annotation.NonNull;
+import android.view.View;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,5 +31,11 @@ public abstract class StagerListAdapter<T, VH extends RecyclerView.ViewHolder>
 
     public void setOnItemClickListener(OnItemClickListener<T> onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
+    }
+
+    protected void bindOnItemClickListener(View view, T item, int pos){
+        if (onItemClickListener != null)
+            view.setOnClickListener(v -> onItemClickListener
+                    .onItemClick(item, pos));
     }
 }

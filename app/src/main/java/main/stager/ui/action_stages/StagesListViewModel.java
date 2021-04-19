@@ -27,6 +27,10 @@ public class StagesListViewModel extends StagerViewModel {
         ));
     }
 
+    public void deleteStage(Stage s, String actionKey) {
+        dataProvider.deleteStage(actionKey, s.getKey());
+    }
+
     public LiveData<String> getActionName(String key, String defaultValue) {
         return getData(actionName, () -> dataProvider.getAction(key).addValueEventListener(
             new DataProvider.AValueEventListener<UserAction>() {

@@ -30,4 +30,8 @@ public class ActionsListViewModel extends StagerViewModel {
             }
         ));
     }
+
+    public void deleteAction(UserAction ua) {
+        dataProvider.deleteAction(ua.getKey());
+    }
 }

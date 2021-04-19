@@ -80,6 +80,15 @@ public class DataProvider {
         return getStages(actionName).child(key);
     }
 
+    public void deleteStage(String actionName, String key) {
+        getStage(actionName, key).removeValue();
+    }
+
+    public void deleteAction(String key) {
+        getStages(key).removeValue();
+        getAction(key).removeValue();
+    }
+
     public DatabaseReference getUserInfo() {
         return mRef.child("user_info").child(mAuth.getUid());
     }

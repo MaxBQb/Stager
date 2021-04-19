@@ -2,7 +2,9 @@ package main.stager.ui.actions;
 
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
@@ -31,6 +33,11 @@ public class ActionsListFragment extends
     @Override
     protected LiveData<List<UserAction>> getList(DataProvider.OnError onError) {
         return viewModel.getActions(onError);
+    }
+
+    @Override
+    public void onItemSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int pos, int direction) {
+        viewModel.deleteAction(adapter.get(pos));
     }
 
     @Override

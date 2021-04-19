@@ -1,8 +1,11 @@
 package main.stager.ui.action_stages;
 
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,6 +73,11 @@ public class StagesListFragment
         Bundle args = new Bundle();
         args.putString(AddStageFragment.ARG_ACTION_KEY, mActionKey);
         navigator.navigate(R.id.transition_action_stages_to_add_stage, args);
+    }
+
+    @Override
+    public void onItemSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int pos, int direction) {
+        viewModel.deleteStage(adapter.get(pos), mActionKey);
     }
 
     @Override

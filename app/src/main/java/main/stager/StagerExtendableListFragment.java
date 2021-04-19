@@ -14,7 +14,7 @@ public abstract class StagerExtendableListFragment<TVM extends ViewModel, TA ext
 
     protected abstract void onButtonAddClicked(View v);
 
-    public void onItemSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {}
+    public void onItemSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int pos, int direction) {}
 
     @Override
     protected TA createAdapter() {
@@ -43,7 +43,7 @@ public abstract class StagerExtendableListFragment<TVM extends ViewModel, TA ext
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                onItemSwiped(viewHolder, direction);
+                onItemSwiped(viewHolder, viewHolder.getAdapterPosition(), direction);
             }
         }).attachToRecyclerView(rv);
     }

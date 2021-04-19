@@ -9,8 +9,10 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import java.lang.reflect.InvocationTargetException;
 
-public abstract class StagerExtendableList<TVM extends ViewModel, TA extends StagerListAdapter, T>
-        extends StagerList<TVM, TA, T> {
+public abstract class StagerExtendableList<TVM extends ViewModel,
+                                           TA extends StagerListAdapter<T,
+                                           ? extends RecyclerView.ViewHolder>,
+                                           T> extends StagerList<TVM, TA, T> {
 
     protected abstract void onButtonAddClicked(View v);
 

@@ -19,7 +19,10 @@ import com.rockerhieu.rvadapter.states.StatesRecyclerViewAdapter;
 import java.util.List;
 
 
-public abstract class StagerList<TVM extends ViewModel, TA extends StagerListAdapter, T> extends Fragment {
+public abstract class StagerList<TVM extends ViewModel,
+                                 TA extends StagerListAdapter<T,
+                                         ? extends RecyclerView.ViewHolder>,
+                                 T> extends Fragment {
     protected TVM viewModel;
     protected TA adapter;
 
@@ -119,11 +122,15 @@ public abstract class StagerList<TVM extends ViewModel, TA extends StagerListAda
             srvAdapter.setState(StatesRecyclerViewAdapter.STATE_NORMAL);
     }
 
+    protected void onItemClick(T item, int pos) {}
+
     protected void setObservers() {
         list.observe(getViewLifecycleOwner(), this::reactState);
     }
 
-    protected void setEventListeners() {}
+    protected void setEventListeners() {
+        adapter.setOnItemClickListener(this::onItemClick);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

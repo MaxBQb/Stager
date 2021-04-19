@@ -1,44 +1,30 @@
 package main.stager;
 
-import android.os.Bundle;
 import androidx.annotation.IdRes;
-import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import com.rockerhieu.rvadapter.states.StatesRecyclerViewAdapter;
 import java.util.List;
 
-
 public abstract class StagerList<TVM extends ViewModel,
                                  TA extends StagerListAdapter<T,
                                          ? extends RecyclerView.ViewHolder>,
-                                 T> extends Fragment {
-    protected TVM viewModel;
+                                 T> extends StagerVMFragment<TVM> {
     protected TA adapter;
 
     // Требует переопределения
-    protected abstract Class<TVM> getViewModelType();
     protected abstract Class<TA> getAdapterType();
-    protected abstract @LayoutRes int getViewBaseLayoutId();
 
     // Основное
-    protected NavController navigator;
     protected RecyclerView rv;
     protected LiveData<List<T>> list;
     protected StatesRecyclerViewAdapter srvAdapter;
-    protected View view;
 
     // Режимы отображения
     protected View emptyView;
@@ -68,13 +54,6 @@ public abstract class StagerList<TVM extends ViewModel,
         return recyclerView;
     }
 
-    protected NavController getNavigator() {
-        return ((NavHostFragment) getActivity()
-                .getSupportFragmentManager()
-                .findFragmentById(R.id.nav_host_fragment))
-                .getNavController();
-    }
-
     protected View getEmptyView() {
         return getLayoutInflater().inflate(R.layout.empty_list_view, rv, false);
     }
@@ -98,7 +77,6 @@ public abstract class StagerList<TVM extends ViewModel,
     protected String getLoadingText() {
         return getString(R.string.CommonList_LoadingListView_TextView_text);
     }
-
 
     private void setNNText(View v, @IdRes int id, String text) {
         if (v == null) return;
@@ -128,10 +106,12 @@ public abstract class StagerList<TVM extends ViewModel,
             srvAdapter.setState(StatesRecyclerViewAdapter.STATE_NORMAL);
     }
 
+    @Override
     protected void setObservers() {
         list.observe(getViewLifecycleOwner(), this::reactState);
     }
 
+    @Override
     protected void setEventListeners() {
         adapter.setOnItemClickListener(this::onItemClick);
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
@@ -149,20 +129,13 @@ public abstract class StagerList<TVM extends ViewModel,
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        view = inflater.inflate(getViewBaseLayoutId(), container, false);
-        navigator = getNavigator();
-        viewModel = new ViewModelProvider(this).get(getViewModelType());
+    protected void prepareFragmentComponents() {
         adapter = createAdapter();
         rv = getRecyclerView();
         prepareViews();
         srvAdapter = new StatesRecyclerViewAdapter(adapter, loadingView, emptyView, errorView);
         rv.setAdapter(srvAdapter);
         list = getList(this::onError);
-        setObservers();
-        setEventListeners();
         srvAdapter.setState(StatesRecyclerViewAdapter.STATE_LOADING);
-        return view;
     }
 }

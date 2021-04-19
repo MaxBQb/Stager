@@ -23,7 +23,6 @@ public class StagesListFragment
     private String mActionName;
     private String mActionKey;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +43,12 @@ public class StagesListFragment
     @Override
     protected Class<StageItemRecyclerViewAdapter> getAdapterType() {
         return StageItemRecyclerViewAdapter.class;
+    }
+
+    @Override
+    protected void setDependencies() {
+        super.setDependencies();
+        dependencies.add(dataProvider.getAction(mActionKey));
     }
 
     @Override

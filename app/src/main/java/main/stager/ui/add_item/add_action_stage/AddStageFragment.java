@@ -36,6 +36,12 @@ public class AddStageFragment extends AddItemFragment {
     }
 
     @Override
+    protected void setDependencies() {
+        super.setDependencies();
+        dependencies.add(dataProvider.getAction(mActionKey));
+    }
+
+    @Override
     protected void saveChanges() {
         String name = inputName.getText().toString().trim();
         if (name.isEmpty()) {

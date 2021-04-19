@@ -175,4 +175,17 @@ public class DataProvider {
             return item;
         }
     }
+
+    public abstract static class ValueRemovedListener implements com.google.firebase.database.ValueEventListener {
+
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            if (!snapshot.exists()) onValueRemoved();
+        }
+
+        protected void onValueRemoved() {}
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {}
+    }
 }

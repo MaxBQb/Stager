@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-public class Stage {
+public class Stage extends FBModel {
     @Getter private Status currentStatus;
     @Getter private String name;
     @Getter private TriggerType trigger;

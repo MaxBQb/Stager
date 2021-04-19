@@ -14,12 +14,12 @@ import java.util.List;
 import main.stager.DataProvider;
 import main.stager.R;
 import main.stager.SmartActivity;
-import main.stager.StagerExtendableListFragment;
+import main.stager.StagerExtendableList;
 import main.stager.model.Stage;
 import main.stager.ui.add_action_stage.AddStageFragment;
 
 public class StagesListFragment
-        extends StagerExtendableListFragment<StagesListViewModel, StageItemRecyclerViewAdapter, Stage> {
+        extends StagerExtendableList<StagesListViewModel, StageItemRecyclerViewAdapter, Stage> {
     static public final String ARG_ACTION_NAME = "Stager.stages_list.param_action_name";
     static public final String ARG_ACTION_KEY = "Stager.stages_list.param_action_key";
     private String mActionName;

@@ -10,11 +10,11 @@ import java.util.List;
 
 import main.stager.DataProvider;
 import main.stager.R;
-import main.stager.StagerExtendableListFragment;
+import main.stager.StagerExtendableList;
 import main.stager.model.UserAction;
 
 public class ActionsListFragment extends
-        StagerExtendableListFragment<ActionsListViewModel, ActionItemRecyclerViewAdapter, UserAction> {
+        StagerExtendableList<ActionsListViewModel, ActionItemRecyclerViewAdapter, UserAction> {
     @Override
     protected Class<ActionsListViewModel> getViewModelType() {
         return ActionsListViewModel.class;

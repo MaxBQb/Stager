@@ -19,7 +19,7 @@ import com.rockerhieu.rvadapter.states.StatesRecyclerViewAdapter;
 import java.util.List;
 
 
-public abstract class StagerListFragment<TVM extends ViewModel, TA extends StagerListAdapter, T> extends Fragment {
+public abstract class StagerList<TVM extends ViewModel, TA extends StagerListAdapter, T> extends Fragment {
     protected TVM viewModel;
     protected TA adapter;
 

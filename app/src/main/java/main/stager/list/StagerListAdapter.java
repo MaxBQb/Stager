@@ -1,4 +1,4 @@
-package main.stager;
+package main.stager.list;
 
 import android.view.View;
 import androidx.recyclerview.widget.RecyclerView;

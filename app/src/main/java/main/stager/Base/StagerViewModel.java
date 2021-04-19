@@ -1,4 +1,4 @@
-package main.stager;
+package main.stager.Base;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -6,9 +6,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import java.util.List;
-
-import main.stager.model.Stage;
+import main.stager.utils.DataProvider;
 
 public abstract class StagerViewModel extends AndroidViewModel {
     protected static DataProvider dataProvider = DataProvider.getInstance();
@@ -19,7 +17,7 @@ public abstract class StagerViewModel extends AndroidViewModel {
 
     @FunctionalInterface
     protected interface EventListenerSetter {
-        public void add();
+        void add();
     }
 
     protected <T> LiveData<T> getData(MutableLiveData<T> data, EventListenerSetter els) {

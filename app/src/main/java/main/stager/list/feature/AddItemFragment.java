@@ -1,4 +1,4 @@
-package main.stager;
+package main.stager.list.feature;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,6 +7,9 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import main.stager.R;
+import main.stager.Base.StagerFragment;
 
 public abstract class AddItemFragment extends StagerFragment {
 

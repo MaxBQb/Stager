@@ -50,14 +50,14 @@
     <fragment
         android:id="@+id/add_action"
         android:label="@string/AddAction_title"
-        android:name="main.stager.ui.add_action.AddActionFragment"
+        android:name="main.stager.ui.add_item.add_action.AddActionFragment"
         tools:layout="@layout/fragment_add_action"
         />
 
     <fragment
         android:id="@+id/add_action_stage"
         android:label="@string/AddActionStage_title"
-        android:name="main.stager.ui.add_action_stage.AddStageFragment"
+        android:name="main.stager.ui.add_item.add_action_stage.AddStageFragment"
         tools:layout="@layout/fragment_add_action_stage"
         />
 

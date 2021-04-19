@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 
+import main.stager.Base.SmartActivity;
+
 
 public class Registration extends SmartActivity {
     private EditText edNickname, edEmail, edPassword, edPasswordCheck;

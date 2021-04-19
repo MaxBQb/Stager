@@ -4,11 +4,11 @@ import android.content.Intent;
 import android.widget.EditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
-import main.stager.ChangeListeners.OnLostFocus;
-import main.stager.DataProvider;
+import main.stager.utils.ChangeListeners.OnLostFocus;
+import main.stager.utils.DataProvider;
 import main.stager.MainActivity;
 import main.stager.R;
-import main.stager.StagerVMFragment;
+import main.stager.Base.StagerVMFragment;
 
 public class AboutMeFragment extends StagerVMFragment<AboutMeViewModel> {
     private EditText inputName;

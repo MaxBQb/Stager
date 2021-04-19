@@ -1,4 +1,4 @@
-package main.stager;
+package main.stager.list;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
@@ -12,9 +12,13 @@ import android.widget.TextView;
 import com.rockerhieu.rvadapter.states.StatesRecyclerViewAdapter;
 import java.util.List;
 
+import main.stager.utils.DataProvider;
+import main.stager.R;
+import main.stager.Base.StagerVMFragment;
+
 public abstract class StagerList<TVM extends ViewModel,
                                  TA extends StagerListAdapter<T,
-                                         ? extends RecyclerView.ViewHolder>,
+                                                                          ? extends RecyclerView.ViewHolder>,
                                  T> extends StagerVMFragment<TVM> {
     protected TA adapter;
 

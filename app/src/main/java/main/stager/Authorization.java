@@ -13,6 +13,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import main.stager.Base.SmartActivity;
+
 public class Authorization extends SmartActivity {
 
     private EditText edEmail, edPassword;
@@ -94,20 +96,16 @@ public class Authorization extends SmartActivity {
                         return;
                     }
 
-                    fbAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                startActivity(intent);
+                    fbAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, task -> {
+                        if (task.isSuccessful()) {
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
+                        } else {
+                            // Получение ошибок при входе
+                            Toast.makeText(getApplicationContext(),
+                                    task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();
                             }
-                            else {
-                                // Получение ошибок при входе
-                                Toast.makeText(getApplicationContext(),
-                                        task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                                }
-                            }
-                    });
+                        });
                 }
         );
     }

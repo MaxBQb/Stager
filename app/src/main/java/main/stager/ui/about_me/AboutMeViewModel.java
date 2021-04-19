@@ -4,8 +4,8 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import main.stager.DataProvider;
-import main.stager.StagerViewModel;
+import main.stager.utils.DataProvider;
+import main.stager.Base.StagerViewModel;
 
 public class AboutMeViewModel extends StagerViewModel {
     private static DataProvider dataProvider = DataProvider.getInstance();

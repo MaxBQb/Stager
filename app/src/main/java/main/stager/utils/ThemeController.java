@@ -1,7 +1,9 @@
-package main.stager;
+package main.stager.utils;
 
 import android.app.Activity;
 import androidx.preference.PreferenceManager;
+
+import main.stager.R;
 
 public class ThemeController {
     private static int DARK_THEME = R.style.Theme_AppCompat;

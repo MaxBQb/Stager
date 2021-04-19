@@ -1,9 +1,9 @@
-package main.stager.ui.add_action;
+package main.stager.ui.add_item.add_action;
 
 import android.widget.EditText;
 import android.widget.Toast;
-import main.stager.AddItemFragment;
-import main.stager.DataProvider;
+import main.stager.list.feature.AddItemFragment;
+import main.stager.utils.DataProvider;
 import main.stager.R;
 import main.stager.model.Status;
 import main.stager.model.UserAction;

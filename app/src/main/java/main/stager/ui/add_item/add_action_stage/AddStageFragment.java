@@ -1,11 +1,11 @@
-package main.stager.ui.add_action_stage;
+package main.stager.ui.add_item.add_action_stage;
 
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
-import main.stager.AddItemFragment;
-import main.stager.DataProvider;
+import main.stager.list.feature.AddItemFragment;
+import main.stager.utils.DataProvider;
 import main.stager.R;
 import main.stager.model.Stage;
 import main.stager.model.Status;

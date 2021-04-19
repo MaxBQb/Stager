@@ -6,9 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
-import main.stager.DataProvider;
+import main.stager.utils.DataProvider;
 import main.stager.R;
-import main.stager.StagerExtendableList;
+import main.stager.list.StagerExtendableList;
 import main.stager.model.UserAction;
 import main.stager.ui.action_stages.StagesListFragment;
 

@@ -1,4 +1,4 @@
-package main.stager;
+package main.stager.Base;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import androidx.annotation.LayoutRes;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
+
+import main.stager.R;
 
 public abstract class StagerFragment extends Fragment {
     // Требует переопределения

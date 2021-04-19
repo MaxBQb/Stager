@@ -46,6 +46,7 @@ public class StageItemRecyclerViewAdapter
                         R.drawable.ic_stage_status_wait);
                 break;
         }
+        bindOnItemClickListener(holder.mView, holder.mItem, position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

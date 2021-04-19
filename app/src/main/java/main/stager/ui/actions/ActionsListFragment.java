@@ -10,7 +10,7 @@ import main.stager.utils.DataProvider;
 import main.stager.R;
 import main.stager.list.StagerExtendableList;
 import main.stager.model.UserAction;
-import main.stager.ui.edit_item.edit_action.StagesListFragment;
+import main.stager.ui.edit_item.edit_action.EditActionFragment;
 
 public class ActionsListFragment extends
         StagerExtendableList<ActionsListViewModel, ActionItemRecyclerViewAdapter, UserAction> {
@@ -43,8 +43,8 @@ public class ActionsListFragment extends
     protected void onItemClick(UserAction item, int pos) {
         super.onItemClick(item, pos);
         Bundle args = new Bundle();
-        args.putString(StagesListFragment.ARG_ACTION_NAME, item.getName());
-        args.putString(StagesListFragment.ARG_ACTION_KEY, item.getKey());
+        args.putString(EditActionFragment.ARG_ACTION_NAME, item.getName());
+        args.putString(EditActionFragment.ARG_ACTION_KEY, item.getKey());
         navigator.navigate(R.id.transition_actions_list_to_action_stages_list, args);
     }
 

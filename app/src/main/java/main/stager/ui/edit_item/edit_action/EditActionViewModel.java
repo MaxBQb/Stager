@@ -11,11 +11,11 @@ import main.stager.Base.StagerViewModel;
 import main.stager.model.Stage;
 import main.stager.model.UserAction;
 
-public class StagesListViewModel extends StagerViewModel {
+public class EditActionViewModel extends StagerViewModel {
     private MutableLiveData<List<Stage>> stages;
     private MutableLiveData<String> actionName;
 
-    public StagesListViewModel(@NonNull Application application) {
+    public EditActionViewModel(@NonNull Application application) {
         super(application);
         stages = new MutableLiveData<>();
         actionName = new MutableLiveData<>();

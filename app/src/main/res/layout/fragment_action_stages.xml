@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.edit_item.edit_action.StagesListFragment"
+    tools:context=".ui.edit_item.edit_action.EditActionFragment"
     android:orientation="vertical">
 
     <EditText
@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
-        android:hint="@string/StagesFragment_ActivityList_UntitledAction" />
+        android:hint="@string/EditActionFragment_message_UntitledAction" />
 
     <include layout="@layout/fragment_extendable_list"/>
 

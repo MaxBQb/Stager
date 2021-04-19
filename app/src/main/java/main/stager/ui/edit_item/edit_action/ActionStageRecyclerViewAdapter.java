@@ -14,8 +14,8 @@ import main.stager.model.Stage;
 /**
  * {@link RecyclerView.Adapter} для отображения {@link Stage}.
  */
-public class StageItemRecyclerViewAdapter
-        extends StagerListAdapter<Stage, StageItemRecyclerViewAdapter.ViewHolder> {
+public class ActionStageRecyclerViewAdapter
+        extends StagerListAdapter<Stage, ActionStageRecyclerViewAdapter.ViewHolder> {
 
     @NotNull
     @Override

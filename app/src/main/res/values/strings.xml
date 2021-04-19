@@ -27,11 +27,11 @@
         <string name="Settings_Appearance_List_summary_Locale" formatted="true">
             Current language: %1$s</string>
 
-    <!-- StagesList -->
+    <!-- Edit action -->
     <string name="StagesFragment_label" formatted="true">
         Stages of \'%1$s\'</string>
-    <string name="StagesFragment_ActivityList_UntitledAction">Untitled</string>
-    <string name="StagesFragment_ActivityList_NoItemsMessage">No stages yet..</string>
+    <string name="EditActionFragment_message_UntitledAction">Untitled</string>
+    <string name="EditActionFragment_StagesList_NoItemsMessage">No stages yet..</string>
 
     <!-- SideBar -->
     <string name="SideBarActivity_title">SideBar</string>

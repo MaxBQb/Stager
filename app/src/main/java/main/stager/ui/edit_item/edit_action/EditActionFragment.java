@@ -5,9 +5,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.LayoutInflater;
+
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.google.firebase.database.DatabaseReference;
@@ -22,8 +21,8 @@ import main.stager.list.StagerExtendableList;
 import main.stager.model.Stage;
 import main.stager.ui.add_item.add_action_stage.AddStageFragment;
 
-public class StagesListFragment
-        extends StagerExtendableList<StagesListViewModel, StageItemRecyclerViewAdapter, Stage> {
+public class EditActionFragment
+        extends StagerExtendableList<EditActionViewModel, ActionStageRecyclerViewAdapter, Stage> {
     static public final String ARG_ACTION_NAME = "Stager.stages_list.param_action_name";
     static public final String ARG_ACTION_KEY = "Stager.stages_list.param_action_key";
     private String mActionName;
@@ -37,19 +36,19 @@ public class StagesListFragment
             mActionName = getArguments().getString(ARG_ACTION_NAME);
             mActionKey = getArguments().getString(ARG_ACTION_KEY);
         } else {
-            mActionName = getString(R.string.StagesFragment_ActivityList_UntitledAction);
+            mActionName = getString(R.string.EditActionFragment_message_UntitledAction);
             mActionKey = "";
         }
     }
 
     @Override
-    protected Class<StagesListViewModel> getViewModelType() {
-        return StagesListViewModel.class;
+    protected Class<EditActionViewModel> getViewModelType() {
+        return EditActionViewModel.class;
     }
 
     @Override
-    protected Class<StageItemRecyclerViewAdapter> getAdapterType() {
-        return StageItemRecyclerViewAdapter.class;
+    protected Class<ActionStageRecyclerViewAdapter> getAdapterType() {
+        return ActionStageRecyclerViewAdapter.class;
     }
 
     @Override
@@ -76,7 +75,7 @@ public class StagesListFragment
         (String text) -> {
             editActionName.setText(text);
             if (text.isEmpty())
-                text = getString(R.string.StagesFragment_ActivityList_UntitledAction);
+                text = getString(R.string.EditActionFragment_message_UntitledAction);
             ((AppCompatActivity)getActivity())
                             .getSupportActionBar()
                             .setTitle(getString(R.string.StagesFragment_label, text));

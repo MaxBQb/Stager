@@ -7,6 +7,10 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import main.stager.model.FBModel;
 
 public abstract class StagerListAdapter<T, VH extends RecyclerView.ViewHolder>
@@ -28,6 +32,12 @@ public abstract class StagerListAdapter<T, VH extends RecyclerView.ViewHolder>
 
     public void setOnItemClickListener(OnItemClickListener<T> onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
+    }
+
+    public void moveItem(int from, int to) {
+        ArrayList<T> list = new ArrayList<T>(getCurrentList());
+        list.add(to, list.remove(from));
+        submitList(list);
     }
 
     protected void bindOnItemClickListener(View view, T item, int pos){

@@ -49,12 +49,6 @@ public class ActionsListFragment extends
     }
 
     @Override
-    protected void setObservers() {
-        super.setObservers();
-        list.observe(getViewLifecycleOwner(), adapter::submitList);
-    }
-
-    @Override
     protected void onButtonAddClicked(View v) {
         navigator.navigate(R.id.transition_actions_list_to_add_action);
     }

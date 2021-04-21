@@ -51,7 +51,7 @@ public class ActionsListFragment extends
     @Override
     protected void setObservers() {
         super.setObservers();
-        list.observe(getViewLifecycleOwner(), adapter::setValues);
+        list.observe(getViewLifecycleOwner(), adapter::submitList);
     }
 
     @Override

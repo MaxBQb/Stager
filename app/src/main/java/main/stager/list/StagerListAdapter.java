@@ -1,27 +1,24 @@
 package main.stager.list;
 
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
-import java.util.ArrayList;
-import java.util.List;
+
+import main.stager.model.FBModel;
 
 public abstract class StagerListAdapter<T, VH extends RecyclerView.ViewHolder>
-        extends RecyclerView.Adapter<VH> {
-    protected List<T> mValues = new ArrayList<>();
+        extends ListAdapter<T, VH> {
     protected OnItemClickListener<T> onItemClickListener;
 
-    public void setValues(List<T> values) {
-        mValues = values;
-        notifyDataSetChanged();
+    protected StagerListAdapter(@NonNull DiffUtil.ItemCallback<T> diffCallback) {
+        super(diffCallback);
     }
 
     public T get(int index) {
-        return mValues.get(index);
-    }
-
-    @Override
-    public int getItemCount() {
-        return mValues.size();
+        return getItem(index);
     }
 
     @FunctionalInterface
@@ -37,5 +34,12 @@ public abstract class StagerListAdapter<T, VH extends RecyclerView.ViewHolder>
         if (onItemClickListener != null)
             view.setOnClickListener(v -> onItemClickListener
                     .onItemClick(item, pos));
+    }
+
+    protected abstract static class FBItemCallback<U extends FBModel> extends DiffUtil.ItemCallback<U> {
+        @Override
+        public boolean areItemsTheSame(@NonNull U oldItem, @NonNull U newItem) {
+            return oldItem.getKey().equals(newItem.getKey());
+        }
     }
 }

@@ -5,17 +5,33 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import org.jetbrains.annotations.NotNull;
 import main.stager.R;
 import main.stager.list.StagerListAdapter;
 import main.stager.model.Stage;
+import main.stager.model.UserAction;
 
 /**
  * {@link RecyclerView.Adapter} для отображения {@link Stage}.
  */
 public class ActionStageRecyclerViewAdapter
         extends StagerListAdapter<Stage, ActionStageRecyclerViewAdapter.ViewHolder> {
+
+    private static DiffUtil.ItemCallback<Stage> DIFF_CALLBACK = new FBItemCallback<Stage>() {
+        @Override
+        public boolean areContentsTheSame(@NonNull Stage oldItem, @NonNull Stage newItem) {
+            return oldItem.getName().equals(newItem.getName()) &&
+                    oldItem.getCurrentStatus().equals(newItem.getCurrentStatus());
+        }
+    };
+
+    public ActionStageRecyclerViewAdapter() {
+        super(DIFF_CALLBACK);
+    }
 
     @NotNull
     @Override
@@ -28,7 +44,7 @@ public class ActionStageRecyclerViewAdapter
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
+        holder.mItem = getItem(position);
         holder.mContentView.setText(holder.mItem.getName());
         switch (holder.mItem.getCurrentStatus()) {
             case ABORTED:

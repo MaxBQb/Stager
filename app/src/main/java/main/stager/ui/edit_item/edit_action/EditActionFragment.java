@@ -70,7 +70,7 @@ public class EditActionFragment
     @Override
     protected void setObservers() {
         super.setObservers();
-        list.observe(getViewLifecycleOwner(), adapter::setValues);
+        list.observe(getViewLifecycleOwner(), adapter::submitList);
         viewModel.getActionName(mActionKey, "").observe(getViewLifecycleOwner(),
         (String text) -> {
             editActionName.setText(text);

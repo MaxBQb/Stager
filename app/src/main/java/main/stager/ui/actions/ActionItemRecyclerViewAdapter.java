@@ -5,6 +5,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import org.jetbrains.annotations.NotNull;
 import main.stager.R;
@@ -17,6 +20,19 @@ import main.stager.model.UserAction;
 public class ActionItemRecyclerViewAdapter
         extends StagerListAdapter<UserAction, ActionItemRecyclerViewAdapter.ViewHolder> {
 
+    private static DiffUtil.ItemCallback<UserAction> DIFF_CALLBACK = new FBItemCallback<UserAction>() {
+        @Override
+        public boolean areContentsTheSame(@NonNull UserAction oldItem, @NonNull UserAction newItem) {
+            return oldItem.getName().equals(newItem.getName()) &&
+                   oldItem.getStatus().equals(newItem.getStatus());
+        }
+    };
+
+    public ActionItemRecyclerViewAdapter() {
+        super(DIFF_CALLBACK);
+    }
+
+
     @NotNull
     @Override
     public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
@@ -28,7 +44,7 @@ public class ActionItemRecyclerViewAdapter
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
+        holder.mItem = getItem(position);
         holder.mContentView.setText(holder.mItem.getName());
         switch (holder.mItem.getStatus()) {
             case ABORTED:

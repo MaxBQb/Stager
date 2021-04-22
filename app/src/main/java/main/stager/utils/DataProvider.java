@@ -1,13 +1,16 @@
 package main.stager.utils;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.Transaction;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -29,7 +32,7 @@ public class DataProvider {
         return instance;
     }
 
-    public DataProvider() {
+    private DataProvider() {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
         db.setPersistenceEnabled(true);
@@ -118,8 +121,22 @@ public class DataProvider {
     }
 
     public static void resetPositions(@NotNull DatabaseReference ref, List<String> keys) {
-        for (int i = 0; i < keys.size(); i++)
-            setPosition(ref, keys.get(i), i+1);
+        ref.runTransaction(new Transaction.Handler() {
+            @NonNull
+            @Override
+            public Transaction.Result doTransaction(@NonNull MutableData currentData) {
+                if (currentData.getValue() != null)
+                    for (int i = 0; i < keys.size(); i++)
+                        if (currentData.child(keys.get(i)).getValue() != null)
+                            currentData.child(keys.get(i)).child("pos").setValue(i+1);
+                return Transaction.success(currentData);
+            }
+
+            @Override
+            public void onComplete(@Nullable DatabaseError error,
+                                   boolean committed,
+                                   @Nullable DataSnapshot currentData) {}
+        });
     }
 
     public static <T extends FBModel> List<String> getKeys(List<T> list) {

@@ -7,11 +7,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import main.stager.model.FBModel;
 import main.stager.model.Stage;
 import main.stager.model.UserAction;
@@ -61,6 +63,18 @@ public class DataProvider {
         return mRef.child("actions").child(getUID());
     }
 
+    public Query getActionsSorted() {
+        return getSorted(getActions());
+    }
+
+    public Query getStagesSorted(@NotNull String key) {
+        return getSorted(getStages(key));
+    }
+
+    private Query getSorted(@NotNull DatabaseReference ref) {
+        return ref.orderByChild("pos");
+    }
+
     public DatabaseReference getAction(@NotNull String key) {
         return getActions().child(key);
     }
@@ -91,6 +105,27 @@ public class DataProvider {
 
     public DatabaseReference getStage(@NotNull String actionName, @NotNull String key) {
         return getStages(actionName).child(key);
+    }
+
+    private static DatabaseReference getPosition(@NotNull DatabaseReference ref,
+                                                @NotNull String key) {
+        return ref.child(key).child("pos");
+    }
+
+    public static void setPosition(@NotNull DatabaseReference ref, @NotNull String key,
+                                    int pos) {
+        getPosition(ref, key).setValue(pos);
+    }
+
+    public static void resetPositions(@NotNull DatabaseReference ref, List<String> keys) {
+        for (int i = 0; i < keys.size(); i++)
+            setPosition(ref, keys.get(i), i+1);
+    }
+
+    public static <T extends FBModel> List<String> getKeys(List<T> list) {
+        ArrayList<String> keys = new ArrayList<>();
+        for (T item: list) keys.add(item.getKey());
+        return keys;
     }
 
     public void deleteStage(@NotNull String actionName, @NotNull String key) {
@@ -142,8 +177,22 @@ public class DataProvider {
             List<T> lst = new ArrayList<>();
             for (DataSnapshot postSnapshot: snapshot.getChildren())
                 lst.add(modify(postSnapshot.getValue(className), postSnapshot));
-            liveList.postValue(lst);
+            liveList.postValue(listModify(lst));
         }
+
+        protected List<T> listModify(List<T> list) {
+            if (list != null && !list.isEmpty() &&
+                list.get(0) instanceof FBModel &&
+                backPathModify() != null) {
+                int counter = list.size();
+                for (T itm : list)
+                    if (((FBModel) itm).getPos() == Integer.MAX_VALUE)
+                        setPosition(backPathModify(), ((FBModel) itm).getKey(), ++counter);
+            }
+            return list;
+        }
+
+        protected DatabaseReference backPathModify() { return null; }
     }
 
     public static class ValueEventListener<T> extends AValueEventListener<T> {

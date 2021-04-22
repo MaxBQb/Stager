@@ -5,6 +5,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+
 import java.util.List;
 import main.stager.utils.DataProvider;
 import main.stager.Base.StagerViewModel;
@@ -19,7 +21,7 @@ public class ActionsListViewModel extends StagerViewModel {
     }
 
     public LiveData<List<UserAction>> getActions(DataProvider.OnError onError) {
-        return getData(actions, () -> dataProvider.getActions().addValueEventListener(
+        return getData(actions, () -> dataProvider.getActionsSorted().addValueEventListener(
             new DataProvider.ValueListEventListener<UserAction>(actions, UserAction.class, onError) {
                 @Override
                 public UserAction modify(UserAction ua, DataSnapshot snapshot) {
@@ -27,11 +29,20 @@ public class ActionsListViewModel extends StagerViewModel {
                     ua.setKey(snapshot.getKey());
                     return ua;
                 }
+
+                @Override
+                protected DatabaseReference backPathModify() {
+                    return dataProvider.getActions();
+                }
             }
         ));
     }
 
     public void deleteAction(UserAction ua) {
         dataProvider.deleteAction(ua.getKey());
+    }
+
+    public void sendActionsList(List<UserAction> uas) {
+        DataProvider.resetPositions(dataProvider.getActions(), DataProvider.getKeys(uas));
     }
 }

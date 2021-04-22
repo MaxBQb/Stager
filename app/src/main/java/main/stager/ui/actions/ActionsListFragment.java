@@ -36,7 +36,14 @@ public class ActionsListFragment extends
 
     @Override
     public void onItemSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int pos, int direction) {
+        super.onItemSwiped(viewHolder, pos, direction);
         viewModel.deleteAction(adapter.get(pos));
+    }
+
+    @Override
+    protected void onItemDropped(int from, int to) {
+        super.onItemDropped(from, to);
+        viewModel.sendActionsList(adapter.getCurrentList());
     }
 
     @Override

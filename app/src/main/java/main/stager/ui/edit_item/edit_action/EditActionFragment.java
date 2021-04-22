@@ -104,6 +104,12 @@ public class EditActionFragment
     }
 
     @Override
+    protected void onItemDropped(int from, int to) {
+        super.onItemDropped(from, to);
+        viewModel.sendStagesList(adapter.getCurrentList(), mActionKey);
+    }
+
+    @Override
     protected void setEventListeners() {
         super.setEventListeners();
         editActionName.setOnFocusChangeListener(new OnLostFocusDBUpdater() {

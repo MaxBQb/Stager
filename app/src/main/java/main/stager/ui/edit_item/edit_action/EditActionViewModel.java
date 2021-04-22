@@ -25,13 +25,7 @@ public class EditActionViewModel extends StagerViewModel {
 
     public LiveData<List<Stage>> getStages(String key, DataProvider.OnError onError) {
         return getData(stages, () -> dataProvider.getStagesSorted(key).addValueEventListener(
-            new DataProvider.ValueListEventListener<Stage>(stages, Stage.class, onError) {
-                @Override
-                protected DatabaseReference backPathModify() {
-                    return dataProvider.getStages(key);
-                }
-            }
-        ));
+            new DataProvider.ValueListEventListener<>(stages, Stage.class, onError)));
     }
 
     public void deleteStage(Stage s, String actionKey) {

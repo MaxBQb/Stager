@@ -89,12 +89,14 @@ public class DataProvider {
     public String addAction(UserAction ua) {
         String key = getActions().push().getKey();
         getAction(key).setValue(ua);
+        initPositions(getActions());
         return key;
     }
 
     public String addStage(@NotNull String actionName, Stage stage) {
         String key = getStages(actionName).push().getKey();
         getStage(actionName, key).setValue(stage);
+        initPositions(getStages(actionName));
         return key;
     }
 
@@ -110,16 +112,6 @@ public class DataProvider {
         return getStages(actionName).child(key);
     }
 
-    private static DatabaseReference getPosition(@NotNull DatabaseReference ref,
-                                                @NotNull String key) {
-        return ref.child(key).child("pos");
-    }
-
-    public static void setPosition(@NotNull DatabaseReference ref, @NotNull String key,
-                                    int pos) {
-        getPosition(ref, key).setValue(pos);
-    }
-
     public static void resetPositions(@NotNull DatabaseReference ref, List<String> keys) {
         ref.runTransaction(new Transaction.Handler() {
             @NonNull
@@ -129,6 +121,39 @@ public class DataProvider {
                     for (int i = 0; i < keys.size(); i++)
                         if (currentData.child(keys.get(i)).getValue() != null)
                             currentData.child(keys.get(i)).child("pos").setValue(i+1);
+                return Transaction.success(currentData);
+            }
+
+            @Override
+            public void onComplete(@Nullable DatabaseError error,
+                                   boolean committed,
+                                   @Nullable DataSnapshot currentData) {}
+        });
+    }
+
+    private static void initPositions(@NotNull DatabaseReference ref) {
+        ref.runTransaction(new Transaction.Handler() {
+            @NonNull
+            @Override
+            public Transaction.Result doTransaction(@NonNull MutableData currentData) {
+                if (currentData.getValue() == null || !currentData.hasChildren())
+                    return Transaction.success(currentData);
+
+                int max_pos = 0;
+                Integer i;
+
+                for (MutableData item: currentData.getChildren()) {
+                    i = item.child("pos").getValue(Integer.class);
+                    if (i != null && i != Integer.MAX_VALUE && i > max_pos)
+                        max_pos = i;
+                }
+
+                for (MutableData item: currentData.getChildren()) {
+                    i = item.child("pos").getValue(Integer.class);
+                    if (i == null || i == Integer.MAX_VALUE)
+                        item.child("pos").setValue(++max_pos);
+                }
+
                 return Transaction.success(currentData);
             }
 
@@ -194,22 +219,8 @@ public class DataProvider {
             List<T> lst = new ArrayList<>();
             for (DataSnapshot postSnapshot: snapshot.getChildren())
                 lst.add(modify(postSnapshot.getValue(className), postSnapshot));
-            liveList.postValue(listModify(lst));
+            liveList.postValue(lst);
         }
-
-        protected List<T> listModify(List<T> list) {
-            if (list != null && !list.isEmpty() &&
-                list.get(0) instanceof FBModel &&
-                backPathModify() != null) {
-                int counter = list.size();
-                for (T itm : list)
-                    if (((FBModel) itm).getPos() == Integer.MAX_VALUE)
-                        setPosition(backPathModify(), ((FBModel) itm).getKey(), ++counter);
-            }
-            return list;
-        }
-
-        protected DatabaseReference backPathModify() { return null; }
     }
 
     public static class ValueEventListener<T> extends AValueEventListener<T> {

@@ -29,11 +29,6 @@ public class ActionsListViewModel extends StagerViewModel {
                     ua.setKey(snapshot.getKey());
                     return ua;
                 }
-
-                @Override
-                protected DatabaseReference backPathModify() {
-                    return dataProvider.getActions();
-                }
             }
         ));
     }

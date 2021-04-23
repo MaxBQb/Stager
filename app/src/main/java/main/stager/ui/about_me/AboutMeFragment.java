@@ -56,7 +56,7 @@ public class AboutMeFragment extends StagerVMFragment<AboutMeViewModel> {
     @Override
     protected void setObservers() {
         super.setObservers();
-        viewModel.getText().observe(getViewLifecycleOwner(), inputName::setText);
+        viewModel.getName().observe(getViewLifecycleOwner(), inputName::setText);
         viewModel.getDescription().observe(getViewLifecycleOwner(), inputDescription::setText);
     }
 }

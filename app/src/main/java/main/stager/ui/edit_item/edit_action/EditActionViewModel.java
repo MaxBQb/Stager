@@ -4,10 +4,8 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.Query;
 import lombok.Setter;
-import main.stager.utils.ChangeListeners.firebase.ValueEventListener;
 import main.stager.list.StagerListViewModel;
 import main.stager.model.Stage;
 
@@ -35,16 +33,6 @@ public class EditActionViewModel extends StagerListViewModel<Stage> {
     }
 
     public LiveData<String> getActionName(String defaultValue) {
-        return getData(actionName, () -> dataProvider.getActionName(actionKey).addValueEventListener(
-            new ValueEventListener<String>(actionName, String.class) {
-                @Override
-                protected String modify(String item, DataSnapshot snapshot) {
-                    String t = super.modify(item, snapshot);
-                    if (t == null || t.trim().isEmpty())
-                        return defaultValue;
-                    return t.trim();
-                }
-            }
-        ));
+        return getText(actionName, dataProvider.getActionName(actionKey), defaultValue);
     }
 }

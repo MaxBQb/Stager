@@ -4,6 +4,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import main.stager.utils.ChangeListeners.firebase.ValueEventListener;
 import main.stager.utils.DataProvider;
 import main.stager.Base.StagerViewModel;
 
@@ -20,13 +21,13 @@ public class AboutMeViewModel extends StagerViewModel {
 
     public LiveData<String> getText() {
         return getData(mName, () -> dataProvider.getUserName().addValueEventListener(
-            new DataProvider.ValueEventListener<>(mName, String.class)
+            new ValueEventListener<>(mName, String.class)
         ));
     }
 
     public LiveData<String> getDescription() {
         return getData(mDescription, () -> dataProvider.getUserDescription().addValueEventListener(
-            new DataProvider.ValueEventListener<>(mDescription, String.class)
+            new ValueEventListener<>(mDescription, String.class)
         ));
     }
 }

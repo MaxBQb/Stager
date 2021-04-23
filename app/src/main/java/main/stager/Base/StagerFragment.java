@@ -5,18 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.LayoutRes;
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
-
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import main.stager.R;
+import main.stager.utils.ChangeListeners.firebase.ValueRemovedListener;
 import main.stager.utils.DataProvider;
 
 public abstract class StagerFragment extends Fragment {
@@ -69,13 +65,13 @@ public abstract class StagerFragment extends Fragment {
 
     protected void setDependencies() { dependencies = new ArrayList<>(); }
 
-    protected DataProvider.ValueRemovedListener onValueRemovedListener;
+    protected ValueRemovedListener onValueRemovedListener;
 
     protected void bindDependencies() {
         if (dependencies == null || dependencies.isEmpty()) return;
 
         if (onValueRemovedListener == null)
-            onValueRemovedListener = new DataProvider.ValueRemovedListener() {
+            onValueRemovedListener = new ValueRemovedListener() {
                 @Override public void onValueRemoved() { close(); }
             };
 

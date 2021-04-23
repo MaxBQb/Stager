@@ -10,6 +10,7 @@ import java.util.List;
 import main.stager.Base.StagerViewModel;
 import main.stager.model.FBModel;
 import main.stager.utils.DataProvider;
+import main.stager.utils.ChangeListeners.firebase.*;
 
 public abstract class StagerListViewModel<T extends FBModel> extends StagerViewModel {
 
@@ -29,8 +30,8 @@ public abstract class StagerListViewModel<T extends FBModel> extends StagerViewM
         DataProvider.resetPositions((DatabaseReference)getListPath(), DataProvider.getKeys(items));
     }
 
-    public LiveData<List<T>> getItems(DataProvider.OnError onError) {
+    public LiveData<List<T>> getItems(OnError onError) {
         return getData(mValues, () -> dataProvider.getSorted(getListPath()).addValueEventListener(
-                new DataProvider.ValueListEventListener<T>(mValues, getItemType(), onError)));
+                new ValueListEventListener<T>(mValues, getItemType(), onError)));
     }
 }

@@ -2,7 +2,6 @@ package main.stager.utils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -187,95 +186,5 @@ public class DataProvider {
         ArrayList<String> keys = new ArrayList<>();
         for (T item: list) keys.add(item.getKey());
         return keys;
-    }
-
-    @FunctionalInterface
-    public interface OnError {
-        void react(String reason);
-    }
-
-    public static class ValueListEventListener<T> extends AValueEventListener<T> {
-        protected MutableLiveData<List<T>> liveList;
-        protected Class<T> className;
-
-        public ValueListEventListener(MutableLiveData<List<T>> liveList, Class<T> className, OnError onError) {
-            this.liveList = liveList;
-            this.className = className;
-            this.onError = onError;
-        }
-
-        public ValueListEventListener(MutableLiveData<List<T>> liveList, Class<T> className) {
-            this(liveList, className, null);
-        }
-
-        @Override
-        public void onDataChange(@NonNull DataSnapshot snapshot) {
-            if (!snapshot.exists()) {
-                liveList.postValue(null);
-                return;
-            }
-            List<T> lst = new ArrayList<>();
-            for (DataSnapshot postSnapshot: snapshot.getChildren())
-                lst.add(modify(postSnapshot.getValue(className), postSnapshot));
-            liveList.postValue(lst);
-        }
-    }
-
-    public static class ValueEventListener<T> extends AValueEventListener<T> {
-        protected MutableLiveData<T> live;
-        protected Class<T> className;
-
-        public ValueEventListener(MutableLiveData<T> live, Class<T> className, OnError onError) {
-            this.live = live;
-            this.className = className;
-            this.onError = onError;
-        }
-
-        public ValueEventListener(MutableLiveData<T> live, Class<T> className) {
-            this(live, className, null);
-        }
-
-        protected T modify(T item, DataSnapshot snapshot) {
-            if (item instanceof FBModel)
-                ((FBModel)item).setKey(snapshot.getKey());
-            return item;
-        }
-
-        @Override
-        public void onDataChange(@NonNull DataSnapshot snapshot) {
-            live.postValue(snapshot.exists() ?
-                    modify(snapshot.getValue(className), snapshot):
-                    null
-            );
-        }
-    }
-
-    public abstract static class AValueEventListener<T> implements com.google.firebase.database.ValueEventListener {
-        protected OnError onError;
-
-        @Override
-        public void onCancelled(@NonNull DatabaseError error) {
-            if (onError != null)
-                onError.react(error.getMessage());
-        }
-
-        protected T modify(T item, DataSnapshot snapshot) {
-            if (item instanceof FBModel)
-                ((FBModel)item).setKey(snapshot.getKey());
-            return item;
-        }
-    }
-
-    public abstract static class ValueRemovedListener implements com.google.firebase.database.ValueEventListener {
-
-        @Override
-        public void onDataChange(@NonNull DataSnapshot snapshot) {
-            if (!snapshot.exists()) onValueRemoved();
-        }
-
-        protected void onValueRemoved() {}
-
-        @Override
-        public void onCancelled(@NonNull DatabaseError error) {}
     }
 }

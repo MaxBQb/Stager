@@ -11,9 +11,9 @@ import android.widget.TextView;
 import com.rockerhieu.rvadapter.states.StatesRecyclerViewAdapter;
 import java.util.List;
 import main.stager.model.FBModel;
-import main.stager.utils.DataProvider;
 import main.stager.R;
 import main.stager.Base.StagerVMFragment;
+import main.stager.utils.ChangeListeners.firebase.OnError;
 
 public abstract class StagerList<TVM extends StagerListViewModel<T>,
                                  TA extends StagerListAdapter<T,
@@ -48,7 +48,7 @@ public abstract class StagerList<TVM extends StagerListViewModel<T>,
         }
     }
 
-    protected LiveData<List<T>> getList(DataProvider.OnError onError) {
+    protected LiveData<List<T>> getList(OnError onError) {
         return viewModel.getItems(onError);
     }
 

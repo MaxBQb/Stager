@@ -1,18 +1,10 @@
 package main.stager.ui.edit_item.edit_action;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.View;
 import android.widget.EditText;
-
 import com.google.firebase.database.DatabaseReference;
-
-import java.util.List;
-
 import main.stager.utils.ChangeListeners.OnLostFocusDBUpdater;
 import main.stager.utils.DataProvider;
 import main.stager.R;
@@ -62,15 +54,11 @@ public class EditActionFragment
         return R.layout.fragment_action_stages;
     }
 
-    @Override
-    protected LiveData<List<Stage>> getList(DataProvider.OnError onError) {
-        return viewModel.getStages(mActionKey, onError);
-    }
 
     @Override
     protected void setObservers() {
         super.setObservers();
-        viewModel.getActionName(mActionKey, "").observe(getViewLifecycleOwner(),
+        viewModel.getActionName("").observe(getViewLifecycleOwner(),
         (String text) -> {
             editActionName.setText(text);
             if (text.isEmpty())
@@ -89,11 +77,6 @@ public class EditActionFragment
     }
 
     @Override
-    public void onItemSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int pos, int direction) {
-        viewModel.deleteStage(adapter.get(pos), mActionKey);
-    }
-
-    @Override
     protected void prepareFragmentComponents() {
         super.prepareFragmentComponents();
         ((SmartActivity)getActivity())
@@ -101,12 +84,6 @@ public class EditActionFragment
                 .setTitle(getString(R.string.StagesFragment_label, mActionName));
         editActionName = view.findViewById(R.id.edit_action_input_name);
         editActionName.setText(mActionName);
-    }
-
-    @Override
-    protected void onItemDropped(int from, int to) {
-        super.onItemDropped(from, to);
-        viewModel.sendStagesList(adapter.getCurrentList(), mActionKey);
     }
 
     @Override
@@ -118,5 +95,11 @@ public class EditActionFragment
                 return dp.getActionName(mActionKey);
             }
         });
+    }
+
+    @Override
+    protected void setViewModelData() {
+        super.setViewModelData();
+        viewModel.setActionKey(mActionKey);
     }
 }

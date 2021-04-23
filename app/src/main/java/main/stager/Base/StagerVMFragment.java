@@ -19,8 +19,11 @@ public abstract class StagerVMFragment<TVM extends ViewModel> extends StagerFrag
         super.setEventListeners();
     }
 
+    protected void setViewModelData() {}
+
     @Override
     protected void prepareFragmentComponents() {
         viewModel = new ViewModelProvider(this).get(getViewModelType());
+        setViewModelData();
     }
 }

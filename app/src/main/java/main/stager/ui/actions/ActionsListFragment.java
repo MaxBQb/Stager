@@ -2,11 +2,6 @@ package main.stager.ui.actions;
 
 import android.os.Bundle;
 import android.view.View;
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
-import androidx.recyclerview.widget.RecyclerView;
-import java.util.List;
-import main.stager.utils.DataProvider;
 import main.stager.R;
 import main.stager.list.StagerExtendableList;
 import main.stager.model.UserAction;
@@ -27,23 +22,6 @@ public class ActionsListFragment extends
     @Override
     protected int getViewBaseLayoutId() {
         return R.layout.fragment_actions;
-    }
-
-    @Override
-    protected LiveData<List<UserAction>> getList(DataProvider.OnError onError) {
-        return viewModel.getActions(onError);
-    }
-
-    @Override
-    public void onItemSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int pos, int direction) {
-        super.onItemSwiped(viewHolder, pos, direction);
-        viewModel.deleteAction(adapter.get(pos));
-    }
-
-    @Override
-    protected void onItemDropped(int from, int to) {
-        super.onItemDropped(from, to);
-        viewModel.sendActionsList(adapter.getCurrentList());
     }
 
     @Override

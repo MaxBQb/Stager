@@ -74,7 +74,7 @@ public class DataProvider {
         return getSorted(getStages(key));
     }
 
-    private Query getSorted(@NotNull DatabaseReference ref) {
+    public Query getSorted(@NotNull Query ref) {
         return ref.orderByChild("pos");
     }
 

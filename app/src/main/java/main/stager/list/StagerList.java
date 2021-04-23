@@ -3,7 +3,6 @@ package main.stager.list;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,14 +11,15 @@ import android.widget.TextView;
 import com.rockerhieu.rvadapter.states.StatesRecyclerViewAdapter;
 import java.util.List;
 
+import main.stager.model.FBModel;
 import main.stager.utils.DataProvider;
 import main.stager.R;
 import main.stager.Base.StagerVMFragment;
 
-public abstract class StagerList<TVM extends ViewModel,
+public abstract class StagerList<TVM extends StagerListViewModel<T>,
                                  TA extends StagerListAdapter<T,
                                                                           ? extends RecyclerView.ViewHolder>,
-                                 T> extends StagerVMFragment<TVM> {
+                                 T extends FBModel> extends StagerVMFragment<TVM> {
     protected TA adapter;
 
     // Требует переопределения
@@ -49,7 +49,9 @@ public abstract class StagerList<TVM extends ViewModel,
         }
     }
 
-    protected abstract LiveData<List<T>> getList(DataProvider.OnError onError);
+    protected LiveData<List<T>> getList(DataProvider.OnError onError) {
+        return viewModel.getItems(onError);
+    }
 
     protected RecyclerView getRecyclerView() {
         RecyclerView recyclerView = view.findViewById(R.id.list);

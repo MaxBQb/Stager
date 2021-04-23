@@ -8,12 +8,14 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import org.jetbrains.annotations.NotNull;
 import main.stager.R;
+import main.stager.model.FBModel;
+
 import static com.google.android.material.color.MaterialColors.ALPHA_FULL;
 
-public abstract class StagerExtendableList<TVM extends ViewModel,
+public abstract class StagerExtendableList<TVM extends StagerListViewModel<T>,
                                            TA extends StagerListAdapter<T,
                                                                                       ? extends RecyclerView.ViewHolder>,
-                                           T> extends StagerList<TVM, TA, T> {
+                                           T extends FBModel> extends StagerList<TVM, TA, T> {
 
     // Listeners
     protected abstract void onButtonAddClicked(View v);
@@ -22,7 +24,15 @@ public abstract class StagerExtendableList<TVM extends ViewModel,
         adapter.moveItem(from, to);
     }
 
-    protected void onItemDropped(int from, int to) {}
+    protected void onItemDropped(int from, int to) {
+        viewModel.pushItemsPositions(adapter.getCurrentList());
+    }
+
+    @Override
+    public void onItemSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int pos, int direction) {
+        super.onItemSwiped(viewHolder, pos, direction);
+        viewModel.deleteItem(adapter.get(pos));
+    }
 
     protected void setEventListeners() {
         super.setEventListeners();

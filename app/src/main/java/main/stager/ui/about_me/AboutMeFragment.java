@@ -32,18 +32,9 @@ public class AboutMeFragment extends StagerVMFragment<AboutMeViewModel> {
             startActivity(new Intent(this.getActivity(), MainActivity.class));
             this.getActivity().finish();
         });
-        inputName.setOnFocusChangeListener(new OnLostFocusDBUpdater() {
-            @Override
-            public DatabaseReference getDataRef(DataProvider dp) {
-            return dp.getUserName();
-            }
-        });
-        inputDescription.setOnFocusChangeListener(new OnLostFocusDBUpdater() {
-            @Override
-            public DatabaseReference getDataRef(DataProvider dp) {
-            return dp.getUserDescription();
-            }
-        });
+        inputName.setOnFocusChangeListener(new OnLostFocusDBUpdater(dataProvider.getUserName()));
+        inputDescription.setOnFocusChangeListener(
+                new OnLostFocusDBUpdater(dataProvider.getUserDescription()));
     }
 
     @Override

@@ -54,18 +54,17 @@ public class EditActionFragment
         return R.layout.fragment_action_stages;
     }
 
-
     @Override
     protected void setObservers() {
         super.setObservers();
         viewModel.getActionName("").observe(getViewLifecycleOwner(),
-        (String text) -> {
-            editActionName.setText(text);
-            if (text.isEmpty())
-                text = getString(R.string.EditActionFragment_message_UntitledAction);
-            ((AppCompatActivity)getActivity())
-                            .getSupportActionBar()
-                            .setTitle(getString(R.string.StagesFragment_label, text));
+            (String text) -> {
+                editActionName.setText(text);
+                if (text.isEmpty())
+                    text = getString(R.string.EditActionFragment_message_UntitledAction);
+                ((AppCompatActivity)getActivity())
+                                .getSupportActionBar()
+                                .setTitle(getString(R.string.StagesFragment_label, text));
         });
     }
 
@@ -89,12 +88,8 @@ public class EditActionFragment
     @Override
     protected void setEventListeners() {
         super.setEventListeners();
-        editActionName.setOnFocusChangeListener(new OnLostFocusDBUpdater() {
-            @Override
-            public DatabaseReference getDataRef(DataProvider dp) {
-                return dp.getActionName(mActionKey);
-            }
-        });
+        editActionName.setOnFocusChangeListener(
+                new OnLostFocusDBUpdater(dataProvider.getActionName(mActionKey)));
     }
 
     @Override

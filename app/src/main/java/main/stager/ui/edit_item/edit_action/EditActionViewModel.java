@@ -5,27 +5,22 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
-
 import java.util.List;
 import main.stager.utils.DataProvider;
-import main.stager.Base.StagerViewModel;
+import main.stager.list.StagerListViewModel;
 import main.stager.model.Stage;
-import main.stager.model.UserAction;
 
-public class EditActionViewModel extends StagerViewModel {
-    private MutableLiveData<List<Stage>> stages;
+public class EditActionViewModel extends StagerListViewModel<Stage> {
     private MutableLiveData<String> actionName;
 
     public EditActionViewModel(@NonNull Application application) {
         super(application);
-        stages = new MutableLiveData<>();
         actionName = new MutableLiveData<>();
     }
 
     public LiveData<List<Stage>> getStages(String key, DataProvider.OnError onError) {
-        return getData(stages, () -> dataProvider.getStagesSorted(key).addValueEventListener(
-            new DataProvider.ValueListEventListener<>(stages, Stage.class, onError)));
+        return getData(mValues, () -> dataProvider.getStagesSorted(key).addValueEventListener(
+            new DataProvider.ValueListEventListener<>(mValues, Stage.class, onError)));
     }
 
     public void deleteStage(Stage s, String actionKey) {

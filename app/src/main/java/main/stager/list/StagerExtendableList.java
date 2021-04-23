@@ -1,9 +1,7 @@
 package main.stager.list;
 
 import android.view.View;
-
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import org.jetbrains.annotations.NotNull;
@@ -34,8 +32,7 @@ public abstract class StagerExtendableList<TVM extends StagerListViewModel<T>,
         viewModel.deleteItem(adapter.get(pos));
     }
 
-    protected void setEventListeners() {
-        super.setEventListeners();
+    protected void bindOnDragAndDropListener() {
         new ItemTouchHelper(new ItemDragAndDropCallback() {
             @Override
             protected void onDrag(int from, int to) {
@@ -47,6 +44,11 @@ public abstract class StagerExtendableList<TVM extends StagerListViewModel<T>,
                 onItemDropped(from, to);
             }
         }).attachToRecyclerView(rv);
+    }
+
+    protected void setEventListeners() {
+        super.setEventListeners();
+        bindOnDragAndDropListener();
         view.findViewById(R.id.button_list_add).setOnClickListener(this::onButtonAddClicked);
     }
 

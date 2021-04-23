@@ -120,10 +120,7 @@ public abstract class StagerList<TVM extends StagerListViewModel<T>,
         list.observe(getViewLifecycleOwner(), adapter::submitList);
     }
 
-    @Override
-    protected void setEventListeners() {
-        super.setEventListeners();
-        adapter.setOnItemClickListener(this::onItemClick);
+    protected void bindOnSwipeListener() {
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -136,6 +133,13 @@ public abstract class StagerList<TVM extends StagerListViewModel<T>,
                 onItemSwiped(viewHolder, viewHolder.getAdapterPosition(), direction);
             }
         }).attachToRecyclerView(rv);
+    }
+
+    @Override
+    protected void setEventListeners() {
+        super.setEventListeners();
+        adapter.setOnItemClickListener(this::onItemClick);
+        bindOnSwipeListener();
     }
 
     @Override

@@ -11,12 +11,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.Transaction;
-
 import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import main.stager.model.FBModel;
 import main.stager.model.Stage;
 import main.stager.model.UserAction;
@@ -40,14 +37,6 @@ public class DataProvider {
         keepSynced();
     }
 
-    /** Path safe, not null uid
-     * @return uid or empty string
-     */
-    public @NotNull String getUID() {
-        String uid = mAuth.getUid();
-        return uid == null ? "" : uid;
-    }
-
     private void keepSynced() {
         DatabaseReference[] sync = new DatabaseReference[]{
                 getActions(),
@@ -58,24 +47,37 @@ public class DataProvider {
             dr.keepSynced(true);
     }
 
+    // User data
+
+    /** Path safe, not null uid
+     * @return uid or empty string
+     */
+    public @NotNull String getUID() {
+        String uid = mAuth.getUid();
+        return uid == null ? "" : uid;
+    }
+
     public boolean isAuthorized() {
         return mAuth.getCurrentUser() != null;
     }
 
+    public DatabaseReference getUserInfo() {
+        return mRef.child("user_info").child(getUID());
+    }
+
+    public DatabaseReference getUserName() {
+        return getUserInfo().child("name");
+    }
+
+    public DatabaseReference getUserDescription() {
+        return getUserInfo().child("description");
+    }
+
+
+    // Actions
+
     public DatabaseReference getActions() {
         return mRef.child("actions").child(getUID());
-    }
-
-    public Query getActionsSorted() {
-        return getSorted(getActions());
-    }
-
-    public Query getStagesSorted(@NotNull String key) {
-        return getSorted(getStages(key));
-    }
-
-    public Query getSorted(@NotNull Query ref) {
-        return ref.orderByChild("pos");
     }
 
     public DatabaseReference getAction(@NotNull String key) {
@@ -92,6 +94,13 @@ public class DataProvider {
         initPositions(getActions());
         return key;
     }
+
+    public void deleteAction(@NotNull String key) {
+        getStages(key).removeValue();
+        getAction(key).removeValue();
+    }
+
+    // Stages of action
 
     public String addStage(@NotNull String actionName, Stage stage) {
         String key = getStages(actionName).push().getKey();
@@ -112,6 +121,12 @@ public class DataProvider {
         return getStages(actionName).child(key);
     }
 
+    public void deleteStage(@NotNull String actionName, @NotNull String key) {
+        getStage(actionName, key).removeValue();
+    }
+
+    // Other
+
     public static void resetPositions(@NotNull DatabaseReference ref, List<String> keys) {
         ref.runTransaction(new Transaction.Handler() {
             @NonNull
@@ -131,7 +146,7 @@ public class DataProvider {
         });
     }
 
-    private static void initPositions(@NotNull DatabaseReference ref) {
+    public static void initPositions(@NotNull DatabaseReference ref) {
         ref.runTransaction(new Transaction.Handler() {
             @NonNull
             @Override
@@ -164,31 +179,14 @@ public class DataProvider {
         });
     }
 
+    public Query getSorted(@NotNull Query ref) {
+        return ref.orderByChild("pos");
+    }
+
     public static <T extends FBModel> List<String> getKeys(List<T> list) {
         ArrayList<String> keys = new ArrayList<>();
         for (T item: list) keys.add(item.getKey());
         return keys;
-    }
-
-    public void deleteStage(@NotNull String actionName, @NotNull String key) {
-        getStage(actionName, key).removeValue();
-    }
-
-    public void deleteAction(@NotNull String key) {
-        getStages(key).removeValue();
-        getAction(key).removeValue();
-    }
-
-    public DatabaseReference getUserInfo() {
-        return mRef.child("user_info").child(getUID());
-    }
-
-    public DatabaseReference getUserName() {
-        return getUserInfo().child("name");
-    }
-
-    public DatabaseReference getUserDescription() {
-        return getUserInfo().child("description");
     }
 
     @FunctionalInterface

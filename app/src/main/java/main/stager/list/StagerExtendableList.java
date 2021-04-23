@@ -12,7 +12,7 @@ import static com.google.android.material.color.MaterialColors.ALPHA_FULL;
 
 public abstract class StagerExtendableList<TVM extends StagerListViewModel<T>,
                                            TA extends StagerListAdapter<T,
-                                                                                      ? extends RecyclerView.ViewHolder>,
+                                                      ? extends RecyclerView.ViewHolder>,
                                            T extends FBModel> extends StagerList<TVM, TA, T> {
 
     // Listeners
@@ -32,6 +32,7 @@ public abstract class StagerExtendableList<TVM extends StagerListViewModel<T>,
         viewModel.deleteItem(adapter.get(pos));
     }
 
+    // Bind listener
     protected void bindOnDragAndDropListener() {
         new ItemTouchHelper(new ItemDragAndDropCallback() {
             @Override

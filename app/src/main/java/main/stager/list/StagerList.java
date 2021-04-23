@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.TextView;
 import com.rockerhieu.rvadapter.states.StatesRecyclerViewAdapter;
 import java.util.List;
-
 import main.stager.model.FBModel;
 import main.stager.utils.DataProvider;
 import main.stager.R;
@@ -18,7 +17,7 @@ import main.stager.Base.StagerVMFragment;
 
 public abstract class StagerList<TVM extends StagerListViewModel<T>,
                                  TA extends StagerListAdapter<T,
-                                                                          ? extends RecyclerView.ViewHolder>,
+                                            ? extends RecyclerView.ViewHolder>,
                                  T extends FBModel> extends StagerVMFragment<TVM> {
     protected TA adapter;
 
@@ -120,6 +119,7 @@ public abstract class StagerList<TVM extends StagerListViewModel<T>,
         list.observe(getViewLifecycleOwner(), adapter::submitList);
     }
 
+    // Bind listeners
     protected void bindOnSwipeListener() {
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {

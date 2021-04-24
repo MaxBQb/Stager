@@ -3,9 +3,6 @@ package main.stager.ui.about_me;
 import android.content.Intent;
 import android.widget.EditText;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import main.stager.utils.ChangeListeners.OnLostFocusDBUpdater;
-import main.stager.utils.DataProvider;
 import main.stager.MainActivity;
 import main.stager.R;
 import main.stager.Base.StagerVMFragment;
@@ -32,9 +29,6 @@ public class AboutMeFragment extends StagerVMFragment<AboutMeViewModel> {
             startActivity(new Intent(this.getActivity(), MainActivity.class));
             this.getActivity().finish();
         });
-        inputName.setOnFocusChangeListener(new OnLostFocusDBUpdater(dataProvider.getUserName()));
-        inputDescription.setOnFocusChangeListener(
-                new OnLostFocusDBUpdater(dataProvider.getUserDescription()));
     }
 
     @Override
@@ -47,7 +41,7 @@ public class AboutMeFragment extends StagerVMFragment<AboutMeViewModel> {
     @Override
     protected void setObservers() {
         super.setObservers();
-        viewModel.getName().observe(getViewLifecycleOwner(), inputName::setText);
-        viewModel.getDescription().observe(getViewLifecycleOwner(), inputDescription::setText);
+        bindDataTwoWay(viewModel.getName(), inputName);
+        bindDataTwoWay(viewModel.getDescription(), inputDescription);
     }
 }

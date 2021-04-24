@@ -32,7 +32,7 @@ public class EditActionViewModel extends StagerListViewModel<Stage> {
         return Stage.class;
     }
 
-    public LiveData<String> getActionName(String defaultValue) {
-        return getText(actionName, dataProvider.getActionName(actionKey), defaultValue);
+    public LiveData<String> getActionName() {
+        return getText(actionName, dataProvider.getActionName(actionKey));
     }
 }

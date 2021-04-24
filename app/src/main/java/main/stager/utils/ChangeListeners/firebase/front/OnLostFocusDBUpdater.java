@@ -1,14 +1,13 @@
-package main.stager.utils.ChangeListeners;
+package main.stager.utils.ChangeListeners.firebase.front;
 
 import android.view.View;
 import android.widget.TextView;
 import com.google.firebase.database.DatabaseReference;
 
-// Update DB <- info
-public class OnLostFocusDBUpdater implements View.OnFocusChangeListener {
-    private DatabaseReference mRef;
+public class OnLostFocusDBUpdater extends FBFrontListener
+        implements View.OnFocusChangeListener {
 
-    public OnLostFocusDBUpdater(DatabaseReference ref) { mRef = ref; }
+    public OnLostFocusDBUpdater(DatabaseReference ref) { super(ref); }
 
     @Override
     public void onFocusChange(View v, boolean hasFocus) {

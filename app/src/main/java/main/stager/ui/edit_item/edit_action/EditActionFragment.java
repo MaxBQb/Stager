@@ -4,9 +4,6 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
-import com.google.firebase.database.DatabaseReference;
-import main.stager.utils.ChangeListeners.OnLostFocusDBUpdater;
-import main.stager.utils.DataProvider;
 import main.stager.R;
 import main.stager.Base.SmartActivity;
 import main.stager.list.StagerExtendableList;
@@ -57,15 +54,14 @@ public class EditActionFragment
     @Override
     protected void setObservers() {
         super.setObservers();
-        viewModel.getActionName("").observe(getViewLifecycleOwner(),
-            (String text) -> {
-                editActionName.setText(text);
-                if (text.isEmpty())
-                    text = getString(R.string.EditActionFragment_message_UntitledAction);
-                ((AppCompatActivity)getActivity())
-                                .getSupportActionBar()
-                                .setTitle(getString(R.string.StagesFragment_label, text));
-        });
+        bindData(viewModel.getActionName(),
+                (String text) -> ((AppCompatActivity)getActivity())
+                                 .getSupportActionBar()
+                                 .setTitle(getString(R.string.StagesFragment_label,
+                                         text == null || text.trim().isEmpty() ?
+                                                 getString(R.string.EditActionFragment_message_UntitledAction)
+                                                 : text)));
+        bindDataTwoWay(viewModel.getActionName(), editActionName);
     }
 
     @Override
@@ -83,13 +79,6 @@ public class EditActionFragment
                 .setTitle(getString(R.string.StagesFragment_label, mActionName));
         editActionName = view.findViewById(R.id.edit_action_input_name);
         editActionName.setText(mActionName);
-    }
-
-    @Override
-    protected void setEventListeners() {
-        super.setEventListeners();
-        editActionName.setOnFocusChangeListener(
-                new OnLostFocusDBUpdater(dataProvider.getActionName(mActionKey)));
     }
 
     @Override

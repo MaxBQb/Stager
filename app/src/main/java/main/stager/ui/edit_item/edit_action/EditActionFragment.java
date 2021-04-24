@@ -9,6 +9,7 @@ import main.stager.Base.SmartActivity;
 import main.stager.list.StagerExtendableList;
 import main.stager.model.Stage;
 import main.stager.ui.add_item.add_action_stage.AddStageFragment;
+import main.stager.utils.Utilits;
 
 public class EditActionFragment
         extends StagerExtendableList<EditActionViewModel, ActionStageRecyclerViewAdapter, Stage> {
@@ -22,7 +23,8 @@ public class EditActionFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mActionName = getArguments().getString(ARG_ACTION_NAME);
+            mActionName = Utilits.getDefaultOnNullOrBlank(getArguments().getString(ARG_ACTION_NAME),
+                    getString(R.string.EditActionFragment_message_UntitledAction));
             mActionKey = getArguments().getString(ARG_ACTION_KEY);
         } else {
             mActionName = getString(R.string.EditActionFragment_message_UntitledAction);
@@ -58,9 +60,10 @@ public class EditActionFragment
                 (String text) -> ((AppCompatActivity)getActivity())
                                  .getSupportActionBar()
                                  .setTitle(getString(R.string.StagesFragment_label,
-                                         text == null || text.trim().isEmpty() ?
-                                                 getString(R.string.EditActionFragment_message_UntitledAction)
-                                                 : text)));
+                                         Utilits.getDefaultOnNullOrBlank(text,
+                                                 getString(R.string
+                                                         .EditActionFragment_message_UntitledAction
+                                                 )))));
         bindDataTwoWay(viewModel.getActionName(), editActionName);
     }
 

@@ -10,6 +10,7 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.HashMap;
 import main.stager.utils.ChangeListeners.firebase.ValueEventListener;
 import main.stager.utils.DataProvider;
+import main.stager.utils.Utilits;
 
 public abstract class StagerViewModel extends AndroidViewModel {
     protected static DataProvider dataProvider = DataProvider.getInstance();
@@ -49,7 +50,7 @@ public abstract class StagerViewModel extends AndroidViewModel {
                 new ValueEventListener<String>(data, String.class) {
                     @Override
                     protected String modify(String item, DataSnapshot snapshot) {
-                        if (item == null || item.trim().isEmpty())
+                        if (Utilits.isNullOrBlank(item))
                             return defaultValue;
                         return item.trim();
                     }

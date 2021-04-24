@@ -14,6 +14,7 @@ import java.util.List;
 import main.stager.R;
 import main.stager.utils.ChangeListeners.firebase.ValueRemovedListener;
 import main.stager.utils.DataProvider;
+import main.stager.utils.Utilits;
 
 public abstract class StagerFragment extends Fragment {
     protected static DataProvider dataProvider = DataProvider.getInstance();
@@ -68,7 +69,7 @@ public abstract class StagerFragment extends Fragment {
     protected ValueRemovedListener onValueRemovedListener;
 
     protected void bindDependencies() {
-        if (dependencies == null || dependencies.isEmpty()) return;
+        if (Utilits.isNullOrEmpty(dependencies)) return;
 
         if (onValueRemovedListener == null)
             onValueRemovedListener = new ValueRemovedListener() {
@@ -80,7 +81,7 @@ public abstract class StagerFragment extends Fragment {
     }
 
     protected void unbindDependencies() {
-        if (dependencies == null || dependencies.isEmpty()
+        if (Utilits.isNullOrEmpty(dependencies)
                 || onValueRemovedListener == null) return;
         for (DatabaseReference ref: dependencies)
             ref.removeEventListener(onValueRemovedListener);

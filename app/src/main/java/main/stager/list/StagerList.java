@@ -14,6 +14,7 @@ import main.stager.model.FBModel;
 import main.stager.R;
 import main.stager.Base.StagerVMFragment;
 import main.stager.utils.ChangeListeners.firebase.OnError;
+import main.stager.utils.Utilits;
 
 public abstract class StagerList<TVM extends StagerListViewModel<T>,
                                  TA extends StagerListAdapter<T,
@@ -106,7 +107,7 @@ public abstract class StagerList<TVM extends StagerListViewModel<T>,
     }
 
     protected void reactState(List<?> list) {
-        if (list == null || list.isEmpty())
+        if (Utilits.isNullOrEmpty(list))
             srvAdapter.setState(StatesRecyclerViewAdapter.STATE_EMPTY);
         else
             srvAdapter.setState(StatesRecyclerViewAdapter.STATE_NORMAL);

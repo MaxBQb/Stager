@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import main.stager.R;
 import main.stager.list.StagerListAdapter;
 import main.stager.model.UserAction;
+import main.stager.utils.Utilits;
 
 /**
  * {@link RecyclerView.Adapter} для отображения {@link UserAction}.
@@ -45,7 +46,12 @@ public class ActionItemRecyclerViewAdapter
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = getItem(position);
-        holder.mContentView.setText(holder.mItem.getName());
+
+        if (Utilits.isNullOrBlank(holder.mItem.getName()))
+            holder.mContentView.setText(R.string.EditActionFragment_message_UntitledAction);
+        else
+            holder.mContentView.setText(holder.mItem.getName());
+
         switch (holder.mItem.getStatus()) {
             case ABORTED:
                 holder.mStatusView.setImageResource(

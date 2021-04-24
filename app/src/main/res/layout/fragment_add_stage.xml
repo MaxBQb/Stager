@@ -7,7 +7,7 @@
     tools:context=".ui.add_item.add_stage.AddStageFragment"
     android:orientation="vertical">
     <EditText
-        android:id="@+id/add_action_stage_input_name"
+        android:id="@+id/add_stage_input_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"

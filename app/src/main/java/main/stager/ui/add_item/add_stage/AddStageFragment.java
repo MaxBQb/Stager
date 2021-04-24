@@ -32,7 +32,7 @@ public class AddStageFragment extends AddItemFragment {
     @Override
     protected void prepareFragmentComponents() {
         super.prepareFragmentComponents();
-        inputName = view.findViewById(R.id.add_action_stage_input_name);
+        inputName = view.findViewById(R.id.add_stage_input_name);
     }
 
     @Override

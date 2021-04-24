@@ -69,7 +69,7 @@ public class EditStageFragment extends StagerVMFragment<EditStageViewModel> {
         ((SmartActivity)getActivity())
                 .getSupportActionBar()
                 .setTitle(mStageName);
-        editStageName = view.findViewById(R.id.edit_action_stage_input_name);
+        editStageName = view.findViewById(R.id.edit_stage_input_name);
         editStageName.setText(mStageName);
     }
 

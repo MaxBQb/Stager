@@ -47,7 +47,7 @@ public class ActionStageRecyclerViewAdapter
         holder.mItem = getItem(position);
 
         if (Utilits.isNullOrBlank(holder.mItem.getName()))
-            holder.mContentView.setText(R.string.EditActionStage_message_UntitledStage);
+            holder.mContentView.setText(R.string.EditStageFragment_message_UntitledStage);
         else
             holder.mContentView.setText(holder.mItem.getName());
 

@@ -1,4 +1,4 @@
-package main.stager.ui.edit_item.edit_action_stage;
+package main.stager.ui.edit_item.edit_stage;
 
 import android.app.Application;
 
@@ -9,12 +9,12 @@ import androidx.lifecycle.MutableLiveData;
 import lombok.Setter;
 import main.stager.Base.StagerViewModel;
 
-public class EditActionStageViewModel extends StagerViewModel {
+public class EditStageViewModel extends StagerViewModel {
     private MutableLiveData<String> mName;
     @Setter private String actionKey;
     @Setter private String stageKey;
 
-    public EditActionStageViewModel(@NonNull Application application) {
+    public EditStageViewModel(@NonNull Application application) {
         super(application);
         mName = new MutableLiveData<>();
     }

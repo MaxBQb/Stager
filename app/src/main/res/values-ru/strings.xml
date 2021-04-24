@@ -19,7 +19,7 @@
     <string name="AuthorizationActivity_Button_Register">Регистрация</string>
 
     <!-- Настройки -->
-    <string name="Settings_label">Настройки</string>
+    <string name="Settings_title">Настройки</string>
     <string name="Settings_Category_title_Appearance">Внешний вид</string>
         <string name="Settings_Appearance_label_Theme">Тёмная тема</string>
         <string name="Settings_Appearance_Switch_summaryOn_DarkMode">Текущая тема: Тёмная</string>
@@ -29,7 +29,7 @@
             Текущий язык: %1$s</string>
 
     <!-- Список этапов -->
-    <string name="StagesFragment_label" formatted="true">
+    <string name="StagesFragment_title" formatted="true">
         Этапы \'%1$s\'"</string>
     <string name="EditActionFragment_message_UntitledAction">Без названия</string>
     <string name="EditActionFragment_StagesList_NoItemsMessage">Стадий пока нет..</string>
@@ -50,16 +50,16 @@
     <string name="AboutMeFragment_Button_ChangePassword">Сменить</string>
 
     <!-- Добавить мероприятие -->
-    <string name="AddAction_title">Новое мероприятие</string>
-    <string name="AddAction_EditText_hint_context">Заголовок</string>
-    <string name="AddAction_ErrorMessage">Невозможно создать мероприятие: %s</string>
-    <string name="AddAction_ErrorMessage_ReasonNoName">отсутствует название</string>
+    <string name="AddActionFragment_title">Новое мероприятие</string>
+    <string name="AddActionFragment_EditText_hint_context">Заголовок</string>
+    <string name="AddActionFragment_ErrorMessage">Невозможно создать мероприятие: %s</string>
+    <string name="AddActionFragment_ErrorMessage_ReasonNoName">отсутствует название</string>
 
     <!-- Добавить этап мероприятия -->
-    <string name="AddActionStage_title">Очередной этап</string>
-    <string name="AddActionStage_EditText_InputHint">Заголовок</string>
-    <string name="AddActionStage_ErrorMessage">Невозможно создать стадию: %s</string>
-    <string name="AddActionStage_ErrorMessage_ReasonNoName">отсутствует название</string>
+    <string name="AddStageFragment_title">Очередной этап</string>
+    <string name="AddStageFragment_EditText_InputHint">Заголовок</string>
+    <string name="AddStageFragment_ErrorMessage">Невозможно создать стадию: %s</string>
+    <string name="AddStageFragment_ErrorMessage_ReasonNoName">отсутствует название</string>
 
     <!-- Меню редактирования чего-либо -->
     <string name="ItemEditMenu_title_SaveChanges">Сохранить</string>
@@ -70,6 +70,6 @@
     <string name="CommonList_ErrorListView_TextView_text">Произошла ошибка: %s</string>
 
     <!-- Изменить этап мероприятия -->
-    <string name="EditActionStage_title">Этап</string>
-    <string name="EditActionStage_message_UntitledStage">Безымянный этап</string>
+    <string name="EditStageFragment_title">Этап</string>
+    <string name="EditStageFragment_message_UntitledStage">Безымянный этап</string>
 </resources>

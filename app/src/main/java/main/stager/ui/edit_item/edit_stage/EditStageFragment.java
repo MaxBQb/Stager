@@ -1,4 +1,4 @@
-package main.stager.ui.edit_item.edit_action_stage;
+package main.stager.ui.edit_item.edit_stage;
 
 import android.os.Bundle;
 
@@ -9,7 +9,7 @@ import main.stager.Base.StagerVMFragment;
 import main.stager.R;
 import main.stager.utils.Utilits;
 
-public class EditActionStageFragment extends StagerVMFragment<EditActionStageViewModel> {
+public class EditStageFragment extends StagerVMFragment<EditStageViewModel> {
     static public final String ARG_STAGE_NAME = "Stager.edit_item.stage.param_stage_name";
     static public final String ARG_ACTION_KEY = "Stager.edit_item.stage.param_action_key";
     static public final String ARG_STAGE_KEY = "Stager.edit_item.stage.param_stage_key";
@@ -22,24 +22,24 @@ public class EditActionStageFragment extends StagerVMFragment<EditActionStageVie
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mStageName = Utilits.getDefaultOnNullOrBlank(getArguments().getString(ARG_STAGE_NAME),
-                    getString(R.string.EditActionStage_message_UntitledStage));
+                    getString(R.string.EditStageFragment_message_UntitledStage));
             mActionKey = getArguments().getString(ARG_ACTION_KEY);
             mStageKey = getArguments().getString(ARG_STAGE_KEY);
         } else {
-            mStageName = getString(R.string.EditActionStage_message_UntitledStage);
+            mStageName = getString(R.string.EditStageFragment_message_UntitledStage);
             mActionKey = "";
             mStageKey = "";
         }
     }
 
     @Override
-    protected Class<EditActionStageViewModel> getViewModelType() {
-        return EditActionStageViewModel.class;
+    protected Class<EditStageViewModel> getViewModelType() {
+        return EditStageViewModel.class;
     }
 
     @Override
     protected int getViewBaseLayoutId() {
-        return R.layout.fragment_edit_action_stage;
+        return R.layout.fragment_edit_stage;
     }
 
     @Override
@@ -49,7 +49,7 @@ public class EditActionStageFragment extends StagerVMFragment<EditActionStageVie
                 (String text) -> ((AppCompatActivity)getActivity())
                         .getSupportActionBar()
                         .setTitle(Utilits.getDefaultOnNullOrBlank(text,
-                                        getString(R.string.EditActionStage_message_UntitledStage
+                                        getString(R.string.EditStageFragment_message_UntitledStage
                                         ))));
         bindDataTwoWay(viewModel.getStageName(),
                 view.findViewById(R.id.edit_action_stage_input_name));

@@ -9,6 +9,7 @@ import main.stager.Base.SmartActivity;
 import main.stager.list.StagerExtendableList;
 import main.stager.model.Stage;
 import main.stager.ui.add_item.add_action_stage.AddStageFragment;
+import main.stager.ui.edit_item.edit_action_stage.EditActionStageFragment;
 import main.stager.utils.Utilits;
 
 public class EditActionFragment
@@ -65,6 +66,16 @@ public class EditActionFragment
                                                          .EditActionFragment_message_UntitledAction
                                                  )))));
         bindDataTwoWay(viewModel.getActionName(), editActionName);
+    }
+
+    @Override
+    protected void onItemClick(Stage item, int pos) {
+        super.onItemClick(item, pos);
+        Bundle args = new Bundle();
+        args.putString(EditActionStageFragment.ARG_ACTION_KEY, mActionKey);
+        args.putString(EditActionStageFragment.ARG_STAGE_KEY, item.getKey());
+        args.putString(EditActionStageFragment.ARG_STAGE_NAME, item.getName());
+        navigator.navigate(R.id.transition_action_stages_to_edit_stage, args);
     }
 
     @Override

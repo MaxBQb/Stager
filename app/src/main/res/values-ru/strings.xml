@@ -68,4 +68,8 @@
     <string name="CommonList_EmptyListView_TextView_text">Тут ничего нет</string>
     <string name="CommonList_LoadingListView_TextView_text">Загрузка...</string>
     <string name="CommonList_ErrorListView_TextView_text">Произошла ошибка: %s</string>
+
+    <!-- Изменить этап мероприятия -->
+    <string name="EditActionStage_title">Этап</string>
+    <string name="EditActionStage_message_UntitledStage">Безымянный этап</string>
 </resources>

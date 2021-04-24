@@ -67,4 +67,8 @@
     <string name="CommonList_EmptyListView_TextView_text">Here is nothing</string>
     <string name="CommonList_LoadingListView_TextView_text">Loading...</string>
     <string name="CommonList_ErrorListView_TextView_text">Error occurred: %s</string>
+
+    <!-- Edit action stage -->
+    <string name="EditActionStage_title">Stage</string>
+    <string name="EditActionStage_message_UntitledStage">Untitled stage</string>
 </resources>

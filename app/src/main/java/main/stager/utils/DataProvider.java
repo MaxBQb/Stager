@@ -120,6 +120,10 @@ public class DataProvider {
         return getStages(actionName).child(key);
     }
 
+    public DatabaseReference getStageName(@NotNull String actionName, @NotNull String key) {
+        return getStage(actionName, key).child("name");
+    }
+
     public void deleteStage(@NotNull String actionName, @NotNull String key) {
         getStage(actionName, key).removeValue();
     }

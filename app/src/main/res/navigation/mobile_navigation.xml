@@ -45,6 +45,9 @@
         <action
             android:id="@+id/transition_action_stages_to_add_stage"
             app:destination="@id/add_action_stage" />
+        <action
+            android:id="@+id/transition_action_stages_to_edit_stage"
+            app:destination="@id/edit_action_stage" />
     </fragment>
 
     <fragment
@@ -58,6 +61,13 @@
         android:id="@+id/add_action_stage"
         android:label="@string/AddActionStage_title"
         android:name="main.stager.ui.add_item.add_action_stage.AddStageFragment"
+        tools:layout="@layout/fragment_add_action_stage"
+        />
+
+    <fragment
+        android:id="@+id/edit_action_stage"
+        android:label="@string/EditActionStage_title"
+        android:name="main.stager.ui.edit_item.edit_action_stage.EditActionStageFragment"
         tools:layout="@layout/fragment_add_action_stage"
         />
 

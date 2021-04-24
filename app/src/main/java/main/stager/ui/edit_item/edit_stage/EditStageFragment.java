@@ -1,6 +1,7 @@
 package main.stager.ui.edit_item.edit_stage;
 
 import android.os.Bundle;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +14,7 @@ public class EditStageFragment extends StagerVMFragment<EditStageViewModel> {
     static public final String ARG_STAGE_NAME = "Stager.edit_item.stage.param_stage_name";
     static public final String ARG_ACTION_KEY = "Stager.edit_item.stage.param_action_key";
     static public final String ARG_STAGE_KEY = "Stager.edit_item.stage.param_stage_key";
+    private EditText editStageName;
     private String mStageName;
     private String mActionKey;
     private String mStageKey;
@@ -51,8 +53,7 @@ public class EditStageFragment extends StagerVMFragment<EditStageViewModel> {
                         .setTitle(Utilits.getDefaultOnNullOrBlank(text,
                                         getString(R.string.EditStageFragment_message_UntitledStage
                                         ))));
-        bindDataTwoWay(viewModel.getStageName(),
-                view.findViewById(R.id.edit_action_stage_input_name));
+        bindDataTwoWay(viewModel.getStageName(), editStageName);
     }
 
     @Override
@@ -68,6 +69,8 @@ public class EditStageFragment extends StagerVMFragment<EditStageViewModel> {
         ((SmartActivity)getActivity())
                 .getSupportActionBar()
                 .setTitle(mStageName);
+        editStageName = view.findViewById(R.id.edit_action_stage_input_name);
+        editStageName.setText(mStageName);
     }
 
     @Override

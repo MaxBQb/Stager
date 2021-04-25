@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import org.jetbrains.annotations.NotNull;
 import main.stager.R;
+import main.stager.linkers.LStatus;
 import main.stager.list.StagerListAdapter;
 import main.stager.model.Stage;
 import main.stager.utils.Utilits;
@@ -51,27 +52,8 @@ public class ActionStageRecyclerViewAdapter
         else
             holder.mContentView.setText(holder.mItem.getName());
 
-        switch (holder.mItem.getCurrentStatus()) {
-            case ABORTED:
-                holder.mStatusView.setImageResource(
-                        R.drawable.ic_stage_status_abort);
-                break;
-
-            case SUCCEED:
-                holder.mStatusView.setImageResource(
-                        R.drawable.ic_stage_status_succes);
-                break;
-
-            case WAITING:
-                holder.mStatusView.setImageResource(
-                        R.drawable.ic_stage_status_wait);
-                break;
-
-            case LOCKED:
-                holder.mStatusView.setImageResource(
-                        R.drawable.ic_stage_status_locked);
-                break;
-        }
+        holder.mStatusView.setImageResource(LStatus.toIcon(
+                holder.mItem.getCurrentStatus()));
         bindOnItemClickListener(holder.mView, holder.mItem, position);
     }
 

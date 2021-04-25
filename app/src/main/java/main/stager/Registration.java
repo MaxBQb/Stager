@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 
 import main.stager.Base.SmartActivity;
+import main.stager.utils.DataProvider;
 
 
 public class Registration extends SmartActivity {
@@ -119,6 +120,7 @@ public class Registration extends SmartActivity {
         fbAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(
                 task -> {
                     if (task.isSuccessful() ) {
+                        DataProvider.getInstance().getUserName().setValue(name);
                         // Пользователь зарегистрировался и вошел в аккаунт
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
@@ -134,8 +136,7 @@ public class Registration extends SmartActivity {
     }
 
     protected boolean isOnline() {
-        String cs = Context.CONNECTIVITY_SERVICE;
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(cs);
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
     }
 }

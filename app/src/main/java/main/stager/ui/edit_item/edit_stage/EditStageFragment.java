@@ -66,10 +66,10 @@ public class EditStageFragment extends StagerVMFragment<EditStageViewModel> {
     protected void setEventListeners() {
         super.setEventListeners();
         view.findViewById(R.id.edit_stage_button_abort).setOnClickListener((l) -> {
-            dataProvider.setStageStatus(mActionKey, mStageKey, Status.ABORTED);
+            dataProvider.setStageStatusAborted(mActionKey, mStageKey);
         });
         view.findViewById(R.id.edit_stage_button_success).setOnClickListener((l) -> {
-            dataProvider.setStageStatus(mActionKey, mStageKey, Status.SUCCEED);
+            dataProvider.setStageStatusSucceed(mActionKey, mStageKey);
         });
     }
 

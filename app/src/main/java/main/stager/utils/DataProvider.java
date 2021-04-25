@@ -13,6 +13,8 @@ import com.google.firebase.database.Transaction;
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
+
 import main.stager.model.FBModel;
 import main.stager.model.Stage;
 import main.stager.model.Status;
@@ -84,6 +86,10 @@ public class DataProvider {
         return getActions().child(key);
     }
 
+    public DatabaseReference getActionStatus(@NotNull String key) {
+        return getAction(key).child("status");
+    }
+
     public DatabaseReference getActionName(@NotNull String key) {
         return getActions().child(key).child("name");
     }
@@ -129,8 +135,105 @@ public class DataProvider {
         return getStage(actionName, key).child("currentStatus");
     }
 
-    public void setStageStatus(@NotNull String actionName, @NotNull String key, Status status) {
+    public void setStageStatusSucceed(@NotNull String actionKey, @NotNull String key) {
+        getStages(actionKey).runTransaction(new Transaction.Handler() {
+            @NonNull
+            @Override
+            public Transaction.Result doTransaction(@NonNull MutableData currentData) {
+                if (!currentData.hasChildren())
+                    return Transaction.success(currentData);
 
+                Stage target = currentData.child(key).getValue(Stage.class);
+                if (target == null)
+                    return Transaction.abort();
+
+                int pos = target.getPos();
+                if (pos == Integer.MAX_VALUE)
+                    return Transaction.abort();
+
+                Stage stage;
+                for (MutableData item: currentData.getChildren()) {
+                    stage = item.getValue(Stage.class);
+                    if (stage == null)
+                        return Transaction.abort();
+
+                    if (stage.getPos() < pos &&
+                        stage.getCurrentStatus() != Status.SUCCEED)
+                        return Transaction.abort();
+                }
+
+                currentData.child(key).child("currentStatus").setValue(Status.SUCCEED);
+                return Transaction.success(currentData);
+            }
+
+            @Override
+            public void onComplete(@Nullable DatabaseError error,
+                                   boolean committed, @Nullable DataSnapshot currentData) {
+                if (!committed || !currentData.exists())
+                    return;
+
+                for (DataSnapshot item : currentData.getChildren())
+                    if (item.child("currentStatus").getValue(Status.class) != Status.SUCCEED)
+                        return;
+
+                getActionStatus(actionKey).setValue(Status.SUCCEED);
+            }
+        });
+    }
+
+    public void setStageStatusAborted(@NotNull String actionKey, @NotNull String key) {
+        getStages(actionKey).runTransaction(new Transaction.Handler() {
+            @NonNull
+            @Override
+            public Transaction.Result doTransaction(@NonNull MutableData currentData) {
+                if (!currentData.hasChildren())
+                    return Transaction.success(currentData);
+
+                Stage target = currentData.child(key).getValue(Stage.class);
+                if (target == null)
+                    return Transaction.abort();
+
+                int pos = target.getPos();
+                if (pos == Integer.MAX_VALUE)
+                    return Transaction.abort();
+
+                List<String> lockList = new ArrayList<>();
+
+                Stage stage;
+                for (MutableData item: currentData.getChildren()) {
+                    stage = item.getValue(Stage.class);
+                    if (stage == null)
+                        return Transaction.abort();
+
+                    if (stage.getPos() < pos &&
+                        stage.getCurrentStatus() != Status.SUCCEED)
+                        return Transaction.abort();
+
+                    if (stage.getPos() > pos) {
+                        if (stage.getCurrentStatus() != Status.WAITING &&
+                            stage.getCurrentStatus() != Status.LOCKED)
+                            return Transaction.abort();
+                        lockList.add(item.getKey());
+                    }
+                }
+
+                currentData.child(key).child("currentStatus").setValue(Status.ABORTED);
+
+                for (String lock_key: lockList)
+                    currentData.child(lock_key).child("currentStatus").setValue(Status.LOCKED);
+
+                return Transaction.success(currentData);
+            }
+
+            @Override
+            public void onComplete(@Nullable DatabaseError error,
+                                   boolean committed, @Nullable DataSnapshot currentData) {
+                if (!committed || !currentData.exists())
+                    return;
+
+                getActionStatus(actionKey).setValue(Status.ABORTED);
+            }
+        });
     }
 
     public void deleteStage(@NotNull String actionName, @NotNull String key) {

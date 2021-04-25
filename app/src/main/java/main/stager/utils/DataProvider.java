@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import main.stager.model.FBModel;
 import main.stager.model.Stage;
+import main.stager.model.Status;
 import main.stager.model.UserAction;
 
 public class DataProvider {
@@ -122,6 +123,14 @@ public class DataProvider {
 
     public DatabaseReference getStageName(@NotNull String actionName, @NotNull String key) {
         return getStage(actionName, key).child("name");
+    }
+
+    public DatabaseReference getStageStatus(@NotNull String actionName, @NotNull String key) {
+        return getStage(actionName, key).child("currentStatus");
+    }
+
+    public void setStageStatus(@NotNull String actionName, @NotNull String key, Status status) {
+
     }
 
     public void deleteStage(@NotNull String actionName, @NotNull String key) {

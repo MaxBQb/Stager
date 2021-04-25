@@ -12,4 +12,23 @@
         android:layout_height="wrap_content"
         android:inputType="text"
         android:hint="@string/EditStageFragment_message_UntitledStage" />
+    <LinearLayout
+        android:id="@+id/edit_stage_layout_controls"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageButton
+            android:id="@+id/edit_stage_button_success"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_stage_status_succes"/>
+        <ImageButton
+            android:id="@+id/edit_stage_button_abort"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_stage_status_abort"/>
+    </LinearLayout>
 </LinearLayout>

@@ -1,6 +1,7 @@
 package main.stager.ui.edit_item.edit_stage;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import main.stager.Base.SmartActivity;
 import main.stager.Base.StagerVMFragment;
 import main.stager.R;
+import main.stager.model.Status;
 import main.stager.utils.Utilits;
 
 public class EditStageFragment extends StagerVMFragment<EditStageViewModel> {
@@ -54,6 +56,21 @@ public class EditStageFragment extends StagerVMFragment<EditStageViewModel> {
                                         getString(R.string.EditStageFragment_message_UntitledStage
                                         ))));
         bindDataTwoWay(viewModel.getStageName(), editStageName);
+        bindData(viewModel.getStageStatus(), (status) -> {
+            view.findViewById(R.id.edit_stage_layout_controls)
+                    .setVisibility(status == Status.WAITING ? View.VISIBLE : View.GONE);
+        });
+    }
+
+    @Override
+    protected void setEventListeners() {
+        super.setEventListeners();
+        view.findViewById(R.id.edit_stage_button_abort).setOnClickListener((l) -> {
+            dataProvider.setStageStatus(mActionKey, mStageKey, Status.ABORTED);
+        });
+        view.findViewById(R.id.edit_stage_button_success).setOnClickListener((l) -> {
+            dataProvider.setStageStatus(mActionKey, mStageKey, Status.SUCCEED);
+        });
     }
 
     @Override

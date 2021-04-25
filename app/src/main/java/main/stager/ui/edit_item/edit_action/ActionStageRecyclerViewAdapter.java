@@ -11,9 +11,10 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import org.jetbrains.annotations.NotNull;
 import main.stager.R;
+import main.stager.linkers.LStatus;
 import main.stager.list.StagerListAdapter;
 import main.stager.model.Stage;
-import main.stager.model.UserAction;
+import main.stager.utils.Utilits;
 
 /**
  * {@link RecyclerView.Adapter} для отображения {@link Stage}.
@@ -45,23 +46,14 @@ public class ActionStageRecyclerViewAdapter
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = getItem(position);
-        holder.mContentView.setText(holder.mItem.getName());
-        switch (holder.mItem.getCurrentStatus()) {
-            case ABORTED:
-                holder.mStatusView.setImageResource(
-                        R.drawable.ic_stage_status_abort);
-                break;
 
-            case SUCCEED:
-                holder.mStatusView.setImageResource(
-                        R.drawable.ic_stage_status_succes);
-                break;
+        if (Utilits.isNullOrBlank(holder.mItem.getName()))
+            holder.mContentView.setText(R.string.EditStageFragment_message_UntitledStage);
+        else
+            holder.mContentView.setText(holder.mItem.getName());
 
-            case WAITING:
-                holder.mStatusView.setImageResource(
-                        R.drawable.ic_stage_status_wait);
-                break;
-        }
+        holder.mStatusView.setImageResource(LStatus.toIcon(
+                holder.mItem.getCurrentStatus()));
         bindOnItemClickListener(holder.mView, holder.mItem, position);
     }
 

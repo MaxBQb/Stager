@@ -28,8 +28,8 @@ public class AddActionFragment extends AddItemFragment {
         String name = inputName.getText().toString().trim();
         if (name.isEmpty()) {
             Toast.makeText(getContext(),
-                    getString(R.string.AddAction_ErrorMessage,
-                            getString(R.string.AddAction_ErrorMessage_ReasonNoName)
+                    getString(R.string.AddActionFragment_ErrorMessage,
+                            getString(R.string.AddActionFragment_ErrorMessage_ReasonNoName)
                     ), Toast.LENGTH_LONG).show();
             return;
         }

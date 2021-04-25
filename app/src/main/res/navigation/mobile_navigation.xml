@@ -10,7 +10,7 @@
     <fragment
         android:id="@+id/settings"
         android:name="main.stager.SettingsFragment"
-        android:label="@string/Settings_label"
+        android:label="@string/Settings_title"
         />
 
     <fragment
@@ -41,24 +41,34 @@
     <fragment
         android:id="@+id/action_stages"
         android:name="main.stager.ui.edit_item.edit_action.EditActionFragment"
-        tools:layout="@layout/fragment_action_stages">
+        tools:layout="@layout/fragment_edit_action">
         <action
             android:id="@+id/transition_action_stages_to_add_stage"
             app:destination="@id/add_action_stage" />
+        <action
+            android:id="@+id/transition_action_stages_to_edit_stage"
+            app:destination="@id/edit_action_stage" />
     </fragment>
 
     <fragment
         android:id="@+id/add_action"
-        android:label="@string/AddAction_title"
+        android:label="@string/AddActionFragment_title"
         android:name="main.stager.ui.add_item.add_action.AddActionFragment"
         tools:layout="@layout/fragment_add_action"
         />
 
     <fragment
         android:id="@+id/add_action_stage"
-        android:label="@string/AddActionStage_title"
-        android:name="main.stager.ui.add_item.add_action_stage.AddStageFragment"
-        tools:layout="@layout/fragment_add_action_stage"
+        android:label="@string/AddStageFragment_title"
+        android:name="main.stager.ui.add_item.add_stage.AddStageFragment"
+        tools:layout="@layout/fragment_add_stage"
+        />
+
+    <fragment
+        android:id="@+id/edit_action_stage"
+        android:label="@string/EditStageFragment_title"
+        android:name="main.stager.ui.edit_item.edit_stage.EditStageFragment"
+        tools:layout="@layout/fragment_add_stage"
         />
 
 </navigation>

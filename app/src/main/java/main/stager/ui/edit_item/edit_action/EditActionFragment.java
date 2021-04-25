@@ -8,7 +8,8 @@ import main.stager.R;
 import main.stager.Base.SmartActivity;
 import main.stager.list.StagerExtendableList;
 import main.stager.model.Stage;
-import main.stager.ui.add_item.add_action_stage.AddStageFragment;
+import main.stager.ui.add_item.add_stage.AddStageFragment;
+import main.stager.ui.edit_item.edit_stage.EditStageFragment;
 import main.stager.utils.Utilits;
 
 public class EditActionFragment
@@ -50,7 +51,7 @@ public class EditActionFragment
 
     @Override
     protected int getViewBaseLayoutId() {
-        return R.layout.fragment_action_stages;
+        return R.layout.fragment_edit_action;
     }
 
     @Override
@@ -59,12 +60,22 @@ public class EditActionFragment
         bindData(viewModel.getActionName(),
                 (String text) -> ((AppCompatActivity)getActivity())
                                  .getSupportActionBar()
-                                 .setTitle(getString(R.string.StagesFragment_label,
+                                 .setTitle(getString(R.string.StagesFragment_title,
                                          Utilits.getDefaultOnNullOrBlank(text,
                                                  getString(R.string
                                                          .EditActionFragment_message_UntitledAction
                                                  )))));
         bindDataTwoWay(viewModel.getActionName(), editActionName);
+    }
+
+    @Override
+    protected void onItemClick(Stage item, int pos) {
+        super.onItemClick(item, pos);
+        Bundle args = new Bundle();
+        args.putString(EditStageFragment.ARG_ACTION_KEY, mActionKey);
+        args.putString(EditStageFragment.ARG_STAGE_KEY, item.getKey());
+        args.putString(EditStageFragment.ARG_STAGE_NAME, item.getName());
+        navigator.navigate(R.id.transition_action_stages_to_edit_stage, args);
     }
 
     @Override
@@ -79,7 +90,7 @@ public class EditActionFragment
         super.prepareFragmentComponents();
         ((SmartActivity)getActivity())
                 .getSupportActionBar()
-                .setTitle(getString(R.string.StagesFragment_label, mActionName));
+                .setTitle(getString(R.string.StagesFragment_title, mActionName));
         editActionName = view.findViewById(R.id.edit_action_input_name);
         editActionName.setText(mActionName);
     }

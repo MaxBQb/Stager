@@ -18,7 +18,7 @@
     <string name="AuthorizationActivity_Button_Register">Registration</string>
 
     <!-- Settings -->
-    <string name="Settings_label">Settings</string>
+    <string name="Settings_title">Settings</string>
     <string name="Settings_Category_title_Appearance">Appearance</string>
         <string name="Settings_Appearance_label_Theme">Dark theme</string>
         <string name="Settings_Appearance_Switch_summaryOn_DarkMode">Current theme: Dark</string>
@@ -28,7 +28,7 @@
             Current language: %1$s</string>
 
     <!-- Edit action -->
-    <string name="StagesFragment_label" formatted="true">
+    <string name="StagesFragment_title" formatted="true">
         Stages of \'%1$s\'</string>
     <string name="EditActionFragment_message_UntitledAction">Untitled</string>
     <string name="EditActionFragment_StagesList_NoItemsMessage">No stages yet..</string>
@@ -49,16 +49,16 @@
     <string name="AboutMeFragment_Button_ExitInAccount">Log out of account</string>
 
     <!-- Add action -->
-    <string name="AddAction_title">New action</string>
-    <string name="AddAction_EditText_hint_context">Title</string>
-    <string name="AddAction_ErrorMessage">Unable to create new action: %s</string>
-    <string name="AddAction_ErrorMessage_ReasonNoName">missing title</string>
+    <string name="AddActionFragment_title">New action</string>
+    <string name="AddActionFragment_EditText_hint_context">Title</string>
+    <string name="AddActionFragment_ErrorMessage">Unable to create new action: %s</string>
+    <string name="AddActionFragment_ErrorMessage_ReasonNoName">missing title</string>
 
     <!-- Add action stage -->
-    <string name="AddActionStage_title">Next stage</string>
-    <string name="AddActionStage_EditText_InputHint">Title</string>
-    <string name="AddActionStage_ErrorMessage">Unable to create new stage: %s</string>
-    <string name="AddActionStage_ErrorMessage_ReasonNoName">missing title</string>
+    <string name="AddStageFragment_title">Next stage</string>
+    <string name="AddStageFragment_EditText_InputHint">Title</string>
+    <string name="AddStageFragment_ErrorMessage">Unable to create new stage: %s</string>
+    <string name="AddStageFragment_ErrorMessage_ReasonNoName">missing title</string>
 
     <!-- Item edit menu -->
     <string name="ItemEditMenu_title_SaveChanges">Save</string>
@@ -67,4 +67,8 @@
     <string name="CommonList_EmptyListView_TextView_text">Here is nothing</string>
     <string name="CommonList_LoadingListView_TextView_text">Loading...</string>
     <string name="CommonList_ErrorListView_TextView_text">Error occurred: %s</string>
+
+    <!-- Edit action stage -->
+    <string name="EditStageFragment_title">Stage</string>
+    <string name="EditStageFragment_message_UntitledStage">Untitled stage</string>
 </resources>

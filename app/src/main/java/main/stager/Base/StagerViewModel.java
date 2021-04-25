@@ -32,6 +32,13 @@ public abstract class StagerViewModel extends AndroidViewModel {
         return data;
     }
 
+    protected <T> LiveData<T> getSimpleFBData(MutableLiveData<T> data,
+                                           DatabaseReference ref, Class<T> clazz) {
+        backPath.put(data, ref);
+        return getData(data,
+                () -> ref.addValueEventListener(new ValueEventListener<T>(data, clazz)));
+    }
+
     protected LiveData<String> getText(MutableLiveData<String> data, DatabaseReference ref) {
         return getText(data, ref, "");
     }

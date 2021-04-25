@@ -1,4 +1,4 @@
-package main.stager.ui.add_item.add_action_stage;
+package main.stager.ui.add_item.add_stage;
 
 import android.os.Bundle;
 import android.widget.EditText;
@@ -26,13 +26,13 @@ public class AddStageFragment extends AddItemFragment {
 
     @Override
     protected int getViewBaseLayoutId() {
-        return R.layout.fragment_add_action_stage;
+        return R.layout.fragment_add_stage;
     }
 
     @Override
     protected void prepareFragmentComponents() {
         super.prepareFragmentComponents();
-        inputName = view.findViewById(R.id.add_action_stage_input_name);
+        inputName = view.findViewById(R.id.add_stage_input_name);
     }
 
     @Override
@@ -46,8 +46,8 @@ public class AddStageFragment extends AddItemFragment {
         String name = inputName.getText().toString().trim();
         if (name.isEmpty()) {
             Toast.makeText(getContext(),
-                    getString(R.string.AddAction_ErrorMessage,
-                            getString(R.string.AddAction_ErrorMessage_ReasonNoName)
+                    getString(R.string.AddActionFragment_ErrorMessage,
+                            getString(R.string.AddActionFragment_ErrorMessage_ReasonNoName)
                     ), Toast.LENGTH_LONG).show();
             return;
         }

@@ -66,6 +66,11 @@ public class ActionStageRecyclerViewAdapter
                 holder.mStatusView.setImageResource(
                         R.drawable.ic_stage_status_wait);
                 break;
+
+            case LOCKED:
+                holder.mStatusView.setImageResource(
+                        R.drawable.ic_stage_status_locked);
+                break;
         }
         bindOnItemClickListener(holder.mView, holder.mItem, position);
     }

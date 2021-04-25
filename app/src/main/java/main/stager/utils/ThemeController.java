@@ -1,6 +1,8 @@
 package main.stager.utils;
 
 import android.app.Activity;
+import android.content.Context;
+
 import androidx.preference.PreferenceManager;
 
 import main.stager.R;
@@ -30,9 +32,9 @@ public class ThemeController {
 
     /** Возвращает текущую тему
      */
-    public static Boolean getTheme(Activity activity) {
-        return PreferenceManager.getDefaultSharedPreferences(activity)
-                                .getBoolean(activity.getString(R.string.Settings__Theme), false);
+    public static Boolean getTheme(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                                .getBoolean(context.getString(R.string.Settings__Theme), false);
     }
 
 }

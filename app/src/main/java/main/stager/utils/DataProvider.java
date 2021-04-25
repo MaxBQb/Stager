@@ -13,7 +13,6 @@ import com.google.firebase.database.Transaction;
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 import main.stager.model.FBModel;
 import main.stager.model.Stage;
@@ -108,10 +107,10 @@ public class DataProvider {
 
     // Stages of action
 
-    public String addStage(@NotNull String actionName, Stage stage) {
-        String key = getStages(actionName).push().getKey();
-        getStage(actionName, key).setValue(stage);
-        initPositions(getStages(actionName));
+    public String addStage(@NotNull String actionKey, Stage stage) {
+        String key = getStages(actionKey).push().getKey();
+        getStage(actionKey, key).setValue(stage);
+        initPositions(getStages(actionKey));
         return key;
     }
 
@@ -119,23 +118,23 @@ public class DataProvider {
         return mRef.child("stages").child(getUID());
     }
 
-    public DatabaseReference getStages(@NotNull String key) {
-        return getAllStages().child(key);
+    public DatabaseReference getStages(@NotNull String actionKey) {
+        return getAllStages().child(actionKey);
     }
 
-    public DatabaseReference getStage(@NotNull String actionName, @NotNull String key) {
-        return getStages(actionName).child(key);
+    public DatabaseReference getStage(@NotNull String actionKey, @NotNull String stageKey) {
+        return getStages(actionKey).child(stageKey);
     }
 
-    public DatabaseReference getStageName(@NotNull String actionName, @NotNull String key) {
-        return getStage(actionName, key).child("name");
+    public DatabaseReference getStageName(@NotNull String actionKey, @NotNull String stageKey) {
+        return getStage(actionKey, stageKey).child("name");
     }
 
-    public DatabaseReference getStageStatus(@NotNull String actionName, @NotNull String key) {
-        return getStage(actionName, key).child("currentStatus");
+    public DatabaseReference getStageStatus(@NotNull String actionName, @NotNull String stageKey) {
+        return getStage(actionName, stageKey).child("currentStatus");
     }
 
-    public void setStageStatusSucceed(@NotNull String actionKey, @NotNull String key) {
+    public void setStageStatusSucceed(@NotNull String actionKey, @NotNull String stageKey) {
         getStages(actionKey).runTransaction(new Transaction.Handler() {
             @NonNull
             @Override
@@ -143,7 +142,7 @@ public class DataProvider {
                 if (!currentData.hasChildren())
                     return Transaction.success(currentData);
 
-                Stage target = currentData.child(key).getValue(Stage.class);
+                Stage target = currentData.child(stageKey).getValue(Stage.class);
                 if (target == null)
                     return Transaction.abort();
 
@@ -162,7 +161,7 @@ public class DataProvider {
                         return Transaction.abort();
                 }
 
-                currentData.child(key).child("currentStatus").setValue(Status.SUCCEED);
+                currentData.child(stageKey).child("currentStatus").setValue(Status.SUCCEED);
                 return Transaction.success(currentData);
             }
 
@@ -181,7 +180,7 @@ public class DataProvider {
         });
     }
 
-    public void setStageStatusAborted(@NotNull String actionKey, @NotNull String key) {
+    public void setStageStatusAborted(@NotNull String actionKey, @NotNull String stageKey) {
         getStages(actionKey).runTransaction(new Transaction.Handler() {
             @NonNull
             @Override
@@ -189,7 +188,7 @@ public class DataProvider {
                 if (!currentData.hasChildren())
                     return Transaction.success(currentData);
 
-                Stage target = currentData.child(key).getValue(Stage.class);
+                Stage target = currentData.child(stageKey).getValue(Stage.class);
                 if (target == null)
                     return Transaction.abort();
 
@@ -217,7 +216,7 @@ public class DataProvider {
                     }
                 }
 
-                currentData.child(key).child("currentStatus").setValue(Status.ABORTED);
+                currentData.child(stageKey).child("currentStatus").setValue(Status.ABORTED);
 
                 for (String lock_key: lockList)
                     currentData.child(lock_key).child("currentStatus").setValue(Status.LOCKED);
@@ -236,8 +235,8 @@ public class DataProvider {
         });
     }
 
-    public void deleteStage(@NotNull String actionName, @NotNull String key) {
-        getStage(actionName, key).removeValue();
+    public void deleteStage(@NotNull String actionKey, @NotNull String stageKey) {
+        getStage(actionKey, stageKey).removeValue();
     }
 
     // Other
@@ -298,7 +297,8 @@ public class DataProvider {
         return ref.orderByChild("pos");
     }
 
-    public static <T extends FBModel> List<String> getKeys(List<T> list) {
+    @NotNull
+    public static <T extends FBModel> List<String> getKeys(@NotNull List<T> list) {
         ArrayList<String> keys = new ArrayList<>();
         for (T item: list) keys.add(item.getKey());
         return keys;

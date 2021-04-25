@@ -1,26 +1,33 @@
 package main.stager;
 
+import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import lombok.Setter;
+import main.stager.utils.ThemeController;
+import main.stager.utils.Utilits;
 
 
 public class UserAvatar extends View {
-    private String text;
+    @Setter
+    private String mUserName;
     private Rect mTextBoundRect = new Rect();
 
     private String[] backgroundColor = new String[] {
@@ -30,20 +37,10 @@ public class UserAvatar extends View {
             "#80BD9E",
             "#66A5AD",
             "#2E4600",
-            "#486B00",
-            "#2C7873",
-            "#FB6542",
-            "#FFBB00"
-//            "#3F681C",
-//            "#EC96A4",
-//            "#F0810F",
-//            "#E2DFA2"
-//            "",
-//            "",
-//            "",
-//            "",
-//            "",
-//            ""
+            "#3F681C",
+            "#EC96A4",
+            "#F0810F",
+            "#E2DFA2"
     };
 
 
@@ -70,47 +67,89 @@ public class UserAvatar extends View {
 
         String uid = FirebaseAuth.getInstance().getUid();
 
-        text = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        String name = Utilits.getDefaultOnNullOrBlank(
+                mUserName, Utilits.getDefaultOnNullOrBlank(
+                        FirebaseAuth.getInstance().getCurrentUser().getEmail(), "A"
+                )
+        );
 
-        Pattern pattern = Pattern.compile("^\\w*@{0}");
-        Matcher matcher = pattern.matcher(text);
-
-        if (matcher.find())
-            if (text.length() > 20)
-                text = text.substring(matcher.start(), matcher.end());
-
-        Paint paint = new Paint();
+        if (!name.equals("A"))
+            name = name.substring(0,2).toUpperCase();
 
         float textWidth, textHeight;
 
-        // стиль заливка
+        float width, height, centerX, centerY, radius;
+        height = getHeight();
+        radius = height / 2;
+        centerX = height / 2;
+        centerY = centerX;
+
+        Paint paint = new Paint();
+
+        // Стиль заливка
         paint.setStyle(Paint.Style.FILL);
-        // закрашиваем холст
+        // Закрашиваем холст
         paint.setColor(Color.parseColor(
                 backgroundColor[Integer.parseInt(uid.substring(uid.length() - 1))]
         ));
+        paint.setAlpha(Color.TRANSPARENT);
         canvas.drawPaint(paint);
 
+        // Рисуем круг
+        paint.setAntiAlias(true);
+
+        int color = Color.TRANSPARENT;
+        Drawable background = getRootView().getBackground();
+        if (background instanceof ColorDrawable)
+            color = ((ColorDrawable) background).getColor();
+
+        paint.setColor(colorChangeBrightness(
+                color,
+                32 * (ThemeController.getTheme(getContext()) ? 1 : -1)
+                )
+        );
+//
+//        paint.setColor(getContext().getResources()
+//                .getIdentifier("colorButtonNormal", "attr", getContext().getPackageName()));
+
+        canvas.drawCircle(centerX, centerY, radius, paint);
+
         // Рисуем текст
-        paint.setColor(Color.WHITE);
+        if (ThemeController.getTheme(getContext()))
+            paint.setColor(Color.WHITE);
+        else paint.setColor(Color.BLACK);
+
         paint.setStyle(Paint.Style.FILL);
         paint.setAntiAlias(true);
         paint.setTextSize(80);
 
-
         // Подсчитаем размер текста
-        paint.getTextBounds(text, 0, text.length(), mTextBoundRect);
+        paint.getTextBounds(name, 0, name.length(), mTextBoundRect);
 
         // Используем measureText для измерения ширины
-        textWidth = paint.measureText(text);
+        textWidth = paint.measureText(name);
         textHeight = mTextBoundRect.height();
 
-        canvas.drawText(text, getWidth() / 2 - (textWidth / 2f),getHeight() / 2 + (textHeight /2f), paint);
+        canvas.drawText(name,
+                centerX - (textWidth / 2f),
+                centerY + (textHeight /2f),
+                paint
+        );
+
     }
 
-    // Можно выбрать 20 цветов. Берем хэш от user_id и используем как R G B
-    // R = хэш(id), G = хэш(R), B = хэш(G)
+    private int colorChangeBrightness(int color, int brightnessOffset) {
+        return Color.rgb(((color >> 16)&0xFF) + brightnessOffset,
+                ((color >> 8)&0xFF) + brightnessOffset,
+                (color&0xFF) + brightnessOffset);
+    }
 
-    // setColor() {}
-    // setChar() {}
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int w = MeasureSpec.getSize(widthMeasureSpec);
+        int h = MeasureSpec.getSize(heightMeasureSpec);
+
+        int size = Math.min(w, h);
+        setMeasuredDimension(size, size);
+    }
 }

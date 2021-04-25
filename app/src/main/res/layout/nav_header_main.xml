@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<main.stager.UserAvatar xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/nav_header_height"
-    android:layout_marginTop="24dp"
-    android:contentDescription="@string/SideBarActivity_ImageView_UserPicture"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark" >
-</main.stager.UserAvatar>
+    android:gravity="center"
+    android:layout_marginTop="60dp"
+    android:layout_marginBottom="30dp">
+
+    <main.stager.UserAvatar
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:contentDescription="@string/SideBarActivity_ImageView_UserPicture"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        >
+    </main.stager.UserAvatar>
+
+</LinearLayout>

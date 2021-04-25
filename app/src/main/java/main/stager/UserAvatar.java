@@ -1,9 +1,6 @@
 package main.stager;
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -16,7 +13,6 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -29,6 +25,7 @@ public class UserAvatar extends View {
     @Setter
     private String mUserName;
     private Rect mTextBoundRect = new Rect();
+    private Paint paint = new Paint();
 
     private String[] backgroundColor = new String[] {
             "#505160",
@@ -65,8 +62,6 @@ public class UserAvatar extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        String uid = FirebaseAuth.getInstance().getUid();
-
         String name = Utilits.getDefaultOnNullOrBlank(
                 mUserName, Utilits.getDefaultOnNullOrBlank(
                         FirebaseAuth.getInstance().getCurrentUser().getEmail(), "A"
@@ -76,22 +71,12 @@ public class UserAvatar extends View {
         if (!name.equals("A"))
             name = name.substring(0,2).toUpperCase();
 
-        float textWidth, textHeight;
-
-        float width, height, centerX, centerY, radius;
+        float height, center, radius, textWidth, textHeight;
         height = getHeight();
         radius = height / 2;
-        centerX = height / 2;
-        centerY = centerX;
-
-        Paint paint = new Paint();
+        center = height / 2;
 
         // Стиль заливка
-        paint.setStyle(Paint.Style.FILL);
-        // Закрашиваем холст
-        paint.setColor(Color.parseColor(
-                backgroundColor[Integer.parseInt(uid.substring(uid.length() - 1))]
-        ));
         paint.setAlpha(Color.TRANSPARENT);
         canvas.drawPaint(paint);
 
@@ -100,6 +85,7 @@ public class UserAvatar extends View {
 
         int color = Color.TRANSPARENT;
         Drawable background = getRootView().getBackground();
+
         if (background instanceof ColorDrawable)
             color = ((ColorDrawable) background).getColor();
 
@@ -108,11 +94,8 @@ public class UserAvatar extends View {
                 32 * (ThemeController.getTheme(getContext()) ? 1 : -1)
                 )
         );
-//
-//        paint.setColor(getContext().getResources()
-//                .getIdentifier("colorButtonNormal", "attr", getContext().getPackageName()));
 
-        canvas.drawCircle(centerX, centerY, radius, paint);
+        canvas.drawCircle(center, center, radius, paint);
 
         // Рисуем текст
         if (ThemeController.getTheme(getContext()))
@@ -131,8 +114,8 @@ public class UserAvatar extends View {
         textHeight = mTextBoundRect.height();
 
         canvas.drawText(name,
-                centerX - (textWidth / 2f),
-                centerY + (textHeight /2f),
+                center - (textWidth / 2f),
+                center + (textHeight /2f),
                 paint
         );
 

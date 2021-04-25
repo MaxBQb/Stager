@@ -16,30 +16,15 @@ import androidx.annotation.RequiresApi;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import lombok.Setter;
 import main.stager.utils.ThemeController;
 import main.stager.utils.Utilits;
 
 
 public class UserAvatar extends View {
-    @Setter
     private String mUserName;
+    private String mName;
     private Rect mTextBoundRect = new Rect();
     private Paint paint = new Paint();
-
-    private String[] backgroundColor = new String[] {
-            "#505160",
-            "#68829E",
-            "#90AFC5",
-            "#80BD9E",
-            "#66A5AD",
-            "#2E4600",
-            "#3F681C",
-            "#EC96A4",
-            "#F0810F",
-            "#E2DFA2"
-    };
-
 
     public UserAvatar(Context context) {
         super(context);
@@ -58,18 +43,28 @@ public class UserAvatar extends View {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-
-        String name = Utilits.getDefaultOnNullOrBlank(
+    private void updateName() {
+        mName = Utilits.getDefaultOnNullOrBlank(
                 mUserName, Utilits.getDefaultOnNullOrBlank(
                         FirebaseAuth.getInstance().getCurrentUser().getEmail(), "A"
                 )
         );
 
-        if (!name.equals("A"))
-            name = name.substring(0,2).toUpperCase();
+        if (!mName.equals("A"))
+            mName = mName.substring(0,2).toUpperCase();
+    }
+
+    public void setUserName(String userName) {
+        mUserName = userName;
+        updateName();
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+
+        if (mName == null)
+            updateName();
 
         float height, center, radius, textWidth, textHeight;
         height = getHeight();
@@ -107,13 +102,13 @@ public class UserAvatar extends View {
         paint.setTextSize(80);
 
         // Подсчитаем размер текста
-        paint.getTextBounds(name, 0, name.length(), mTextBoundRect);
+        paint.getTextBounds(mName, 0, mName.length(), mTextBoundRect);
 
         // Используем measureText для измерения ширины
-        textWidth = paint.measureText(name);
+        textWidth = paint.measureText(mName);
         textHeight = mTextBoundRect.height();
 
-        canvas.drawText(name,
+        canvas.drawText(mName,
                 center - (textWidth / 2f),
                 center + (textHeight /2f),
                 paint

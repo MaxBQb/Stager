@@ -6,6 +6,7 @@ project-three_musketeers created by GitHub Classroom
 
 # Как запустить приложение:
 ( В данном варианте нет подключения к БД разработчиков, вам нужно будет самим создать свою БД и добавить файл google-services.json в проект )
+#### 1 вариант:
  1. Установить:
     * Java ( https://www.java.com/ )  
     * Android - SDK ( https://developer.android.google.cn/studio/releases/platform-tools )
@@ -21,6 +22,16 @@ project-three_musketeers created by GitHub Classroom
     * Linux: `apksigner sign --ks stager-release-key.jks --out app-release-unsigned.apk stager-aligned.apk`
  7. В папке `app/build/outputs/apk/release` вы найдете `app-release-unsigned.apk`
  8. Перекидываем на устройство, распаковать (у вас должна быть разрешена установка из неизвестных источников)!
+
+#### 2 вариант(через Docker):
+ 1. Скачать Docker Desktop ( https://www.docker.com/products/docker-desktop )
+ 2. Cклонировать репозиторий: `git clone https://github.com/TRPP-IKBO-06/project-three_musketeers.git` 
+ 3. Перейти в папку `project-three_musketeers`
+ 4. Прописать следующую команду: `docker pull dedicated407/androidstager`
+ 5. Прописать следующую команду: 
+    * Для Win: `docker run --rm -v "%cd%":/home/gradle/ dedicated407/androidstager sh /home/makeapk`
+    * Для Linux: `docker run --rm -v "$PWD":/home/gradle/ dedicated407/androidstager sh /home/makeapk`
+ 6. После работы контейнера в вашей папке появится папка `release`, в ней содержится `stager.apk`, файл с приложением
 
 ## Информация по сдаче итогового проекта
 ### 1. Информация про проект, UserStory, Макет

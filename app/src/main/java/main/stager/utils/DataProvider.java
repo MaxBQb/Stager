@@ -10,6 +10,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.Transaction;
+
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,8 @@ import main.stager.model.Status;
 import main.stager.model.UserAction;
 
 public class DataProvider {
+
+
     private static DataProvider instance;
     private FirebaseAuth mAuth;
     private DatabaseReference mRef;
@@ -34,7 +37,7 @@ public class DataProvider {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
         db.setPersistenceEnabled(true);
-        mRef = db.getReference("stager-main-db");
+        mRef = db.getReference(PATH.MAIN_DB);
         keepSynced();
     }
 
@@ -46,6 +49,28 @@ public class DataProvider {
 
         for (DatabaseReference dr: sync)
             dr.keepSynced(true);
+    }
+
+    // CONSTANTS
+    private static final class PATH {
+        // Common
+        public static final String MAIN_DB = "stager-main-db";
+        public static final String FB_POS = "pos";
+
+        // User
+        public static final String USER_INFO = "user_info";
+        public static final String USER_NAME = "name";
+        public static final String USER_DESCRIPTION = "description";
+
+        // Actions
+        public static final String ACTIONS = "actions";
+        public static final String ACTION_STATUS = "status";
+        public static final String ACTION_NAME = "name";
+
+        // Action stages
+        public static final String STAGES = "stages";
+        public static final String STAGE_STATUS = "currentStatus";
+        public static final String STAGE_NAME = "name";
     }
 
     // User data
@@ -63,22 +88,22 @@ public class DataProvider {
     }
 
     public DatabaseReference getUserInfo() {
-        return mRef.child("user_info").child(getUID());
+        return mRef.child(PATH.USER_INFO).child(getUID());
     }
 
     public DatabaseReference getUserName() {
-        return getUserInfo().child("name");
+        return getUserInfo().child(PATH.USER_NAME);
     }
 
     public DatabaseReference getUserDescription() {
-        return getUserInfo().child("description");
+        return getUserInfo().child(PATH.USER_DESCRIPTION);
     }
 
 
     // Actions
 
     public DatabaseReference getActions() {
-        return mRef.child("actions").child(getUID());
+        return mRef.child(PATH.ACTIONS).child(getUID());
     }
 
     public DatabaseReference getAction(@NotNull String key) {
@@ -86,11 +111,11 @@ public class DataProvider {
     }
 
     public DatabaseReference getActionStatus(@NotNull String key) {
-        return getAction(key).child("status");
+        return getAction(key).child(PATH.ACTION_STATUS);
     }
 
     public DatabaseReference getActionName(@NotNull String key) {
-        return getActions().child(key).child("name");
+        return getActions().child(key).child(PATH.ACTION_NAME);
     }
 
     public String addAction(UserAction ua) {
@@ -115,7 +140,7 @@ public class DataProvider {
     }
 
     public DatabaseReference getAllStages() {
-        return mRef.child("stages").child(getUID());
+        return mRef.child(PATH.STAGES).child(getUID());
     }
 
     public DatabaseReference getStages(@NotNull String actionKey) {
@@ -127,11 +152,11 @@ public class DataProvider {
     }
 
     public DatabaseReference getStageName(@NotNull String actionKey, @NotNull String stageKey) {
-        return getStage(actionKey, stageKey).child("name");
+        return getStage(actionKey, stageKey).child(PATH.STAGE_NAME);
     }
 
     public DatabaseReference getStageStatus(@NotNull String actionName, @NotNull String stageKey) {
-        return getStage(actionName, stageKey).child("currentStatus");
+        return getStage(actionName, stageKey).child(PATH.STAGE_STATUS);
     }
 
     public void setStageStatusSucceed(@NotNull String actionKey, @NotNull String stageKey) {
@@ -161,18 +186,18 @@ public class DataProvider {
                         return Transaction.abort();
                 }
 
-                currentData.child(stageKey).child("currentStatus").setValue(Status.SUCCEED);
+                currentData.child(stageKey).child(PATH.STAGE_STATUS).setValue(Status.SUCCEED);
                 return Transaction.success(currentData);
             }
 
             @Override
             public void onComplete(@Nullable DatabaseError error,
                                    boolean committed, @Nullable DataSnapshot currentData) {
-                if (!committed || !currentData.exists())
+                if (!committed || currentData == null || !currentData.exists())
                     return;
 
                 for (DataSnapshot item : currentData.getChildren())
-                    if (item.child("currentStatus").getValue(Status.class) != Status.SUCCEED)
+                    if (item.child(PATH.STAGE_STATUS).getValue(Status.class) != Status.SUCCEED)
                         return;
 
                 getActionStatus(actionKey).setValue(Status.SUCCEED);
@@ -216,10 +241,10 @@ public class DataProvider {
                     }
                 }
 
-                currentData.child(stageKey).child("currentStatus").setValue(Status.ABORTED);
+                currentData.child(stageKey).child(PATH.STAGE_STATUS).setValue(Status.ABORTED);
 
                 for (String lock_key: lockList)
-                    currentData.child(lock_key).child("currentStatus").setValue(Status.LOCKED);
+                    currentData.child(lock_key).child(PATH.STAGE_STATUS).setValue(Status.LOCKED);
 
                 return Transaction.success(currentData);
             }
@@ -227,7 +252,7 @@ public class DataProvider {
             @Override
             public void onComplete(@Nullable DatabaseError error,
                                    boolean committed, @Nullable DataSnapshot currentData) {
-                if (!committed || !currentData.exists())
+                if (!committed || currentData == null || !currentData.exists())
                     return;
 
                 getActionStatus(actionKey).setValue(Status.ABORTED);
@@ -249,7 +274,7 @@ public class DataProvider {
                 if (currentData.getValue() != null)
                     for (int i = 0; i < keys.size(); i++)
                         if (currentData.child(keys.get(i)).getValue() != null)
-                            currentData.child(keys.get(i)).child("pos").setValue(i+1);
+                            currentData.child(keys.get(i)).child(PATH.FB_POS).setValue(i+1);
                 return Transaction.success(currentData);
             }
 
@@ -272,15 +297,15 @@ public class DataProvider {
                 Integer i;
 
                 for (MutableData item: currentData.getChildren()) {
-                    i = item.child("pos").getValue(Integer.class);
+                    i = item.child(PATH.FB_POS).getValue(Integer.class);
                     if (i != null && i != Integer.MAX_VALUE && i > max_pos)
                         max_pos = i;
                 }
 
                 for (MutableData item: currentData.getChildren()) {
-                    i = item.child("pos").getValue(Integer.class);
+                    i = item.child(PATH.FB_POS).getValue(Integer.class);
                     if (i == null || i == Integer.MAX_VALUE)
-                        item.child("pos").setValue(++max_pos);
+                        item.child(PATH.FB_POS).setValue(++max_pos);
                 }
 
                 return Transaction.success(currentData);
@@ -294,7 +319,7 @@ public class DataProvider {
     }
 
     public Query getSorted(@NotNull Query ref) {
-        return ref.orderByChild("pos");
+        return ref.orderByChild(PATH.FB_POS);
     }
 
     @NotNull

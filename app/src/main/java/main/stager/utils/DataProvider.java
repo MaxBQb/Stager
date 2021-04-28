@@ -266,6 +266,24 @@ public class DataProvider {
 
     // Other
 
+    public static <T> void trySetValue(@NotNull DatabaseReference ref, T value) {
+        ref.runTransaction(new Transaction.Handler() {
+            @NonNull
+            @Override
+            public Transaction.Result doTransaction(@NotNull MutableData currentData) {
+                if (currentData.getKey() == null)
+                    return Transaction.abort();
+                currentData.setValue(value);
+                return Transaction.success(currentData);
+            }
+
+            @Override
+            public void onComplete(@Nullable DatabaseError error,
+                                   boolean committed,
+                                   @Nullable DataSnapshot currentData) {}
+        });
+    }
+
     public static void resetPositions(@NotNull DatabaseReference ref, List<String> keys) {
         ref.runTransaction(new Transaction.Handler() {
             @NonNull

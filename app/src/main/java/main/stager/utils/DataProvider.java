@@ -14,6 +14,7 @@ import com.google.firebase.database.Transaction;
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import main.stager.model.FBModel;
 import main.stager.model.Stage;
@@ -267,13 +268,17 @@ public class DataProvider {
     // Other
 
     public static <T> void trySetValue(@NotNull DatabaseReference ref, T value) {
-        ref.runTransaction(new Transaction.Handler() {
+        String key = ref.getKey();
+        if (key == null || ref.getParent() == null)
+            return;
+        ref.getParent().runTransaction(new Transaction.Handler() {
             @NonNull
             @Override
             public Transaction.Result doTransaction(@NotNull MutableData currentData) {
-                if (currentData.getKey() == null)
-                    return Transaction.abort();
-                currentData.setValue(value);
+                if (currentData == null ||
+                    !currentData.hasChild(key))
+                    return Transaction.success(currentData);
+                currentData.child(key).setValue(value);
                 return Transaction.success(currentData);
             }
 

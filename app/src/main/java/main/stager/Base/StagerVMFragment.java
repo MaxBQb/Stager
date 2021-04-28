@@ -54,15 +54,27 @@ public abstract class StagerVMFragment<TVM extends StagerViewModel> extends Stag
     @SneakyThrows
     protected <T, L extends FBFrontListener> void bindFBDataTwoWay(LiveData<T> data, BindDataCallback<T> callback,
                                                                    BindDataTwoWayListenerSetter<L> listenerSetter,
-                                                                   Class<L> listenerType) {
+                                                                   Class<L> listenerType, boolean updateOnly) {
         bindData(data, callback);
         DatabaseReference ref = viewModel.getBackPathTo(data);
         assert ref != null;
-        listenerSetter.setListener(listenerType.getConstructor(DatabaseReference.class)
-            .newInstance(ref));
+        listenerSetter.setListener(listenerType.getConstructor(DatabaseReference.class,
+                boolean.class).newInstance(ref, updateOnly));
+    }
+
+    protected <T, L extends FBFrontListener> void bindFBDataTwoWay(LiveData<T> data, BindDataCallback<T> callback,
+                                                                   BindDataTwoWayListenerSetter<L> listenerSetter,
+                                                                   Class<L> listenerType) {
+        bindFBDataTwoWay(data, callback, listenerSetter, listenerType, true);
+    }
+
+    protected void bindDataTwoWay(LiveData<String> data, EditText edit, boolean updateOnly) {
+        bindFBDataTwoWay(data, edit::setText, edit::setOnFocusChangeListener,
+                OnLostFocusDBUpdater.class, updateOnly);
     }
 
     protected void bindDataTwoWay(LiveData<String> data, EditText edit) {
-        bindFBDataTwoWay(data, edit::setText, edit::setOnFocusChangeListener, OnLostFocusDBUpdater.class);
+        bindFBDataTwoWay(data, edit::setText, edit::setOnFocusChangeListener,
+                OnLostFocusDBUpdater.class);
     }
 }

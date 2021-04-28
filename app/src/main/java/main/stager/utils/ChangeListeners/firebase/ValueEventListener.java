@@ -27,9 +27,7 @@ public class ValueEventListener<T> extends AValueEventListener<T> {
 
     @Override
     public void onDataChange(@NonNull DataSnapshot snapshot) {
-        live.postValue(snapshot.exists() ?
-                modify(snapshot.getValue(className), snapshot):
-                null
-        );
+        if (snapshot.exists())
+            live.postValue(modify(snapshot.getValue(className), snapshot));
     }
 }

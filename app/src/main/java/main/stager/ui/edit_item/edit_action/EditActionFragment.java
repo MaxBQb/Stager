@@ -57,14 +57,11 @@ public class EditActionFragment
     @Override
     protected void setObservers() {
         super.setObservers();
-        bindData(viewModel.getActionName(),
-                (String text) -> ((AppCompatActivity)getActivity())
-                                 .getSupportActionBar()
-                                 .setTitle(getString(R.string.StagesFragment_title,
-                                         Utilits.getDefaultOnNullOrBlank(text,
-                                                 getString(R.string
-                                                         .EditActionFragment_message_UntitledAction
-                                                 )))));
+        bindData(viewModel.getActionName(), (String text) ->
+                getActionBar().setTitle(getString(R.string.StagesFragment_title,
+                    Utilits.getDefaultOnNullOrBlank(text,
+                            getString(R.string.EditActionFragment_message_UntitledAction)
+                ))));
         bindDataTwoWay(viewModel.getActionName(), editActionName);
     }
 
@@ -88,9 +85,7 @@ public class EditActionFragment
     @Override
     protected void prepareFragmentComponents() {
         super.prepareFragmentComponents();
-        ((SmartActivity)getActivity())
-                .getSupportActionBar()
-                .setTitle(getString(R.string.StagesFragment_title, mActionName));
+        getActionBar().setTitle(getString(R.string.StagesFragment_title, mActionName));
         editActionName = view.findViewById(R.id.edit_action_input_name);
         editActionName.setText(mActionName);
     }

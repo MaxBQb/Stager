@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.LayoutRes;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -87,8 +89,12 @@ public abstract class StagerFragment extends Fragment {
             ref.removeEventListener(onValueRemovedListener);
     }
 
+    protected ActionBar getActionBar() {
+        return ((AppCompatActivity)getActivity()).getSupportActionBar();
+    }
+
     protected void close() {
-        if (isSafe())
-            navigator.navigateUp();
+        if (!isSafe()) return;
+        navigator.navigateUp();
     }
 }

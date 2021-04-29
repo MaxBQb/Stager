@@ -34,4 +34,10 @@ public abstract class StagerListViewModel<T extends FBModel> extends StagerViewM
         return getData(mValues, () -> dataProvider.getSorted(getListPath()).addValueEventListener(
                 new ValueListEventListener<T>(mValues, getItemType(), onError)));
     }
+
+    @Override
+    public void buildBackPath() {
+        super.buildBackPath();
+        backPath.put(mValues, getListPath());
+    }
 }

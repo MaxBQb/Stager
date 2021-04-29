@@ -22,11 +22,19 @@ public class EditStageViewModel extends StagerViewModel {
     }
 
     public LiveData<String> getStageName() {
-        return getText(mName, dataProvider.getStageName(actionKey, stageKey));
+        return getText(mName);
     }
 
     public LiveData<Status> getStageStatus() {
-        return getSimpleFBData(mStatus,
-                dataProvider.getStageStatus(actionKey, stageKey), Status.class);
+        return getSimpleFBData(mStatus, Status.class);
+    }
+
+    @Override
+    public void buildBackPath() {
+        super.buildBackPath();
+        backPath.put(mStatus,
+                dataProvider.getStageStatus(actionKey, stageKey));
+        backPath.put(mName,
+                dataProvider.getStageName(actionKey, stageKey));
     }
 }

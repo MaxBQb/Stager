@@ -33,6 +33,13 @@ public class EditActionViewModel extends StagerListViewModel<Stage> {
     }
 
     public LiveData<String> getActionName() {
-        return getText(actionName, dataProvider.getActionName(actionKey));
+        return getText(actionName);
+    }
+
+    @Override
+    public void buildBackPath() {
+        super.buildBackPath();
+        backPath.put(actionName,
+                dataProvider.getActionName(actionKey));
     }
 }

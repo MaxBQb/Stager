@@ -17,10 +17,17 @@ public class AboutMeViewModel extends StagerViewModel {
     }
 
     public LiveData<String> getName() {
-        return getText(mName, dataProvider.getUserName());
+        return getText(mName);
     }
 
     public LiveData<String> getDescription() {
-        return getText(mDescription, dataProvider.getUserDescription());
+        return getText(mDescription);
+    }
+
+    @Override
+    public void buildBackPath() {
+        super.buildBackPath();
+        backPath.put(mName, dataProvider.getUserName());
+        backPath.put(mDescription, dataProvider.getUserDescription());
     }
 }

@@ -4,9 +4,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
@@ -19,6 +21,12 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         // Добавляем реакции на изменение различных опций
         PreferenceManager.getDefaultSharedPreferences(getActivity())
                 .registerOnSharedPreferenceChangeListener(this::bindOptionChanges);
+        init();
+    }
+
+    private void init() {
+        findPreference(getString(R.string.Settings__Theme)).setOnPreferenceClickListener(this::enable);
+        findPreference(getString(R.string.Settings__Locale)).setOnPreferenceClickListener(this::enable);
     }
 
     private void bindOptionChanges(SharedPreferences prefs, String key) {
@@ -26,6 +34,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         try {
             if (getString(R.string.Settings__Theme).equals(key) ||
                 getString(R.string.Settings__Locale).equals(key)) {
+                    findPreference(getString(R.string.Settings__Theme)).setOnPreferenceClickListener(this::disable);
+                    findPreference(getString(R.string.Settings__Locale)).setOnPreferenceClickListener(this::disable);
                     prefs.edit().commit(); // Гарантирия сохранности
                     getActivity().recreate();
             }
@@ -42,5 +52,15 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+    }
+
+    private boolean enable(Preference p) {
+        p.setEnabled(true);
+        return false;
+    }
+
+    private boolean disable(Preference p) {
+        p.setEnabled(false);
+        return false;
     }
 }

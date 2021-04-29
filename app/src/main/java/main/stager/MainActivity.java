@@ -3,6 +3,7 @@ package main.stager;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -13,7 +14,7 @@ import com.google.android.material.navigation.NavigationView;
 import main.stager.Base.AuthorizedOnlyActivity;
 
 public class MainActivity extends AuthorizedOnlyActivity {
-
+    private NavBarViewModel navBarViewModel;
     private AppBarConfiguration mAppBarConfiguration;
 
     @Override
@@ -36,6 +37,12 @@ public class MainActivity extends AuthorizedOnlyActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        navBarViewModel = new ViewModelProvider(this).get(NavBarViewModel.class);
+        navBarViewModel.buildBackPath();
+        UserAvatar ua = navigationView.getHeaderView(0)
+                        .findViewById(R.id.user_avatar);
+        navBarViewModel.getName().observe(this, ua::setUserName);
     }
 
     @Override

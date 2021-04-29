@@ -44,14 +44,17 @@ public class UserAvatar extends View {
     }
 
     private void updateName() {
-        mName = Utilits.getDefaultOnNullOrBlank(
-                mUserName, Utilits.getDefaultOnNullOrBlank(
-                        FirebaseAuth.getInstance().getCurrentUser().getEmail(), "A"
-                )
-        );
+        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
-        if (!mName.equals("A"))
-            mName = mName.substring(0,2).toUpperCase();
+        mName = (Utilits.isNullOrBlank(mUserName) || mUserName.trim().length() < 2)
+                ? ((Utilits.isNullOrBlank(email) || email.trim().length() < 2)
+                    ? "A"
+                    : email)
+                : mUserName;
+
+        mName = mName.trim().toUpperCase();
+        if (mName.length() > 2)
+            mName = mName.substring(0,2);
     }
 
     public void setUserName(String userName) {

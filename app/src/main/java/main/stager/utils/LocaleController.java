@@ -28,6 +28,10 @@ public class LocaleController {
     /** Получить сохранённый язык */
     private static String getLocale(Context context) {
         return androidx.preference.PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(context.getString(R.string.Settings__Locale), Locale.getDefault().getLanguage());
+                .getString(context.getString(R.string.Settings__Locale), getDefaultLocale(context));
+    }
+
+    private static String getDefaultLocale(Context context) {
+        return context.getResources().getConfiguration().locale.getLanguage();
     }
 }

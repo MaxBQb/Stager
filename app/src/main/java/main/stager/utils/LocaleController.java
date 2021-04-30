@@ -21,17 +21,17 @@ public class LocaleController {
     }
 
     /** Устанавливает язык */
-    private static void setLocale(Context context, String language) {
+    public static void setLocale(Context context, String language) {
         Lingver.getInstance().setLocale(context, language);
     }
 
     /** Получить сохранённый язык */
-    private static String getLocale(Context context) {
+    public static String getLocale(Context context) {
         return androidx.preference.PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(context.getString(R.string.Settings__Locale), getDefaultLocale(context));
     }
 
-    private static String getDefaultLocale(Context context) {
+    public static String getDefaultLocale(Context context) {
         return context.getResources().getConfiguration().locale.getLanguage();
     }
 }

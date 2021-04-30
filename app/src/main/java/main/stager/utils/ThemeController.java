@@ -22,7 +22,7 @@ public class ThemeController {
      * @param activity Активность (обычно это this)
      */
     public static void restoreTheme(Activity activity, boolean showActionBar) {
-        boolean currentTheme = getTheme(activity);
+        boolean currentTheme = isCurrentDark(activity);
         activity.setTheme(theme(currentTheme, showActionBar));
     }
 
@@ -33,7 +33,7 @@ public class ThemeController {
     /** Возвращает текущую тему
      */
     @NotNull
-    public static boolean getTheme(Context context) {
+    public static boolean isCurrentDark(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                                 .getBoolean(context.getString(R.string.Settings__Theme),
                                         isDarkByDefault(context));

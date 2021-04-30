@@ -89,14 +89,14 @@ public class UserAvatar extends View {
 
         paint.setColor(colorChangeBrightness(
                 color,
-                32 * (ThemeController.getTheme(getContext()) ? 1 : -1)
+                32 * (ThemeController.isCurrentDark(getContext()) ? 1 : -1)
                 )
         );
 
         canvas.drawCircle(center, center, radius, paint);
 
         // Рисуем текст
-        if (ThemeController.getTheme(getContext()))
+        if (ThemeController.isCurrentDark(getContext()))
             paint.setColor(Color.WHITE);
         else paint.setColor(Color.BLACK);
 

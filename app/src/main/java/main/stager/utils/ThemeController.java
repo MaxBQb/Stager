@@ -2,9 +2,9 @@ package main.stager.utils;
 
 import android.app.Activity;
 import android.content.Context;
-
+import android.content.res.Configuration;
 import androidx.preference.PreferenceManager;
-
+import org.jetbrains.annotations.NotNull;
 import main.stager.R;
 
 public class ThemeController {
@@ -32,9 +32,17 @@ public class ThemeController {
 
     /** Возвращает текущую тему
      */
-    public static Boolean getTheme(Context context) {
+    @NotNull
+    public static boolean getTheme(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
-                                .getBoolean(context.getString(R.string.Settings__Theme), false);
+                                .getBoolean(context.getString(R.string.Settings__Theme),
+                                        isDarkByDefault(context));
     }
 
+    public static boolean isDarkByDefault(@NotNull Context context) {
+        int nightModeFlags =
+                context.getResources().getConfiguration().uiMode &
+                        Configuration.UI_MODE_NIGHT_MASK;
+        return nightModeFlags == Configuration.UI_MODE_NIGHT_YES;
+    }
 }

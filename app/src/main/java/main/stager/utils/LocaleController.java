@@ -2,7 +2,14 @@ package main.stager.utils;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Build;
+
+import androidx.preference.PreferenceManager;
+
 import com.yariksoffice.lingver.Lingver;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Locale;
 
 import main.stager.R;
@@ -27,11 +34,18 @@ public class LocaleController {
 
     /** Получить сохранённый язык */
     public static String getLocale(Context context) {
+        if (PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(context.getString(R.string.Settings__AutoTune),
+                        true))
+            return getDefaultLocale(context);
         return androidx.preference.PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(context.getString(R.string.Settings__Locale), getDefaultLocale(context));
     }
 
+    @NotNull
     public static String getDefaultLocale(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            return context.getResources().getConfiguration().getLocales().get(0).getLanguage();
         return context.getResources().getConfiguration().locale.getLanguage();
     }
 }

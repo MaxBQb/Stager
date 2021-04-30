@@ -20,6 +20,7 @@
     <!-- Settings -->
     <string name="Settings_title">Settings</string>
     <string name="Settings_Category_title_Appearance">Appearance</string>
+        <string name="Settings_Appearance_label_AutoTune">Use system defaults</string>
         <string name="Settings_Appearance_label_Theme">Dark theme</string>
         <string name="Settings_Appearance_Switch_summaryOn_DarkMode">Current theme: Dark</string>
         <string name="Settings_Appearance_Switch_summaryOff_LightMode">Current theme: Light</string>

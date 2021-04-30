@@ -34,9 +34,13 @@ public class ThemeController {
      */
     @NotNull
     public static boolean isCurrentDark(Context context) {
+        if (PreferenceManager.getDefaultSharedPreferences(context)
+                             .getBoolean(context.getString(R.string.Settings__AutoTune),
+                             true))
+            return isDarkByDefault(context);
         return PreferenceManager.getDefaultSharedPreferences(context)
                                 .getBoolean(context.getString(R.string.Settings__Theme),
-                                        isDarkByDefault(context));
+                                isDarkByDefault(context));
     }
 
     public static boolean isDarkByDefault(@NotNull Context context) {

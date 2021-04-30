@@ -3,14 +3,23 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory app:title="@string/Settings_Category_title_Appearance">
         <SwitchPreferenceCompat
+            app:key="@string/Settings__AutoTune"
+            app:title="@string/Settings_Appearance_label_AutoTune"
+            android:defaultValue="true"
+            android:disableDependentsState="true"
+            />
+
+        <SwitchPreferenceCompat
+            android:dependency="@string/Settings__AutoTune"
             app:key="@string/Settings__Theme"
             app:title="@string/Settings_Appearance_label_Theme"
             android:icon="@drawable/ic_baseline_color_lens_24"
             app:summaryOn="@string/Settings_Appearance_Switch_summaryOn_DarkMode"
             app:summaryOff="@string/Settings_Appearance_Switch_summaryOff_LightMode"
-            app:defaultValue="false"/>
+            />
 
         <ListPreference
+            android:dependency="@string/Settings__AutoTune"
             app:key="@string/Settings__Locale"
             app:title="@string/Settings_Appearance_List_label_Locale"
             app:icon="@drawable/ic_baseline_language_24"

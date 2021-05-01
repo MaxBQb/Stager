@@ -3,7 +3,6 @@ package main.stager.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
-import androidx.preference.PreferenceManager;
 import org.jetbrains.annotations.NotNull;
 import main.stager.R;
 
@@ -34,13 +33,10 @@ public class ThemeController {
      */
     @NotNull
     public static boolean isCurrentDark(Context context) {
-        if (PreferenceManager.getDefaultSharedPreferences(context)
-                             .getBoolean(context.getString(R.string.Settings__AutoTune),
-                             true))
+        SettingsWrapper S = SettingsWrapper.getInstance();
+        if (S.isAutoTune(true))
             return isDarkByDefault(context);
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                                .getBoolean(context.getString(R.string.Settings__Theme),
-                                isDarkByDefault(context));
+        return S.isDarkTheme(isDarkByDefault(context));
     }
 
     public static boolean isDarkByDefault(@NotNull Context context) {

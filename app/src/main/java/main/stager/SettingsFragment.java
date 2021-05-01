@@ -13,18 +13,16 @@ import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreferenceCompat;
 
 import main.stager.utils.LocaleController;
+import main.stager.utils.SettingsWrapper;
 import main.stager.utils.ThemeController;
 
 public class SettingsFragment extends PreferenceFragmentCompat
 implements SharedPreferences.OnSharedPreferenceChangeListener {
-    private String S_AUTO_TUNE;
-    private String S_LOCALE;
-    private String S_THEME;
+    private final SettingsWrapper S = SettingsWrapper.getInstance();
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.settings, rootKey);
-        defineSettingsNames();
         autoTune();
 
         // Добавляем реакции на изменение различных опций
@@ -32,32 +30,26 @@ implements SharedPreferences.OnSharedPreferenceChangeListener {
                 .registerOnSharedPreferenceChangeListener(this);
     }
 
-    private void defineSettingsNames() {
-        S_AUTO_TUNE = getString(R.string.Settings__AutoTune);
-        S_LOCALE = getString(R.string.Settings__Locale);
-        S_THEME = getString(R.string.Settings__Theme);
-    }
-
     private void autoTune() {
         if (!PreferenceManager.getDefaultSharedPreferences(getContext())
-                .getBoolean(S_AUTO_TUNE, true)) return;
+                .getBoolean(S.AUTO_TUNE, true)) return;
 
-        SwitchPreferenceCompat theme = findPreference(S_THEME);
+        SwitchPreferenceCompat theme = findPreference(S.THEME);
         theme.setChecked(ThemeController.isDarkByDefault(getContext()));
 
-        ListPreference language = findPreference(S_LOCALE);
+        ListPreference language = findPreference(S.LOCALE);
         language.setValue(LocaleController.getDefaultLocale(getContext()));
     }
 
     public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
         // Смена темы или языка
         try {
-            if (S_THEME.equals(key) ||
-                S_AUTO_TUNE.equals(key) ||
-                S_LOCALE.equals(key)) {
+            if (S.THEME.equals(key) ||
+                S.AUTO_TUNE.equals(key) ||
+                S.LOCALE.equals(key)) {
 
                 prefs.edit().commit(); // Гарантирия сохранности
-                if (S_AUTO_TUNE.equals(key))
+                if (S.AUTO_TUNE.equals(key))
                     ((StagerApplication)getActivity().getApplication()).restart(getActivity());
                 else
                     getActivity().recreate();

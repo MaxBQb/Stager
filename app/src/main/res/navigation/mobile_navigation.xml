@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/nav_my_contacts"
-        android:name="main.stager.ui.my_contacts.MyContactsFragment"
+        android:name="main.stager.ui.my_contacts.ContactsListFragment"
         android:label="@string/SideBarActivity_NavigationItem_MyContacts"
         tools:layout="@layout/fragment_my_contacts" />
 

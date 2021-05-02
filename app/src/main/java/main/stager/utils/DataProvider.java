@@ -72,6 +72,9 @@ public class DataProvider {
         public static final String STAGES = "stages";
         public static final String STAGE_STATUS = "currentStatus";
         public static final String STAGE_NAME = "name";
+
+        // Contacts
+        public static final String CONTACTS = "contacts";
     }
 
     // User data
@@ -264,6 +267,13 @@ public class DataProvider {
     public void deleteStage(@NotNull String actionKey, @NotNull String stageKey) {
         getStage(actionKey, stageKey).removeValue();
     }
+
+    // Contacts
+
+    public DatabaseReference getContacts() {
+        return mRef.child(PATH.CONTACTS).child(getUID());
+    }
+
 
     // Other
 

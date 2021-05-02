@@ -73,4 +73,7 @@
     <!-- Edit action stage -->
     <string name="EditStageFragment_title">Stage</string>
     <string name="EditStageFragment_message_UntitledStage">Untitled stage</string>
+
+    <!-- Find contacts -->
+    <string name="FindNewContacts_title">Find new contact</string>
 </resources>

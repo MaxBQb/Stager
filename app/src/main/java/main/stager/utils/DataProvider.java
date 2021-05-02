@@ -62,6 +62,7 @@ public class DataProvider {
         public static final String USER_INFO = "user_info";
         public static final String USER_NAME = "name";
         public static final String USER_DESCRIPTION = "description";
+        public static final String USER_EMAIL = "email";
 
         // Actions
         public static final String ACTIONS = "actions";
@@ -103,6 +104,13 @@ public class DataProvider {
         return getUserInfo().child(PATH.USER_DESCRIPTION);
     }
 
+    public DatabaseReference getUserEmail() {
+        return getUserInfo().child(PATH.USER_EMAIL);
+    }
+
+    public Query findUserByEmail(String email) {
+        return getUserEmail().equalTo(email);
+    }
 
     // Actions
 
@@ -273,7 +281,6 @@ public class DataProvider {
     public DatabaseReference getContacts() {
         return mRef.child(PATH.CONTACTS).child(getUID());
     }
-
 
     // Other
 

@@ -74,4 +74,7 @@
     <!-- Изменить этап мероприятия -->
     <string name="EditStageFragment_title">Этап</string>
     <string name="EditStageFragment_message_UntitledStage">Безымянный этап</string>
+
+    <!-- Find contacts -->
+    <string name="FindNewContacts_title">Найти новый контакт</string>
 </resources>

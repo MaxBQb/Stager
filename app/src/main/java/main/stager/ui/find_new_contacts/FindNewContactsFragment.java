@@ -1,18 +1,18 @@
-package main.stager.ui.my_contacts;
+package main.stager.ui.find_new_contacts;
 
 import android.os.Bundle;
-import android.view.View;
 
 import main.stager.R;
-import main.stager.list.StagerExtendableList;
+import main.stager.list.StagerList;
 import main.stager.model.Contact;
 import main.stager.ui.edit_item.edit_action.EditActionFragment;
+import main.stager.ui.my_contacts.ContactRecyclerViewAdapter;
 
-public class ContactsListFragment extends
-        StagerExtendableList<ContactsListViewModel, ContactRecyclerViewAdapter, Contact> {
+public class FindNewContactsFragment extends
+        StagerList<FindNewContactsViewModel, ContactRecyclerViewAdapter, Contact> {
     @Override
-    protected Class<ContactsListViewModel> getViewModelType() {
-        return ContactsListViewModel.class;
+    protected Class<FindNewContactsViewModel> getViewModelType() {
+        return FindNewContactsViewModel.class;
     }
 
     @Override
@@ -22,7 +22,7 @@ public class ContactsListFragment extends
 
     @Override
     protected int getViewBaseLayoutId() {
-        return R.layout.fragment_my_contacts;
+        return R.layout.fragment_find_contacts;
     }
 
     @Override
@@ -32,10 +32,5 @@ public class ContactsListFragment extends
         args.putString(EditActionFragment.ARG_ACTION_NAME, item.getName());
         args.putString(EditActionFragment.ARG_ACTION_KEY, item.getKey());
         navigator.navigate(R.id.transition_actions_list_to_action_stages_list, args);
-    }
-
-    @Override
-    protected void onButtonAddClicked(View v) {
-        navigator.navigate(R.id.transition_my_contacts_to_find_new_contacts);
     }
 }

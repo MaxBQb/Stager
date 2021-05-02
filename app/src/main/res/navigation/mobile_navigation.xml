@@ -23,7 +23,17 @@
         android:id="@+id/nav_my_contacts"
         android:name="main.stager.ui.my_contacts.ContactsListFragment"
         android:label="@string/SideBarActivity_NavigationItem_MyContacts"
-        tools:layout="@layout/fragment_my_contacts" />
+        tools:layout="@layout/fragment_my_contacts">
+        <action
+            android:id="@+id/transition_my_contacts_to_find_new_contacts"
+            app:destination="@id/find_new_contacts" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/find_new_contacts"
+        android:name="main.stager.ui.find_new_contacts.FindNewContactsFragment"
+        android:label="@string/FindNewContacts_title"
+        tools:layout="@layout/fragment_find_contacts" />
 
     <fragment
         android:id="@+id/nav_my_actions"

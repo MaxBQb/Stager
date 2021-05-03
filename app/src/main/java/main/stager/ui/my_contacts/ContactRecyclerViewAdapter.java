@@ -55,6 +55,7 @@ public class ContactRecyclerViewAdapter
         else
             holder.mContentView.setText(holder.mItem.getName());
 
+        holder.mAvatar.setEmail(holder.mItem.getEmail());
         holder.mAvatar.setUserName(holder.mItem.getName());
         bindOnItemClickListener(holder.mView, holder.mItem, position);
     }

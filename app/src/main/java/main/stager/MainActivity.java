@@ -10,6 +10,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import main.stager.Base.AuthorizedOnlyActivity;
 
@@ -42,6 +43,7 @@ public class MainActivity extends AuthorizedOnlyActivity {
         navBarViewModel.buildBackPath();
         UserAvatar ua = navigationView.getHeaderView(0)
                         .findViewById(R.id.user_avatar);
+        ua.setEmail(FirebaseAuth.getInstance().getCurrentUser().getEmail());
         navBarViewModel.getName().observe(this, ua::setUserName);
     }
 

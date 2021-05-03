@@ -14,7 +14,6 @@ import com.google.firebase.database.Transaction;
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import main.stager.model.FBModel;
 import main.stager.model.Stage;
@@ -113,7 +112,8 @@ public class DataProvider {
     }
 
     public Query findUserByEmail(String email) {
-        return getUserEmail().equalTo(email);
+        return getAllUserInfo().orderByChild(PATH.USER_EMAIL)
+                .startAt(email).endAt(email+"\uf8ff");
     }
 
     // Actions

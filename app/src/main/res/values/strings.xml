@@ -65,6 +65,9 @@
     <!-- Item edit menu -->
     <string name="ItemEditMenu_title_SaveChanges">Save</string>
 
+    <!-- Search menu -->
+    <string name="SearchMenu_title">Search</string>
+
     <!-- Common List -->
     <string name="CommonList_EmptyListView_TextView_text">Here is nothing</string>
     <string name="CommonList_LoadingListView_TextView_text">Loading...</string>

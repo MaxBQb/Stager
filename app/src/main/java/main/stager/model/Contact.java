@@ -8,5 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Contact extends FBModel {
     @Getter private String name;
+    @Getter private String description;
+    @Getter private String email;
 }
 

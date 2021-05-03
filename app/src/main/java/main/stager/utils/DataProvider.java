@@ -93,7 +93,11 @@ public class DataProvider {
     }
 
     public DatabaseReference getUserInfo() {
-        return mRef.child(PATH.USER_INFO).child(getUID());
+        return getAllUserInfo().child(getUID());
+    }
+
+    public DatabaseReference getAllUserInfo() {
+        return mRef.child(PATH.USER_INFO);
     }
 
     public DatabaseReference getUserName() {
@@ -296,6 +300,25 @@ public class DataProvider {
                     !currentData.hasChild(key))
                     return Transaction.success(currentData);
                 currentData.child(key).setValue(value);
+                return Transaction.success(currentData);
+            }
+
+            @Override
+            public void onComplete(@Nullable DatabaseError error,
+                                   boolean committed,
+                                   @Nullable DataSnapshot currentData) {}
+        });
+    }
+
+    public static void toggle(@NotNull DatabaseReference ref) {
+        ref.runTransaction(new Transaction.Handler() {
+            @NonNull
+            @Override
+            public Transaction.Result doTransaction(@NotNull MutableData currentData) {
+                Boolean value = currentData.getValue(boolean.class);
+                if (value == null)
+                    return Transaction.success(currentData);
+                currentData.setValue(!value);
                 return Transaction.success(currentData);
             }
 

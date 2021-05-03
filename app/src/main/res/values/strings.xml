@@ -79,4 +79,6 @@
 
     <!-- Find contacts -->
     <string name="FindNewContacts_title">Find new contact</string>
+    <string name="FindNewContacts_message_success">Send request to "%s"</string>
+    <string name="FindNewContacts_message_denied">Request denied</string>
 </resources>

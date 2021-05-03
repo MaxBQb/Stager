@@ -1,11 +1,10 @@
 package main.stager.ui.find_new_contacts;
 
-import android.os.Bundle;
-
+import android.view.Gravity;
+import android.widget.Toast;
 import main.stager.R;
 import main.stager.list.StagerList;
 import main.stager.model.Contact;
-import main.stager.ui.edit_item.edit_action.EditActionFragment;
 import main.stager.ui.my_contacts.ContactRecyclerViewAdapter;
 import main.stager.utils.Utilits;
 
@@ -33,10 +32,14 @@ public class FindNewContactsFragment extends
     @Override
     protected void onItemClick(Contact item, int pos) {
         super.onItemClick(item, pos);
-        Bundle args = new Bundle();
-        args.putString(EditActionFragment.ARG_ACTION_NAME, item.getName());
-        args.putString(EditActionFragment.ARG_ACTION_KEY, item.getKey());
-        navigator.navigate(R.id.transition_actions_list_to_action_stages_list, args);
+        dataProvider.makeContactRequest(item.getKey()).addOnSuccessListener(e -> {
+            Toast.makeText(getContext(),
+                    getString(R.string.FindNewContacts_message_success, item.getName()),
+                    Toast.LENGTH_SHORT).show();
+        }).addOnFailureListener(e -> {
+            Toast.makeText(getContext(), R.string.FindNewContacts_message_denied,
+                    Toast.LENGTH_SHORT).show();
+        });
     }
 
     @Override

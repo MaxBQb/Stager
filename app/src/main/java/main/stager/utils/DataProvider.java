@@ -2,6 +2,8 @@ package main.stager.utils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -75,6 +77,9 @@ public class DataProvider {
 
         // Contacts
         public static final String CONTACTS = "contacts";
+
+        // Contact requests
+        public static final String CONTACT_REQUESTS = "contact_requests";
     }
 
     // User data
@@ -114,6 +119,20 @@ public class DataProvider {
     public Query findUserByEmail(String email) {
         return getAllUserInfo().orderByChild(PATH.USER_EMAIL)
                 .startAt(email).endAt(email+"\uf8ff");
+    }
+
+    // Contact requests
+
+    public DatabaseReference getContactRequests() {
+        return getAllContactRequests().child(getUID());
+    }
+
+    public DatabaseReference getAllContactRequests() {
+        return mRef.child(PATH.CONTACT_REQUESTS);
+    }
+
+    public Task<Void> makeContactRequest(String receiver) {
+        return getAllContactRequests().child(receiver).child(getUID()).setValue(true);
     }
 
     // Actions

@@ -80,4 +80,6 @@
 
     <!-- Find contacts -->
     <string name="FindNewContacts_title">Найти новый контакт</string>
+    <string name="FindNewContacts_message_success">Запрос отправен "%s"</string>
+    <string name="FindNewContacts_message_denied">Запрос отклонён</string>
 </resources>

@@ -51,9 +51,14 @@ public class ContactRecyclerViewAdapter
         holder.mItem = getItem(position);
 
         if (Utilits.isNullOrBlank(holder.mItem.getName()))
-            holder.mContentView.setText("Anonim");
+            holder.mNameView.setText("Anonim");
         else
-            holder.mContentView.setText(holder.mItem.getName());
+            holder.mNameView.setText(holder.mItem.getName());
+
+        if (Utilits.isNullOrBlank(holder.mItem.getEmail()))
+            holder.mEmailView.setVisibility(View.GONE);
+        else
+            holder.mEmailView.setText(holder.mItem.getEmail());
 
         holder.mAvatar.setEmail(holder.mItem.getEmail());
         holder.mAvatar.setUserName(holder.mItem.getName());
@@ -62,14 +67,16 @@ public class ContactRecyclerViewAdapter
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mContentView;
+        public final TextView mNameView;
+        public final TextView mEmailView;
         public final UserAvatar mAvatar;
         public Contact mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mContentView = view.findViewById(R.id.item_name);
+            mNameView = view.findViewById(R.id.item_name);
+            mEmailView = view.findViewById(R.id.item_email);
             mAvatar = view.findViewById(R.id.item_avatar);
         }
     }

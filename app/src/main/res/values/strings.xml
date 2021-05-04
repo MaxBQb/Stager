@@ -81,4 +81,8 @@
     <string name="FindNewContacts_title">Find new contact</string>
     <string name="FindNewContacts_message_success">Send request to "%s"</string>
     <string name="FindNewContacts_message_denied">Request denied</string>
+
+    <!-- Contact info -->
+    <string name="ContactInfo_title">About "%s"</string>
+    <string name="ContactInfo_message_AnonymousUser">Anonymous User</string>
 </resources>

@@ -103,7 +103,7 @@ public class DataProvider {
     }
 
     public DatabaseReference getUserInfo(@NonNull String uid) {
-        return getAllUserInfo().child(getUID());
+        return getAllUserInfo().child(uid);
     }
 
     public DatabaseReference getAllUserInfo() {
@@ -346,6 +346,10 @@ public class DataProvider {
 
     public DatabaseReference getContacts() {
         return getContacts(getUID());
+    }
+
+    public DatabaseReference getContact(@NonNull String of) {
+        return getContacts(getUID()).child(of);
     }
 
     public DatabaseReference getContacts(@NonNull String uid) {

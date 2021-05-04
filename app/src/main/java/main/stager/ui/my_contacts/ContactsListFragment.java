@@ -6,6 +6,7 @@ import android.view.View;
 import main.stager.R;
 import main.stager.list.StagerExtendableList;
 import main.stager.model.Contact;
+import main.stager.ui.contact_info.ContactInfoFragment;
 import main.stager.ui.edit_item.edit_action.EditActionFragment;
 
 public class ContactsListFragment extends
@@ -29,9 +30,9 @@ public class ContactsListFragment extends
     protected void onItemClick(Contact item, int pos) {
         super.onItemClick(item, pos);
         Bundle args = new Bundle();
-        args.putString(EditActionFragment.ARG_ACTION_NAME, item.getName());
-        args.putString(EditActionFragment.ARG_ACTION_KEY, item.getKey());
-        navigator.navigate(R.id.transition_actions_list_to_action_stages_list, args);
+        args.putString(ContactInfoFragment.ARG_CONTACT_NAME, item.getName());
+        args.putString(ContactInfoFragment.ARG_CONTACT_KEY, item.getKey());
+        navigator.navigate(R.id.transition_my_contacts_to_contact_info, args);
     }
 
     @Override

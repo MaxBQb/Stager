@@ -27,7 +27,16 @@
         <action
             android:id="@+id/transition_my_contacts_to_find_new_contacts"
             app:destination="@id/find_new_contacts" />
+        <action
+            android:id="@+id/transition_my_contacts_to_contact_info"
+            app:destination="@id/contact_info" />
     </fragment>
+
+    <fragment
+        android:id="@+id/contact_info"
+        android:name="main.stager.ui.contact_info.ContactInfoFragment"
+        android:label="@string/ContactInfo_title"
+        tools:layout="@layout/fragment_contact_info"/>
 
     <fragment
         android:id="@+id/find_new_contacts"

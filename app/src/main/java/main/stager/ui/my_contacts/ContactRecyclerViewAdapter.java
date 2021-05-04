@@ -51,7 +51,7 @@ public class ContactRecyclerViewAdapter
         holder.mItem = getItem(position);
 
         if (Utilits.isNullOrBlank(holder.mItem.getName()))
-            holder.mContentView.setText("Anonim");
+            holder.mContentView.setText(R.string.ContactInfo_message_AnonymousUser);
         else
             holder.mContentView.setText(holder.mItem.getName());
 

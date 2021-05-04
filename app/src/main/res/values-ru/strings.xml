@@ -82,4 +82,8 @@
     <string name="FindNewContacts_title">Найти новый контакт</string>
     <string name="FindNewContacts_message_success">Запрос отправен "%s"</string>
     <string name="FindNewContacts_message_denied">Запрос отклонён</string>
+
+    <!-- Contact info -->
+    <string name="ContactInfo_title">Сведения о "%s"</string>
+    <string name="ContactInfo_message_AnonymousUser">Анонимный Пользователь</string>
 </resources>

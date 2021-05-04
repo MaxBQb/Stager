@@ -4,13 +4,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
-
 import org.jetbrains.annotations.NotNull;
-
 import main.stager.R;
 import main.stager.UserAvatar;
 import main.stager.list.StagerListAdapter;
@@ -34,7 +31,6 @@ public class ContactRecyclerViewAdapter
         super(DIFF_CALLBACK);
     }
 
-
     @NotNull
     @Override
     public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
@@ -49,9 +45,14 @@ public class ContactRecyclerViewAdapter
         holder.mItem = getItem(position);
 
         if (Utilits.isNullOrBlank(holder.mItem.getName()))
-            holder.mContentView.setText(R.string.ContactInfoFragment_message_AnonymousUser);
+            holder.mNameView.setText(R.string.ContactInfoFragment_message_AnonymousUser);
         else
-            holder.mContentView.setText(holder.mItem.getName());
+            holder.mNameView.setText(holder.mItem.getName());
+
+        if (Utilits.isNullOrBlank(holder.mItem.getEmail()))
+            holder.mEmailView.setVisibility(View.GONE);
+        else
+            holder.mEmailView.setText(holder.mItem.getEmail());
 
         holder.mAvatar.setEmail(holder.mItem.getEmail());
         holder.mAvatar.setUserName(holder.mItem.getName());
@@ -60,14 +61,16 @@ public class ContactRecyclerViewAdapter
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mContentView;
+        public final TextView mNameView;
+        public final TextView mEmailView;
         public final UserAvatar mAvatar;
         public Contact mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mContentView = view.findViewById(R.id.item_name);
+            mNameView = view.findViewById(R.id.item_name);
+            mEmailView = view.findViewById(R.id.item_email);
             mAvatar = view.findViewById(R.id.item_avatar);
         }
     }

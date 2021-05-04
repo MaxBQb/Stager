@@ -78,11 +78,11 @@
     <string name="EditStageFragment_message_UntitledStage">Untitled stage</string>
 
     <!-- Find contacts -->
-    <string name="FindNewContacts_title">Find new contact</string>
-    <string name="FindNewContacts_message_success">Send request to "%s"</string>
-    <string name="FindNewContacts_message_denied">Request denied</string>
+    <string name="FindNewContactsFragment_title">Find new contact</string>
+    <string name="FindNewContactsFragment_message_success">Send request to "%s"</string>
+    <string name="FindNewContactsFragment_message_denied">Request denied</string>
 
     <!-- Contact info -->
-    <string name="ContactInfo_title">About "%s"</string>
-    <string name="ContactInfo_message_AnonymousUser">Anonymous User</string>
+    <string name="ContactInfoFragment_title">About "%s"</string>
+    <string name="ContactInfoFragment_message_AnonymousUser">Anonymous User</string>
 </resources>

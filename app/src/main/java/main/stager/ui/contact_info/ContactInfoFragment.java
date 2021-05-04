@@ -28,13 +28,13 @@ public class ContactInfoFragment extends
         if (getArguments() != null) {
             name = Utilits.getDefaultOnNullOrBlank(
                     getArguments().getString(ARG_CONTACT_NAME),
-                    getString(R.string.ContactInfo_message_AnonymousUser));
+                    getString(R.string.ContactInfoFragment_message_AnonymousUser));
             type = ContactType.valueOf(Utilits.getDefaultOnNullOrBlank(
                     getArguments().getString(ARG_CONTACT_TYPE),
                     ContactType.ACCEPTED.toString()));
             key = getArguments().getString(ARG_CONTACT_KEY);
         } else {
-            name = getString(R.string.ContactInfo_message_AnonymousUser);
+            name = getString(R.string.ContactInfoFragment_message_AnonymousUser);
             key = "";
             type = ContactType.ACCEPTED;
         }
@@ -87,7 +87,7 @@ public class ContactInfoFragment extends
         super.setObservers();
         bindData(viewModel.getContact(), (contact) -> {
             name = Utilits.getDefaultOnNullOrBlank(contact.getName(),
-                    getString(R.string.ContactInfo_message_AnonymousUser));
+                    getString(R.string.ContactInfoFragment_message_AnonymousUser));
             nameView.setText(name);
             descriptionView.setText(contact.getDescription());
             getActionBar().setTitle(name);

@@ -35,13 +35,13 @@
     <fragment
         android:id="@+id/contact_info"
         android:name="main.stager.ui.contact_info.ContactInfoFragment"
-        android:label="@string/ContactInfo_title"
+        android:label="@string/ContactInfoFragment_title"
         tools:layout="@layout/fragment_contact_info"/>
 
     <fragment
         android:id="@+id/find_new_contacts"
         android:name="main.stager.ui.find_new_contacts.FindNewContactsFragment"
-        android:label="@string/FindNewContacts_title"
+        android:label="@string/FindNewContactsFragment_title"
         tools:layout="@layout/fragment_find_contacts" />
 
     <fragment

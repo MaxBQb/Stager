@@ -1,6 +1,5 @@
 package main.stager.ui.find_new_contacts;
 
-import android.view.Gravity;
 import android.widget.Toast;
 import main.stager.R;
 import main.stager.list.StagerList;
@@ -34,10 +33,10 @@ public class FindNewContactsFragment extends
         super.onItemClick(item, pos);
         dataProvider.makeContactRequest(item.getKey()).addOnSuccessListener(e -> {
             Toast.makeText(getContext(),
-                    getString(R.string.FindNewContacts_message_success, item.getName()),
+                    getString(R.string.FindNewContactsFragment_message_success, item.getName()),
                     Toast.LENGTH_SHORT).show();
         }).addOnFailureListener(e -> {
-            Toast.makeText(getContext(), R.string.FindNewContacts_message_denied,
+            Toast.makeText(getContext(), R.string.FindNewContactsFragment_message_denied,
                     Toast.LENGTH_SHORT).show();
         });
     }

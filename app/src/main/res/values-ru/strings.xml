@@ -79,11 +79,11 @@
     <string name="EditStageFragment_message_UntitledStage">Безымянный этап</string>
 
     <!-- Find contacts -->
-    <string name="FindNewContacts_title">Найти новый контакт</string>
-    <string name="FindNewContacts_message_success">Запрос отправен "%s"</string>
-    <string name="FindNewContacts_message_denied">Запрос отклонён</string>
+    <string name="FindNewContactsFragment_title">Найти новый контакт</string>
+    <string name="FindNewContactsFragment_message_success">Запрос отправен "%s"</string>
+    <string name="FindNewContactsFragment_message_denied">Запрос отклонён</string>
 
     <!-- Contact info -->
-    <string name="ContactInfo_title">Сведения о "%s"</string>
-    <string name="ContactInfo_message_AnonymousUser">Анонимный Пользователь</string>
+    <string name="ContactInfoFragment_title">Сведения о "%s"</string>
+    <string name="ContactInfoFragment_message_AnonymousUser">Анонимный Пользователь</string>
 </resources>

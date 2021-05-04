@@ -3,7 +3,6 @@ package main.stager.ui.my_contacts;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 
 import main.stager.R;
 import main.stager.UserAvatar;
-import main.stager.linkers.LStatus;
 import main.stager.list.StagerListAdapter;
 import main.stager.model.Contact;
 import main.stager.utils.Utilits;
@@ -51,7 +49,7 @@ public class ContactRecyclerViewAdapter
         holder.mItem = getItem(position);
 
         if (Utilits.isNullOrBlank(holder.mItem.getName()))
-            holder.mContentView.setText(R.string.ContactInfo_message_AnonymousUser);
+            holder.mContentView.setText(R.string.ContactInfoFragment_message_AnonymousUser);
         else
             holder.mContentView.setText(holder.mItem.getName());
 

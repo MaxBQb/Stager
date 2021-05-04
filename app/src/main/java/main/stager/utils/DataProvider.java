@@ -2,6 +2,7 @@ package main.stager.utils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -80,6 +81,7 @@ public class DataProvider {
 
         // Contact requests
         public static final String CONTACT_REQUESTS = "contact_requests";
+        public static final String IGNORE_CONTACTS = "ignore_contacts";
     }
 
     // User data
@@ -97,6 +99,10 @@ public class DataProvider {
     }
 
     public DatabaseReference getUserInfo() {
+        return getUserInfo(getUID());
+    }
+
+    public DatabaseReference getUserInfo(@NonNull String uid) {
         return getAllUserInfo().child(getUID());
     }
 
@@ -127,12 +133,49 @@ public class DataProvider {
         return getAllContactRequests().child(getUID());
     }
 
+    public DatabaseReference getContactRequest(@NonNull String to) {
+        return getContactRequests().child(to);
+    }
+
     public DatabaseReference getAllContactRequests() {
         return mRef.child(PATH.CONTACT_REQUESTS);
     }
 
-    public Task<Void> makeContactRequest(String receiver) {
+    public Query getIncomeContactRequests() {
+        return getAllContactRequests().orderByKey().equalTo(getUID());
+    }
+
+    public Query getIncomeContactRequest(@NonNull String from) {
+        return getAllContactRequests().child(from).child(getUID());
+    }
+
+    public DatabaseReference getIgnoredContactRequests() {
+        return mRef.child(PATH.IGNORE_CONTACTS).child(getUID());
+    }
+
+    public DatabaseReference getIgnoredContactRequest(@NonNull String from) {
+        return getIgnoredContactRequests().child(from);
+    }
+
+    public Task<Void> makeContactRequest(@NonNull String receiver) {
         return getAllContactRequests().child(receiver).child(getUID()).setValue(true);
+    }
+
+    public void removeContactRequest(@NonNull String from) {
+        getContactRequests().child(from).removeValue();
+    }
+
+    public void acceptContactRequest(@NonNull String from) {
+        removeContactRequest(from);
+        getIgnoredContactRequests().child(from).removeValue();
+
+        getContacts().child(from).setValue(true);
+        getContacts(from).child(getUID()).setValue(true);
+    }
+
+    public void ignoreContactRequest(@NonNull String from) {
+        removeContactRequest(from);
+        getIgnoredContactRequests().child(from).setValue(true);
     }
 
     // Actions
@@ -302,7 +345,11 @@ public class DataProvider {
     // Contacts
 
     public DatabaseReference getContacts() {
-        return mRef.child(PATH.CONTACTS).child(getUID());
+        return getContacts(getUID());
+    }
+
+    public DatabaseReference getContacts(@NonNull String uid) {
+        return mRef.child(PATH.CONTACTS).child(uid);
     }
 
     // Other

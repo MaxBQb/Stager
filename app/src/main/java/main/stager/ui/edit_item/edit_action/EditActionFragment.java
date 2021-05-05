@@ -1,7 +1,6 @@
 package main.stager.ui.edit_item.edit_action;
 
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import main.stager.R;
@@ -65,8 +64,8 @@ public class EditActionFragment
     }
 
     @Override
-    protected void onItemClick(Stage item, int pos) {
-        super.onItemClick(item, pos);
+    protected void onItemClick(Stage item, int pos, View view) {
+        super.onItemClick(item, pos, view);
         Bundle args = new Bundle();
         args.putString(EditStageFragment.ARG_ACTION_KEY, mActionKey);
         args.putString(EditStageFragment.ARG_STAGE_KEY, item.getKey());

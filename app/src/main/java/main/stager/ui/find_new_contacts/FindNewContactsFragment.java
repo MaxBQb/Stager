@@ -1,5 +1,6 @@
 package main.stager.ui.find_new_contacts;
 
+import android.view.View;
 import android.widget.Toast;
 import main.stager.R;
 import main.stager.list.StagerList;
@@ -29,8 +30,8 @@ public class FindNewContactsFragment extends
     }
 
     @Override
-    protected void onItemClick(Contact item, int pos) {
-        super.onItemClick(item, pos);
+    protected void onItemClick(Contact item, int pos, View view) {
+        super.onItemClick(item, pos, view);
         dataProvider.makeContactRequest(item.getKey()).addOnSuccessListener(e -> {
             Toast.makeText(getContext(),
                     getString(R.string.FindNewContactsFragment_message_success, item.getName()),

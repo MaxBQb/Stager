@@ -49,7 +49,7 @@ public abstract class StagerList<TVM extends StagerListViewModel<T>,
     protected View loadingView;
 
     // Listeners
-    protected void onItemClick(T item, int pos) {}
+    protected void onItemClick(T item, int pos, View view) {}
     public void onItemSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int pos, int direction) {}
     public void onSearchQuerySubmit(String query) {}
     public void onSearchQueryChange(String query) {}

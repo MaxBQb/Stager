@@ -30,8 +30,8 @@ public class ContactsListFragment extends
     }
 
     @Override
-    protected void onItemClick(Contact item, int pos) {
-        super.onItemClick(item, pos);
+    protected void onItemClick(Contact item, int pos, View view) {
+        super.onItemClick(item, pos, view);
         Bundle args = new Bundle();
         args.putString(ContactInfoFragment.ARG_CONTACT_NAME, item.getName());
         args.putString(ContactInfoFragment.ARG_CONTACT_KEY, item.getKey());

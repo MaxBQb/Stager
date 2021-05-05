@@ -20,6 +20,7 @@
 
     <!-- Настройки -->
     <string name="Settings_title">Настройки</string>
+    <string name="Settings_summary_AppRestartRequired">(Требуется перезапуск приложения)</string>
     <string name="Settings_Category_title_Appearance">Внешний вид</string>
         <string name="Settings_Appearance_label_AutoTune">Системные значения</string>
         <string name="Settings_Appearance_label_Theme">Тёмная тема</string>

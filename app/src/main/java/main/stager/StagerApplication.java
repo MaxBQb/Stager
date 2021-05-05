@@ -1,21 +1,20 @@
 package main.stager;
 
 import android.app.Activity;
-import android.app.AlarmManager;
 import android.app.Application;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
 import androidx.annotation.NonNull;
 
 import main.stager.utils.LocaleController;
+import main.stager.utils.SettingsWrapper;
 
 public class StagerApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        SettingsWrapper.init(this);
         LocaleController.init(this);
     }
 

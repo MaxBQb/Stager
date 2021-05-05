@@ -8,56 +8,48 @@ import android.view.MenuInflater;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.preference.ListPreference;
-import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreferenceCompat;
 
 import main.stager.utils.LocaleController;
+import main.stager.utils.SettingsWrapper;
 import main.stager.utils.ThemeController;
 
-public class SettingsFragment extends PreferenceFragmentCompat {
+public class SettingsFragment extends PreferenceFragmentCompat
+implements SharedPreferences.OnSharedPreferenceChangeListener {
+    private final SettingsWrapper S = SettingsWrapper.getInstance();
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.settings, rootKey);
-
         autoTune();
+
         // Добавляем реакции на изменение различных опций
-        PreferenceManager.getDefaultSharedPreferences(getActivity())
-                .registerOnSharedPreferenceChangeListener(this::bindOptionChanges);
-        init();
+        PreferenceManager.getDefaultSharedPreferences(getContext())
+                .registerOnSharedPreferenceChangeListener(this);
     }
 
     private void autoTune() {
         if (!PreferenceManager.getDefaultSharedPreferences(getContext())
-                .getBoolean(getContext().getString(R.string.Settings__AutoTune),
-                        true)) return;
+                .getBoolean(S.AUTO_TUNE, true)) return;
 
-        SwitchPreferenceCompat theme = findPreference(getString(R.string.Settings__Theme));
+        SwitchPreferenceCompat theme = findPreference(S.THEME);
         theme.setChecked(ThemeController.isDarkByDefault(getContext()));
 
-        ListPreference language = findPreference(getString(R.string.Settings__Locale));
+        ListPreference language = findPreference(S.LOCALE);
         language.setValue(LocaleController.getDefaultLocale(getContext()));
     }
 
-    private void init() {
-        findPreference(getString(R.string.Settings__Theme)).setOnPreferenceClickListener(this::enable);
-        findPreference(getString(R.string.Settings__Locale)).setOnPreferenceClickListener(this::enable);
-        findPreference(getString(R.string.Settings__AutoTune)).setOnPreferenceClickListener(this::enable);
-    }
-
-    private void bindOptionChanges(SharedPreferences prefs, String key) {
+    public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
         // Смена темы или языка
         try {
-            if (getString(R.string.Settings__Theme).equals(key) ||
-                getString(R.string.Settings__AutoTune).equals(key) ||
-                getString(R.string.Settings__Locale).equals(key)) {
-                    findPreference(getString(R.string.Settings__Theme)).setOnPreferenceClickListener(this::disable);
-                    findPreference(getString(R.string.Settings__Locale)).setOnPreferenceClickListener(this::disable);
-                    findPreference(getString(R.string.Settings__AutoTune)).setOnPreferenceClickListener(this::disable);
-                    prefs.edit().commit(); // Гарантирия сохранности
-                if (getString(R.string.Settings__AutoTune).equals(key))
+            if (S.THEME.equals(key) ||
+                S.AUTO_TUNE.equals(key) ||
+                S.LOCALE.equals(key)) {
+
+                prefs.edit().commit(); // Гарантирия сохранности
+                if (S.AUTO_TUNE.equals(key))
                     ((StagerApplication)getActivity().getApplication()).restart(getActivity());
                 else
                     getActivity().recreate();
@@ -75,15 +67,5 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-    }
-
-    private boolean enable(Preference p) {
-        p.setEnabled(true);
-        return false;
-    }
-
-    private boolean disable(Preference p) {
-        p.setEnabled(false);
-        return false;
     }
 }

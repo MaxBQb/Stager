@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Patterns;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,6 +37,7 @@ public class Authorization extends SmartActivity {
     }
 
     private void init() {
+
         edEmail = findViewById(R.id.email);
         edPassword = findViewById(R.id.password);
 
@@ -43,6 +46,7 @@ public class Authorization extends SmartActivity {
             Intent intent = new Intent(this, Registration.class);
             startActivity(intent);
         });
+
         findViewById(R.id.success_btn).setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) signIn();
         });
@@ -89,7 +93,10 @@ public class Authorization extends SmartActivity {
             return;
         }
 
+        showLoadingScreen();
+
         fbAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, task -> {
+            hideLoadingScreen();
             if (task.isSuccessful()) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);

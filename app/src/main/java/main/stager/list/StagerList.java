@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import com.rockerhieu.rvadapter.states.StatesRecyclerViewAdapter;
 import java.util.List;
@@ -69,7 +70,9 @@ public abstract class StagerList<TVM extends StagerListViewModel<T>,
     }
 
     protected View getLoadingView() {
-        return getLayoutInflater().inflate(R.layout.loading_list_view, rv, false);
+        View v = getLayoutInflater().inflate(R.layout.loading_list_view, rv, false);
+        v.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.appear));
+        return v;
     }
 
     protected String getEmptyText() {

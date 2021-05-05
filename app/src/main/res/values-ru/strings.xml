@@ -78,16 +78,16 @@
     <string name="EditStageFragment_title">Этап</string>
     <string name="EditStageFragment_message_UntitledStage">Безымянный этап</string>
 
-    <!-- Find contacts -->
+    <!-- Найти контакты -->
     <string name="FindNewContactsFragment_title">Найти новый контакт</string>
     <string name="FindNewContactsFragment_message_success">Запрос отправен "%s"</string>
     <string name="FindNewContactsFragment_message_denied">Запрос отклонён</string>
 
-    <!-- Contact info -->
+    <!-- Информация о контакте -->
     <string name="ContactInfoFragment_title">Сведения о "%s"</string>
     <string name="ContactInfoFragment_message_AnonymousUser">Анонимный Пользователь</string>
 
-    <!-- Contact requests -->
+    <!-- Запрос на добавление контакта -->
     <string name="ContactRequestsTabsFragment_title">Предложения дружбы</string>
     <string name="ContactRequestsTabsFragment_Tab_title_incoming">Входящие</string>
     <string name="ContactRequestsTabsFragment_Tab_title_outgoing">Исходящие</string>

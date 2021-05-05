@@ -47,7 +47,7 @@ public abstract class AuthorizedOnlyActivity extends SmartActivity {
             return super.onOptionsItemSelected(item);
         ((NavHostFragment)getSupportFragmentManager()
             .findFragmentById(R.id.nav_host_fragment))
-            .getNavController().navigate(R.id.transition_settings);
+            .getNavController().navigate(R.id.transition_to_settings);
         return true;
     }
 }

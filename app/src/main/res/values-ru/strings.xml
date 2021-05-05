@@ -80,6 +80,7 @@
 
     <!-- Найти контакты -->
     <string name="FindNewContactsFragment_title">Найти новый контакт</string>
+    <string name="FindNewContactsFragment_message_revoke">Отменн запрос к "%s"</string>
     <string name="FindNewContactsFragment_message_success">Запрос отправен "%s"</string>
     <string name="FindNewContactsFragment_message_denied">Запрос отклонён</string>
 

@@ -79,6 +79,7 @@
 
     <!-- Find contacts -->
     <string name="FindNewContactsFragment_title">Find new contact</string>
+    <string name="FindNewContactsFragment_message_revoke">Revoke request to "%s"</string>
     <string name="FindNewContactsFragment_message_success">Send request to "%s"</string>
     <string name="FindNewContactsFragment_message_denied">Request denied</string>
 

@@ -3,9 +3,7 @@ package main.stager.ui.contact_info;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-
 import com.google.firebase.database.Query;
-
 import main.stager.Base.StagerVMFragment;
 import main.stager.R;
 import main.stager.utils.Utilits;
@@ -56,11 +54,13 @@ public class ContactInfoFragment extends
         if (type != ContactType.OUTGOING && type != ContactType.ACCEPTED) {
             view.findViewById(R.id.btn_accept).setOnClickListener((v) ->
                 dataProvider.acceptContactRequest(key));
-            view.findViewById(R.id.btn_ignore).setOnClickListener((v) ->
-                dataProvider.ignoreContactRequest(key));
+            view.findViewById(R.id.btn_ignore).setOnClickListener(
+                    type != ContactType.IGNORED
+                    ? (v) -> dataProvider.ignoreContactRequest(key)
+                    : (v) -> dataProvider.removeIgnoredContactRequest(key));
         } else if (type == ContactType.OUTGOING)
             view.findViewById(R.id.btn_revoke).setOnClickListener((v) ->
-                dataProvider.removeContactRequest(key));
+                dataProvider.removeOutgoingContactRequest(key));
     }
 
     @Override
@@ -110,7 +110,7 @@ public class ContactInfoFragment extends
     private Query getDependencyByType() {
         switch (type) {
             case IGNORED: return dataProvider.getIgnoredContactRequest(key);
-            case INCOMING: return dataProvider.getContactRequest(key);
+            case INCOMING: return dataProvider.getIncomingContactRequest(key);
             case OUTGOING: return dataProvider.getOutgoingContactRequest(key);
             case ACCEPTED: return dataProvider.getContact(key);
         }

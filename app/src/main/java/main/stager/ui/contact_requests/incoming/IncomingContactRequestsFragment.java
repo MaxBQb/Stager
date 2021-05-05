@@ -23,7 +23,7 @@ public class IncomingContactRequestsFragment extends
 
     @Override
     protected int getViewBaseLayoutId() {
-        return R.layout.fragment_find_contacts;
+        return R.layout.fragment_incoming_contact_request;
     }
 
     @Override

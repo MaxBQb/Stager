@@ -34,5 +34,7 @@ public class OutgoingContactRequestsViewModel extends StagerListViewModel<Contac
     }
 
     @Override
-    public void deleteItem(Contact s) {}
+    public void deleteItem(Contact s) {
+        dataProvider.removeOutgoingContactRequest(s.getKey());
+    }
 }

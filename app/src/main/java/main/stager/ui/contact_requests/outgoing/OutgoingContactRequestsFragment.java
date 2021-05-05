@@ -1,15 +1,24 @@
 package main.stager.ui.contact_requests.outgoing;
 
 import android.os.Bundle;
+import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import org.jetbrains.annotations.NotNull;
+
 import main.stager.R;
-import main.stager.list.StagerList;
+import main.stager.list.StagerExtendableList;
 import main.stager.model.Contact;
 import main.stager.ui.contact_info.ContactInfoFragment;
 import main.stager.ui.contact_info.ContactType;
 import main.stager.ui.my_contacts.ContactRecyclerViewAdapter;
 
 public class OutgoingContactRequestsFragment extends
-        StagerList<OutgoingContactRequestsViewModel, ContactRecyclerViewAdapter, Contact> {
+        StagerExtendableList<OutgoingContactRequestsViewModel, ContactRecyclerViewAdapter, Contact> {
+
+    public boolean ALLOW_DRAG_AND_DROP() { return false; }
 
     @Override
     protected Class<OutgoingContactRequestsViewModel> getViewModelType() {
@@ -23,7 +32,7 @@ public class OutgoingContactRequestsFragment extends
 
     @Override
     protected int getViewBaseLayoutId() {
-        return R.layout.fragment_find_contacts;
+        return R.layout.fragment_outgoing_contact_request;
     }
 
     @Override
@@ -34,5 +43,10 @@ public class OutgoingContactRequestsFragment extends
         args.putString(ContactInfoFragment.ARG_CONTACT_KEY, item.getKey());
         args.putString(ContactInfoFragment.ARG_CONTACT_TYPE, ContactType.OUTGOING.name());
         navigator.navigate(R.id.transition_contact_requests_to_contact_info, args);
+    }
+
+    @Override
+    protected void onButtonAddClicked(View v) {
+        navigator.navigate(R.id.transition_contact_requests_to_find_new_contacts);
     }
 }

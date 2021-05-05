@@ -27,6 +27,9 @@
         <action
             android:id="@+id/transition_contact_requests_to_contact_info"
             app:destination="@id/contact_info" />
+        <action
+            android:id="@+id/transition_contact_requests_to_find_new_contacts"
+            app:destination="@id/find_new_contacts" />
     </fragment>
 
     <fragment

@@ -1,8 +1,11 @@
 package main.stager.ui.my_contacts;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
@@ -44,13 +47,16 @@ public class ContactRecyclerViewAdapter
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = getItem(position);
 
+        TextView textView = (TextView) holder.mView.findViewById(R.id.item_email);
         if (Utilits.isNullOrBlank(holder.mItem.getName()))
             holder.mNameView.setText(R.string.ContactInfoFragment_message_AnonymousUser);
         else
             holder.mNameView.setText(holder.mItem.getName());
 
-        if (Utilits.isNullOrBlank(holder.mItem.getEmail()))
+        if (Utilits.isNullOrBlank(holder.mItem.getEmail())) {
             holder.mEmailView.setVisibility(View.GONE);
+            textView.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0f));
+        }
         else
             holder.mEmailView.setText(holder.mItem.getEmail());
 

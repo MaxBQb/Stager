@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent" >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
             android:gravity="center"
             android:layout_marginTop="10dp"
             android:text="Type request"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <TextView
             android:id="@+id/personName"
@@ -27,7 +27,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="20dp" />
 
         <TextView
             android:id="@+id/description"
@@ -38,7 +38,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="20dp" />
 
         <LinearLayout
             android:id="@+id/incoming_request_controls"
@@ -47,22 +47,26 @@
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
             android:visibility="gone"
-            android:orientation="horizontal">
+            android:orientation="horizontal" >
+
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btn_accept"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_submit"
                 android:layout_margin="6dp"
-                />
+                app:backgroundTint="?attr/colorButtonNormal" />
+
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btn_ignore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_close"
                 android:layout_margin="6dp"
-                />
+                app:backgroundTint="?attr/colorButtonNormal" />
+
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/outgoing_request_controls"
             android:layout_below="@id/description"
@@ -70,14 +74,17 @@
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
             android:visibility="gone"
-            android:orientation="horizontal">
+            android:orientation="horizontal" >
+
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btn_revoke"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_close"
                 android:layout_margin="6dp"
-                />
+                app:backgroundTint="?attr/colorButtonNormal" />
+
         </LinearLayout>
+
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

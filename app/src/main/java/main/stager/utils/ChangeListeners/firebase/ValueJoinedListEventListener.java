@@ -77,13 +77,19 @@ public class ValueJoinedListEventListener<T> extends ValueListEventListener<T> {
     protected void onSourceDataGotInitial(@NotNull DataSnapshot snapshot) {
         awaitedKeys.remove(snapshot.getKey());
 
-        if (snapshot.exists())
-            tmpList.add(modify(snapshot.getValue(className), snapshot));
+        T item;
+        if (snapshot.exists()) {
+            item = snapshot.getValue(className);
+            if (!exclude(item)) {
+                item = modify(item, snapshot);
+                if (!excludeModified(item))
+                    tmpList.add(item);
+            }
+        }
 
         if (awaitedKeys.isEmpty())
             liveList.postValue(tmpList);
     }
-
 
     protected class SourceValueListener implements ValueEventListener {
         @Override

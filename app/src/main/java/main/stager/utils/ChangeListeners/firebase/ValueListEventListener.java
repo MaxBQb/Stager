@@ -27,8 +27,26 @@ public class ValueListEventListener<T> extends AValueEventListener<T> {
             return;
         }
         List<T> lst = new ArrayList<>();
-        for (DataSnapshot postSnapshot: snapshot.getChildren())
-            lst.add(modify(postSnapshot.getValue(className), postSnapshot));
+        T item;
+        for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+            item = postSnapshot.getValue(className);
+            if (exclude(item))
+                continue;
+
+            item = modify(item, postSnapshot);
+            if (excludeModified(item))
+                continue;
+
+            lst.add(item);
+        }
         liveList.postValue(lst);
+    }
+
+    protected boolean exclude(T item) {
+        return false;
+    }
+
+    protected boolean excludeModified(T item) {
+        return false;
     }
 }

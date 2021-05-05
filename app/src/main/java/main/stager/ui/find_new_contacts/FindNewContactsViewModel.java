@@ -12,7 +12,7 @@ import main.stager.utils.ChangeListeners.firebase.ValueListEventListener;
 
 public class FindNewContactsViewModel extends StagerListViewModel<Contact> {
 
-    private String query = "";
+    private String query = " ";
 
     public FindNewContactsViewModel(@NonNull Application application) {
         super(application);
@@ -30,7 +30,12 @@ public class FindNewContactsViewModel extends StagerListViewModel<Contact> {
 
     public LiveData<List<Contact>> getItems(OnError onError) {
         getListPath().addListenerForSingleValueEvent(
-                new ValueListEventListener<>(mValues, getItemType(), onError));
+                new ValueListEventListener<Contact>(mValues, getItemType(), onError) {
+                    @Override
+                    protected boolean excludeModified(Contact item) {
+                        return item.getKey().equals(dataProvider.getUID());
+                    }
+                });
         return mValues;
     }
 

@@ -120,7 +120,7 @@ public class DataProvider {
 
     public Query findUserByEmail(String email) {
         return getAllUserInfo().orderByChild(PATH.USER_EMAIL)
-                .startAt(email).endAt(email+"\uf8ff");
+                .startAt(email).endAt(email+"\uf8ff").limitToFirst(5);
     }
 
     // Contact requests

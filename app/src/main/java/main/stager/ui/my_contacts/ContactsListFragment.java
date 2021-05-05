@@ -7,10 +7,13 @@ import main.stager.R;
 import main.stager.list.StagerExtendableList;
 import main.stager.model.Contact;
 import main.stager.ui.contact_info.ContactInfoFragment;
-import main.stager.ui.edit_item.edit_action.EditActionFragment;
 
 public class ContactsListFragment extends
         StagerExtendableList<ContactsListViewModel, ContactRecyclerViewAdapter, Contact> {
+
+    public boolean ALLOW_DRAG_AND_DROP() { return false; }
+    public boolean ALLOW_SWIPE() { return false; }
+
     @Override
     protected Class<ContactsListViewModel> getViewModelType() {
         return ContactsListViewModel.class;

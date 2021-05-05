@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import com.rockerhieu.rvadapter.states.StatesRecyclerViewAdapter;
+
 import java.util.List;
 import main.stager.model.FBModel;
 import main.stager.R;
@@ -28,6 +29,8 @@ public abstract class StagerList<TVM extends StagerListViewModel<T>,
                                  T extends FBModel> extends StagerVMFragment<TVM> {
 
     public boolean ALLOW_SEARCH() { return false; }
+    public boolean ALLOW_DRAG_AND_DROP() { return false; }
+    public boolean ALLOW_SWIPE() { return false; }
 
     protected TA adapter;
 
@@ -49,6 +52,12 @@ public abstract class StagerList<TVM extends StagerListViewModel<T>,
     public void onItemSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int pos, int direction) {}
     public void onSearchQuerySubmit(String query) {}
     public void onSearchQueryChange(String query) {}
+    protected void onItemDragged(int from, int to) {
+        adapter.moveItem(from, to);
+    }
+    protected void onItemDropped(int from, int to) {
+        viewModel.pushItemsPositions(adapter.getCurrentList());
+    }
 
     protected TA createAdapter() {
         try {
@@ -147,11 +156,26 @@ public abstract class StagerList<TVM extends StagerListViewModel<T>,
         }).attachToRecyclerView(rv);
     }
 
+    protected void bindOnDragAndDropListener() {
+        new ItemTouchHelper(new ItemDragAndDropCallback() {
+            @Override
+            protected void onDrag(int from, int to) {
+                onItemDragged(from, to);
+            }
+
+            @Override
+            protected void onDrop(int from, int to) {
+                onItemDropped(from, to);
+            }
+        }).attachToRecyclerView(rv);
+    }
+
     @Override
     protected void setEventListeners() {
         super.setEventListeners();
         adapter.setOnItemClickListener(this::onItemClick);
-        bindOnSwipeListener();
+        if (ALLOW_SWIPE()) bindOnSwipeListener();
+        if (ALLOW_DRAG_AND_DROP()) bindOnDragAndDropListener();
     }
 
     @Override

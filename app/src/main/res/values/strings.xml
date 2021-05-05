@@ -85,4 +85,10 @@
     <!-- Contact info -->
     <string name="ContactInfoFragment_title">About "%s"</string>
     <string name="ContactInfoFragment_message_AnonymousUser">Anonymous User</string>
+
+    <!-- Contact requests -->
+    <string name="ContactRequestsTabsFragment_title">Friendship requests</string>
+    <string name="ContactRequestsTabsFragment_Tab_title_income">Incoming</string>
+    <string name="ContactRequestsTabsFragment_Tab_title_outcome">Outgoing</string>
+    <string name="ContactRequestsTabsFragment_Tab_title_ignored">Ignored</string>
 </resources>

@@ -20,6 +20,16 @@
         tools:layout="@layout/fragment_about_me" />
 
     <fragment
+        android:id="@+id/nav_contact_requests"
+        android:name="main.stager.ui.contact_requests.ContactRequestsTabsFragment"
+        android:label="@string/ContactRequestsTabsFragment_title"
+        tools:layout="@layout/fragment_contact_requests_tabs" >
+        <action
+            android:id="@+id/transition_contact_requests_to_contact_info"
+            app:destination="@id/contact_info" />
+    </fragment>
+
+    <fragment
         android:id="@+id/nav_my_contacts"
         android:name="main.stager.ui.my_contacts.ContactsListFragment"
         android:label="@string/SideBarActivity_NavigationItem_MyContacts"

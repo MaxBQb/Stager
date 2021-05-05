@@ -110,8 +110,8 @@ public class ContactInfoFragment extends
     private Query getDependencyByType() {
         switch (type) {
             case IGNORED: return dataProvider.getIgnoredContactRequest(key);
-            case INCOME: return dataProvider.getIncomeContactRequest(key);
-            case OUTCOME: return dataProvider.getContactRequest(key);
+            case INCOME: return dataProvider.getContactRequest(key);
+            case OUTCOME: return dataProvider.getOutcomeContactRequest(key);
             case ACCEPTED: return dataProvider.getContact(key);
         }
         throw new IllegalStateException("ContactType incorrect");

@@ -141,11 +141,11 @@ public class DataProvider {
         return mRef.child(PATH.CONTACT_REQUESTS);
     }
 
-    public Query getIncomeContactRequests() {
-        return getAllContactRequests().orderByKey().equalTo(getUID());
+    public Query getOutcomeContactRequests() {
+        return getAllContactRequests().orderByChild(getUID()).startAt(false).endAt(true);
     }
 
-    public Query getIncomeContactRequest(@NonNull String from) {
+    public Query getOutcomeContactRequest(@NonNull String from) {
         return getAllContactRequests().child(from).child(getUID());
     }
 

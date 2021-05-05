@@ -86,4 +86,10 @@
     <!-- Contact info -->
     <string name="ContactInfoFragment_title">Сведения о "%s"</string>
     <string name="ContactInfoFragment_message_AnonymousUser">Анонимный Пользователь</string>
+
+    <!-- Contact requests -->
+    <string name="ContactRequestsTabsFragment_title">Предложения дружбы</string>
+    <string name="ContactRequestsTabsFragment_Tab_title_income">Входящие</string>
+    <string name="ContactRequestsTabsFragment_Tab_title_outcome">Исходящие</string>
+    <string name="ContactRequestsTabsFragment_Tab_title_ignored">Скрытые</string>
 </resources>

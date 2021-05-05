@@ -24,7 +24,7 @@ public abstract class StagerListViewModel<T extends FBModel> extends StagerViewM
     protected abstract Query getListPath();
     protected abstract Class<T> getItemType();
 
-    public abstract void deleteItem(T s);
+    public void deleteItem(T s) {}
 
     public void pushItemsPositions(List<T> items) {
         DataProvider.resetPositions((DatabaseReference)getListPath(), DataProvider.getKeys(items));

@@ -2,14 +2,21 @@ package main.stager.list;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import com.rockerhieu.rvadapter.states.StatesRecyclerViewAdapter;
+
 import java.util.List;
 import main.stager.model.FBModel;
 import main.stager.R;
@@ -21,6 +28,11 @@ public abstract class StagerList<TVM extends StagerListViewModel<T>,
                                  TA extends StagerListAdapter<T,
                                             ? extends RecyclerView.ViewHolder>,
                                  T extends FBModel> extends StagerVMFragment<TVM> {
+
+    public boolean ALLOW_SEARCH() { return false; }
+    public boolean ALLOW_DRAG_AND_DROP() { return false; }
+    public boolean ALLOW_SWIPE() { return false; }
+
     protected TA adapter;
 
     // Требует переопределения
@@ -39,6 +51,14 @@ public abstract class StagerList<TVM extends StagerListViewModel<T>,
     // Listeners
     protected void onItemClick(T item, int pos) {}
     public void onItemSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int pos, int direction) {}
+    public void onSearchQuerySubmit(String query) {}
+    public void onSearchQueryChange(String query) {}
+    protected void onItemDragged(int from, int to) {
+        adapter.moveItem(from, to);
+    }
+    protected void onItemDropped(int from, int to) {
+        viewModel.pushItemsPositions(adapter.getCurrentList());
+    }
 
     protected TA createAdapter() {
         try {
@@ -139,11 +159,26 @@ public abstract class StagerList<TVM extends StagerListViewModel<T>,
         }).attachToRecyclerView(rv);
     }
 
+    protected void bindOnDragAndDropListener() {
+        new ItemTouchHelper(new ItemDragAndDropCallback() {
+            @Override
+            protected void onDrag(int from, int to) {
+                onItemDragged(from, to);
+            }
+
+            @Override
+            protected void onDrop(int from, int to) {
+                onItemDropped(from, to);
+            }
+        }).attachToRecyclerView(rv);
+    }
+
     @Override
     protected void setEventListeners() {
         super.setEventListeners();
         adapter.setOnItemClickListener(this::onItemClick);
-        bindOnSwipeListener();
+        if (ALLOW_SWIPE()) bindOnSwipeListener();
+        if (ALLOW_DRAG_AND_DROP()) bindOnDragAndDropListener();
     }
 
     @Override
@@ -156,5 +191,35 @@ public abstract class StagerList<TVM extends StagerListViewModel<T>,
         rv.setAdapter(srvAdapter);
         list = getList(this::onError);
         srvAdapter.setState(StatesRecyclerViewAdapter.STATE_LOADING);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        if (!ALLOW_SEARCH()) return;
+        inflater.inflate(R.menu.search_menu, menu);
+        MenuItem item = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) item.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                onSearchQuerySubmit(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                onSearchQueryChange(newText);
+                return false;
+            }
+        });
+        menu.findItem(R.id.action_settings).setVisible(false);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (ALLOW_SEARCH())
+            setHasOptionsMenu(true);
     }
 }

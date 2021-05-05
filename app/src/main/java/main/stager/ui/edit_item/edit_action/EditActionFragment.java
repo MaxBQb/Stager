@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import main.stager.R;
-import main.stager.Base.SmartActivity;
 import main.stager.list.StagerExtendableList;
 import main.stager.model.Stage;
 import main.stager.ui.add_item.add_stage.AddStageFragment;

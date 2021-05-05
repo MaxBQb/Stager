@@ -20,10 +20,42 @@
         tools:layout="@layout/fragment_about_me" />
 
     <fragment
+        android:id="@+id/nav_contact_requests"
+        android:name="main.stager.ui.contact_requests.ContactRequestsTabsFragment"
+        android:label="@string/ContactRequestsTabsFragment_title"
+        tools:layout="@layout/fragment_contact_requests_tabs" >
+        <action
+            android:id="@+id/transition_contact_requests_to_contact_info"
+            app:destination="@id/contact_info" />
+        <action
+            android:id="@+id/transition_contact_requests_to_find_new_contacts"
+            app:destination="@id/find_new_contacts" />
+    </fragment>
+
+    <fragment
         android:id="@+id/nav_my_contacts"
-        android:name="main.stager.ui.my_contacts.MyContactsFragment"
+        android:name="main.stager.ui.my_contacts.ContactsListFragment"
         android:label="@string/SideBarActivity_NavigationItem_MyContacts"
-        tools:layout="@layout/fragment_my_contacts" />
+        tools:layout="@layout/fragment_my_contacts">
+        <action
+            android:id="@+id/transition_my_contacts_to_find_new_contacts"
+            app:destination="@id/find_new_contacts" />
+        <action
+            android:id="@+id/transition_my_contacts_to_contact_info"
+            app:destination="@id/contact_info" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/contact_info"
+        android:name="main.stager.ui.contact_info.ContactInfoFragment"
+        android:label="@string/ContactInfoFragment_title"
+        tools:layout="@layout/fragment_contact_info"/>
+
+    <fragment
+        android:id="@+id/find_new_contacts"
+        android:name="main.stager.ui.find_new_contacts.FindNewContactsFragment"
+        android:label="@string/FindNewContactsFragment_title"
+        tools:layout="@layout/fragment_find_contacts" />
 
     <fragment
         android:id="@+id/nav_my_actions"

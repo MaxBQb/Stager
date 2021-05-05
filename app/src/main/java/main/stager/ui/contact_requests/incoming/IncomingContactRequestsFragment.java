@@ -32,7 +32,7 @@ public class IncomingContactRequestsFragment extends
         Bundle args = new Bundle();
         args.putString(ContactInfoFragment.ARG_CONTACT_NAME, item.getName());
         args.putString(ContactInfoFragment.ARG_CONTACT_KEY, item.getKey());
-        args.putString(ContactInfoFragment.ARG_CONTACT_TYPE, ContactType.INCOME.name());
+        args.putString(ContactInfoFragment.ARG_CONTACT_TYPE, ContactType.INCOMING.name());
         navigator.navigate(R.id.transition_contact_requests_to_contact_info, args);
     }
 }

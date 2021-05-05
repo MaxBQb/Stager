@@ -53,12 +53,12 @@ public class ContactInfoFragment extends
     @Override
     protected void setEventListeners() {
         super.setEventListeners();
-        if (type != ContactType.OUTCOME && type != ContactType.ACCEPTED) {
+        if (type != ContactType.OUTGOING && type != ContactType.ACCEPTED) {
             view.findViewById(R.id.btn_accept).setOnClickListener((v) ->
                 dataProvider.acceptContactRequest(key));
             view.findViewById(R.id.btn_ignore).setOnClickListener((v) ->
                 dataProvider.ignoreContactRequest(key));
-        } else if (type == ContactType.OUTCOME)
+        } else if (type == ContactType.OUTGOING)
             view.findViewById(R.id.btn_revoke).setOnClickListener((v) ->
                 dataProvider.removeContactRequest(key));
     }
@@ -68,16 +68,16 @@ public class ContactInfoFragment extends
         super.prepareFragmentComponents();
         nameView = view.findViewById(R.id.personName);
         descriptionView = view.findViewById(R.id.description);
-        View incomeRequestControls = view.findViewById(R.id.income_request_controls);
+        View incomingRequestControls = view.findViewById(R.id.incoming_request_controls);
 
-        if (type == ContactType.INCOME || type == ContactType.IGNORED)
-            incomeRequestControls.setVisibility(View.VISIBLE);
+        if (type == ContactType.INCOMING || type == ContactType.IGNORED)
+            incomingRequestControls.setVisibility(View.VISIBLE);
 
         if (type == ContactType.IGNORED)
-            incomeRequestControls.setAlpha(0.7f);
+            incomingRequestControls.setAlpha(0.7f);
 
-        if (type == ContactType.OUTCOME)
-            view.findViewById(R.id.outcome_request_controls).setVisibility(View.VISIBLE);
+        if (type == ContactType.OUTGOING)
+            view.findViewById(R.id.outgoing_request_controls).setVisibility(View.VISIBLE);
 
         getActionBar().setTitle(name);
     }
@@ -110,8 +110,8 @@ public class ContactInfoFragment extends
     private Query getDependencyByType() {
         switch (type) {
             case IGNORED: return dataProvider.getIgnoredContactRequest(key);
-            case INCOME: return dataProvider.getContactRequest(key);
-            case OUTCOME: return dataProvider.getOutcomeContactRequest(key);
+            case INCOMING: return dataProvider.getContactRequest(key);
+            case OUTGOING: return dataProvider.getOutgoingContactRequest(key);
             case ACCEPTED: return dataProvider.getContact(key);
         }
         throw new IllegalStateException("ContactType incorrect");

@@ -18,7 +18,7 @@ public class OutgoingContactRequestsViewModel extends StagerListViewModel<Contac
 
     @Override
     protected Query getListPath() {
-        return dataProvider.getOutcomeContactRequests();
+        return dataProvider.getOutgoingContactRequests();
     }
 
     @Override

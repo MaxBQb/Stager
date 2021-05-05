@@ -89,7 +89,7 @@
 
     <!-- Contact requests -->
     <string name="ContactRequestsTabsFragment_title">Предложения дружбы</string>
-    <string name="ContactRequestsTabsFragment_Tab_title_income">Входящие</string>
-    <string name="ContactRequestsTabsFragment_Tab_title_outcome">Исходящие</string>
+    <string name="ContactRequestsTabsFragment_Tab_title_incoming">Входящие</string>
+    <string name="ContactRequestsTabsFragment_Tab_title_outgoing">Исходящие</string>
     <string name="ContactRequestsTabsFragment_Tab_title_ignored">Скрытые</string>
 </resources>

@@ -32,7 +32,4 @@ public class IncomingContactRequestsViewModel extends StagerListViewModel<Contac
                 new ValueJoinedListEventListener<>(mValues, getItemType(), onError,
                         dataProvider.getAllUserInfo())));
     }
-
-    @Override
-    public void deleteItem(Contact s) {}
 }

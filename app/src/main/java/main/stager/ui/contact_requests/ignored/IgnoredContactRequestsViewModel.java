@@ -33,7 +33,4 @@ public class IgnoredContactRequestsViewModel extends StagerListViewModel<Contact
                         dataProvider.getAllUserInfo()){
                 }));
     }
-
-    @Override
-    public void deleteItem(Contact s) {}
 }

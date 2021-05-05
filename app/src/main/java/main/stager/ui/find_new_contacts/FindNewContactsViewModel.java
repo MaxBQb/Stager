@@ -38,7 +38,4 @@ public class FindNewContactsViewModel extends StagerListViewModel<Contact> {
         this.query = query;
         getItems(null);
     }
-
-    @Override
-    public void deleteItem(Contact s) {}
 }

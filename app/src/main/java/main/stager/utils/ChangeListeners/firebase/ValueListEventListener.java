@@ -4,10 +4,16 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.database.DataSnapshot;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import lombok.Getter;
+import lombok.Setter;
 
 public class ValueListEventListener<T> extends AValueEventListener<T> {
     protected MutableLiveData<List<T>> liveList;
+    @Getter @Setter protected Set<String> ignoredKeys = new HashSet<>();
     protected Class<T> className;
 
     public ValueListEventListener(MutableLiveData<List<T>> liveList, Class<T> className, OnError onError) {
@@ -30,11 +36,12 @@ public class ValueListEventListener<T> extends AValueEventListener<T> {
         T item;
         for (DataSnapshot postSnapshot: snapshot.getChildren()) {
             item = postSnapshot.getValue(className);
-            if (exclude(item))
+            if (isExcluded(item)
+                    || ignoredKeys.contains(postSnapshot.getKey()))
                 continue;
 
             item = modify(item, postSnapshot);
-            if (excludeModified(item))
+            if (isModifiedExcluded(item))
                 continue;
 
             lst.add(item);
@@ -42,11 +49,11 @@ public class ValueListEventListener<T> extends AValueEventListener<T> {
         liveList.postValue(lst);
     }
 
-    protected boolean exclude(T item) {
+    protected boolean isExcluded(T item) {
         return false;
     }
 
-    protected boolean excludeModified(T item) {
+    protected boolean isModifiedExcluded(T item) {
         return false;
     }
 }

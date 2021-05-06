@@ -139,8 +139,8 @@ public abstract class StagerList<TVM extends StagerListViewModel<T>,
     @Override
     protected void setObservers() {
         super.setObservers();
-        list.observe(getViewLifecycleOwner(), this::reactState);
-        list.observe(getViewLifecycleOwner(), adapter::submitList);
+        bindData(list, this::reactState);
+        bindData(list, adapter::submitList);
     }
 
     // Bind listeners

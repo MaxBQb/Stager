@@ -61,6 +61,7 @@ public class FindNewContactsFragment extends
     public void onSearchQueryChange(String query) {
         super.onSearchQueryChange(query);
         if (Utilits.isNullOrBlank(query)) return;
+        onDataLoadingStarted();
         viewModel.setQuery(query.trim());
     }
 }

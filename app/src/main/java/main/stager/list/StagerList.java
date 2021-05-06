@@ -129,6 +129,10 @@ public abstract class StagerList<TVM extends StagerListViewModel<T>,
         srvAdapter.setState(StatesRecyclerViewAdapter.STATE_ERROR);
     }
 
+    protected void onDataLoadingStarted() {
+        srvAdapter.setState(StatesRecyclerViewAdapter.STATE_LOADING);
+    }
+
     protected void reactState(List<?> list) {
         if (Utilits.isNullOrEmpty(list))
             srvAdapter.setState(StatesRecyclerViewAdapter.STATE_EMPTY);
@@ -191,7 +195,7 @@ public abstract class StagerList<TVM extends StagerListViewModel<T>,
         srvAdapter = new StatesRecyclerViewAdapter(adapter, loadingView, emptyView, errorView);
         rv.setAdapter(srvAdapter);
         list = getList(this::onError);
-        srvAdapter.setState(StatesRecyclerViewAdapter.STATE_LOADING);
+        onDataLoadingStarted();
     }
 
     @Override

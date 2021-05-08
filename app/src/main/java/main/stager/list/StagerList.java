@@ -9,14 +9,11 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.animation.LayoutTransition;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import com.rockerhieu.rvadapter.states.StatesRecyclerViewAdapter;
@@ -105,6 +102,10 @@ public abstract class StagerList<TVM extends StagerListViewModel<T>,
             public void onViewDetachedFromWindow(View v) {}
         });
         return v;
+    }
+
+    protected String getQueryHintText() {
+        return null;
     }
 
     protected String getEmptyText() {
@@ -217,6 +218,7 @@ public abstract class StagerList<TVM extends StagerListViewModel<T>,
         inflater.inflate(R.menu.search_menu, menu);
         MenuItem item = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) item.getActionView();
+        searchView.setQueryHint(getQueryHintText());
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

@@ -30,6 +30,11 @@ public class FindNewContactsFragment extends
     }
 
     @Override
+    protected String getQueryHintText() {
+        return getString(R.string.FindNewContactsFragment_message_queryHint);
+    }
+
+    @Override
     protected void onItemClick(Contact item, int pos, View view) {
         super.onItemClick(item, pos, view);
         final float selected = 0.8f;

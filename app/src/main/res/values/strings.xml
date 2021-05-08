@@ -93,6 +93,7 @@
     <string name="FindNewContactsFragment_message_revoke">Revoke request to "%s"</string>
     <string name="FindNewContactsFragment_message_success">Send request to "%s"</string>
     <string name="FindNewContactsFragment_message_denied">Request denied</string>
+    <string name="FindNewContactsFragment_message_queryHint">Input email</string>
 
     <!-- Contact info -->
     <string name="ContactInfoFragment_title">About "%s"</string>

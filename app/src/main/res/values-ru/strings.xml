@@ -51,6 +51,17 @@
     <string name="AboutMeFragment_TextView_label_ChangePassword">Хотите сменить пароль?</string>
     <string name="AboutMeFragment_Button_ChangePassword">Сменить</string>
 
+    <!-- Обновить пароль -->
+    <string name="UpdatePasswordFragment_title">Смена пароля</string>
+    <string name="UpdatePasswordFragment_TextView_title_ChangePassword">Смена пароля</string>
+    <string name="UpdatePasswordFragment_TextView_label_Info">Чтобы сменить ваш пароль,
+        введите текущий</string>
+    <string name="UpdatePasswordFragment_EditText_hint_context">Введите старый пароль</string>
+    <string name="UpdatePasswordFragment_Button_NewPassword">Ввести новый пароль</string>
+    <string name="UpdatePasswordFragment_EditText_hint_NewPassword">Новый пароль</string>
+    <string name="UpdatePasswordFragment_EditText_hint_NewPasswordConfirm">Подтвердите пароль</string>
+    <string name="UpdatePasswordFragment_Button_ChangePassword">Сменить</string>
+
     <!-- Добавить мероприятие -->
     <string name="AddActionFragment_title">Новое мероприятие</string>
     <string name="AddActionFragment_EditText_hint_context">Заголовок</string>

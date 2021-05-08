@@ -50,6 +50,17 @@
     <string name="AboutMeFragment_Button_ChangePassword">Change</string>
     <string name="AboutMeFragment_Button_ExitInAccount">Log out of account</string>
 
+    <!-- Update password -->
+    <string name="UpdatePasswordFragment_title">Change password</string>
+    <string name="UpdatePasswordFragment_TextView_title_ChangePassword">Change password</string>
+    <string name="UpdatePasswordFragment_TextView_label_Info">To change password you need
+        to enter your password again</string>
+    <string name="UpdatePasswordFragment_EditText_hint_context">Enter your old password</string>
+    <string name="UpdatePasswordFragment_Button_NewPassword">Enter a new password</string>
+    <string name="UpdatePasswordFragment_EditText_hint_NewPassword">New password</string>
+    <string name="UpdatePasswordFragment_EditText_hint_NewPasswordConfirm">Confirm password</string>
+    <string name="UpdatePasswordFragment_Button_ChangePassword">Change it</string>
+
     <!-- Add action -->
     <string name="AddActionFragment_title">New action</string>
     <string name="AddActionFragment_EditText_hint_context">Title</string>

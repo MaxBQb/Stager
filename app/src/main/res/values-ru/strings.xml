@@ -87,6 +87,10 @@
     <!-- Информация о контакте -->
     <string name="ContactInfoFragment_title">Сведения о "%s"</string>
     <string name="ContactInfoFragment_message_AnonymousUser">Анонимный Пользователь</string>
+    <string name="ContactInfoFragment_header_type_incoming">Входящий запрос</string>
+    <string name="ContactInfoFragment_header_type_outgoing">Исходящий запрос</string>
+    <string name="ContactInfoFragment_header_type_ignored">Вы скрыли этот запрос</string>
+    <string name="ContactInfoFragment_header_type_accepted">Из контактов</string>
 
     <!-- Запрос на добавление контакта -->
     <string name="ContactRequestsTabsFragment_title">Предложения дружбы</string>

@@ -3,6 +3,9 @@ package main.stager.ui.contact_info;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.annotation.StringRes;
+
 import com.google.firebase.database.Query;
 import main.stager.Base.StagerVMFragment;
 import main.stager.R;
@@ -35,6 +38,21 @@ public class ContactInfoFragment extends
             name = getString(R.string.ContactInfoFragment_message_AnonymousUser);
             key = "";
             type = ContactType.ACCEPTED;
+        }
+    }
+
+    private @StringRes int getHeaderTitle() {
+        switch (type) {
+            case ACCEPTED:
+                return R.string.ContactInfoFragment_header_type_accepted;
+            case IGNORED:
+                return R.string.ContactInfoFragment_header_type_ignored;
+            case INCOMING:
+                return R.string.ContactInfoFragment_header_type_incoming;
+            case OUTGOING:
+                return R.string.ContactInfoFragment_header_type_outgoing;
+            default:
+                throw new IllegalStateException("Unsupported ContactType");
         }
     }
 
@@ -79,8 +97,11 @@ public class ContactInfoFragment extends
         if (type == ContactType.OUTGOING)
             view.findViewById(R.id.outgoing_request_controls).setVisibility(View.VISIBLE);
 
+        ((TextView)view.findViewById(R.id.header_title)).setText(getHeaderTitle());
         getActionBar().setTitle(name);
     }
+
+
 
     @Override
     protected void setObservers() {

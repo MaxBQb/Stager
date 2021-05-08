@@ -86,6 +86,10 @@
     <!-- Contact info -->
     <string name="ContactInfoFragment_title">About "%s"</string>
     <string name="ContactInfoFragment_message_AnonymousUser">Anonymous User</string>
+    <string name="ContactInfoFragment_header_type_incoming">Incoming request</string>
+    <string name="ContactInfoFragment_header_type_outgoing">Outgoing request</string>
+    <string name="ContactInfoFragment_header_type_ignored">You hide this request</string>
+    <string name="ContactInfoFragment_header_type_accepted">In your contacts</string>
 
     <!-- Contact requests -->
     <string name="ContactRequestsTabsFragment_title">Friendship requests</string>

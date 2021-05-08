@@ -34,6 +34,6 @@ public class AddActionFragment extends AddItemFragment {
             return;
         }
         DataProvider.getInstance().addAction(new UserAction(Status.WAITING, name));
-        navigator.navigateUp();
+        close();
     }
 }

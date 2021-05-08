@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 import java.util.ArrayList;
 import java.util.List;
 import main.stager.R;
@@ -22,7 +23,7 @@ public abstract class StagerFragment extends Fragment {
     protected static DataProvider dataProvider = DataProvider.getInstance();
 
     // Зависимости
-    protected List<DatabaseReference> dependencies;
+    protected List<Query> dependencies;
 
     // Требует переопределения
     protected abstract @LayoutRes int getViewBaseLayoutId();
@@ -78,14 +79,15 @@ public abstract class StagerFragment extends Fragment {
                 @Override public void onValueRemoved() { close(); }
             };
 
-        for (DatabaseReference ref: dependencies)
+        for (Query ref: dependencies)
             ref.addValueEventListener(onValueRemovedListener);
     }
 
     protected void unbindDependencies() {
         if (Utilits.isNullOrEmpty(dependencies)
                 || onValueRemovedListener == null) return;
-        for (DatabaseReference ref: dependencies)
+
+        for (Query ref: dependencies)
             ref.removeEventListener(onValueRemovedListener);
     }
 

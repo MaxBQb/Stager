@@ -77,6 +77,9 @@
     <!-- Меню редактирования чего-либо -->
     <string name="ItemEditMenu_title_SaveChanges">Сохранить</string>
 
+    <!-- Меню поиска -->
+    <string name="SearchMenu_title">Поиск</string>
+
     <!-- Общее для списков -->
     <string name="CommonList_EmptyListView_TextView_text">Тут ничего нет</string>
     <string name="CommonList_LoadingListView_TextView_text">Загрузка...</string>
@@ -85,4 +88,20 @@
     <!-- Изменить этап мероприятия -->
     <string name="EditStageFragment_title">Этап</string>
     <string name="EditStageFragment_message_UntitledStage">Безымянный этап</string>
+
+    <!-- Найти контакты -->
+    <string name="FindNewContactsFragment_title">Найти новый контакт</string>
+    <string name="FindNewContactsFragment_message_revoke">Отменн запрос к "%s"</string>
+    <string name="FindNewContactsFragment_message_success">Запрос отправен "%s"</string>
+    <string name="FindNewContactsFragment_message_denied">Запрос отклонён</string>
+
+    <!-- Информация о контакте -->
+    <string name="ContactInfoFragment_title">Сведения о "%s"</string>
+    <string name="ContactInfoFragment_message_AnonymousUser">Анонимный Пользователь</string>
+
+    <!-- Запрос на добавление контакта -->
+    <string name="ContactRequestsTabsFragment_title">Предложения дружбы</string>
+    <string name="ContactRequestsTabsFragment_Tab_title_incoming">Входящие</string>
+    <string name="ContactRequestsTabsFragment_Tab_title_outgoing">Исходящие</string>
+    <string name="ContactRequestsTabsFragment_Tab_title_ignored">Скрытые</string>
 </resources>

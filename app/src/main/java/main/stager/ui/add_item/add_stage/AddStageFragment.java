@@ -53,6 +53,6 @@ public class AddStageFragment extends AddItemFragment {
         }
         DataProvider.getInstance().addStage(mActionKey,
                 new Stage(Status.WAITING, name, TriggerType.MANUAL));
-        navigator.navigateUp();
+        close();
     }
 }

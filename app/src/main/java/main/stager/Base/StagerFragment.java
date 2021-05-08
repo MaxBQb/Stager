@@ -99,4 +99,18 @@ public abstract class StagerFragment extends Fragment {
         if (!isSafe()) return;
         navigator.navigateUp();
     }
+
+    protected void showLoadingScreen() {
+        try {
+            ((SmartActivity) getActivity()).showLoadingScreen();
+        } catch (Throwable ignore) {
+        }
+    }
+
+    protected void hideLoadingScreen() {
+        try {
+            ((SmartActivity) getActivity()).hideLoadingScreen();
+        } catch (Throwable ignore) {
+        }
+    }
 }

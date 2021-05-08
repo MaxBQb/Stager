@@ -8,11 +8,15 @@ import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.animation.LayoutTransition;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import com.rockerhieu.rvadapter.states.StatesRecyclerViewAdapter;
@@ -91,7 +95,15 @@ public abstract class StagerList<TVM extends StagerListViewModel<T>,
 
     protected View getLoadingView() {
         View v = getLayoutInflater().inflate(R.layout.loading_list_view, rv, false);
-        v.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.appear));
+        v.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+            @Override
+            public void onViewAttachedToWindow(View v) {
+                v.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.appear));
+            }
+
+            @Override
+            public void onViewDetachedFromWindow(View v) {}
+        });
         return v;
     }
 

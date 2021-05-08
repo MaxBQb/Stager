@@ -217,6 +217,7 @@ public class DataProvider {
         String key = getStages(actionKey).push().getKey();
         getStage(actionKey, key).setValue(stage);
         initPositions(getStages(actionKey));
+        resetActionStatus(actionKey);
         return key;
     }
 
@@ -238,6 +239,33 @@ public class DataProvider {
 
     public DatabaseReference getStageStatus(@NotNull String actionName, @NotNull String stageKey) {
         return getStage(actionName, stageKey).child(PATH.STAGE_STATUS);
+    }
+
+    public void resetActionStatus(@NotNull String actionKey) {
+        getStages(actionKey).runTransaction(new Transaction.Handler() {
+            @NonNull
+            @Override
+            public Transaction.Result doTransaction(@NonNull MutableData currentData) {
+                if (!currentData.hasChildren())
+                    return Transaction.success(currentData);
+
+                for (MutableData item: currentData.getChildren())
+                    if (!item.hasChild(PATH.STAGE_STATUS))
+                        return Transaction.abort();
+                    else
+                        item.child(PATH.STAGE_STATUS).setValue(Status.WAITING);
+                return Transaction.success(currentData);
+            }
+
+            @Override
+            public void onComplete(@Nullable DatabaseError error,
+                                   boolean committed, @Nullable DataSnapshot currentData) {
+                if (!committed || currentData == null || !currentData.exists())
+                    return;
+
+                getActionStatus(actionKey).setValue(Status.WAITING);
+            }
+        });
     }
 
     public void setStageStatusSucceed(@NotNull String actionKey, @NotNull String stageKey) {
@@ -343,6 +371,7 @@ public class DataProvider {
 
     public void deleteStage(@NotNull String actionKey, @NotNull String stageKey) {
         getStage(actionKey, stageKey).removeValue();
+        resetActionStatus(actionKey);
     }
 
     // Contacts

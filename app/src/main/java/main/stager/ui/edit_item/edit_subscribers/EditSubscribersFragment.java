@@ -57,11 +57,14 @@ public class EditSubscribersFragment
     @Override
     protected void setObservers() {
         super.setObservers();
-        bindData(viewModel.getActionName(), (String text) ->
-                getActionBar().setTitle(getString(R.string.EditSubscribersFragment_title,
-                    Utilits.getDefaultOnNullOrBlank(text,
-                            getString(R.string.EditActionFragment_message_UntitledAction)
-                ))));
+        bindData(viewModel.getActionName(), this::updateTitle);
+    }
+
+    private void updateTitle(String text) {
+        getActionBar().setTitle(getString(R.string.EditSubscribersFragment_title,
+                Utilits.getDefaultOnNullOrBlank(text,
+                        getString(R.string.EditActionFragment_message_UntitledAction
+                        ))));
     }
 
     @Override
@@ -83,7 +86,7 @@ public class EditSubscribersFragment
     @Override
     protected void prepareFragmentComponents() {
         super.prepareFragmentComponents();
-        getActionBar().setTitle(getString(R.string.EditSubscribersFragment_title, mActionName));
+        updateTitle(mActionName);
     }
 
     @Override

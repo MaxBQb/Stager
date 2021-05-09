@@ -31,7 +31,7 @@
             Текущий язык: %1$s</string>
 
     <!-- Список этапов -->
-    <string name="StagesFragment_title" formatted="true">
+    <string name="EditActionFragment_title" formatted="true">
         Этапы \'%1$s\'"</string>
     <string name="EditActionFragment_message_UntitledAction">Без названия</string>
     <string name="EditActionFragment_StagesList_NoItemsMessage">Стадий пока нет..</string>

@@ -68,11 +68,7 @@ public class EditActionFragment
     @Override
     protected void setObservers() {
         super.setObservers();
-        bindData(viewModel.getActionName(), (String text) ->
-                getActionBar().setTitle(getString(R.string.StagesFragment_title,
-                    Utilits.getDefaultOnNullOrBlank(text,
-                            getString(R.string.EditActionFragment_message_UntitledAction)
-                ))));
+        bindData(viewModel.getActionName(), this::updateTitle);
         bindDataTwoWay(viewModel.getActionName(), editActionName);
     }
 
@@ -93,10 +89,17 @@ public class EditActionFragment
         navigator.navigate(R.id.transition_action_stages_to_add_stage, args);
     }
 
+    private void updateTitle(String text) {
+        getActionBar().setTitle(getString(R.string.EditActionFragment_title,
+            Utilits.getDefaultOnNullOrBlank(text,
+                getString(R.string.EditActionFragment_message_UntitledAction
+        ))));
+    }
+
     @Override
     protected void prepareFragmentComponents() {
         super.prepareFragmentComponents();
-        getActionBar().setTitle(getString(R.string.StagesFragment_title, mActionName));
+        updateTitle(mActionName);
         editActionName = view.findViewById(R.id.edit_action_input_name);
         editActionName.setText(mActionName);
     }

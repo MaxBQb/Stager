@@ -78,6 +78,9 @@ public class DataProvider {
         // Contact requests
         public static final String CONTACT_REQUESTS = "contact_requests";
         public static final String IGNORE_CONTACTS = "ignore_contacts";
+
+        // Shared actions
+        public static final String SHARED = "shared";
     }
 
     // User data
@@ -120,7 +123,12 @@ public class DataProvider {
 
     public Query findUserByEmail(String email) {
         return getAllUserInfo().orderByChild(PATH.USER_EMAIL)
-                .startAt(email).endAt(email+"\uf8ff").limitToFirst(5);
+                .startAt(email).endAt(email+"\uf8ff");
+    }
+
+    public Query findUserByName(String name) {
+        return getAllUserInfo().orderByChild(PATH.USER_NAME)
+                .startAt(name).endAt(name+"\uf8ff");
     }
 
     // Contact requests
@@ -179,6 +187,32 @@ public class DataProvider {
     public void ignoreContactRequest(@NonNull String from) {
         getIncomingContactRequest(from).removeValue();
         getIgnoredContactRequest(from).setValue(true);
+    }
+
+    // Share Actions
+
+    public DatabaseReference getSubscribers() {
+        return mRef.child(PATH.SHARED).child(getUID());
+    }
+
+    public Query getSubscribersOfAction(@NonNull String actionKey) {
+        return getSubscribers().orderByChild(actionKey).startAt(false).endAt(true);
+    }
+
+    public DatabaseReference getSharedActions(@NonNull String sharedTo) {
+        return getSubscribers().child(sharedTo);
+    }
+
+    public DatabaseReference getSharedAction(@NonNull String sharedTo, @NonNull String key) {
+        return getSharedActions(sharedTo).child(key);
+    }
+
+    public Task<Void> shareAction(@NonNull String sharedTo, @NonNull String key) {
+        return getSharedAction(sharedTo, key).setValue(true);
+    }
+
+    public Task<Void> revokeSharedActionAccess(@NonNull String sharedTo, @NotNull String key) {
+        return getSharedAction(sharedTo, key).removeValue();
     }
 
     // Actions

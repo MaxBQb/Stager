@@ -27,12 +27,10 @@
         <string name="Settings_Appearance_Switch_summaryOn_DarkMode">Текущая тема: Тёмная</string>
         <string name="Settings_Appearance_Switch_summaryOff_LightMode">Текущая тема: Светлая</string>
         <string name="Settings_Appearance_List_label_Locale">Язык</string>
-        <string name="Settings_Appearance_List_summary_Locale" formatted="true">
-            Текущий язык: %1$s</string>
+        <string name="Settings_Appearance_List_summary_Locale">Текущий язык: %1$s</string>
 
     <!-- Список этапов -->
-    <string name="EditActionFragment_title" formatted="true">
-        Этапы \'%1$s\'"</string>
+    <string name="EditActionFragment_title">Этапы \"%s\"</string>
     <string name="EditActionFragment_message_UntitledAction">Без названия</string>
     <string name="EditActionFragment_StagesList_NoItemsMessage">Стадий пока нет..</string>
     <string name="EditActionFragment_Button_text_Observers">Наблюдатели</string>
@@ -55,8 +53,7 @@
     <!-- Обновить пароль -->
     <string name="UpdatePasswordFragment_title">Смена пароля</string>
     <string name="UpdatePasswordFragment_TextView_title_ChangePassword">Смена пароля</string>
-    <string name="UpdatePasswordFragment_TextView_label_Info">Чтобы сменить ваш пароль,
-        введите текущий</string>
+    <string name="UpdatePasswordFragment_TextView_label_Info">Чтобы сменить ваш пароль, введите текущий</string>
     <string name="UpdatePasswordFragment_EditText_hint_context">Введите старый пароль</string>
     <string name="UpdatePasswordFragment_Button_NewPassword">Ввести новый пароль</string>
     <string name="UpdatePasswordFragment_EditText_hint_NewPassword">Новый пароль</string>
@@ -92,23 +89,22 @@
 
     <!-- Найти новые контакты -->
     <string name="FindNewContactsFragment_title">Найти новый контакт</string>
-    <string name="FindNewContactsFragment_message_revoke">Отменн запрос к "%s"</string>
-    <string name="FindNewContactsFragment_message_success">Запрос отправлен "%s"</string>
+    <string name="FindNewContactsFragment_message_revoke">Отменён запрос к \"%s\"</string>
+    <string name="FindNewContactsFragment_message_success">Запрос отправлен \"%s\"</string>
     <string name="FindNewContactsFragment_message_denied">Запрос отклонён</string>
     <string name="FindNewContactsFragment_message_queryHint">Введите адрес эл.почты</string>
 
     <!-- Найти контакты -->
     <string name="FindContactsFragment_title">Найти контакт</string>
     <string name="FindContactsFragment_message_queryHint">Введите имя</string>
-    <string name="FindContactsFragment_message_revoke">Закрыт доступ для "%s"</string>
-    <string name="FindContactsFragment_message_success">Предоставлен доступ для "%s"</string>
+    <string name="FindContactsFragment_message_revoke">Закрыт доступ для \"%s\"</string>
+    <string name="FindContactsFragment_message_success">Предоставлен доступ для \"%s\"</string>
 
     <!-- Изменить список наблюдателей мероприятия -->
-    <string name="EditSubscribersFragment_title" formatted="true">
-        Следят за \'%1$s\'</string>
+    <string name="EditSubscribersFragment_title">Следят за \"%s\"</string>
 
     <!-- Информация о контакте -->
-    <string name="ContactInfoFragment_title">Сведения о "%s"</string>
+    <string name="ContactInfoFragment_title">Сведения о \"%s\"</string>
     <string name="ContactInfoFragment_message_AnonymousUser">Анонимный Пользователь</string>
     <string name="ContactInfoFragment_header_type_incoming">Входящий запрос</string>
     <string name="ContactInfoFragment_header_type_outgoing">Исходящий запрос</string>

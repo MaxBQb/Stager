@@ -26,12 +26,10 @@
         <string name="Settings_Appearance_Switch_summaryOn_DarkMode">Current theme: Dark</string>
         <string name="Settings_Appearance_Switch_summaryOff_LightMode">Current theme: Light</string>
         <string name="Settings_Appearance_List_label_Locale">Language</string>
-        <string name="Settings_Appearance_List_summary_Locale" formatted="true">
-            Current language: %1$s</string>
+        <string name="Settings_Appearance_List_summary_Locale">Current language: %1$s</string>
 
     <!-- Edit action -->
-    <string name="EditActionFragment_title" formatted="true">
-        Stages of \'%1$s\'</string>
+    <string name="EditActionFragment_title">Stages of \"%s\"</string>
     <string name="EditActionFragment_message_UntitledAction">Untitled</string>
     <string name="EditActionFragment_StagesList_NoItemsMessage">No stages yet..</string>
     <string name="EditActionFragment_Button_text_Observers">Observers</string>
@@ -47,7 +45,7 @@
 
     <!-- About me -->
     <string name="AboutMeFragment_TextView_title_MyAccount">My account</string>
-    <string name="AboutMeFragment_TextView_label_ChangePassword">Сhange your password?</string>
+    <string name="AboutMeFragment_TextView_label_ChangePassword">Change your password?</string>
     <string name="AboutMeFragment_Button_ChangePassword">Change</string>
     <string name="AboutMeFragment_Button_ExitInAccount">Log out of account</string>
 
@@ -91,23 +89,22 @@
 
     <!-- Find new contacts -->
     <string name="FindNewContactsFragment_title">Find new contact</string>
-    <string name="FindNewContactsFragment_message_revoke">Revoke request to "%s"</string>
-    <string name="FindNewContactsFragment_message_success">Send request to "%s"</string>
+    <string name="FindNewContactsFragment_message_revoke">Revoke request to \"%s\"</string>
+    <string name="FindNewContactsFragment_message_success">Send request to \"%s\"</string>
     <string name="FindNewContactsFragment_message_denied">Request denied</string>
     <string name="FindNewContactsFragment_message_queryHint">Input email</string>
 
     <!-- Find contacts -->
     <string name="FindContactsFragment_title">Find contact</string>
     <string name="FindContactsFragment_message_queryHint">Input name</string>
-    <string name="FindContactsFragment_message_revoke">Revoke access from "%s"</string>
-    <string name="FindContactsFragment_message_success">Grant access to "%s"</string>
+    <string name="FindContactsFragment_message_revoke">Revoke access from \"%s\"</string>
+    <string name="FindContactsFragment_message_success">Grant access to \"%s\"</string>
 
     <!-- Edit action subscribers -->
-    <string name="EditSubscribersFragment_title" formatted="true">
-        Observe \'%1$s\'</string>
+    <string name="EditSubscribersFragment_title">Observe \"%s\"</string>
 
     <!-- Contact info -->
-    <string name="ContactInfoFragment_title">About "%s"</string>
+    <string name="ContactInfoFragment_title">About \"%s\"</string>
     <string name="ContactInfoFragment_message_AnonymousUser">Anonymous User</string>
     <string name="ContactInfoFragment_header_type_incoming">Incoming request</string>
     <string name="ContactInfoFragment_header_type_outgoing">Outgoing request</string>

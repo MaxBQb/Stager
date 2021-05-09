@@ -1,9 +1,7 @@
 package main.stager.ui.update_password;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.firebase.auth.AuthCredential;
@@ -16,7 +14,6 @@ import main.stager.R;
 
 public class UpdatePasswordFragment extends StagerFragment {
 
-    private static final String TAG = "UpdatePassword";
     private EditText edOldPassword;
     private EditText edNewPassword;
     private EditText edNewPasswordConfirm;
@@ -25,16 +22,14 @@ public class UpdatePasswordFragment extends StagerFragment {
     protected void setEventListeners() {
         super.setEventListeners();
 
-        LinearLayout layoutPassword = view.findViewById(R.id.layout_OldPassword);
-        LinearLayout layoutUpdatePassword = view.findViewById(R.id.layout_UpdatePassword);
-
         view.findViewById(R.id.btn_NewPassword).setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
 
                 String oldPassword = edOldPassword.getText().toString();
 
                 if (oldPassword.isEmpty() || oldPassword.length() < 6) {
-                    edOldPassword.setError("Minimum length of password should be 6");
+                    edOldPassword.setError(getResources().getString(
+                            R.string.UpdatePasswordFragment_ErrorMessage_MinLengthPassword));
                     edOldPassword.requestFocus();
                     return;
                 }
@@ -53,11 +48,11 @@ public class UpdatePasswordFragment extends StagerFragment {
                         .addOnCompleteListener(task -> {
                             hideLoadingScreen();
                             if (task.isSuccessful()) {
-                                layoutPassword.setVisibility(View.GONE);
-                                layoutUpdatePassword.setVisibility(View.VISIBLE);
+                                view.findViewById(R.id.layout_OldPassword).setVisibility(View.GONE);
+                                view.findViewById(R.id.layout_UpdatePassword).setVisibility(View.VISIBLE);
                             } else {
-                                Log.d(TAG, "Error auth failed");
-                                edOldPassword.setError("Password isn`t correct");
+                                edOldPassword.setError(getResources().
+                                        getString(R.string.UpdatePasswordFragment_ErrorMessage_PasswordIsNotCorrect));
                                 edOldPassword.requestFocus();
                             }
                         });
@@ -71,14 +66,17 @@ public class UpdatePasswordFragment extends StagerFragment {
             String newPasswordConfirm = edNewPasswordConfirm.getText().toString();
 
             if (newPassword.isEmpty() || newPassword.length() < 6) {
-                edNewPassword.setError("Minimum length of password should be 6");
+                edNewPassword.setError(getResources().getString(
+                        R.string.UpdatePasswordFragment_ErrorMessage_MinLengthPassword));
                 edNewPassword.requestFocus();
                 return;
             }
 
             if (!newPassword.equals(newPasswordConfirm)) {
-                edNewPassword.setError("Passwords don't match");
-                edNewPasswordConfirm.setError("Passwords don't match");
+                edNewPassword.setError(getResources().
+                        getString(R.string.UpdatePasswordFragment_ErrorMessage_PasswordsDoNotMatch));
+                edNewPasswordConfirm.setError(getResources().
+                        getString(R.string.UpdatePasswordFragment_ErrorMessage_PasswordsDoNotMatch));
                 edNewPasswordConfirm.requestFocus();
                 return;
             }
@@ -94,13 +92,14 @@ public class UpdatePasswordFragment extends StagerFragment {
                     .addOnCompleteListener(task -> {
                         hideLoadingScreen();
                         if (task.isSuccessful()) {
-                            Toast.makeText(getContext(),
-                                    "Password update", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), getResources().
+                                    getString(R.string.UpdatePasswordFragment_Toast_PasswordUpdate),
+                                    Toast.LENGTH_LONG).show();
                             navigator.navigate(R.id.nav_about_me);
                         } else {
-                            Log.d(TAG, "Error new password failed");
-                            Toast.makeText(getContext(),
-                                    "Password not update", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), getResources().
+                                    getString(R.string.UpdatePasswordFragment_ErrorMessage_PasswordNotUpdate),
+                                    Toast.LENGTH_LONG).show();
                         }
                     });
         });

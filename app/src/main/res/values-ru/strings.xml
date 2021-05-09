@@ -53,14 +53,21 @@
 
     <!-- Обновить пароль -->
     <string name="UpdatePasswordFragment_title">Смена пароля</string>
-    <string name="UpdatePasswordFragment_TextView_title_ChangePassword">Смена пароля</string>
-    <string name="UpdatePasswordFragment_TextView_label_Info">Чтобы сменить ваш пароль,
+    <string name="UpdatePasswordFragment_TextView_title_ConfirmOldPassword">Подтверждение пароля</string>
+    <string name="UpdatePasswordFragment_TextView_label_Info">Чтобы сменить пароль,
         введите текущий</string>
     <string name="UpdatePasswordFragment_EditText_hint_context">Введите старый пароль</string>
-    <string name="UpdatePasswordFragment_Button_NewPassword">Ввести новый пароль</string>
+    <string name="UpdatePasswordFragment_ErrorMessage_MinLengthPassword">Минимальная длина пароля
+        6 символов</string>
+    <string name="UpdatePasswordFragment_ErrorMessage_PasswordIsNotCorrect">Пароль неправильный</string>
+    <string name="UpdatePasswordFragment_Button_ConfirmOldPassword">Подтвердить старый пароль</string>
+    <string name="UpdatePasswordFragment_TextView_title_ChangePassword">Смена пароля</string>
     <string name="UpdatePasswordFragment_EditText_hint_NewPassword">Новый пароль</string>
+    <string name="UpdatePasswordFragment_ErrorMessage_PasswordsDoNotMatch">Пароли не совпадают</string>
     <string name="UpdatePasswordFragment_EditText_hint_NewPasswordConfirm">Подтвердите пароль</string>
     <string name="UpdatePasswordFragment_Button_ChangePassword">Сменить</string>
+    <string name="UpdatePasswordFragment_Toast_PasswordUpdate">Пароль изменен</string>
+    <string name="UpdatePasswordFragment_ErrorMessage_PasswordNotUpdate">Пароль не изменен</string>
 
     <!-- Добавить мероприятие -->
     <string name="AddActionFragment_title">Новое мероприятие</string>

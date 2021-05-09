@@ -52,14 +52,21 @@
 
     <!-- Update password -->
     <string name="UpdatePasswordFragment_title">Change password</string>
-    <string name="UpdatePasswordFragment_TextView_title_ChangePassword">Change password</string>
-    <string name="UpdatePasswordFragment_TextView_label_Info">To change password you need
-        to enter your password again</string>
+    <string name="UpdatePasswordFragment_TextView_title_ConfirmOldPassword">Confirm Password</string>
+    <string name="UpdatePasswordFragment_TextView_label_Info">To change your password,
+        enter the current one</string>
     <string name="UpdatePasswordFragment_EditText_hint_context">Enter your old password</string>
-    <string name="UpdatePasswordFragment_Button_NewPassword">Enter a new password</string>
+    <string name="UpdatePasswordFragment_ErrorMessage_MinLengthPassword">Minimum length of
+        password should be 6</string>
+    <string name="UpdatePasswordFragment_ErrorMessage_PasswordIsNotCorrect">Password isn`t correct</string>
+    <string name="UpdatePasswordFragment_Button_ConfirmOldPassword">Confirm old password</string>
+    <string name="UpdatePasswordFragment_TextView_title_ChangePassword">Change password</string>
     <string name="UpdatePasswordFragment_EditText_hint_NewPassword">New password</string>
+    <string name="UpdatePasswordFragment_ErrorMessage_PasswordsDoNotMatch">Passwords don`t match</string>
     <string name="UpdatePasswordFragment_EditText_hint_NewPasswordConfirm">Confirm password</string>
     <string name="UpdatePasswordFragment_Button_ChangePassword">Change it</string>
+    <string name="UpdatePasswordFragment_Toast_PasswordUpdate">Password update</string>
+    <string name="UpdatePasswordFragment_ErrorMessage_PasswordNotUpdate">Password not update</string>
 
     <!-- Add action -->
     <string name="AddActionFragment_title">New action</string>

@@ -14,6 +14,7 @@ import lombok.Setter;
 public class ValueListEventListener<T> extends AValueEventListener<T> {
     protected MutableLiveData<List<T>> liveList;
     @Getter @Setter protected Set<String> ignoredKeys = new HashSet<>();
+    @Getter @Setter protected boolean invertIgnoredKeys = false;
     protected Class<T> className;
 
     public ValueListEventListener(MutableLiveData<List<T>> liveList, Class<T> className, OnError onError) {
@@ -37,7 +38,8 @@ public class ValueListEventListener<T> extends AValueEventListener<T> {
         for (DataSnapshot postSnapshot: snapshot.getChildren()) {
             item = postSnapshot.getValue(className);
             if (isExcluded(item)
-                    || ignoredKeys.contains(postSnapshot.getKey()))
+                    || ignoredKeys.contains(postSnapshot.getKey())
+                        ^ invertIgnoredKeys)
                 continue;
 
             item = modify(item, postSnapshot);

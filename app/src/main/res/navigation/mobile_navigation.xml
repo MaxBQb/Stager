@@ -64,6 +64,13 @@
         />
 
     <fragment
+        android:id="@+id/find_contacts"
+        android:name="main.stager.ui.find_contacts.FindContactsFragment"
+        android:label="@string/FindContactsFragment_title"
+        tools:layout="@layout/fragment_find_contacts"
+        />
+
+    <fragment
         android:id="@+id/nav_my_actions"
         android:name="main.stager.ui.actions.ActionsListFragment"
         android:label="@string/SideBarActivity_NavigationItem_MyActions"
@@ -86,6 +93,21 @@
         <action
             android:id="@+id/transition_action_stages_to_edit_stage"
             app:destination="@id/edit_action_stage" />
+        <action
+            android:id="@+id/transition_action_stages_to_action_subscribers"
+            app:destination="@id/action_subscribers" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/action_subscribers"
+        android:name="main.stager.ui.edit_item.edit_subscribers.EditSubscribersFragment"
+        tools:layout="@layout/fragment_edit_subscribers">
+        <action
+            android:id="@+id/transition_action_subscribers_to_find_contacts"
+            app:destination="@id/find_contacts" />
+        <action
+            android:id="@+id/transition_action_subscribers_to_contact_info"
+            app:destination="@id/contact_info" />
     </fragment>
 
     <fragment

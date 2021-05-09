@@ -89,12 +89,22 @@
     <string name="EditStageFragment_title">Этап</string>
     <string name="EditStageFragment_message_UntitledStage">Безымянный этап</string>
 
-    <!-- Найти контакты -->
+    <!-- Найти новые контакты -->
     <string name="FindNewContactsFragment_title">Найти новый контакт</string>
     <string name="FindNewContactsFragment_message_revoke">Отменн запрос к "%s"</string>
-    <string name="FindNewContactsFragment_message_success">Запрос отправен "%s"</string>
+    <string name="FindNewContactsFragment_message_success">Запрос отправлен "%s"</string>
     <string name="FindNewContactsFragment_message_denied">Запрос отклонён</string>
     <string name="FindNewContactsFragment_message_queryHint">Введите адрес эл.почты</string>
+
+    <!-- Найти контакты -->
+    <string name="FindContactsFragment_title">Найти контакт</string>
+    <string name="FindContactsFragment_message_queryHint">Введите имя</string>
+    <string name="FindContactsFragment_message_revoke">Закрыт доступ для "%s"</string>
+    <string name="FindContactsFragment_message_success">Предоставлен доступ для "%s"</string>
+
+    <!-- Изменить список наблюдателей мероприятия -->
+    <string name="EditSubscribersFragment_title" formatted="true">
+        Следят за \'%1$s\'</string>
 
     <!-- Информация о контакте -->
     <string name="ContactInfoFragment_title">Сведения о "%s"</string>

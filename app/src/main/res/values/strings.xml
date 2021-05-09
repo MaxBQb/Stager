@@ -88,12 +88,22 @@
     <string name="EditStageFragment_title">Stage</string>
     <string name="EditStageFragment_message_UntitledStage">Untitled stage</string>
 
-    <!-- Find contacts -->
+    <!-- Find new contacts -->
     <string name="FindNewContactsFragment_title">Find new contact</string>
     <string name="FindNewContactsFragment_message_revoke">Revoke request to "%s"</string>
     <string name="FindNewContactsFragment_message_success">Send request to "%s"</string>
     <string name="FindNewContactsFragment_message_denied">Request denied</string>
     <string name="FindNewContactsFragment_message_queryHint">Input email</string>
+
+    <!-- Find contacts -->
+    <string name="FindContactsFragment_title">Find contact</string>
+    <string name="FindContactsFragment_message_queryHint">Input name</string>
+    <string name="FindContactsFragment_message_revoke">Revoke access from "%s"</string>
+    <string name="FindContactsFragment_message_success">Grant access to "%s"</string>
+
+    <!-- Edit action subscribers -->
+    <string name="EditSubscribersFragment_title" formatted="true">
+        Observe \'%1$s\'</string>
 
     <!-- Contact info -->
     <string name="ContactInfoFragment_title">About "%s"</string>

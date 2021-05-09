@@ -8,6 +8,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import java.util.List;
 import main.stager.Base.StagerViewModel;
+import main.stager.model.Contact;
 import main.stager.model.FBModel;
 import main.stager.utils.DataProvider;
 import main.stager.utils.ChangeListeners.firebase.*;
@@ -33,6 +34,11 @@ public abstract class StagerListViewModel<T extends FBModel> extends StagerViewM
     public LiveData<List<T>> getItems(OnError onError) {
         return getData(mValues, () -> dataProvider.getSorted(getListPath()).addValueEventListener(
                 new ValueListEventListener<T>(mValues, getItemType(), onError)));
+    }
+
+    protected LiveData<List<T>> getJoinedListData(DatabaseReference source, OnError onError) {
+        return getData(mValues, () -> getListPath().addValueEventListener(
+                new ValueJoinedListEventListener<>(mValues, getItemType(), onError, source)));
     }
 
     @Override

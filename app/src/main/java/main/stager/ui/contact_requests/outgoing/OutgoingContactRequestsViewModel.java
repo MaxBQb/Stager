@@ -8,7 +8,6 @@ import java.util.List;
 import main.stager.list.StagerListViewModel;
 import main.stager.model.Contact;
 import main.stager.utils.ChangeListeners.firebase.OnError;
-import main.stager.utils.ChangeListeners.firebase.ValueJoinedListEventListener;
 
 public class OutgoingContactRequestsViewModel extends StagerListViewModel<Contact> {
 
@@ -28,9 +27,7 @@ public class OutgoingContactRequestsViewModel extends StagerListViewModel<Contac
 
     @Override
     public LiveData<List<Contact>> getItems(OnError onError) {
-        return getData(mValues, () -> getListPath().addValueEventListener(
-                new ValueJoinedListEventListener<>(mValues, getItemType(), onError,
-                        dataProvider.getAllUserInfo())));
+        return getJoinedListData(dataProvider.getAllUserInfo(), onError);
     }
 
     @Override

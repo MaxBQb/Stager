@@ -12,7 +12,6 @@ import lombok.Setter;
 import main.stager.list.StagerListViewModel;
 import main.stager.model.Contact;
 import main.stager.utils.ChangeListeners.firebase.OnError;
-import main.stager.utils.ChangeListeners.firebase.ValueJoinedListEventListener;
 
 public class EditSubscribersViewModel extends StagerListViewModel<Contact> {
     private MutableLiveData<String> actionName;
@@ -39,9 +38,7 @@ public class EditSubscribersViewModel extends StagerListViewModel<Contact> {
 
     @Override
     public LiveData<List<Contact>> getItems(OnError onError) {
-        return getData(mValues, () -> getListPath().addValueEventListener(
-                new ValueJoinedListEventListener<>(mValues, getItemType(), onError,
-                        dataProvider.getAllUserInfo())));
+        return getJoinedListData(dataProvider.getAllUserInfo(), onError);
     }
 
     public LiveData<String> getActionName() {

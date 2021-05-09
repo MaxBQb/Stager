@@ -34,6 +34,7 @@
         Stages of \'%1$s\'</string>
     <string name="EditActionFragment_message_UntitledAction">Untitled</string>
     <string name="EditActionFragment_StagesList_NoItemsMessage">No stages yet..</string>
+    <string name="EditActionFragment_Button_text_Observers">Observers</string>
 
     <!-- SideBar -->
     <string name="SideBarActivity_title">SideBar</string>

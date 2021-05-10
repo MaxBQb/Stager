@@ -116,4 +116,12 @@
     <string name="ContactRequestsTabsFragment_Tab_title_incoming">Входящие</string>
     <string name="ContactRequestsTabsFragment_Tab_title_outgoing">Исходящие</string>
     <string name="ContactRequestsTabsFragment_Tab_title_ignored">Скрытые</string>
+
+    <!-- Отслеживаемые мероприятия -->
+    <string name="MonitoredActions_title">Отслеживаемые мероприятия</string>
+        <!-- Все -->
+        <string name="AllMonitoredActions_title">Все</string>
+
+        <!-- Сгрупперованные -->
+        <string name="GroupedMonitoredActions_title">Сгруппированные</string>
 </resources>

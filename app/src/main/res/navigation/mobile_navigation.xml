@@ -37,6 +37,13 @@
     </fragment>
 
     <fragment
+        android:id="@+id/nav_monitored_actions"
+        android:name="main.stager.ui.monitored_actions.MonitoredActionsTabsFragment"
+        android:label="@string/MonitoredActions_title"
+        tools:layout="@layout/fragment_monitored_actions_tabs" >
+    </fragment>
+
+    <fragment
         android:id="@+id/nav_my_contacts"
         android:name="main.stager.ui.my_contacts.ContactsListFragment"
         android:label="@string/SideBarActivity_NavigationItem_MyContacts"

@@ -116,4 +116,12 @@
     <string name="ContactRequestsTabsFragment_Tab_title_incoming">Incoming</string>
     <string name="ContactRequestsTabsFragment_Tab_title_outgoing">Outgoing</string>
     <string name="ContactRequestsTabsFragment_Tab_title_ignored">Ignored</string>
+
+    <!-- Monitored actions -->
+    <string name="MonitoredActions_title">Monitored actions</string>
+        <!-- All -->
+        <string name="AllMonitoredActions_title">All</string>
+
+        <!-- Grouped -->
+        <string name="GroupedMonitoredActions_title">Grouped</string>
 </resources>

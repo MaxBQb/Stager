@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import main.stager.R;
-import main.stager.ui.monitored_actions.all.AllMonitoredActionsListFragment;
 
 public class MonitoredActionsTabsAdapter extends FragmentStatePagerAdapter {
     private Context context;

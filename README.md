@@ -13,7 +13,7 @@ project-three_musketeers created by GitHub Classroom
     * Gradle ( https://gradle.org/install/ ) 
  2. Склонировать репозиторий: `git clone https://github.com/TRPP-IKBO-06/project-three_musketeers.git`
  3. Открыть консоль в директории проекта ( project-three_musketeers ): `gradlew build` ( Для Win можете использовать gradlew.bat ) 
- 4. Перейти в `project-three_musketeers/app/build/outputs/apk/releas` и ввести команду: `keytool -genkey -v -keystore stager-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias stager-key`
+ 4. Перейти в `project-three_musketeers/app/build/outputs/apk/release` и ввести команду: `keytool -genkey -v -keystore stager-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias stager-key`
  5. Ввести команду:
     * Win: {Абсолютный путь к sdk, пример: D:\Data\sdk\build-tools\30.0.3\}`zipalign -v -p 4 app-release-unsigned.apk stager-aligned.apk`
     * Linux: `zipalign -v -p 4 app-release-unsigned.apk stager-aligned.apk`

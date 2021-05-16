@@ -1,5 +1,5 @@
 <p align="center">
- <a href="https://github.com/TRPP-IKBO-06/project-three_musketeers/releases">
+ <a href="../../releases/latest">
  <img src="./app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" height="60">
   </a>
 </p>

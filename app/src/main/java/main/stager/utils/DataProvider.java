@@ -22,7 +22,6 @@ import main.stager.model.UserAction;
 
 public class DataProvider {
 
-
     private static DataProvider instance;
     private FirebaseAuth mAuth;
     private DatabaseReference mRef;
@@ -181,16 +180,20 @@ public class DataProvider {
         return getIgnoredContactRequest(from).removeValue();
     }
 
-    public void acceptContactRequest(@NonNull String from) {
-        getContacts().child(from).setValue(true);
-        getContacts(from).child(getUID()).setValue(true);
-        getIncomingContactRequest(from).removeValue();
-        getIgnoredContactRequest(from).removeValue();
+    public Task<Void> acceptContactRequest(@NonNull String from) {
+        return batchedFromRoot()
+                .setTrue(getContacts().child(from))
+                .setTrue(getContacts(from).child(getUID()))
+                .remove(getIncomingContactRequest(from))
+                .remove(getIgnoredContactRequest(from))
+                .apply();
     }
 
-    public void ignoreContactRequest(@NonNull String from) {
-        getIncomingContactRequest(from).removeValue();
-        getIgnoredContactRequest(from).setValue(true);
+    public Task<Void> ignoreContactRequest(@NonNull String from) {
+        return batchedFromRoot()
+                .remove(getIncomingContactRequest(from))
+                .setTrue(getIgnoredContactRequest(from))
+                .apply();
     }
 
     // Monitor Actions
@@ -248,20 +251,18 @@ public class DataProvider {
         return getSharedActions(sharedTo).child(key);
     }
 
-    public void shareAction(@NonNull String sharedTo, @NonNull String key,
-                            OnCompleteListener<Void> onComplete) {
-        getSharedAction(sharedTo, key).setValue(true).addOnSuccessListener(t -> {
-            getMonitoredAction(sharedTo, getUID(), key).setValue(true)
-                    .addOnCompleteListener(onComplete);
-        });
+    public Task<Void> shareAction(@NonNull String sharedTo, @NonNull String key) {
+        return batchedFromRoot()
+                   .setTrue(getSharedAction(sharedTo, key))
+                   .setTrue(getMonitoredAction(sharedTo, getUID(), key))
+                   .apply();
     }
 
-    public void revokeSharedActionAccess(@NonNull String sharedTo, @NotNull String key,
-                                               OnCompleteListener<Void> onComplete) {
-        getSharedAction(sharedTo, key).removeValue().addOnCompleteListener(t -> {
-            getMonitoredAction(sharedTo, getUID(), key).removeValue()
-                                    .addOnCompleteListener(onComplete);
-        });
+    public Task<Void> revokeSharedActionAccess(@NonNull String sharedTo, @NotNull String key) {
+        return batchedFromRoot()
+                .remove(getSharedAction(sharedTo, key))
+                .remove(getMonitoredAction(sharedTo, getUID(), key))
+                .apply();
     }
 
     // Actions
@@ -293,9 +294,11 @@ public class DataProvider {
         return key;
     }
 
-    public void deleteAction(@NotNull String key) {
-        getStages(key).removeValue();
-        getAction(key).removeValue();
+    public Task<Void> deleteAction(@NotNull String key) {
+        return batchedFromRoot()
+                .remove(getStages(key))
+                .remove(getAction(key))
+                .apply();
     }
 
     // Stages of action
@@ -583,5 +586,10 @@ public class DataProvider {
         ArrayList<String> keys = new ArrayList<>();
         for (T item: list) keys.add(item.getKey());
         return keys;
+    }
+
+    @NotNull
+    private BatchUpdate batchedFromRoot() {
+        return BatchUpdate.init(mRef);
     }
 }

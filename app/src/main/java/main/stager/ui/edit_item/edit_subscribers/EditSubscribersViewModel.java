@@ -25,7 +25,7 @@ public class EditSubscribersViewModel extends StagerListViewModel<Contact> {
     }
 
     public void deleteItem(Contact s) {
-        dataProvider.revokeSharedActionAccess(s.getKey(), actionKey, t->{});
+        dataProvider.revokeSharedActionAccess(s.getKey(), actionKey);
     }
 
     @Override

@@ -49,7 +49,8 @@ public class FindContactsFragment extends
         final float selected = 0.8f;
         final float reset = 1f;
         if (view.getAlpha() == selected) {
-            dataProvider.revokeSharedActionAccess(item.getKey(), mActionKey, t -> {
+            dataProvider.revokeSharedActionAccess(item.getKey(), mActionKey)
+                        .addOnSuccessListener(t -> {
                 Toast.makeText(getContext(),
                         getString(R.string.FindContactsFragment_message_revoke, item.getName()),
                         Toast.LENGTH_SHORT).show();
@@ -57,8 +58,7 @@ public class FindContactsFragment extends
             });
             return;
         }
-        dataProvider.shareAction(item.getKey(), mActionKey, t -> {
-            if (!t.isSuccessful()) return;
+        dataProvider.shareAction(item.getKey(), mActionKey).addOnSuccessListener(t -> {
             Toast.makeText(getContext(),
                     getString(R.string.FindContactsFragment_message_success, item.getName()),
                     Toast.LENGTH_SHORT).show();

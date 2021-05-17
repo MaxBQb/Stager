@@ -16,6 +16,9 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import com.rockerhieu.rvadapter.states.StatesRecyclerViewAdapter;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 import main.stager.model.FBModel;
 import main.stager.R;
@@ -192,6 +195,13 @@ public abstract class StagerList<TVM extends StagerListViewModel<T>,
             @Override
             protected void onDrop(int from, int to) {
                 onItemDropped(from, to);
+            }
+
+            @Override
+            public int getMovementFlags(@NonNull @NotNull RecyclerView recyclerView, @NonNull @NotNull RecyclerView.ViewHolder viewHolder) {
+                if (srvAdapter.getState() != StatesRecyclerViewAdapter.STATE_NORMAL)
+                    return 0;
+                return super.getMovementFlags(recyclerView, viewHolder);
             }
         }).attachToRecyclerView(rv);
     }

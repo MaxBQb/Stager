@@ -106,10 +106,15 @@ public class ContactInfoFragment extends
             view.findViewById(R.id.outgoing_request_controls).setVisibility(View.VISIBLE);
 
         ((TextView)view.findViewById(R.id.header_title)).setText(getHeaderTitle());
-        getActionBar().setTitle(name);
+        updateTitle(name);
     }
 
-
+    private void updateTitle(String text) {
+        getActionBar().setTitle(getString(R.string.ContactInfoFragment_title,
+            Utilits.getDefaultOnNullOrBlank(text,
+                getString(R.string.ContactInfoFragment_message_AnonymousUser
+        ))));
+    }
 
     @Override
     protected void setObservers() {
@@ -137,7 +142,7 @@ public class ContactInfoFragment extends
                 descriptionView.setMovementMethod(new ScrollingMovementMethod());
             }
 
-            getActionBar().setTitle(name);
+            updateTitle(name);
         });
     }
 

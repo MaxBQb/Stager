@@ -2,6 +2,7 @@ package main.stager.utils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -78,6 +79,12 @@ public class DataProvider {
         // Contact requests
         public static final String CONTACT_REQUESTS = "contact_requests";
         public static final String IGNORE_CONTACTS = "ignore_contacts";
+
+        // Shared actions
+        public static final String SHARED = "shared";
+
+        // Monitored
+        public static final String MONITORED = "monitored";
     }
 
     // User data
@@ -120,7 +127,12 @@ public class DataProvider {
 
     public Query findUserByEmail(String email) {
         return getAllUserInfo().orderByChild(PATH.USER_EMAIL)
-                .startAt(email).endAt(email+"\uf8ff").limitToFirst(5);
+                .startAt(email).endAt(email+"\uf8ff");
+    }
+
+    public Query findUserByName(String name) {
+        return getAllUserInfo().orderByChild(PATH.USER_NAME)
+                .startAt(name).endAt(name+"\uf8ff");
     }
 
     // Contact requests
@@ -181,10 +193,85 @@ public class DataProvider {
         getIgnoredContactRequest(from).setValue(true);
     }
 
+    // Monitor Actions
+
+    public DatabaseReference getMonitored() {
+        return mRef.child(PATH.MONITORED);
+    }
+
+    public DatabaseReference getMonitoredActionHolders(@NonNull String uid) {
+        return getMonitored().child(uid);
+    }
+
+    public DatabaseReference getMonitoredActionHolders() {
+        return getMonitoredActionHolders(getUID());
+    }
+
+    public DatabaseReference getMonitoredAction(@NonNull String uid,
+                                                @NonNull String actionOwner,
+                                                @NonNull String actionKey) {
+        return getMonitoredActionHolders(uid).child(actionOwner)
+                                             .child(actionKey);
+    }
+
+    public DatabaseReference getMonitoredAction(@NonNull String actionOwner,
+                                                @NonNull String actionKey) {
+        return getMonitoredAction(getUID(), actionOwner, actionKey);
+    }
+
+    public DatabaseReference getMonitoredActionStages(@NonNull String actionOwner,
+                                                @NonNull String actionKey) {
+        return getAllStages(actionOwner).child(actionKey);
+    }
+
+
+
+    // Share Actions
+
+    public DatabaseReference getShared() {
+        return mRef.child(PATH.SHARED);
+    }
+
+    public DatabaseReference getSubscribers() {
+        return getShared().child(getUID());
+    }
+
+    public Query getSubscribersOfAction(@NonNull String actionKey) {
+        return getSubscribers().orderByChild(actionKey).startAt(false).endAt(true);
+    }
+
+    public DatabaseReference getSharedActions(@NonNull String sharedTo) {
+        return getSubscribers().child(sharedTo);
+    }
+
+    public DatabaseReference getSharedAction(@NonNull String sharedTo, @NonNull String key) {
+        return getSharedActions(sharedTo).child(key);
+    }
+
+    public void shareAction(@NonNull String sharedTo, @NonNull String key,
+                            OnCompleteListener<Void> onComplete) {
+        getSharedAction(sharedTo, key).setValue(true).addOnSuccessListener(t -> {
+            getMonitoredAction(sharedTo, getUID(), key).setValue(true)
+                    .addOnCompleteListener(onComplete);
+        });
+    }
+
+    public void revokeSharedActionAccess(@NonNull String sharedTo, @NotNull String key,
+                                               OnCompleteListener<Void> onComplete) {
+        getSharedAction(sharedTo, key).removeValue().addOnCompleteListener(t -> {
+            getMonitoredAction(sharedTo, getUID(), key).removeValue()
+                                    .addOnCompleteListener(onComplete);
+        });
+    }
+
     // Actions
 
+    public DatabaseReference getAllActions() {
+        return mRef.child(PATH.ACTIONS);
+    }
+
     public DatabaseReference getActions() {
-        return mRef.child(PATH.ACTIONS).child(getUID());
+        return getAllActions().child(getUID());
     }
 
     public DatabaseReference getAction(@NotNull String key) {
@@ -221,8 +308,12 @@ public class DataProvider {
         return key;
     }
 
+    public DatabaseReference getAllStages(@NotNull String uid) {
+        return mRef.child(PATH.STAGES).child(uid);
+    }
+
     public DatabaseReference getAllStages() {
-        return mRef.child(PATH.STAGES).child(getUID());
+        return getAllStages(getUID());
     }
 
     public DatabaseReference getStages(@NotNull String actionKey) {
@@ -389,12 +480,6 @@ public class DataProvider {
     }
 
     // Other
-
-    private String getPath(Query ref) {
-        String path = ref.getRef().toString();
-        String repo = ref.getRef().getRoot().toString();
-        return path.substring(repo.length());
-    }
 
     public static <T> void trySetValue(@NotNull DatabaseReference ref, T value) {
         String key = ref.getKey();

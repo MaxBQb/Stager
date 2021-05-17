@@ -26,14 +26,19 @@
         <string name="Settings_Appearance_Switch_summaryOn_DarkMode">Current theme: Dark</string>
         <string name="Settings_Appearance_Switch_summaryOff_LightMode">Current theme: Light</string>
         <string name="Settings_Appearance_List_label_Locale">Language</string>
-        <string name="Settings_Appearance_List_summary_Locale" formatted="true">
-            Current language: %1$s</string>
+        <string name="Settings_Appearance_List_summary_Locale">Current language: %1$s</string>
 
     <!-- Edit action -->
-    <string name="StagesFragment_title" formatted="true">
-        Stages of \'%1$s\'</string>
+    <string name="EditActionFragment_title">Stages of \"%s\"</string>
     <string name="EditActionFragment_message_UntitledAction">Untitled</string>
     <string name="EditActionFragment_StagesList_NoItemsMessage">No stages yet..</string>
+    <string name="EditActionFragment_Button_text_Observers">Observers</string>
+
+    <!-- Monitored action -->
+    <string name="MonitoredActionFragment_title">Stages of \"%s\"</string>
+    <string name="MonitoredActionFragment_message_UntitledAction">Untitled</string>
+    <string name="MonitoredActionFragment_StagesList_NoItemsMessage">No stages yet..</string>
+    <string name="MonitoredActionFragment_Button_text_Owner">Owner</string>
 
     <!-- SideBar -->
     <string name="SideBarActivity_title">SideBar</string>
@@ -97,15 +102,24 @@
     <string name="EditStageFragment_title">Stage</string>
     <string name="EditStageFragment_message_UntitledStage">Untitled stage</string>
 
-    <!-- Find contacts -->
+    <!-- Find new contacts -->
     <string name="FindNewContactsFragment_title">Find new contact</string>
-    <string name="FindNewContactsFragment_message_revoke">Revoke request to "%s"</string>
-    <string name="FindNewContactsFragment_message_success">Send request to "%s"</string>
+    <string name="FindNewContactsFragment_message_revoke">Revoke request to \"%s\"</string>
+    <string name="FindNewContactsFragment_message_success">Send request to \"%s\"</string>
     <string name="FindNewContactsFragment_message_denied">Request denied</string>
     <string name="FindNewContactsFragment_message_queryHint">Input email</string>
 
+    <!-- Find contacts -->
+    <string name="FindContactsFragment_title">Find contact</string>
+    <string name="FindContactsFragment_message_queryHint">Input name</string>
+    <string name="FindContactsFragment_message_revoke">Revoke access from \"%s\"</string>
+    <string name="FindContactsFragment_message_success">Grant access to \"%s\"</string>
+
+    <!-- Edit action subscribers -->
+    <string name="EditSubscribersFragment_title">Observe \"%s\"</string>
+
     <!-- Contact info -->
-    <string name="ContactInfoFragment_title">About "%s"</string>
+    <string name="ContactInfoFragment_title">About \"%s\"</string>
     <string name="ContactInfoFragment_TextView_label_UserName">Name:</string>
     <string name="ContactInfoFragment_TextView_label_UserEmail">E-mail:</string>
     <string name="ContactInfoFragment_TextView_label_Description">Description:</string>
@@ -120,4 +134,12 @@
     <string name="ContactRequestsTabsFragment_Tab_title_incoming">Incoming</string>
     <string name="ContactRequestsTabsFragment_Tab_title_outgoing">Outgoing</string>
     <string name="ContactRequestsTabsFragment_Tab_title_ignored">Ignored</string>
+
+    <!-- Monitored actions -->
+    <string name="MonitoredActions_title">Monitored actions</string>
+        <!-- All -->
+        <string name="AllMonitoredActions_title">All</string>
+
+        <!-- Grouped -->
+        <string name="GroupedMonitoredActions_title">Grouped</string>
 </resources>

@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
+
 import java.util.List;
 import main.stager.Base.StagerViewModel;
 import main.stager.model.FBModel;
@@ -30,9 +31,25 @@ public abstract class StagerListViewModel<T extends FBModel> extends StagerViewM
         DataProvider.resetPositions((DatabaseReference)getListPath(), DataProvider.getKeys(items));
     }
 
+    protected ValueListEventListener<T> getListEventListener(OnError onError) {
+        return new ValueListEventListener<T>(mValues, getItemType(), onError);
+    }
+
+    protected ValueJoinedListEventListener<T> getJoinedListEventListener(DatabaseReference source,
+                                                                         OnError onError) {
+        return new ValueJoinedListEventListener<>(mValues, getItemType(),
+                                                  onError, source);
+    }
+
     public LiveData<List<T>> getItems(OnError onError) {
-        return getData(mValues, () -> dataProvider.getSorted(getListPath()).addValueEventListener(
-                new ValueListEventListener<T>(mValues, getItemType(), onError)));
+        return getItems(onError, false);
+    }
+
+    public LiveData<List<T>> getItems(OnError onError, boolean sorted) {
+        Query ref = (!sorted) ? getListPath()
+                    : dataProvider.getSorted(getListPath());
+        return getData(mValues, () ->
+                ref.addValueEventListener(getListEventListener(onError)));
     }
 
     @Override

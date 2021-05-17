@@ -1,10 +1,10 @@
-package main.stager.ui.contact_requests;
+package main.stager.ui.monitored_actions;
 
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import main.stager.Base.StagerTabsFragment;
 import main.stager.R;
 
-public class ContactRequestsTabsFragment extends StagerTabsFragment {
+public class MonitoredActionsTabsFragment extends StagerTabsFragment {
     @Override
     protected int getViewBaseLayoutId() {
         return R.layout.fragment_contact_requests_tabs;
@@ -12,7 +12,7 @@ public class ContactRequestsTabsFragment extends StagerTabsFragment {
 
     @Override
     protected FragmentStatePagerAdapter getPagerAdapter() {
-        return new ContactRequestsTabsAdapter(
+        return new MonitoredActionsTabsAdapter(
                 getChildFragmentManager(), getContext());
     }
 }

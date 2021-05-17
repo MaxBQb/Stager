@@ -219,6 +219,13 @@ public class DataProvider {
         return getMonitoredAction(getUID(), actionOwner, actionKey);
     }
 
+    public DatabaseReference getMonitoredActionStages(@NonNull String actionOwner,
+                                                @NonNull String actionKey) {
+        return getAllStages(actionOwner).child(actionKey);
+    }
+
+
+
     // Share Actions
 
     public DatabaseReference getShared() {
@@ -301,8 +308,12 @@ public class DataProvider {
         return key;
     }
 
+    public DatabaseReference getAllStages(@NotNull String uid) {
+        return mRef.child(PATH.STAGES).child(uid);
+    }
+
     public DatabaseReference getAllStages() {
-        return mRef.child(PATH.STAGES).child(getUID());
+        return getAllStages(getUID());
     }
 
     public DatabaseReference getStages(@NotNull String actionKey) {

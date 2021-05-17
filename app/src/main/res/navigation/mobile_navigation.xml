@@ -41,6 +41,9 @@
         android:name="main.stager.ui.monitored_actions.MonitoredActionsTabsFragment"
         android:label="@string/MonitoredActions_title"
         tools:layout="@layout/fragment_monitored_actions_tabs" >
+        <action
+            android:id="@+id/transition_monitored_actions_to_monitored_action"
+            app:destination="@id/monitored_action" />
     </fragment>
 
     <fragment
@@ -62,6 +65,16 @@
         android:label="@string/ContactInfoFragment_title"
         tools:layout="@layout/fragment_contact_info"
         />
+
+    <fragment
+        android:id="@+id/monitored_action"
+        android:name="main.stager.ui.monitored_action.MonitoredActionFragment"
+        android:label="@string/MonitoredActionFragment_title"
+        tools:layout="@layout/fragment_monitored_action">
+        <action
+            android:id="@+id/transition_monitored_action_to_contact_info"
+            app:destination="@id/contact_info" />
+    </fragment>
 
     <fragment
         android:id="@+id/find_new_contacts"

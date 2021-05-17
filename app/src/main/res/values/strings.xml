@@ -34,6 +34,12 @@
     <string name="EditActionFragment_StagesList_NoItemsMessage">No stages yet..</string>
     <string name="EditActionFragment_Button_text_Observers">Observers</string>
 
+    <!-- Monitored action -->
+    <string name="MonitoredActionFragment_title">Stages of \"%s\"</string>
+    <string name="MonitoredActionFragment_message_UntitledAction">Untitled</string>
+    <string name="MonitoredActionFragment_StagesList_NoItemsMessage">No stages yet..</string>
+    <string name="MonitoredActionFragment_Button_text_Owner">Owner</string>
+
     <!-- SideBar -->
     <string name="SideBarActivity_title">SideBar</string>
     <string name="SideBarActivity_TextView_label">User name</string>

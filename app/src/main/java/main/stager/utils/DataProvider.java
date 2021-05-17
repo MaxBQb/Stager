@@ -18,6 +18,7 @@ import main.stager.model.FBModel;
 import main.stager.model.Stage;
 import main.stager.model.Status;
 import main.stager.model.UserAction;
+import main.stager.utils.ChangeListeners.firebase.OnValueGet;
 
 public class DataProvider {
 
@@ -302,11 +303,21 @@ public class DataProvider {
         return key;
     }
 
-    public Task<Void> deleteAction(@NotNull String key) {
-        return batchedFromRoot()
+    public void deleteAction(@NotNull String key) {
+        getSubscribersOfAction(key).addListenerForSingleValueEvent(new OnValueGet((snapshot) -> {
+            BatchUpdate batched = batchedFromRoot()
                 .remove(getStages(key))
-                .remove(getAction(key))
-                .apply();
+                .remove(getAction(key));
+
+            if (snapshot.exists() && snapshot.hasChildren())
+                for (DataSnapshot post: snapshot.getChildren()) {
+                    if (post.getKey() == null)
+                        continue;
+                    batched.remove(getSharedAction(post.getKey(), key));
+                    batched.remove(getMonitoredAction(post.getKey(), getUID(), key));
+                }
+            batched.apply();
+        }));
     }
 
     //endregion Actions

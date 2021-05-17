@@ -4,13 +4,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 import main.stager.R;
-import main.stager.list.StagerList;
+import main.stager.list.feature.StagerSearchResultsListFragment;
 import main.stager.model.Contact;
 import main.stager.ui.my_contacts.ContactRecyclerViewAdapter;
-import main.stager.utils.Utilits;
 
 public class FindContactsFragment extends
-        StagerList<FindContactsViewModel, ContactRecyclerViewAdapter, Contact> {
+        StagerSearchResultsListFragment<FindContactsViewModel, ContactRecyclerViewAdapter, Contact> {
     static public final String ARG_ACTION_KEY = "Stager.find_contacts.param_action_key";
     private String mActionKey;
 
@@ -23,9 +22,6 @@ public class FindContactsFragment extends
             mActionKey = "";
         }
     }
-
-    @Override
-    public boolean ALLOW_SEARCH() { return true; }
 
     @Override
     protected Class<FindContactsViewModel> getViewModelType() {
@@ -68,14 +64,6 @@ public class FindContactsFragment extends
                     Toast.LENGTH_SHORT).show();
             view.setAlpha(selected);
         });
-    }
-
-    @Override
-    public void onSearchQueryChange(String query) {
-        super.onSearchQueryChange(query);
-        if (Utilits.isNullOrBlank(query)) return;
-        onDataLoadingStarted();
-        viewModel.setQuery(query.trim());
     }
 
     @Override

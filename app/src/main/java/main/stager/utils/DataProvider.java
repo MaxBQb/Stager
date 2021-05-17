@@ -217,11 +217,15 @@ public class DataProvider {
         return getMonitoredActionHolders(getUID());
     }
 
+    public DatabaseReference getMonitoredActions(@NonNull String uid,
+                                                @NonNull String actionOwner) {
+        return getMonitoredActionHolders(uid).child(actionOwner);
+    }
+
     public DatabaseReference getMonitoredAction(@NonNull String uid,
                                                 @NonNull String actionOwner,
                                                 @NonNull String actionKey) {
-        return getMonitoredActionHolders(uid).child(actionOwner)
-                                             .child(actionKey);
+        return getMonitoredAction(uid, actionOwner).child(actionKey);
     }
 
     public DatabaseReference getMonitoredAction(@NonNull String actionOwner,
@@ -503,6 +507,15 @@ public class DataProvider {
 
     public DatabaseReference getContacts(@NonNull String uid) {
         return mRef.child(PATH.CONTACTS).child(uid);
+    }
+
+    public Task<Void> deleteContact(@NonNull String uid) {
+        return batchedFromRoot()
+                .remove(getContacts().child(uid))
+                .remove(getContacts(uid).child(getUID()))
+                .remove(getSharedActions(uid))
+                .remove(getMonitoredActions(uid, getUID()))
+                .apply();
     }
 
     //endregion Contacts

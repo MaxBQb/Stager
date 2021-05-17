@@ -44,6 +44,12 @@ public class AllMonitoredActionsListViewModel extends StagerListViewModel<UserAc
                 }
 
                 @Override
+                protected UserAction modify(UserAction item, DataSnapshot snapshot) {
+                    item.setOwner(currentActionHolder);
+                    return super.modify(item, snapshot);
+                }
+
+                @Override
                 protected DatabaseReference handleListItemSource(@NotNull DataSnapshot snapshot) {
                     return source.child(currentActionHolder);
                 }

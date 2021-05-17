@@ -8,7 +8,6 @@ import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,7 +16,6 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import com.rockerhieu.rvadapter.states.StatesRecyclerViewAdapter;
-
 import java.util.List;
 import main.stager.model.FBModel;
 import main.stager.R;
@@ -72,7 +70,7 @@ public abstract class StagerList<TVM extends StagerListViewModel<T>,
     }
 
     protected LiveData<List<T>> getList(OnError onError) {
-        return viewModel.getItems(onError);
+        return viewModel.getItems(onError, ALLOW_DRAG_AND_DROP());
     }
 
     protected RecyclerView getRecyclerView() {

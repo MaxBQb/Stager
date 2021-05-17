@@ -32,7 +32,8 @@ public class FindNewContactsViewModel extends StagerListViewModel<Contact> {
         return Contact.class;
     }
 
-    public LiveData<List<Contact>> getItems(OnError onError) {
+    @Override
+    public LiveData<List<Contact>> getItems(OnError onError, boolean unused) {
         if (mUserInfoListEventListener == null) {
             mUserInfoListEventListener = new ValueListEventListener<>(
                     mValues, getItemType(), onError);
@@ -56,7 +57,7 @@ public class FindNewContactsViewModel extends StagerListViewModel<Contact> {
 
     public void setQuery(String query) {
         this.query = query;
-        getItems(null);
+        getItems(null, false);
     }
 
     private void initIgnoreList() {

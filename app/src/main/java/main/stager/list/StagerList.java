@@ -172,6 +172,13 @@ public abstract class StagerList<TVM extends StagerListViewModel<T>,
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 onItemSwiped(viewHolder, viewHolder.getAdapterPosition(), direction);
             }
+
+            @Override
+            public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                if (srvAdapter.getState() != StatesRecyclerViewAdapter.STATE_NORMAL)
+                    return 0;
+                return super.getSwipeDirs(recyclerView, viewHolder);
+            }
         }).attachToRecyclerView(rv);
     }
 

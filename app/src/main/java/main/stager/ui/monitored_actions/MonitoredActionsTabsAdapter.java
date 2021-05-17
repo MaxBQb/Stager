@@ -1,11 +1,14 @@
 package main.stager.ui.monitored_actions;
 
 import android.content.Context;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import main.stager.R;
+import main.stager.ui.monitored_actions.all.AllMonitoredActionsListFragment;
 
 public class MonitoredActionsTabsAdapter extends FragmentStatePagerAdapter {
     private Context context;
@@ -16,9 +19,10 @@ public class MonitoredActionsTabsAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
+    @NonNull
     public Fragment getItem(int i) {
         switch (i) {
-            case 0: // return new AllMonitoredActionsListFragment();
+            case 0:  return new AllMonitoredActionsListFragment();
             case 1: // Not implemented yet
             default: throw new IllegalStateException("Item not found");
         }
@@ -26,7 +30,7 @@ public class MonitoredActionsTabsAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 0;
+        return 1;
     }
 
     private String getString(@StringRes int id) {

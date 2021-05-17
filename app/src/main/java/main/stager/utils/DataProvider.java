@@ -259,8 +259,12 @@ public class DataProvider {
 
     // Actions
 
+    public DatabaseReference getAllActions() {
+        return mRef.child(PATH.ACTIONS);
+    }
+
     public DatabaseReference getActions() {
-        return mRef.child(PATH.ACTIONS).child(getUID());
+        return getAllActions().child(getUID());
     }
 
     public DatabaseReference getAction(@NotNull String key) {

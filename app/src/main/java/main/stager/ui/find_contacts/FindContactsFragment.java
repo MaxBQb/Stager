@@ -3,7 +3,6 @@ package main.stager.ui.find_contacts;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
-
 import main.stager.R;
 import main.stager.list.StagerList;
 import main.stager.model.Contact;
@@ -54,7 +53,7 @@ public class FindContactsFragment extends
         final float selected = 0.8f;
         final float reset = 1f;
         if (view.getAlpha() == selected) {
-            dataProvider.revokeSharedActionAccess(item.getKey(), mActionKey).addOnCompleteListener(e -> {
+            dataProvider.revokeSharedActionAccess(item.getKey(), mActionKey, t -> {
                 Toast.makeText(getContext(),
                         getString(R.string.FindContactsFragment_message_revoke, item.getName()),
                         Toast.LENGTH_SHORT).show();
@@ -62,7 +61,8 @@ public class FindContactsFragment extends
             });
             return;
         }
-        dataProvider.shareAction(item.getKey(), mActionKey).addOnSuccessListener(e -> {
+        dataProvider.shareAction(item.getKey(), mActionKey, t -> {
+            if (!t.isSuccessful()) return;
             Toast.makeText(getContext(),
                     getString(R.string.FindContactsFragment_message_success, item.getName()),
                     Toast.LENGTH_SHORT).show();

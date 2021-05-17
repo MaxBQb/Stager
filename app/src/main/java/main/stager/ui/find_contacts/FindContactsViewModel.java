@@ -1,4 +1,4 @@
-package main.stager.ui.find_new_contacts;
+package main.stager.ui.find_contacts;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -9,20 +9,15 @@ import main.stager.list.feature.StagerSearchResultsListViewModel;
 import main.stager.model.Contact;
 import main.stager.utils.ChangeListeners.firebase.AValueEventListener;
 
-public class FindNewContactsViewModel extends StagerSearchResultsListViewModel<Contact> {
+public class FindContactsViewModel extends StagerSearchResultsListViewModel<Contact> {
 
-    @Override
-    protected String getInitialQuery() {
-        return " ";
-    }
-
-    public FindNewContactsViewModel(@NonNull Application application) {
+    public FindContactsViewModel(@NonNull Application application) {
         super(application);
     }
 
     @Override
     protected Query getListPath() {
-        return dataProvider.findUserByEmail(query);
+        return dataProvider.findUserByName(query);
     }
 
     @Override
@@ -33,22 +28,18 @@ public class FindNewContactsViewModel extends StagerSearchResultsListViewModel<C
     @Override
     protected void setupListEventListener() {
         super.setupListEventListener();
-        initIgnoreList();
+        mListEventListener.setInvertIgnoredKeys(true);
         dataProvider.getContacts().addValueEventListener(new AValueEventListener<String>() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                initIgnoreList();
+                Set<String> ignore = mListEventListener
+                        .getIgnoredKeys();
+                ignore.clear();
                 if (!snapshot.exists())
                     return;
-                Set<String> ignore = mListEventListener.getIgnoredKeys();
                 for (DataSnapshot postSnapshot : snapshot.getChildren())
                     ignore.add(postSnapshot.getKey());
             }
         });
-    }
-
-    private void initIgnoreList() {
-        mListEventListener.getIgnoredKeys().clear();
-        mListEventListener.getIgnoredKeys().add(dataProvider.getUID());
     }
 }

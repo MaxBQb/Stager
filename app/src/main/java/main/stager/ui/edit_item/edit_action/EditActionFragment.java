@@ -8,6 +8,7 @@ import main.stager.list.StagerExtendableList;
 import main.stager.model.Stage;
 import main.stager.ui.add_item.add_stage.AddStageFragment;
 import main.stager.ui.edit_item.edit_stage.EditStageFragment;
+import main.stager.ui.edit_item.edit_subscribers.EditSubscribersFragment;
 import main.stager.utils.Utilits;
 
 public class EditActionFragment
@@ -53,13 +54,21 @@ public class EditActionFragment
     }
 
     @Override
+    protected void setEventListeners() {
+        super.setEventListeners();
+        view.findViewById(R.id.btn_open_action_subscribers_list)
+                .setOnClickListener(e -> {
+                    Bundle args = new Bundle();
+                    args.putString(EditSubscribersFragment.ARG_ACTION_KEY, mActionKey);
+                    args.putString(EditSubscribersFragment.ARG_ACTION_NAME, mActionName);
+                    navigator.navigate(R.id.transition_action_stages_to_action_subscribers, args);
+        });
+    }
+
+    @Override
     protected void setObservers() {
         super.setObservers();
-        bindData(viewModel.getActionName(), (String text) ->
-                getActionBar().setTitle(getString(R.string.StagesFragment_title,
-                    Utilits.getDefaultOnNullOrBlank(text,
-                            getString(R.string.EditActionFragment_message_UntitledAction)
-                ))));
+        bindData(viewModel.getActionName(), this::updateTitle);
         bindDataTwoWay(viewModel.getActionName(), editActionName);
     }
 
@@ -80,10 +89,17 @@ public class EditActionFragment
         navigator.navigate(R.id.transition_action_stages_to_add_stage, args);
     }
 
+    private void updateTitle(String text) {
+        getActionBar().setTitle(getString(R.string.EditActionFragment_title,
+            Utilits.getDefaultOnNullOrBlank(text,
+                getString(R.string.EditActionFragment_message_UntitledAction
+        ))));
+    }
+
     @Override
     protected void prepareFragmentComponents() {
         super.prepareFragmentComponents();
-        getActionBar().setTitle(getString(R.string.StagesFragment_title, mActionName));
+        updateTitle(mActionName);
         editActionName = view.findViewById(R.id.edit_action_input_name);
         editActionName.setText(mActionName);
     }

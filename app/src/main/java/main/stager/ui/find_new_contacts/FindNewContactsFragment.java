@@ -3,16 +3,12 @@ package main.stager.ui.find_new_contacts;
 import android.view.View;
 import android.widget.Toast;
 import main.stager.R;
-import main.stager.list.StagerList;
+import main.stager.list.feature.StagerSearchResultsListFragment;
 import main.stager.model.Contact;
 import main.stager.ui.my_contacts.ContactRecyclerViewAdapter;
-import main.stager.utils.Utilits;
 
 public class FindNewContactsFragment extends
-        StagerList<FindNewContactsViewModel, ContactRecyclerViewAdapter, Contact> {
-
-    @Override
-    public boolean ALLOW_SEARCH() { return true; }
+        StagerSearchResultsListFragment<FindNewContactsViewModel, ContactRecyclerViewAdapter, Contact> {
 
     @Override
     protected Class<FindNewContactsViewModel> getViewModelType() {
@@ -60,13 +56,5 @@ public class FindNewContactsFragment extends
             view.setEnabled(false);
             view.setAlpha(disabled);
         });
-    }
-
-    @Override
-    public void onSearchQueryChange(String query) {
-        super.onSearchQueryChange(query);
-        if (Utilits.isNullOrBlank(query)) return;
-        onDataLoadingStarted();
-        viewModel.setQuery(query.trim());
     }
 }

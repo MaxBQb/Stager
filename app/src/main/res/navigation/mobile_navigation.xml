@@ -37,6 +37,16 @@
     </fragment>
 
     <fragment
+        android:id="@+id/nav_monitored_actions"
+        android:name="main.stager.ui.monitored_actions.MonitoredActionsTabsFragment"
+        android:label="@string/MonitoredActions_title"
+        tools:layout="@layout/fragment_monitored_actions_tabs" >
+        <action
+            android:id="@+id/transition_monitored_actions_to_monitored_action"
+            app:destination="@id/monitored_action" />
+    </fragment>
+
+    <fragment
         android:id="@+id/nav_my_contacts"
         android:name="main.stager.ui.my_contacts.ContactsListFragment"
         android:label="@string/SideBarActivity_NavigationItem_MyContacts"
@@ -57,9 +67,26 @@
         />
 
     <fragment
+        android:id="@+id/monitored_action"
+        android:name="main.stager.ui.monitored_action.MonitoredActionFragment"
+        android:label="@string/MonitoredActionFragment_title"
+        tools:layout="@layout/fragment_monitored_action">
+        <action
+            android:id="@+id/transition_monitored_action_to_contact_info"
+            app:destination="@id/contact_info" />
+    </fragment>
+
+    <fragment
         android:id="@+id/find_new_contacts"
         android:name="main.stager.ui.find_new_contacts.FindNewContactsFragment"
         android:label="@string/FindNewContactsFragment_title"
+        tools:layout="@layout/fragment_find_contacts"
+        />
+
+    <fragment
+        android:id="@+id/find_contacts"
+        android:name="main.stager.ui.find_contacts.FindContactsFragment"
+        android:label="@string/FindContactsFragment_title"
         tools:layout="@layout/fragment_find_contacts"
         />
 
@@ -86,6 +113,21 @@
         <action
             android:id="@+id/transition_action_stages_to_edit_stage"
             app:destination="@id/edit_action_stage" />
+        <action
+            android:id="@+id/transition_action_stages_to_action_subscribers"
+            app:destination="@id/action_subscribers" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/action_subscribers"
+        android:name="main.stager.ui.edit_item.edit_subscribers.EditSubscribersFragment"
+        tools:layout="@layout/fragment_edit_subscribers">
+        <action
+            android:id="@+id/transition_action_subscribers_to_find_contacts"
+            app:destination="@id/find_contacts" />
+        <action
+            android:id="@+id/transition_action_subscribers_to_contact_info"
+            app:destination="@id/contact_info" />
     </fragment>
 
     <fragment

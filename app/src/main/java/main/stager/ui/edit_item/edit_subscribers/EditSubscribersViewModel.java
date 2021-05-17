@@ -7,12 +7,13 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
+
 import lombok.Setter;
 import main.stager.list.StagerListViewModel;
 import main.stager.model.Contact;
 import main.stager.utils.ChangeListeners.firebase.OnError;
 import main.stager.utils.ChangeListeners.firebase.ValueJoinedListEventListener;
+import main.stager.utils.ChangeListeners.firebase.ValueListEventListener;
 
 public class EditSubscribersViewModel extends StagerListViewModel<Contact> {
     private MutableLiveData<String> actionName;
@@ -38,7 +39,7 @@ public class EditSubscribersViewModel extends StagerListViewModel<Contact> {
     }
 
     @Override
-    protected ValueEventListener getListEventListener(OnError onError) {
+    protected ValueListEventListener<Contact> getListEventListener(OnError onError) {
         return new ValueJoinedListEventListener<Contact>(mValues, getItemType(),
                 onError, dataProvider.getAllUserInfo()){
             @Override

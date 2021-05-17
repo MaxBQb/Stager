@@ -5,12 +5,13 @@ import androidx.annotation.NonNull;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
+
 import org.jetbrains.annotations.NotNull;
 import main.stager.list.StagerListViewModel;
 import main.stager.model.UserAction;
 import main.stager.utils.ChangeListeners.firebase.OnError;
 import main.stager.utils.ChangeListeners.firebase.ValueJoinedListEventListener;
+import main.stager.utils.ChangeListeners.firebase.ValueListEventListener;
 
 public class AllMonitoredActionsListViewModel extends StagerListViewModel<UserAction> {
 
@@ -29,7 +30,7 @@ public class AllMonitoredActionsListViewModel extends StagerListViewModel<UserAc
     }
 
     @Override
-    protected ValueEventListener getListEventListener(OnError onError) {
+    protected ValueListEventListener<UserAction> getListEventListener(OnError onError) {
         return new ValueJoinedListEventListener<UserAction>(mValues,
                 getItemType(), onError, dataProvider.getAllActions()){
                 private String currentActionHolder;

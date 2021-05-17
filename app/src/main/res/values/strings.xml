@@ -46,6 +46,8 @@
 
     <!-- About me -->
     <string name="AboutMeFragment_TextView_title_MyAccount">My account</string>
+    <string name="AboutMeFragment_EditText_hint_contextName">Name</string>
+    <string name="AboutMeFragment_EditText_hint_contextDescription">Description</string>
     <string name="AboutMeFragment_TextView_label_ChangePassword">Сhange your password?</string>
     <string name="AboutMeFragment_Button_ChangePassword">Change</string>
     <string name="AboutMeFragment_Button_ExitInAccount">Log out of account</string>

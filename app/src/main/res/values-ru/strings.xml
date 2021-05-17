@@ -47,6 +47,8 @@
 
     <!-- Обо мне -->
     <string name="AboutMeFragment_TextView_title_MyAccount">Мой аккаунт</string>
+    <string name="AboutMeFragment_EditText_hint_contextName">Имя</string>
+    <string name="AboutMeFragment_EditText_hint_contextDescription">Описание</string>
     <string name="AboutMeFragment_Button_ExitInAccount">Выход из аккаунта</string>
     <string name="AboutMeFragment_TextView_label_ChangePassword">Хотите сменить пароль?</string>
     <string name="AboutMeFragment_Button_ChangePassword">Сменить</string>

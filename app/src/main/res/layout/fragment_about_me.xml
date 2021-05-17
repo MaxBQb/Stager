@@ -23,12 +23,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/title_aboutMe"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="20dp"
+            android:layout_margin="10dp"
             android:inputType="textPersonName"
+            android:hint="@string/AboutMeFragment_EditText_hint_contextName"
             android:nextFocusForward="@+id/secondName"/>
 
         <EditText
@@ -36,12 +33,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/personName"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="20dp"
-            android:inputType="textPersonName" />
+            android:layout_margin="10dp"
+            android:hint="@string/AboutMeFragment_EditText_hint_contextDescription"
+            android:inputType="textMultiLine"
+            android:lines="3"
+            android:minLines="1"
+            android:maxLines="10"
+            android:gravity="top|start"
+            android:maxLength="255"
+            android:scrollbars="vertical" />
 
         <LinearLayout
             android:id="@+id/LinearLayout_change_pass"

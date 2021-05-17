@@ -2,7 +2,6 @@ package main.stager.utils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -22,6 +21,7 @@ import main.stager.model.UserAction;
 
 public class DataProvider {
 
+    //region INIT
     private static DataProvider instance;
     private FirebaseAuth mAuth;
     private DatabaseReference mRef;
@@ -86,7 +86,9 @@ public class DataProvider {
         public static final String MONITORED = "monitored";
     }
 
-    // User data
+    //endregion INIT
+
+    //region User data
 
     /** Path safe, not null uid
      * @return uid or empty string
@@ -134,7 +136,9 @@ public class DataProvider {
                 .startAt(name).endAt(name+"\uf8ff");
     }
 
-    // Contact requests
+    //endregion User data
+
+    //region Contact requests
 
     public DatabaseReference getContactRequests(@NonNull String from) {
         return getAllContactRequests().child(from);
@@ -196,7 +200,9 @@ public class DataProvider {
                 .apply();
     }
 
-    // Monitor Actions
+    //endregion Contact requests
+
+    //region Monitor Actions
 
     public DatabaseReference getMonitored() {
         return mRef.child(PATH.MONITORED);
@@ -227,9 +233,9 @@ public class DataProvider {
         return getAllStages(actionOwner).child(actionKey);
     }
 
+    //endregion Monitor Actions
 
-
-    // Share Actions
+    //region Share Actions
 
     public DatabaseReference getShared() {
         return mRef.child(PATH.SHARED);
@@ -265,7 +271,9 @@ public class DataProvider {
                 .apply();
     }
 
-    // Actions
+    //endregion Share Actions
+
+    //region Actions
 
     public DatabaseReference getAllActions() {
         return mRef.child(PATH.ACTIONS);
@@ -301,7 +309,9 @@ public class DataProvider {
                 .apply();
     }
 
-    // Stages of action
+    //endregion Actions
+
+    //region Stages of action
 
     public String addStage(@NotNull String actionKey, Stage stage) {
         String key = getStages(actionKey).push().getKey();
@@ -468,7 +478,9 @@ public class DataProvider {
         resetActionStatus(actionKey);
     }
 
-    // Contacts
+    //endregion Stages of action
+
+    //region Contacts
 
     public DatabaseReference getContacts() {
         return getContacts(getUID());
@@ -482,7 +494,9 @@ public class DataProvider {
         return mRef.child(PATH.CONTACTS).child(uid);
     }
 
-    // Other
+    //endregion Contacts
+
+    //region Other
 
     public static <T> void trySetValue(@NotNull DatabaseReference ref, T value) {
         String key = ref.getKey();
@@ -592,4 +606,6 @@ public class DataProvider {
     private BatchUpdate batchedFromRoot() {
         return BatchUpdate.init(mRef);
     }
+
+    //endregion Other
 }

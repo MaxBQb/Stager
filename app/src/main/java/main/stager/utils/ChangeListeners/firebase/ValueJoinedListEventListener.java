@@ -18,6 +18,7 @@ import main.stager.utils.DataProvider;
 
 public class ValueJoinedListEventListener<T> extends ValueListEventListener<T> {
     protected DatabaseReference source;
+    protected Map<String, DatabaseReference> sources = new HashMap<>();
     protected Map<String, DatabaseReference> keySources = new HashMap<>();
     protected List<T> tmpList = new ArrayList<>();
     protected Set<String> awaitedKeys = new HashSet<>();
@@ -28,40 +29,71 @@ public class ValueJoinedListEventListener<T> extends ValueListEventListener<T> {
                                         Class<T> className, OnError onError,
                                         Query source) {
         super(liveList, className, onError);
-        this.source = source.getRef();
+        if (source != null)
+            this.source = source.getRef();
     }
 
     public ValueJoinedListEventListener(MutableLiveData<List<T>> liveList,
                                         Class<T> className, Query source) {
-        super(liveList, className);
-        this.source = source.getRef();
+        this(liveList, className, null, source);
     }
 
     @Override
     public void onDataChange(@NonNull DataSnapshot snapshot) {
+        clearPreviousDataLists();
+
         if (!snapshot.exists()) {
             liveList.postValue(null);
             return;
         }
 
+        handleListItems(snapshot);
+        removePreviousSourceListeners();
+        saveNewSourceListeners();
+    }
+
+    protected void clearPreviousDataLists() {
         tmpList.clear();
         awaitedKeys.clear();
+        sources.clear();
         keySources.clear();
+    }
 
+    protected void handleListItems(@NonNull DataSnapshot snapshot) {
         for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-            String key = postSnapshot.getKey();
-            if (ignoredKeys.contains(key))
-                continue;
-            awaitedKeys.add(key);
-            keySources.put(key, postSnapshot.getRef());
+            String key = handleListItemKey(postSnapshot);
+            if (!ignoredKeys.contains(key) ^ invertIgnoredKeys)
+                handleListItem(postSnapshot, key);
         }
+    }
 
-        if (listenKeys != null)
-            for (String key: listenKeys)
-                removeSourceListener(key);
+    protected void handleListItem(@NonNull DataSnapshot snapshot, @NonNull String key) {
+        awaitedKeys.add(key);
+        keySources.put(key, handleListItemKeySource(snapshot));
+        sources.put(key, handleListItemSource(snapshot));
+    }
 
+    protected DatabaseReference handleListItemKeySource(@NonNull DataSnapshot snapshot) {
+        return snapshot.getRef();
+    }
+
+    protected DatabaseReference handleListItemSource(@NonNull DataSnapshot snapshot) {
+        return source;
+    }
+
+    protected String handleListItemKey(@NonNull DataSnapshot snapshot) {
+        return snapshot.getKey();
+    }
+
+
+    protected void removePreviousSourceListeners() {
+        if (listenKeys == null) return;
+        for (String key: listenKeys)
+            removeSourceListener(key);
+    }
+
+    protected void saveNewSourceListeners() {
         listenKeys = new HashSet<>(awaitedKeys);
-
         for (String key: awaitedKeys)
             addSourceListener(key);
     }
@@ -109,12 +141,16 @@ public class ValueJoinedListEventListener<T> extends ValueListEventListener<T> {
     }
 
 
+    protected DatabaseReference getSourceOf(@NonNull String key) {
+        return sources.get(key);
+    }
+
     protected void removeSourceListener(@NonNull String key) {
-        source.child(key).removeEventListener(sourceListener);
+        getSourceOf(key).child(key).removeEventListener(sourceListener);
     }
 
     protected void addSourceListener(@NonNull String key) {
-        source.child(key).addValueEventListener(sourceListener);
+        getSourceOf(key).child(key).addValueEventListener(sourceListener);
     }
 
     protected class SourceValueListener implements ValueEventListener {
@@ -127,5 +163,5 @@ public class ValueJoinedListEventListener<T> extends ValueListEventListener<T> {
         public void onCancelled(@NonNull DatabaseError error) {
             ValueJoinedListEventListener.this.onCancelled(error);
         }
-    };
+    }
 }

@@ -59,6 +59,7 @@ public class UserAvatar extends View {
         mName = mName.trim().toUpperCase();
         if (mName.length() > 2)
             mName = mName.substring(0,2);
+        invalidate();
     }
 
     public void setUserName(String userName) {

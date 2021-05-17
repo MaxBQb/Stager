@@ -36,6 +36,6 @@ public class AboutMeFragment extends StagerVMFragment<AboutMeViewModel> {
     protected void setObservers() {
         super.setObservers();
         bindDataTwoWay(viewModel.getName(), view.findViewById(R.id.personName), false);
-        bindDataTwoWay(viewModel.getDescription(), view.findViewById(R.id.secondName), false);
+        bindDataTwoWay(viewModel.getDescription(), view.findViewById(R.id.personDescription), false);
     }
 }

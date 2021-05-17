@@ -48,15 +48,15 @@ public class ValueJoinedListEventListener<T> extends ValueListEventListener<T> {
         }
 
         handleListItems(snapshot);
-        removePreviousSourceListeners();
         saveNewSourceListeners();
     }
 
     protected void clearPreviousDataLists() {
         tmpList.clear();
         awaitedKeys.clear();
-        sources.clear();
         keySources.clear();
+        removePreviousSourceListeners();
+        sources.clear();
     }
 
     protected void handleListItems(@NonNull DataSnapshot snapshot) {

@@ -146,11 +146,15 @@ public class ValueJoinedListEventListener<T> extends ValueListEventListener<T> {
     }
 
     protected void removeSourceListener(@NonNull String key) {
-        getSourceOf(key).child(key).removeEventListener(sourceListener);
+        DatabaseReference ref = getSourceOf(key);
+        if (ref == null) return;
+        ref.child(key).removeEventListener(sourceListener);
     }
 
     protected void addSourceListener(@NonNull String key) {
-        getSourceOf(key).child(key).addValueEventListener(sourceListener);
+        DatabaseReference ref = getSourceOf(key);
+        if (ref == null) return;
+        ref.child(key).addValueEventListener(sourceListener);
     }
 
     protected class SourceValueListener implements ValueEventListener {

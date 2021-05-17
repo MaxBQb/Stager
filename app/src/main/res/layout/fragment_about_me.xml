@@ -26,10 +26,10 @@
             android:layout_margin="10dp"
             android:inputType="textPersonName"
             android:hint="@string/AboutMeFragment_EditText_hint_contextName"
-            android:nextFocusForward="@+id/secondName"/>
+            android:nextFocusForward="@+id/personDescription"/>
 
         <EditText
-            android:id="@+id/secondName"
+            android:id="@+id/personDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/personName"
@@ -51,7 +51,7 @@
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="40dp"
             android:orientation="horizontal"
-            android:layout_below="@+id/secondName">
+            android:layout_below="@+id/personDescription">
 
             <TextView
                 android:id="@+id/textView2"

@@ -106,6 +106,9 @@
 
     <!-- Contact info -->
     <string name="ContactInfoFragment_title">About "%s"</string>
+    <string name="ContactInfoFragment_TextView_label_UserName">Name:</string>
+    <string name="ContactInfoFragment_TextView_label_UserEmail">E-mail:</string>
+    <string name="ContactInfoFragment_TextView_label_Description">Description:</string>
     <string name="ContactInfoFragment_message_AnonymousUser">Anonymous User</string>
     <string name="ContactInfoFragment_header_type_incoming">Incoming request</string>
     <string name="ContactInfoFragment_header_type_outgoing">Outgoing request</string>

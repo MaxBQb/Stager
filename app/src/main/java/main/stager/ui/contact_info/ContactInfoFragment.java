@@ -1,6 +1,7 @@
 package main.stager.ui.contact_info;
 
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.TextView;
 
@@ -9,6 +10,7 @@ import androidx.annotation.StringRes;
 import com.google.firebase.database.Query;
 import main.stager.Base.StagerVMFragment;
 import main.stager.R;
+import main.stager.UserAvatar;
 import main.stager.utils.Utilits;
 
 public class ContactInfoFragment extends
@@ -21,7 +23,9 @@ public class ContactInfoFragment extends
     private String name;
     private ContactType type;
     private TextView nameView;
+    private TextView emailView;
     private TextView descriptionView;
+    public UserAvatar mAvatar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,8 +88,12 @@ public class ContactInfoFragment extends
     @Override
     protected void prepareFragmentComponents() {
         super.prepareFragmentComponents();
+        mAvatar = view.findViewById(R.id.user_avatar);
+        mAvatar.setUserName(name);
         nameView = view.findViewById(R.id.personName);
+        emailView = view.findViewById(R.id.contact_email);
         descriptionView = view.findViewById(R.id.description);
+
         View incomingRequestControls = view.findViewById(R.id.incoming_request_controls);
 
         if (type == ContactType.INCOMING || type == ContactType.IGNORED)
@@ -110,7 +118,25 @@ public class ContactInfoFragment extends
             name = Utilits.getDefaultOnNullOrBlank(contact.getName(),
                     getString(R.string.ContactInfoFragment_message_AnonymousUser));
             nameView.setText(name);
-            descriptionView.setText(contact.getDescription());
+
+            mAvatar.setUserName(name);
+            mAvatar.setEmail(contact.getEmail());
+
+            if (Utilits.isNullOrBlank(contact.getEmail())) {
+                view.findViewById(R.id.LinearLayout_email).setVisibility(View.GONE);
+            } else {
+                view.findViewById(R.id.LinearLayout_email).setVisibility(View.VISIBLE);
+                emailView.setText(contact.getEmail());
+            }
+
+            if (Utilits.isNullOrBlank(contact.getDescription())) {
+                view.findViewById(R.id.LinearLayout_description).setVisibility(View.GONE);
+            } else {
+                view.findViewById(R.id.LinearLayout_description).setVisibility(View.VISIBLE);
+                descriptionView.setText(contact.getDescription());
+                descriptionView.setMovementMethod(new ScrollingMovementMethod());
+            }
+
             getActionBar().setTitle(name);
         });
     }

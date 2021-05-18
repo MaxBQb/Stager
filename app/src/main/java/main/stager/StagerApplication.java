@@ -1,16 +1,14 @@
 package main.stager;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-
 import androidx.annotation.NonNull;
-
+import androidx.multidex.MultiDexApplication;
 import main.stager.utils.LocaleController;
 import main.stager.utils.SettingsWrapper;
 
-public class StagerApplication extends Application {
+public class StagerApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();

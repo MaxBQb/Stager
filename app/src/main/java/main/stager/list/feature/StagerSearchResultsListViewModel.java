@@ -3,6 +3,7 @@ package main.stager.list.feature;
 import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
+import com.google.firebase.database.Query;
 import java.util.List;
 import main.stager.list.StagerListViewModel;
 import main.stager.model.FBModel;
@@ -13,6 +14,7 @@ public abstract class StagerSearchResultsListViewModel<T extends FBModel>
         extends StagerListViewModel<T> {
 
     protected String query;
+    protected Query previuosRequest;
     protected ValueListEventListener<T> mListEventListener;
 
     public StagerSearchResultsListViewModel(@NonNull Application application) {
@@ -27,8 +29,10 @@ public abstract class StagerSearchResultsListViewModel<T extends FBModel>
         if (mListEventListener == null) {
             mListEventListener = getListEventListener(onError);
             setupListEventListener();
-        }
-        getListPath().addListenerForSingleValueEvent(mListEventListener);
+        } else
+            previuosRequest.removeEventListener(mListEventListener);
+        previuosRequest = getListPath();
+        previuosRequest.addValueEventListener(mListEventListener);
         return mValues;
     }
 

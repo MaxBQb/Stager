@@ -1,8 +1,11 @@
 package main.stager;
 
 import android.app.Activity;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import androidx.annotation.NonNull;
 import androidx.multidex.MultiDexApplication;
 import main.stager.utils.LocaleController;
@@ -14,6 +17,21 @@ public class StagerApplication extends MultiDexApplication {
         super.onCreate();
         SettingsWrapper.init(this);
         LocaleController.init(this);
+        createNotificationChannel();
+    }
+
+    protected void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O)
+            return;
+
+        NotificationManager nm = (NotificationManager)
+                getSystemService(NOTIFICATION_SERVICE);
+
+        nm.createNotificationChannel(new NotificationChannel(
+            getString(R.string.Notification__channel_id),
+            "StagerNotyChannel",
+            NotificationManager.IMPORTANCE_DEFAULT
+        ));
     }
 
     public void restart(final @NonNull Activity activity) {

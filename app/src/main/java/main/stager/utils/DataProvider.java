@@ -169,6 +169,10 @@ public class DataProvider {
         return mRef.child(PATH.IGNORE_CONTACTS).child(getUID());
     }
 
+     public Query getIgnoringContacts() {
+        return mRef.child(PATH.IGNORE_CONTACTS).orderByChild(getUID()).startAt(false).endAt(true);
+    }
+
     public DatabaseReference getIgnoredContactRequest(@NonNull String from) {
         return getIgnoredContactRequests().child(from);
     }

@@ -5,10 +5,9 @@ import android.widget.Toast;
 import main.stager.R;
 import main.stager.list.feature.StagerSearchResultsListFragment;
 import main.stager.model.Contact;
-import main.stager.ui.my_contacts.ContactRecyclerViewAdapter;
 
 public class FindNewContactsFragment extends
-        StagerSearchResultsListFragment<FindNewContactsViewModel, ContactRecyclerViewAdapter, Contact> {
+        StagerSearchResultsListFragment<FindNewContactsViewModel, FoundContactRecyclerViewAdapter, Contact> {
 
     @Override
     protected Class<FindNewContactsViewModel> getViewModelType() {
@@ -16,8 +15,8 @@ public class FindNewContactsFragment extends
     }
 
     @Override
-    protected Class<ContactRecyclerViewAdapter> getAdapterType() {
-        return ContactRecyclerViewAdapter.class;
+    protected Class<FoundContactRecyclerViewAdapter> getAdapterType() {
+        return FoundContactRecyclerViewAdapter.class;
     }
 
     @Override
@@ -33,15 +32,11 @@ public class FindNewContactsFragment extends
     @Override
     protected void onItemClick(Contact item, int pos, View view) {
         super.onItemClick(item, pos, view);
-        final float selected = 0.8f;
-        final float disabled = 0.2f;
-        final float reset = 1f;
-        if (view.getAlpha() == selected) {
+        if (item.isOutgoing()) {
             dataProvider.removeOutgoingContactRequest(item.getKey()).addOnCompleteListener(e -> {
                 Toast.makeText(getContext(),
                         getString(R.string.FindNewContactsFragment_message_revoke, item.getName()),
                         Toast.LENGTH_SHORT).show();
-                view.setAlpha(reset);
             });
             return;
         }
@@ -49,12 +44,10 @@ public class FindNewContactsFragment extends
             Toast.makeText(getContext(),
                     getString(R.string.FindNewContactsFragment_message_success, item.getName()),
                     Toast.LENGTH_SHORT).show();
-            view.setAlpha(selected);
         }).addOnFailureListener(e -> {
             Toast.makeText(getContext(), R.string.FindNewContactsFragment_message_denied,
                     Toast.LENGTH_SHORT).show();
-            view.setEnabled(false);
-            view.setAlpha(disabled);
+            FoundContactRecyclerViewAdapter.disable(view);
         });
     }
 }

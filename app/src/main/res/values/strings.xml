@@ -16,6 +16,15 @@
     <string name="AuthorizationActivity_TextView_title_Register">Don`t have an account yet?</string>
     <string name="AuthorizationActivity_Button_RestoreAccount">Restore account</string>
     <string name="AuthorizationActivity_Button_Register">Registration</string>
+    <string name="AuthorizationActivity_ErrorMessage_NoInternet">No internet connection</string>
+    <string name="AuthorizationActivity_ErrorMessage_NoEmail">E-mail is required</string>
+    <string name="AuthorizationActivity_ErrorMessage_NoValidEmail">Please enter a valid E-mail</string>
+    <string name="AuthorizationActivity_ErrorMessage_NoPassword">Password is required</string>
+    <string name="AuthorizationActivity_ErrorMessage_MinLengthPassword">Minimum length of password should be 6</string>
+    <string name="AuthorizationActivity_Toast_CheckEmail">Check your E-mail</string>
+    <string name="AuthorizationActivity_Toast_ErrorRestore">You can`t restore your account</string>
+    <string name="AuthorizationActivity_Toast_ErrorAuthorization">Authorization error</string>
+
 
     <!-- Settings -->
     <string name="Settings_title">Settings</string>
@@ -107,7 +116,7 @@
     <string name="FindNewContactsFragment_message_revoke">Revoke request to \"%s\"</string>
     <string name="FindNewContactsFragment_message_success">Send request to \"%s\"</string>
     <string name="FindNewContactsFragment_message_denied">Request denied</string>
-    <string name="FindNewContactsFragment_message_queryHint">Input email</string>
+    <string name="FindNewContactsFragment_message_queryHint">Input E-mail</string>
 
     <!-- Find contacts -->
     <string name="FindContactsFragment_title">Find contact</string>

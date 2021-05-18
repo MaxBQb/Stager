@@ -17,6 +17,17 @@
     <string name="AuthorizationActivity_Button_RestoreAccount">Восстановить аккаунт</string>
     <string name="AuthorizationActivity_TextView_title_Register">Еще нет аккаунта?</string>
     <string name="AuthorizationActivity_Button_Register">Регистрация</string>
+    <string name="AuthorizationActivity_ErrorMessage_NoInternet">Нет подключения к интернету</string>
+    <string name="AuthorizationActivity_ErrorMessage_NoEmail">Требуется электронная почта</string>
+    <string name="AuthorizationActivity_ErrorMessage_NoValidEmail">Пожалуйста,
+        введите действительный адрес электронной почты</string>
+    <string name="AuthorizationActivity_ErrorMessage_NoPassword">Требуется пароль</string>
+    <string name="AuthorizationActivity_ErrorMessage_MinLengthPassword">Минимальная длина пароля
+        должна быть 6</string>
+    <string name="AuthorizationActivity_Toast_CheckEmail">Проверьте свою электронную почту</string>
+    <string name="AuthorizationActivity_Toast_ErrorRestore">Вы не можете восстановить
+        свою учетную запись</string>
+    <string name="AuthorizationActivity_Toast_ErrorAuthorization">Ошибка авторизации</string>
 
     <!-- Настройки -->
     <string name="Settings_title">Настройки</string>

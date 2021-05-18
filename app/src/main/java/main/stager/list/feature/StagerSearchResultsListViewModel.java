@@ -14,7 +14,7 @@ public abstract class StagerSearchResultsListViewModel<T extends FBModel>
         extends StagerListViewModel<T> {
 
     protected String query;
-    protected Query previuosRequest;
+    protected Query previousRequest;
     protected ValueListEventListener<T> mListEventListener;
 
     public StagerSearchResultsListViewModel(@NonNull Application application) {
@@ -30,9 +30,9 @@ public abstract class StagerSearchResultsListViewModel<T extends FBModel>
             mListEventListener = getListEventListener(onError);
             setupListEventListener();
         } else
-            previuosRequest.removeEventListener(mListEventListener);
-        previuosRequest = getListPath();
-        previuosRequest.addValueEventListener(mListEventListener);
+            previousRequest.removeEventListener(mListEventListener);
+        previousRequest = getListPath();
+        previousRequest.addValueEventListener(mListEventListener);
         return mValues;
     }
 

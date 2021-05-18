@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import main.stager.R;
-import main.stager.ui.contact_info.ContactType;
+import main.stager.model.ContactType;
 import main.stager.ui.contact_requests.ignored.IgnoredContactRequestsFragment;
 import main.stager.ui.contact_requests.incoming.IncomingContactRequestsFragment;
 import main.stager.ui.contact_requests.outgoing.OutgoingContactRequestsFragment;

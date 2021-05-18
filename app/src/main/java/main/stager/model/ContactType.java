@@ -1,4 +1,4 @@
-package main.stager.ui.contact_info;
+package main.stager.model;
 
 public enum ContactType {
     INCOMING,

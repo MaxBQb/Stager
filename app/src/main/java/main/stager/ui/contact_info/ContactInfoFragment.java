@@ -1,8 +1,6 @@
 package main.stager.ui.contact_info;
 
-import android.animation.LayoutTransition;
 import android.os.Bundle;
-import android.text.Layout;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +13,7 @@ import com.google.firebase.database.Query;
 import main.stager.Base.StagerVMFragment;
 import main.stager.R;
 import main.stager.UserAvatar;
+import main.stager.model.ContactType;
 import main.stager.utils.Utilits;
 
 public class ContactInfoFragment extends

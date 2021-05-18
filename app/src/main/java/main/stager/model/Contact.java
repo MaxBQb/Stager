@@ -1,14 +1,17 @@
 package main.stager.model;
 
-import lombok.AllArgsConstructor;
+import lombok.NonNull;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class Contact extends FBModel {
-    @Getter private String name;
-    @Getter private String description;
-    @Getter private String email;
+    @NonNull @Getter private String name;
+    @NonNull @Getter private String description;
+    @NonNull @Getter private String email;
+    @Setter  @Getter private ContactType type;
 }
 

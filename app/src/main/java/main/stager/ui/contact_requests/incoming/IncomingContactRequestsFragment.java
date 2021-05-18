@@ -7,7 +7,7 @@ import main.stager.R;
 import main.stager.list.StagerList;
 import main.stager.model.Contact;
 import main.stager.ui.contact_info.ContactInfoFragment;
-import main.stager.ui.contact_info.ContactType;
+import main.stager.model.ContactType;
 import main.stager.ui.my_contacts.ContactRecyclerViewAdapter;
 
 public class IncomingContactRequestsFragment extends

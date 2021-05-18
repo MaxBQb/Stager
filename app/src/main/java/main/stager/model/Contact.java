@@ -12,6 +12,7 @@ public class Contact extends FBModel {
     @NonNull @Getter private String name;
     @NonNull @Getter private String description;
     @NonNull @Getter private String email;
-    @Setter  @Getter private ContactType type;
+    @Setter  @Getter private boolean isOutgoing;
+    @Setter  @Getter private boolean isIgnored;
 }
 

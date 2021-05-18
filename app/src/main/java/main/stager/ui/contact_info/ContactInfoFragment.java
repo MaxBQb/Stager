@@ -1,12 +1,16 @@
 package main.stager.ui.contact_info;
 
+import android.animation.LayoutTransition;
 import android.os.Bundle;
+import android.text.Layout;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
-
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.Query;
 import main.stager.Base.StagerVMFragment;
 import main.stager.R;
@@ -22,10 +26,12 @@ public class ContactInfoFragment extends
     private String key;
     private String name;
     private ContactType type;
+
     private TextView nameView;
-    private TextView emailView;
     private TextView descriptionView;
-    public UserAvatar mAvatar;
+    private UserAvatar mAvatar;
+
+    private FloatingActionButton btnYES, btnNO;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,16 +79,16 @@ public class ContactInfoFragment extends
     @Override
     protected void setEventListeners() {
         super.setEventListeners();
-        if (type != ContactType.OUTGOING && type != ContactType.ACCEPTED) {
-            view.findViewById(R.id.btn_accept).setOnClickListener((v) ->
-                dataProvider.acceptContactRequest(key));
-            view.findViewById(R.id.btn_ignore).setOnClickListener(
+        if (type == ContactType.INCOMING || type == ContactType.IGNORED) {
+            btnYES.setOnClickListener((v) -> dataProvider.acceptContactRequest(key));
+            btnNO.setOnClickListener(
                     type != ContactType.IGNORED
-                    ? (v) -> dataProvider.ignoreContactRequest(key)
-                    : (v) -> dataProvider.removeIgnoredContactRequest(key));
+                    ? v -> dataProvider.ignoreContactRequest(key)
+                    : v -> dataProvider.removeIgnoredContactRequest(key));
         } else if (type == ContactType.OUTGOING)
-            view.findViewById(R.id.btn_revoke).setOnClickListener((v) ->
-                dataProvider.removeOutgoingContactRequest(key));
+            btnNO.setOnClickListener(v -> dataProvider.removeOutgoingContactRequest(key));
+        else if (type == ContactType.ACCEPTED)
+            btnNO.setOnClickListener(v -> dataProvider.deleteContact(key));
     }
 
     @Override
@@ -91,22 +97,21 @@ public class ContactInfoFragment extends
         mAvatar = view.findViewById(R.id.user_avatar);
         mAvatar.setUserName(name);
         nameView = view.findViewById(R.id.personName);
-        emailView = view.findViewById(R.id.contact_email);
         descriptionView = view.findViewById(R.id.description);
+        descriptionView.setMovementMethod(new ScrollingMovementMethod());
 
-        View incomingRequestControls = view.findViewById(R.id.incoming_request_controls);
-
-        if (type == ContactType.INCOMING || type == ContactType.IGNORED)
-            incomingRequestControls.setVisibility(View.VISIBLE);
+        btnNO = view.findViewById(R.id.btn_NO);
+        if (type == ContactType.INCOMING || type == ContactType.IGNORED) {
+            btnYES = view.findViewById(R.id.btn_YES);
+            btnYES.setVisibility(View.VISIBLE);
+        }
 
         if (type == ContactType.IGNORED)
-            incomingRequestControls.setAlpha(0.7f);
-
-        if (type == ContactType.OUTGOING)
-            view.findViewById(R.id.outgoing_request_controls).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.controls).setAlpha(0.7f);
 
         ((TextView)view.findViewById(R.id.header_title)).setText(getHeaderTitle());
         updateTitle(name);
+
     }
 
     private void updateTitle(String text) {
@@ -123,27 +128,24 @@ public class ContactInfoFragment extends
             name = Utilits.getDefaultOnNullOrBlank(contact.getName(),
                     getString(R.string.ContactInfoFragment_message_AnonymousUser));
             nameView.setText(name);
-
-            mAvatar.setUserName(name);
             mAvatar.setEmail(contact.getEmail());
+            mAvatar.setUserName(name);
 
-            if (Utilits.isNullOrBlank(contact.getEmail())) {
-                view.findViewById(R.id.LinearLayout_email).setVisibility(View.GONE);
-            } else {
-                view.findViewById(R.id.LinearLayout_email).setVisibility(View.VISIBLE);
-                emailView.setText(contact.getEmail());
-            }
+            updateField(view.findViewById(R.id.LinearLayout_email),
+                        view.findViewById(R.id.contact_email),
+                        contact.getEmail());
 
-            if (Utilits.isNullOrBlank(contact.getDescription())) {
-                view.findViewById(R.id.LinearLayout_description).setVisibility(View.GONE);
-            } else {
-                view.findViewById(R.id.LinearLayout_description).setVisibility(View.VISIBLE);
-                descriptionView.setText(contact.getDescription());
-                descriptionView.setMovementMethod(new ScrollingMovementMethod());
-            }
+            updateField(view.findViewById(R.id.LinearLayout_description),
+                        descriptionView, contact.getDescription());
 
             updateTitle(name);
         });
+    }
+
+    private void updateField(@NonNull ViewGroup holder, TextView field, String text) {
+        boolean isEmpty = Utilits.isNullOrBlank(text);
+        holder.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
+        if (!isEmpty) field.setText(text);
     }
 
     @Override

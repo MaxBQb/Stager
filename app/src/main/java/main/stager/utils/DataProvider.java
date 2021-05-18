@@ -2,7 +2,6 @@ package main.stager.utils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -19,10 +18,11 @@ import main.stager.model.FBModel;
 import main.stager.model.Stage;
 import main.stager.model.Status;
 import main.stager.model.UserAction;
+import main.stager.utils.ChangeListeners.firebase.OnValueGet;
 
 public class DataProvider {
 
-
+    //region INIT
     private static DataProvider instance;
     private FirebaseAuth mAuth;
     private DatabaseReference mRef;
@@ -87,7 +87,9 @@ public class DataProvider {
         public static final String MONITORED = "monitored";
     }
 
-    // User data
+    //endregion INIT
+
+    //region User data
 
     /** Path safe, not null uid
      * @return uid or empty string
@@ -135,7 +137,9 @@ public class DataProvider {
                 .startAt(name).endAt(name+"\uf8ff");
     }
 
-    // Contact requests
+    //endregion User data
+
+    //region Contact requests
 
     public DatabaseReference getContactRequests(@NonNull String from) {
         return getAllContactRequests().child(from);
@@ -181,19 +185,25 @@ public class DataProvider {
         return getIgnoredContactRequest(from).removeValue();
     }
 
-    public void acceptContactRequest(@NonNull String from) {
-        getContacts().child(from).setValue(true);
-        getContacts(from).child(getUID()).setValue(true);
-        getIncomingContactRequest(from).removeValue();
-        getIgnoredContactRequest(from).removeValue();
+    public Task<Void> acceptContactRequest(@NonNull String from) {
+        return batchedFromRoot()
+                .setTrue(getContacts().child(from))
+                .setTrue(getContacts(from).child(getUID()))
+                .remove(getIncomingContactRequest(from))
+                .remove(getIgnoredContactRequest(from))
+                .apply();
     }
 
-    public void ignoreContactRequest(@NonNull String from) {
-        getIncomingContactRequest(from).removeValue();
-        getIgnoredContactRequest(from).setValue(true);
+    public Task<Void> ignoreContactRequest(@NonNull String from) {
+        return batchedFromRoot()
+                .remove(getIncomingContactRequest(from))
+                .setTrue(getIgnoredContactRequest(from))
+                .apply();
     }
 
-    // Monitor Actions
+    //endregion Contact requests
+
+    //region Monitor Actions
 
     public DatabaseReference getMonitored() {
         return mRef.child(PATH.MONITORED);
@@ -207,11 +217,15 @@ public class DataProvider {
         return getMonitoredActionHolders(getUID());
     }
 
+    public DatabaseReference getMonitoredActions(@NonNull String uid,
+                                                @NonNull String actionOwner) {
+        return getMonitoredActionHolders(uid).child(actionOwner);
+    }
+
     public DatabaseReference getMonitoredAction(@NonNull String uid,
                                                 @NonNull String actionOwner,
                                                 @NonNull String actionKey) {
-        return getMonitoredActionHolders(uid).child(actionOwner)
-                                             .child(actionKey);
+        return getMonitoredAction(uid, actionOwner).child(actionKey);
     }
 
     public DatabaseReference getMonitoredAction(@NonNull String actionOwner,
@@ -224,9 +238,9 @@ public class DataProvider {
         return getAllStages(actionOwner).child(actionKey);
     }
 
+    //endregion Monitor Actions
 
-
-    // Share Actions
+    //region Share Actions
 
     public DatabaseReference getShared() {
         return mRef.child(PATH.SHARED);
@@ -248,23 +262,23 @@ public class DataProvider {
         return getSharedActions(sharedTo).child(key);
     }
 
-    public void shareAction(@NonNull String sharedTo, @NonNull String key,
-                            OnCompleteListener<Void> onComplete) {
-        getSharedAction(sharedTo, key).setValue(true).addOnSuccessListener(t -> {
-            getMonitoredAction(sharedTo, getUID(), key).setValue(true)
-                    .addOnCompleteListener(onComplete);
-        });
+    public Task<Void> shareAction(@NonNull String sharedTo, @NonNull String key) {
+        return batchedFromRoot()
+                   .setTrue(getSharedAction(sharedTo, key))
+                   .setTrue(getMonitoredAction(sharedTo, getUID(), key))
+                   .apply();
     }
 
-    public void revokeSharedActionAccess(@NonNull String sharedTo, @NotNull String key,
-                                               OnCompleteListener<Void> onComplete) {
-        getSharedAction(sharedTo, key).removeValue().addOnCompleteListener(t -> {
-            getMonitoredAction(sharedTo, getUID(), key).removeValue()
-                                    .addOnCompleteListener(onComplete);
-        });
+    public Task<Void> revokeSharedActionAccess(@NonNull String sharedTo, @NotNull String key) {
+        return batchedFromRoot()
+                .remove(getSharedAction(sharedTo, key))
+                .remove(getMonitoredAction(sharedTo, getUID(), key))
+                .apply();
     }
 
-    // Actions
+    //endregion Share Actions
+
+    //region Actions
 
     public DatabaseReference getAllActions() {
         return mRef.child(PATH.ACTIONS);
@@ -294,11 +308,25 @@ public class DataProvider {
     }
 
     public void deleteAction(@NotNull String key) {
-        getStages(key).removeValue();
-        getAction(key).removeValue();
+        getSubscribersOfAction(key).addListenerForSingleValueEvent(new OnValueGet((snapshot) -> {
+            BatchUpdate batched = batchedFromRoot()
+                .remove(getStages(key))
+                .remove(getAction(key));
+
+            if (snapshot.exists() && snapshot.hasChildren())
+                for (DataSnapshot post: snapshot.getChildren()) {
+                    if (post.getKey() == null)
+                        continue;
+                    batched.remove(getSharedAction(post.getKey(), key));
+                    batched.remove(getMonitoredAction(post.getKey(), getUID(), key));
+                }
+            batched.apply();
+        }));
     }
 
-    // Stages of action
+    //endregion Actions
+
+    //region Stages of action
 
     public String addStage(@NotNull String actionKey, Stage stage) {
         String key = getStages(actionKey).push().getKey();
@@ -465,7 +493,9 @@ public class DataProvider {
         resetActionStatus(actionKey);
     }
 
-    // Contacts
+    //endregion Stages of action
+
+    //region Contacts
 
     public DatabaseReference getContacts() {
         return getContacts(getUID());
@@ -479,7 +509,18 @@ public class DataProvider {
         return mRef.child(PATH.CONTACTS).child(uid);
     }
 
-    // Other
+    public Task<Void> deleteContact(@NonNull String uid) {
+        return batchedFromRoot()
+                .remove(getContacts().child(uid))
+                .remove(getContacts(uid).child(getUID()))
+                .remove(getSharedActions(uid))
+                .remove(getMonitoredActions(uid, getUID()))
+                .apply();
+    }
+
+    //endregion Contacts
+
+    //region Other
 
     public static <T> void trySetValue(@NotNull DatabaseReference ref, T value) {
         String key = ref.getKey();
@@ -584,4 +625,11 @@ public class DataProvider {
         for (T item: list) keys.add(item.getKey());
         return keys;
     }
+
+    @NotNull
+    private BatchUpdate batchedFromRoot() {
+        return BatchUpdate.init(mRef);
+    }
+
+    //endregion Other
 }

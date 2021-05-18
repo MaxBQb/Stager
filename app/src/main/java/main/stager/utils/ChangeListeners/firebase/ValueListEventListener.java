@@ -13,9 +13,16 @@ import lombok.Setter;
 
 public class ValueListEventListener<T> extends AValueEventListener<T> {
     protected MutableLiveData<List<T>> liveList;
-    @Getter @Setter protected Set<String> ignoredKeys = new HashSet<>();
+    @Getter protected Set<String> ignoredKeys = new HashSet<>();
     @Getter @Setter protected boolean invertIgnoredKeys = false;
     protected Class<T> className;
+
+    public void setIgnoredKeys(Set<String> ignoredKeys) {
+        if (ignoredKeys == null)
+            this.ignoredKeys.clear();
+        else
+            this.ignoredKeys = ignoredKeys;
+    }
 
     public ValueListEventListener(MutableLiveData<List<T>> liveList, Class<T> className, OnError onError) {
         this.liveList = liveList;

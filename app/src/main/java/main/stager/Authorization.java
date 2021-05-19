@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import main.stager.Base.SmartActivity;
+import main.stager.utils.DataProvider;
 
 public class Authorization extends SmartActivity {
 
@@ -137,6 +138,7 @@ public class Authorization extends SmartActivity {
         fbAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, task -> {
             hideLoadingScreen();
             if (task.isSuccessful()) {
+                DataProvider.getInstance().subscribeInitial();
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             } else if (task.getException() != null)

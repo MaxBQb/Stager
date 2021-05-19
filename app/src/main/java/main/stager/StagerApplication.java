@@ -5,9 +5,11 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import androidx.annotation.NonNull;
 import androidx.multidex.MultiDexApplication;
+import main.stager.utils.pushNotifications.RequestQueueController;
 import main.stager.utils.LocaleController;
 import main.stager.utils.SettingsWrapper;
 
@@ -16,6 +18,7 @@ public class StagerApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         SettingsWrapper.init(this);
+        RequestQueueController.init(this);
         LocaleController.init(this);
         createNotificationChannel();
     }
@@ -27,11 +30,17 @@ public class StagerApplication extends MultiDexApplication {
         NotificationManager nm = (NotificationManager)
                 getSystemService(NOTIFICATION_SERVICE);
 
-        nm.createNotificationChannel(new NotificationChannel(
+        NotificationChannel channel = new NotificationChannel(
             getString(R.string.Notification__channel_id),
             "StagerNotyChannel",
             NotificationManager.IMPORTANCE_DEFAULT
-        ));
+        );
+        channel.enableLights(true);
+        channel.setLightColor(Color.RED);
+        channel.enableVibration(true);
+
+        if (nm != null)
+            nm.createNotificationChannel(channel);
     }
 
     public void restart(final @NonNull Activity activity) {

@@ -11,6 +11,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.Transaction;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.RemoteMessage;
+
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +22,14 @@ import main.stager.model.Stage;
 import main.stager.model.Status;
 import main.stager.model.UserAction;
 import main.stager.utils.ChangeListeners.firebase.OnValueGet;
+import main.stager.utils.pushNotifications.PushNotificationGenerator;
 
 public class DataProvider {
 
     //region INIT
     private static DataProvider instance;
     private FirebaseAuth mAuth;
+    private FirebaseMessaging mMes;
     private DatabaseReference mRef;
 
     public static synchronized DataProvider getInstance() {
@@ -36,6 +41,7 @@ public class DataProvider {
     private DataProvider() {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
+        mMes = FirebaseMessaging.getInstance();
         db.setPersistenceEnabled(true);
         mRef = db.getReference(PATH.MAIN_DB);
         keepSynced();
@@ -178,7 +184,9 @@ public class DataProvider {
     }
 
     public Task<Void> makeContactRequest(@NonNull String receiver) {
-        return getAllContactRequests().child(receiver).child(getUID()).setValue(true);
+        Task<Void> t = getAllContactRequests().child(receiver).child(getUID()).setValue(true);
+        t.addOnSuccessListener(v -> sendFriendshipRequestNoty(receiver));
+        return t;
     }
 
     public Task<Void> removeOutgoingContactRequest(@NonNull String from) {
@@ -523,6 +531,65 @@ public class DataProvider {
     }
 
     //endregion Contacts
+
+    //region Notifications
+
+    private static final class EV {
+        public static final String SEP = "-";
+
+        // Friendship
+        public static final String FRIENDSHIP_REQUEST = "FRIENDSHIP_REQUEST";
+    }
+
+        //region EventNames
+
+    public List<String> getInitialEventNames() {
+        List<String> list = new ArrayList<>();
+        list.add(getFriendshipRequestEventName(getUID()));
+        return list;
+    }
+
+    public String getFriendshipRequestEventName(@NonNull String uid) {
+        return EV.FRIENDSHIP_REQUEST +EV.SEP+ uid;
+    }
+
+        //endregion EventNames
+
+        //region Subscribe
+
+    public void subscribeInitial() {
+        for (String eventName: getInitialEventNames())
+            subscribe(eventName);
+    }
+
+    public void unsubscribeInitial() {
+        for (String eventName: getInitialEventNames())
+            unsubscribe(eventName);
+    }
+
+    private void subscribe(@NonNull String eventName) {
+        mMes.subscribeToTopic(eventName);
+    }
+
+    private void unsubscribe(@NonNull String eventName) {
+        mMes.unsubscribeFromTopic(eventName);
+    }
+
+        //endregion Subscribe
+
+        //region Send
+
+    public void sendFriendshipRequestNoty(@NonNull String uid) {
+        PushNotificationGenerator.send(
+            getFriendshipRequestEventName(uid),
+                "Привет друг",
+                "hello!"
+        );
+    }
+
+        //endregion Send
+
+    //endregion Notifications
 
     //region Other
 

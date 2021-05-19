@@ -14,33 +14,58 @@ public class PushNotificationGenerator {
     static final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
     static final private String serverKey = "key=" + SECRETS.SERVER_KEY;
     static final private String contentType = "application/json";
+
+    public static final String TITLE = "title";
+    public static final String MESSAGE = "message";
+    public static final String PAYLOAD = "payload";
+
     static final private Response.ErrorListener ignoreError = (x)->{};
     static final private Response.Listener<JSONObject> ignoreResponse = (x)->{};
 
-    public static boolean send(String topic, String title, String message,
-                               Response.Listener<JSONObject> listener) {
-        return send(topic, title, message, listener, ignoreError);
+    public static boolean sendAndListen(String topic, String title, String message,
+                                        Map<String, String> payload,
+                                        Response.Listener<JSONObject> listener) {
+        return sendAndListenBoth(topic, title, message, payload, listener, ignoreError);
+    }
+
+    public static boolean sendAndListen(String topic, String title, String message,
+                                        Response.Listener<JSONObject> listener) {
+        return sendAndListen(topic, title, message, null, listener);
+    }
+
+    public static boolean sendAndListenError(String topic, String title, String message,
+                                             Map<String, String> payload,
+                                             Response.ErrorListener errorListener) {
+        return sendAndListenBoth(topic, title, message, payload, ignoreResponse, errorListener);
+    }
+
+    public static boolean sendAndListenError(String topic, String title, String message,
+                                             Response.ErrorListener errorListener) {
+        return sendAndListenError(topic, title, message, null, errorListener);
     }
 
     public static boolean send(String topic, String title, String message,
-                               Response.ErrorListener errorListener) {
-        return send(topic, title, message, ignoreResponse, errorListener);
+                               Map<String, String> payload) {
+        return sendAndListenBoth(topic, title, message, payload, ignoreResponse, ignoreError);
     }
 
     public static boolean send(String topic, String title, String message) {
-        return send(topic, title, message, ignoreResponse, ignoreError);
+        return send(topic, title, message, null);
     }
 
-    public static boolean send(String topic, String title, String message,
-                               Response.Listener<JSONObject> listener,
-                               Response.ErrorListener errorListener) {
+    public static boolean sendAndListenBoth(String topic, String title, String message,
+                                            Map<String, String> payload,
+                                            Response.Listener<JSONObject> listener,
+                                            Response.ErrorListener errorListener) {
         String TOPIC = "/topics/" + topic;
 
         JSONObject notification = new JSONObject();
         JSONObject notificationBody = new JSONObject();
         try {
-            notificationBody.put("title", title);
-            notificationBody.put("message", message);
+            notificationBody.put(TITLE, title);
+            notificationBody.put(MESSAGE, message);
+            if (payload != null)
+                notificationBody.put(PAYLOAD, new JSONObject(payload));
 
             notification.put("to", TOPIC);
             notification.put("data", notificationBody);

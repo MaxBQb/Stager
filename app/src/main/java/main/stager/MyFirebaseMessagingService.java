@@ -9,6 +9,7 @@ import androidx.core.app.NotificationManagerCompat;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import java.util.Random;
+import main.stager.utils.pushNotifications.PushNotificationGenerator;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
@@ -24,8 +25,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 R.mipmap.ic_launcher_round);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this,
                 getString(R.string.Notification__channel_id))
-                .setContentTitle(remoteMessage.getData().get("title"))
-                .setContentText(remoteMessage.getData().get("body"))
+                .setContentTitle(remoteMessage.getData().get(PushNotificationGenerator.TITLE))
+                .setContentText(remoteMessage.getData().get(PushNotificationGenerator.MESSAGE))
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setLargeIcon(largeIcon)
                 .setAutoCancel(true)

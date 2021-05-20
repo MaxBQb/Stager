@@ -151,4 +151,7 @@
 
         <!-- Grouped -->
         <string name="GroupedMonitoredActions_title">Grouped</string>
+
+    <!-- Notifications -->
+    <string name="Notifications_message_FriendshipRequest">You\'ve got new friendship request :)</string>
 </resources>

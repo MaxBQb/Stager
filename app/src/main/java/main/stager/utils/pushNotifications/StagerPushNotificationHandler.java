@@ -66,11 +66,11 @@ public class StagerPushNotificationHandler {
                .setAutoCancel(true)
                .setContentIntent(openAppIntent);
 
-        String title = message.getData().get(PushNotificationGenerator.TITLE);
+        String title = message.getData().get(PushNotification.TITLE);
         if (!Utilits.isNullOrBlank(title))
             builder.setContentTitle(title);
 
-        String body = message.getData().get(PushNotificationGenerator.MESSAGE);
+        String body = message.getData().get(PushNotification.MESSAGE);
         if (!Utilits.isNullOrBlank(body))
             builder.setContentText(body);
     }

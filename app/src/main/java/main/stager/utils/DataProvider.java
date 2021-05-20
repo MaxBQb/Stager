@@ -15,12 +15,13 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+import main.stager.StagerApplication;
 import main.stager.model.FBModel;
 import main.stager.model.Stage;
 import main.stager.model.Status;
 import main.stager.model.UserAction;
 import main.stager.utils.ChangeListeners.firebase.OnValueGet;
-import main.stager.utils.pushNotifications.EventNotificationGenerator;
+import main.stager.utils.pushNotifications.EventNotificationBuilder;
 import main.stager.utils.pushNotifications.EventType;
 
 public class DataProvider {
@@ -29,7 +30,7 @@ public class DataProvider {
     private static DataProvider instance;
     private FirebaseAuth mAuth;
     private FirebaseMessaging mMes;
-    private EventNotificationGenerator mNotyGen;
+    private EventNotificationBuilder mNotyGen;
     private DatabaseReference mRef;
 
     public static synchronized DataProvider getInstance() {
@@ -44,7 +45,7 @@ public class DataProvider {
         mMes = FirebaseMessaging.getInstance();
         db.setPersistenceEnabled(true);
         mRef = db.getReference(PATH.MAIN_DB);
-        mNotyGen = EventNotificationGenerator.getInstance();
+        mNotyGen = StagerApplication.getEventNotificationBuilder();
         keepSynced();
     }
 
@@ -576,10 +577,8 @@ public class DataProvider {
         //region Send
 
     public void sendFriendshipRequestNoty(@NonNull String uid) {
-        mNotyGen.send(
-            getFriendshipRequestEventName(uid),
-            EventType.FRIENDSHIP_REQUEST
-        );
+        mNotyGen.getSimpleEventNotification(EventType.FRIENDSHIP_REQUEST)
+                .build().send(getFriendshipRequestEventName(uid));
     }
 
         //endregion Send

@@ -12,8 +12,6 @@ import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.RemoteMessage;
-
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +20,8 @@ import main.stager.model.Stage;
 import main.stager.model.Status;
 import main.stager.model.UserAction;
 import main.stager.utils.ChangeListeners.firebase.OnValueGet;
-import main.stager.utils.pushNotifications.PushNotificationGenerator;
+import main.stager.utils.pushNotifications.EventNotificationGenerator;
+import main.stager.utils.pushNotifications.EventType;
 
 public class DataProvider {
 
@@ -30,6 +29,7 @@ public class DataProvider {
     private static DataProvider instance;
     private FirebaseAuth mAuth;
     private FirebaseMessaging mMes;
+    private EventNotificationGenerator mNotyGen;
     private DatabaseReference mRef;
 
     public static synchronized DataProvider getInstance() {
@@ -44,6 +44,7 @@ public class DataProvider {
         mMes = FirebaseMessaging.getInstance();
         db.setPersistenceEnabled(true);
         mRef = db.getReference(PATH.MAIN_DB);
+        mNotyGen = EventNotificationGenerator.getInstance();
         keepSynced();
     }
 
@@ -534,12 +535,7 @@ public class DataProvider {
 
     //region Notifications
 
-    private static final class EV {
-        public static final String SEP = "-";
-
-        // Friendship
-        public static final String FRIENDSHIP_REQUEST = "FRIENDSHIP_REQUEST";
-    }
+    private static final String NT_SEP = "-";
 
         //region EventNames
 
@@ -550,7 +546,7 @@ public class DataProvider {
     }
 
     public String getFriendshipRequestEventName(@NonNull String uid) {
-        return EV.FRIENDSHIP_REQUEST +EV.SEP+ uid;
+        return EventType.FRIENDSHIP_REQUEST +NT_SEP+ uid;
     }
 
         //endregion EventNames
@@ -580,10 +576,9 @@ public class DataProvider {
         //region Send
 
     public void sendFriendshipRequestNoty(@NonNull String uid) {
-        PushNotificationGenerator.send(
+        mNotyGen.send(
             getFriendshipRequestEventName(uid),
-                "Привет друг",
-                "hello!"
+            EventType.FRIENDSHIP_REQUEST
         );
     }
 

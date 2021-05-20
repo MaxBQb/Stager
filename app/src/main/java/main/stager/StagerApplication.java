@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.Build;
 import androidx.annotation.NonNull;
 import androidx.multidex.MultiDexApplication;
+import main.stager.utils.pushNotifications.EventNotificationGenerator;
 import main.stager.utils.pushNotifications.RequestQueueController;
 import main.stager.utils.LocaleController;
 import main.stager.utils.SettingsWrapper;
@@ -19,6 +20,7 @@ public class StagerApplication extends MultiDexApplication {
         super.onCreate();
         SettingsWrapper.init(this);
         RequestQueueController.init(this);
+        EventNotificationGenerator.init(this);
         LocaleController.init(this);
         createNotificationChannel();
     }

@@ -17,7 +17,7 @@ public class PushNotificationGenerator {
 
     public static final String TITLE = "title";
     public static final String MESSAGE = "message";
-    public static final String PAYLOAD = "payload";
+
 
     static final private Response.ErrorListener ignoreError = (x)->{};
     static final private Response.Listener<JSONObject> ignoreResponse = (x)->{};
@@ -65,7 +65,8 @@ public class PushNotificationGenerator {
             notificationBody.put(TITLE, title);
             notificationBody.put(MESSAGE, message);
             if (payload != null)
-                notificationBody.put(PAYLOAD, new JSONObject(payload));
+                for (Map.Entry<String, String> entry: payload.entrySet())
+                    notificationBody.put(entry.getKey(), entry.getValue());
 
             notification.put("to", TOPIC);
             notification.put("data", notificationBody);

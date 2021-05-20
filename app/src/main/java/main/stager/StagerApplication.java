@@ -9,16 +9,19 @@ import android.graphics.Color;
 import android.os.Build;
 import androidx.annotation.NonNull;
 import androidx.multidex.MultiDexApplication;
+import lombok.Getter;
 import main.stager.utils.pushNotifications.EventNotificationGenerator;
 import main.stager.utils.pushNotifications.RequestQueueController;
 import main.stager.utils.LocaleController;
 import main.stager.utils.SettingsWrapper;
 
 public class StagerApplication extends MultiDexApplication {
+    @Getter private static SettingsWrapper settings;
+
     @Override
     public void onCreate() {
         super.onCreate();
-        SettingsWrapper.init(this);
+        settings = new SettingsWrapper(this);
         RequestQueueController.init(this);
         EventNotificationGenerator.init(this);
         LocaleController.init(this);

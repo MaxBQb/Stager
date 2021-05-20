@@ -27,19 +27,12 @@ import main.stager.utils.pushNotifications.EventType;
 public class DataProvider {
 
     //region INIT
-    private static DataProvider instance;
     private FirebaseAuth mAuth;
     private FirebaseMessaging mMes;
     private EventNotificationBuilder mNotyGen;
     private DatabaseReference mRef;
 
-    public static synchronized DataProvider getInstance() {
-        if (instance == null)
-            instance = new DataProvider();
-        return instance;
-    }
-
-    private DataProvider() {
+    public DataProvider() {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
         mMes = FirebaseMessaging.getInstance();

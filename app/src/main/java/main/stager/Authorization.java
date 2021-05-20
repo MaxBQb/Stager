@@ -138,7 +138,7 @@ public class Authorization extends SmartActivity {
         fbAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, task -> {
             hideLoadingScreen();
             if (task.isSuccessful()) {
-                DataProvider.getInstance().subscribeInitial();
+                StagerApplication.getDataProvider().subscribeInitial();
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             } else if (task.getException() != null)

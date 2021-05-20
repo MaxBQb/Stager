@@ -4,6 +4,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import main.stager.R;
+import main.stager.StagerApplication;
 import main.stager.utils.DataProvider;
 
 public class EventNotificationBuilder {
@@ -18,7 +19,7 @@ public class EventNotificationBuilder {
         return PushNotification.builder()
                 .setExtra(
                     StagerPushNotificationHandler.SENDER,
-                    DataProvider.getInstance().getUID())
+                    StagerApplication.getDataProvider().getUID())
                 .setExtra(
                     StagerPushNotificationHandler.EVENT_TYPE,
                     event.name()

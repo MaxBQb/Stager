@@ -9,13 +9,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.Query;
 import java.util.HashMap;
 import java.util.Set;
+
+import main.stager.StagerApplication;
 import main.stager.utils.ChangeListeners.firebase.KeySetEventListener;
 import main.stager.utils.ChangeListeners.firebase.ValueEventListener;
 import main.stager.utils.DataProvider;
 import main.stager.utils.Utilits;
 
 public abstract class StagerViewModel extends AndroidViewModel {
-    protected static DataProvider dataProvider = DataProvider.getInstance();
+    protected static DataProvider dataProvider = StagerApplication.getDataProvider();
     protected HashMap<Object, Query> backPath;
 
     public StagerViewModel(@NonNull Application application) {

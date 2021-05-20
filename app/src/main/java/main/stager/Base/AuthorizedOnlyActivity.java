@@ -9,13 +9,14 @@ import androidx.annotation.NonNull;
 import androidx.navigation.fragment.NavHostFragment;
 
 import main.stager.Authorization;
+import main.stager.StagerApplication;
 import main.stager.utils.DataProvider;
 import main.stager.R;
 
 public abstract class AuthorizedOnlyActivity extends SmartActivity {
 
     // Firebase
-    protected static DataProvider dataProvider = DataProvider.getInstance();
+    protected static DataProvider dataProvider = StagerApplication.getDataProvider();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

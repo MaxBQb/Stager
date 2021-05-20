@@ -123,7 +123,7 @@ public class Registration extends SmartActivity {
                 task -> {
                     hideLoadingScreen();
                     if (task.isSuccessful()) {
-                        DataProvider dp = DataProvider.getInstance();
+                        DataProvider dp = StagerApplication.getDataProvider();
                         dp.subscribeInitial();
                         dp.getUserName().setValue(name);
                         // Пользователь зарегистрировался и вошел в аккаунт

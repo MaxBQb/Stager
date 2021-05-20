@@ -15,12 +15,13 @@ import com.google.firebase.database.Query;
 import java.util.ArrayList;
 import java.util.List;
 import main.stager.R;
+import main.stager.StagerApplication;
 import main.stager.utils.ChangeListeners.firebase.ValueRemovedListener;
 import main.stager.utils.DataProvider;
 import main.stager.utils.Utilits;
 
 public abstract class StagerFragment extends Fragment {
-    protected static DataProvider dataProvider = DataProvider.getInstance();
+    protected static DataProvider dataProvider = StagerApplication.getDataProvider();
 
     // Зависимости
     protected List<Query> dependencies;

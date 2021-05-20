@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
+
+import main.stager.StagerApplication;
 import main.stager.list.feature.AddItemFragment;
 import main.stager.utils.DataProvider;
 import main.stager.R;
@@ -51,7 +53,7 @@ public class AddStageFragment extends AddItemFragment {
                     ), Toast.LENGTH_LONG).show();
             return;
         }
-        DataProvider.getInstance().addStage(mActionKey,
+        StagerApplication.getDataProvider().addStage(mActionKey,
                 new Stage(Status.WAITING, name, TriggerType.MANUAL));
         close();
     }

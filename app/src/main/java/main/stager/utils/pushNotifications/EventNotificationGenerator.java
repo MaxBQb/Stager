@@ -34,7 +34,7 @@ public class EventNotificationGenerator {
                                  Map<String, String> payload,
                                  Response.Listener<JSONObject> listener) {
         return PushNotificationGenerator.sendAndListen(topic,
-                getTextMessage(event), "",
+                getTextTitle(event), getTextMessage(event),
                 createPayload(payload, event),
                 listener);
     }
@@ -48,7 +48,7 @@ public class EventNotificationGenerator {
                                       Map<String, String> payload,
                                       Response.ErrorListener errorListener) {
         return PushNotificationGenerator.sendAndListenError(topic,
-                getTextMessage(event), "",
+                getTextTitle(event), getTextMessage(event),
                 createPayload(payload, event),
                 errorListener);
     }
@@ -61,7 +61,7 @@ public class EventNotificationGenerator {
     public boolean send(@NonNull String topic, @NonNull EventType event,
                         Map<String, String> payload) {
         return PushNotificationGenerator.send(topic,
-                getTextMessage(event), "",
+                getTextTitle(event), getTextMessage(event),
                 createPayload(payload, event));
     }
 
@@ -74,7 +74,7 @@ public class EventNotificationGenerator {
                                      Response.Listener<JSONObject> listener,
                                      Response.ErrorListener errorListener) {
         return PushNotificationGenerator.sendAndListenBoth(topic,
-                getTextMessage(event), "",
+                getTextTitle(event), getTextMessage(event),
                 createPayload(payload, event),
                 listener, errorListener);
     }
@@ -100,6 +100,17 @@ public class EventNotificationGenerator {
 
     public String getTextMessage(EventType event) {
         return context.getString(getMessage(event));
+    }
+
+    public @StringRes int getTitle(@NonNull EventType event) {
+        switch (event) {
+            case FRIENDSHIP_REQUEST: return R.string.Notifications_group_Friendship;
+        }
+        throw new IllegalStateException("Unsupported EventType");
+    }
+
+    public String getTextTitle(EventType event) {
+        return context.getString(getTitle(event));
     }
 
 }

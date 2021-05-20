@@ -155,5 +155,6 @@
         <string name="GroupedMonitoredActions_title">Сгруппированные</string>
 
     <!-- Уведомления -->
+    <string name="Notifications_group_Friendship">Дружба</string>
     <string name="Notifications_message_FriendshipRequest">Вам пришёл новый запрос в друзья :)</string>
 </resources>

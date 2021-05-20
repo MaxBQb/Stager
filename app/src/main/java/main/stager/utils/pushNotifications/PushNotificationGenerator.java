@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import main.stager.SECRETS;
+import main.stager.StagerApplication;
 
 public class PushNotificationGenerator {
     static final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
@@ -90,6 +91,7 @@ public class PushNotificationGenerator {
                 return params;
             }
         };
-        RequestQueueController.getInstance().addToRequestQueue(jsonObjectRequest);
+        StagerApplication.getRequestQueueController()
+                .addToRequestQueue(jsonObjectRequest);
     }
 }

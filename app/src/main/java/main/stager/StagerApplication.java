@@ -17,12 +17,13 @@ import main.stager.utils.SettingsWrapper;
 
 public class StagerApplication extends MultiDexApplication {
     @Getter private static SettingsWrapper settings;
+    @Getter private static RequestQueueController requestQueueController;
 
     @Override
     public void onCreate() {
         super.onCreate();
         settings = new SettingsWrapper(this);
-        RequestQueueController.init(this);
+        requestQueueController = new RequestQueueController(this);
         EventNotificationGenerator.init(this);
         LocaleController.init(this);
         createNotificationChannel();

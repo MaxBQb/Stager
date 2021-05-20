@@ -63,8 +63,12 @@ public class PushNotificationGenerator {
         JSONObject notification = new JSONObject();
         JSONObject notificationBody = new JSONObject();
         try {
-            notificationBody.put(TITLE, title);
-            notificationBody.put(MESSAGE, message);
+            if (title != null)
+                notificationBody.put(TITLE, title);
+
+            if (message != null)
+                notificationBody.put(MESSAGE, message);
+
             if (payload != null)
                 for (Map.Entry<String, String> entry: payload.entrySet())
                     notificationBody.put(entry.getKey(), entry.getValue());

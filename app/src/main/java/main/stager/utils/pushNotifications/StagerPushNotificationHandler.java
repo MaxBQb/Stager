@@ -13,7 +13,6 @@ import main.stager.R;
 import main.stager.utils.Utilits;
 
 public class StagerPushNotificationHandler {
-    private static StagerPushNotificationHandler instance;
     private Context context;
     private final Bitmap largeIcon;
     private final PendingIntent openAppIntent;
@@ -23,31 +22,18 @@ public class StagerPushNotificationHandler {
     public static final String EVENT_TYPE = EVENT_DETAILS+SEP+"type";
     public static final String SENDER = EVENT_DETAILS+SEP+"sender";
 
-
-    private void setContext(Context context) {
-        this.context = context;
-    }
-
-    private StagerPushNotificationHandler(@NonNull Context context) {
+    public StagerPushNotificationHandler(@NonNull Context ctx) {
+        context = ctx.getApplicationContext();
         largeIcon = BitmapFactory.decodeResource(
-                context.getResources(),
-                R.mipmap.ic_launcher_round
+            context.getResources(),
+            R.mipmap.ic_launcher_round
         );
-
         final Intent intent = new Intent(context, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         openAppIntent = PendingIntent.getActivity(
-                context, 0, intent,
-                PendingIntent.FLAG_ONE_SHOT
+            context, 0, intent,
+            PendingIntent.FLAG_ONE_SHOT
         );
-    }
-
-    public static synchronized StagerPushNotificationHandler
-                                getInstance(Context context) {
-        if (instance == null)
-            instance = new StagerPushNotificationHandler(context);
-        instance.setContext(context);
-        return instance;
     }
 
     public void handleAny(NotificationCompat.Builder builder, RemoteMessage message) {

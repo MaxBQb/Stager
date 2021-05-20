@@ -13,16 +13,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(
-                this,
-                getString(R.string.Notification__channel_id)
+            this,
+            getString(R.string.Notification__channel_id)
         );
 
-        StagerPushNotificationHandler.getInstance(getBaseContext())
-                                     .handleAny(builder, remoteMessage);
+        StagerApplication.getStagerPushNotificationHandler()
+                         .handleAny(builder, remoteMessage);
 
         NotificationManagerCompat.from(getApplicationContext()).notify(
-                new Random().nextInt(3000),
-                builder.build()
+            new Random().nextInt(3000),
+            builder.build()
         );
     }
 }

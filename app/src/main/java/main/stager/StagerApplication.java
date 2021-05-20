@@ -14,11 +14,13 @@ import main.stager.utils.pushNotifications.EventNotificationBuilder;
 import main.stager.utils.pushNotifications.RequestQueueController;
 import main.stager.utils.LocaleController;
 import main.stager.utils.SettingsWrapper;
+import main.stager.utils.pushNotifications.StagerPushNotificationHandler;
 
 public class StagerApplication extends MultiDexApplication {
     @Getter private static SettingsWrapper settings;
     @Getter private static RequestQueueController requestQueueController;
     @Getter private static EventNotificationBuilder eventNotificationBuilder;
+    @Getter private static StagerPushNotificationHandler stagerPushNotificationHandler;
 
     @Override
     public void onCreate() {
@@ -26,6 +28,7 @@ public class StagerApplication extends MultiDexApplication {
         settings = new SettingsWrapper(this);
         requestQueueController = new RequestQueueController(this);
         eventNotificationBuilder = new EventNotificationBuilder(this);
+        stagerPushNotificationHandler = new StagerPushNotificationHandler(this);
         LocaleController.init(this);
         createNotificationChannel();
     }

@@ -5,7 +5,6 @@ import androidx.core.app.NotificationManagerCompat;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import java.util.Random;
-import main.stager.utils.pushNotifications.StagerPushNotificationHandler;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
@@ -17,7 +16,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             getString(R.string.Notification__channel_id)
         );
 
-        StagerApplication.getStagerPushNotificationHandler()
+        StagerApplication.getPushNotificationHandler()
                          .handleAny(builder, remoteMessage);
 
         NotificationManagerCompat.from(getApplicationContext()).notify(

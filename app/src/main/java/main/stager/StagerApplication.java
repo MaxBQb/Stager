@@ -21,7 +21,7 @@ public class StagerApplication extends MultiDexApplication {
     @Getter private static SettingsWrapper settings;
     @Getter private static RequestQueueController requestQueueController;
     @Getter private static EventNotificationBuilder eventNotificationBuilder;
-    @Getter private static StagerPushNotificationHandler stagerPushNotificationHandler;
+    @Getter private static StagerPushNotificationHandler pushNotificationHandler;
     @Getter private static DataProvider dataProvider;
 
     @Override
@@ -30,7 +30,7 @@ public class StagerApplication extends MultiDexApplication {
         settings = new SettingsWrapper(this);
         requestQueueController = new RequestQueueController(this);
         eventNotificationBuilder = new EventNotificationBuilder(this);
-        stagerPushNotificationHandler = new StagerPushNotificationHandler(this);
+        pushNotificationHandler = new StagerPushNotificationHandler(this);
         dataProvider = new DataProvider();
         LocaleController.init(this);
         createNotificationChannel();

@@ -50,7 +50,7 @@ implements SharedPreferences.OnSharedPreferenceChangeListener {
 
                 prefs.edit().commit(); // Гарантирия сохранности
                 if (S.AUTO_TUNE.equals(key))
-                    ((StagerApplication)getActivity().getApplication()).restart(getActivity());
+                    StagerApplication.restart(getActivity());
                 else
                     getActivity().recreate();
             }

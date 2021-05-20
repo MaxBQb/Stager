@@ -45,7 +45,7 @@ public class StagerApplication extends MultiDexApplication {
             nm.createNotificationChannel(channel);
     }
 
-    public void restart(final @NonNull Activity activity) {
+    public static void restart(final @NonNull Activity activity) {
         // Systems at 29/Q and later don't allow relaunch, but System.exit(0) on
         // all supported systems will relaunch ... but by killing the process, then
         // restarting the process with the back stack intact. We must make sure that

@@ -33,14 +33,14 @@ public class EventNotificationBuilder {
                 .setMessage(context.getString(getMessage(event)));
     }
 
-    public @StringRes int getMessage(@NonNull EventType event) {
+    public static @StringRes int getMessage(@NonNull EventType event) {
         switch (event) {
             case FRIENDSHIP_REQUEST: return R.string.Notifications_message_FriendshipRequest;
         }
         throw new IllegalStateException("Unsupported EventType");
     }
 
-    public @StringRes int getTitle(@NonNull EventType event) {
+    public static @StringRes int getTitle(@NonNull EventType event) {
         switch (event) {
             case FRIENDSHIP_REQUEST: return R.string.Notifications_group_Friendship;
         }

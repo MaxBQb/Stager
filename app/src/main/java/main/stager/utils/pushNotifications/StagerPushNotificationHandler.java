@@ -63,6 +63,8 @@ public class StagerPushNotificationHandler {
 
     public void handleEvent(NotificationCompat.Builder builder, RemoteMessage message,
                                @NonNull EventType event) {
+        builder.setContentTitle(context.getString(EventNotificationBuilder.getTitle(event)))
+               .setContentText(context.getString(EventNotificationBuilder.getMessage(event)));
         switch (event) {
             case FRIENDSHIP_REQUEST: handleFriendshipRequest(builder, message);
             break;

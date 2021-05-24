@@ -1,6 +1,5 @@
 package main.stager.ui.my_contacts;
 
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -9,7 +8,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
-import org.jetbrains.annotations.NotNull;
 import main.stager.R;
 import main.stager.UserAvatar;
 import main.stager.list.StagerListAdapter;
@@ -34,19 +32,18 @@ public class ContactRecyclerViewAdapter
         super(DIFF_CALLBACK);
     }
 
-    @NotNull
     @Override
-    public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_list_item_contact,
-                        parent, false);
-        return new ViewHolder(view);
+    protected Class<ViewHolder> getViewHolderType() {
+        return ViewHolder.class;
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = getItem(position);
+    protected int getItemListLayout() {
+        return R.layout.fragment_list_item_contact;
+    }
 
+    @Override
+    protected void onBindViewHolderInner(final ViewHolder holder, int position) {
         TextView textView = (TextView) holder.mView.findViewById(R.id.item_email);
         if (Utilits.isNullOrBlank(holder.mItem.getName()))
             holder.mNameView.setText(R.string.ContactInfoFragment_message_AnonymousUser);
@@ -69,7 +66,6 @@ public class ContactRecyclerViewAdapter
 
         holder.mAvatar.setEmail(holder.mItem.getEmail());
         holder.mAvatar.setUserName(holder.mItem.getName());
-        bindOnItemClickListener(holder.mView, holder.mItem, position);
     }
 
     public static class ViewHolder extends StagerViewHolder<Contact> {

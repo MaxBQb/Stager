@@ -67,13 +67,15 @@ public class StagerPushNotificationHandler {
         builder.setContentTitle(context.getString(EventNotificationBuilder.getTitle(event)))
                .setContentText(context.getString(EventNotificationBuilder.getMessage(event)));
         switch (event) {
-            case FRIENDSHIP_REQUEST: return handleFriendshipRequest(builder, message);
+            case FRIENDSHIP_REQUEST: return handleFriendshipRequest(builder, message, event);
         }
         return true;
     }
 
-    public boolean handleFriendshipRequest(NotificationCompat.Builder builder, RemoteMessage message) {
-        // Do something
+    public boolean handleFriendshipRequest(NotificationCompat.Builder builder,
+                                           RemoteMessage message,
+                                           @NonNull EventType selfEvent) {
+        builder.setGroup(selfEvent.name());
         return true;
     }
 }

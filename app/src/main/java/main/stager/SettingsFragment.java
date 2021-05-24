@@ -25,9 +25,11 @@ implements SharedPreferences.OnSharedPreferenceChangeListener {
     private SwitchPreferenceCompat P_THEME;
     private ListPreference P_LOCALE;
     private SwitchPreferenceCompat P_AUTO_TUNE;
+    private SwitchPreferenceCompat P_HIDE_EMAIL;
 
     private void initPrefRefs() {
         P_AUTO_TUNE = findPreference(S.AUTO_TUNE);
+        P_HIDE_EMAIL = findPreference(S.HIDE_EMAIL);
         P_LOCALE = findPreference(S.LOCALE);
         P_THEME = findPreference(S.THEME);
     }
@@ -58,7 +60,13 @@ implements SharedPreferences.OnSharedPreferenceChangeListener {
     }
 
     private void setPreferenceChangeListeners() {
-
+        P_HIDE_EMAIL.setOnPreferenceChangeListener((preference, newValue) -> {
+            if ((Boolean) newValue)
+                StagerApplication.getDataProvider().deleteEmail();
+            else
+                StagerApplication.getDataProvider().saveEmail();
+            return true;
+        });
     }
 
     private void autoTune() {

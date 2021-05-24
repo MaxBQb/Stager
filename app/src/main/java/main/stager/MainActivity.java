@@ -39,9 +39,10 @@ public class MainActivity extends AuthorizedOnlyActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        // Актуализируем email на сервере
-        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        dataProvider.getUserEmail().setValue(email);
+        String email = dataProvider.getEmail();
+        if (!StagerApplication.getSettings().isEmailHidden(false))
+            // Актуализируем email на сервере
+            dataProvider.getUserEmail().setValue(email);
 
         navBarViewModel = new ViewModelProvider(this).get(NavBarViewModel.class);
         navBarViewModel.buildBackPath();

@@ -100,6 +100,12 @@ public class DataProvider {
         return uid == null ? "" : uid;
     }
 
+    public @NotNull String getEmail() {
+        if (mAuth.getCurrentUser() == null) return "";
+        String email = mAuth.getCurrentUser().getEmail();
+        return email != null ? email : "";
+    }
+
     public boolean isAuthorized() {
         return mAuth.getCurrentUser() != null;
     }
@@ -126,6 +132,14 @@ public class DataProvider {
 
     public DatabaseReference getUserEmail() {
         return getUserInfo().child(PATH.USER_EMAIL);
+    }
+
+    public Task<Void> saveEmail() {
+        return getUserEmail().setValue(getEmail());
+    }
+
+    public Task<Void> deleteEmail() {
+        return getUserEmail().removeValue();
     }
 
     public Query findUserByEmail(String email) {

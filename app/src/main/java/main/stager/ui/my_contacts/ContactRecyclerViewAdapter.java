@@ -3,6 +3,7 @@ package main.stager.ui.my_contacts;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -53,10 +54,17 @@ public class ContactRecyclerViewAdapter
 
         if (Utilits.isNullOrBlank(holder.mItem.getEmail())) {
             holder.mEmailView.setVisibility(View.GONE);
-            textView.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0f));
-        }
-        else
+            textView.setLayoutParams(new TableLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT, 0f));
+        } else {
+            textView.setLayoutParams(new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT, 0f
+            ));
+            holder.mEmailView.setVisibility(View.VISIBLE);
             holder.mEmailView.setText(holder.mItem.getEmail());
+        }
 
         holder.mAvatar.setEmail(holder.mItem.getEmail());
         holder.mAvatar.setUserName(holder.mItem.getName());

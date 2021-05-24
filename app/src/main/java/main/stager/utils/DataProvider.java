@@ -382,131 +382,109 @@ public class DataProvider {
     }
 
     public void resetActionStatus(@NotNull String actionKey) {
-        getStages(actionKey).runTransaction(new Transaction.Handler() {
-            @NonNull
-            @Override
-            public Transaction.Result doTransaction(@NonNull MutableData currentData) {
-                if (!currentData.hasChildren())
-                    return Transaction.success(currentData);
+        BatchUpdate batch = batchedFromRoot();
+        getStages(actionKey).addListenerForSingleValueEvent(new OnValueGet(snapshot -> {
+            if (!snapshot.exists() || !snapshot.hasChildren())
+                return;
 
-                for (MutableData item: currentData.getChildren())
-                    if (!item.hasChild(PATH.STAGE_STATUS))
-                        return Transaction.abort();
-                    else
-                        item.child(PATH.STAGE_STATUS).setValue(Status.WAITING);
-                return Transaction.success(currentData);
-            }
+            for (DataSnapshot item: snapshot.getChildren())
+                batch.set(item.child(PATH.STAGE_STATUS).getRef(),
+                          Status.WAITING);
 
-            @Override
-            public void onComplete(@Nullable DatabaseError error,
-                                   boolean committed, @Nullable DataSnapshot currentData) {
-                if (!committed || currentData == null || !currentData.exists())
-                    return;
-
-                getActionStatus(actionKey).setValue(Status.WAITING);
-            }
-        });
+            batch.set(getActionStatus(actionKey), Status.WAITING);
+            batch.apply();
+        }));
     }
 
-    public void setStageStatusSucceed(@NotNull String actionKey, @NotNull String stageKey) {
-        getStages(actionKey).runTransaction(new Transaction.Handler() {
-            @NonNull
-            @Override
-            public Transaction.Result doTransaction(@NonNull MutableData currentData) {
-                if (!currentData.hasChildren())
-                    return Transaction.success(currentData);
+    public void setStageStatusSucceed(@NotNull String actionKey,
+                                      @NotNull String stageKey) {
+        DatabaseReference ref = getStages(actionKey);
+        BatchUpdate batch = BatchUpdate.init(ref);
+        ref.addListenerForSingleValueEvent(new OnValueGet(snapshot -> {
+            if (!snapshot.exists() || !snapshot.hasChildren())
+                return;
 
-                Stage target = currentData.child(stageKey).getValue(Stage.class);
-                if (target == null)
-                    return Transaction.abort();
+            Stage target = snapshot.child(stageKey).getValue(Stage.class);
+            if (target == null)
+                return;
 
-                int pos = target.getPos();
-                if (pos == Integer.MAX_VALUE)
-                    return Transaction.abort();
+            int pos = target.getPos();
+            if (pos == Integer.MAX_VALUE)
+                return;
 
-                Stage stage;
-                for (MutableData item: currentData.getChildren()) {
-                    stage = item.getValue(Stage.class);
-                    if (stage == null)
-                        return Transaction.abort();
-
-                    if (stage.getPos() < pos &&
-                        stage.getCurrentStatus() != Status.SUCCEED)
-                        return Transaction.abort();
-                }
-
-                currentData.child(stageKey).child(PATH.STAGE_STATUS).setValue(Status.SUCCEED);
-                return Transaction.success(currentData);
-            }
-
-            @Override
-            public void onComplete(@Nullable DatabaseError error,
-                                   boolean committed, @Nullable DataSnapshot currentData) {
-                if (!committed || currentData == null || !currentData.exists())
+            Stage stage;
+            int unfinishedCount = 0;
+            for (DataSnapshot item: snapshot.getChildren()) {
+                stage = item.getValue(Stage.class);
+                if (stage == null)
                     return;
 
-                for (DataSnapshot item : currentData.getChildren())
-                    if (item.child(PATH.STAGE_STATUS).getValue(Status.class) != Status.SUCCEED)
-                        return;
-
-                getActionStatus(actionKey).setValue(Status.SUCCEED);
+                if (stage.getCurrentStatus() != Status.SUCCEED) {
+                    if (stage.getPos() < pos) return;
+                    unfinishedCount++;
+                }
             }
-        });
+
+            batch.set(snapshot.child(stageKey)
+                    .child(PATH.STAGE_STATUS)
+                    .getRef(), Status.SUCCEED);
+
+            if (unfinishedCount == 0) return;
+
+            Task<Void> task = batch.apply();
+            if (unfinishedCount == 1)
+                task.addOnSuccessListener(t -> getActionStatus(actionKey)
+                                               .setValue(Status.SUCCEED));
+        }));
     }
 
     public void setStageStatusAborted(@NotNull String actionKey, @NotNull String stageKey) {
-        getStages(actionKey).runTransaction(new Transaction.Handler() {
-            @NonNull
-            @Override
-            public Transaction.Result doTransaction(@NonNull MutableData currentData) {
-                if (!currentData.hasChildren())
-                    return Transaction.success(currentData);
+        DatabaseReference ref = getStages(actionKey);
+        BatchUpdate batch = BatchUpdate.init(ref);
+        ref.addListenerForSingleValueEvent(new OnValueGet(snapshot -> {
+            if (!snapshot.exists())
+                return;
 
-                Stage target = currentData.child(stageKey).getValue(Stage.class);
-                if (target == null)
-                    return Transaction.abort();
+            Stage target = snapshot.child(stageKey).getValue(Stage.class);
+            if (target == null)
+                return;
 
-                int pos = target.getPos();
-                if (pos == Integer.MAX_VALUE)
-                    return Transaction.abort();
+            int pos = target.getPos();
+            if (pos == Integer.MAX_VALUE)
+                return;
 
-                List<String> lockList = new ArrayList<>();
+            List<String> lockList = new ArrayList<>();
 
-                Stage stage;
-                for (MutableData item: currentData.getChildren()) {
-                    stage = item.getValue(Stage.class);
-                    if (stage == null)
-                        return Transaction.abort();
-
-                    if (stage.getPos() < pos &&
-                        stage.getCurrentStatus() != Status.SUCCEED)
-                        return Transaction.abort();
-
-                    if (stage.getPos() > pos) {
-                        if (stage.getCurrentStatus() != Status.WAITING &&
-                            stage.getCurrentStatus() != Status.LOCKED)
-                            return Transaction.abort();
-                        lockList.add(item.getKey());
-                    }
-                }
-
-                currentData.child(stageKey).child(PATH.STAGE_STATUS).setValue(Status.ABORTED);
-
-                for (String lock_key: lockList)
-                    currentData.child(lock_key).child(PATH.STAGE_STATUS).setValue(Status.LOCKED);
-
-                return Transaction.success(currentData);
-            }
-
-            @Override
-            public void onComplete(@Nullable DatabaseError error,
-                                   boolean committed, @Nullable DataSnapshot currentData) {
-                if (!committed || currentData == null || !currentData.exists())
+            Stage stage;
+            for (DataSnapshot item: snapshot.getChildren()) {
+                stage = item.getValue(Stage.class);
+                if (stage == null)
                     return;
 
-                getActionStatus(actionKey).setValue(Status.ABORTED);
+                if (stage.getPos() < pos &&
+                    stage.getCurrentStatus() != Status.SUCCEED)
+                    return;
+
+                if (stage.getPos() > pos) {
+                    if (stage.getCurrentStatus() != Status.WAITING &&
+                        stage.getCurrentStatus() != Status.LOCKED)
+                        return;
+                    lockList.add(item.getKey());
+                }
             }
-        });
+
+            batch.set(snapshot.child(stageKey)
+                                 .child(PATH.STAGE_STATUS)
+                                 .getRef(), Status.ABORTED);
+
+            for (String lock_key: lockList)
+                batch.set(snapshot.child(lock_key)
+                                     .child(PATH.STAGE_STATUS)
+                                     .getRef(), Status.LOCKED);
+
+            batch.apply().addOnSuccessListener(t -> getActionStatus(actionKey)
+                                                    .setValue(Status.ABORTED));
+        }));
     }
 
     public void deleteStage(@NotNull String actionKey, @NotNull String stageKey) {
@@ -617,74 +595,53 @@ public class DataProvider {
     }
 
     public static void toggle(@NotNull DatabaseReference ref) {
-        ref.runTransaction(new Transaction.Handler() {
-            @NonNull
-            @Override
-            public Transaction.Result doTransaction(@NotNull MutableData currentData) {
-                Boolean value = currentData.getValue(boolean.class);
-                if (value == null)
-                    return Transaction.success(currentData);
-                currentData.setValue(!value);
-                return Transaction.success(currentData);
-            }
-
-            @Override
-            public void onComplete(@Nullable DatabaseError error,
-                                   boolean committed,
-                                   @Nullable DataSnapshot currentData) {}
-        });
+        ref.addListenerForSingleValueEvent(new OnValueGet(currentData -> {
+            if (!currentData.exists())
+                return;
+            Boolean value = currentData.getValue(boolean.class);
+            if (value == null)
+                return;
+            ref.setValue(!value);
+        }));
     }
 
     public static void resetPositions(@NotNull DatabaseReference ref, List<String> keys) {
-        ref.runTransaction(new Transaction.Handler() {
-            @NonNull
-            @Override
-            public Transaction.Result doTransaction(@NonNull MutableData currentData) {
-                if (currentData.getValue() != null)
-                    for (int i = 0; i < keys.size(); i++)
-                        if (currentData.child(keys.get(i)).getValue() != null)
-                            currentData.child(keys.get(i)).child(PATH.FB_POS).setValue(i+1);
-                return Transaction.success(currentData);
-            }
+        BatchUpdate batch = BatchUpdate.init(ref);
+        ref.addListenerForSingleValueEvent(new OnValueGet(snapshot -> {
+            if (!snapshot.exists() || !snapshot.hasChildren())
+                return;
 
-            @Override
-            public void onComplete(@Nullable DatabaseError error,
-                                   boolean committed,
-                                   @Nullable DataSnapshot currentData) {}
-        });
+            for (int i = 0; i < keys.size(); i++)
+                if (snapshot.child(keys.get(i)).getValue() != null)
+                    batch.set(snapshot.child(keys.get(i))
+                                         .child(PATH.FB_POS)
+                                         .getRef(), i+1);
+            batch.apply();
+        }));
     }
 
     public static void initPositions(@NotNull DatabaseReference ref) {
-        ref.runTransaction(new Transaction.Handler() {
-            @NonNull
-            @Override
-            public Transaction.Result doTransaction(@NonNull MutableData currentData) {
-                if (currentData.getValue() == null || !currentData.hasChildren())
-                    return Transaction.success(currentData);
+        BatchUpdate batch = BatchUpdate.init(ref);
+        ref.addListenerForSingleValueEvent(new OnValueGet(snapshot -> {
+            if (!snapshot.exists() || !snapshot.hasChildren())
+                return;
 
-                int max_pos = 0;
-                Integer i;
+            int max_pos = 0;
+            Integer i;
 
-                for (MutableData item: currentData.getChildren()) {
-                    i = item.child(PATH.FB_POS).getValue(Integer.class);
-                    if (i != null && i != Integer.MAX_VALUE && i > max_pos)
-                        max_pos = i;
-                }
-
-                for (MutableData item: currentData.getChildren()) {
-                    i = item.child(PATH.FB_POS).getValue(Integer.class);
-                    if (i == null || i == Integer.MAX_VALUE)
-                        item.child(PATH.FB_POS).setValue(++max_pos);
-                }
-
-                return Transaction.success(currentData);
+            for (DataSnapshot item: snapshot.getChildren()) {
+                i = item.child(PATH.FB_POS).getValue(Integer.class);
+                if (i != null && i != Integer.MAX_VALUE && i > max_pos)
+                    max_pos = i;
             }
 
-            @Override
-            public void onComplete(@Nullable DatabaseError error,
-                                   boolean committed,
-                                   @Nullable DataSnapshot currentData) {}
-        });
+            for (DataSnapshot item: snapshot.getChildren()) {
+                i = item.child(PATH.FB_POS).getValue(Integer.class);
+                if (i == null || i == Integer.MAX_VALUE)
+                    batch.set(item.child(PATH.FB_POS).getRef(), ++max_pos);
+            }
+            batch.apply();
+        }));
     }
 
     public Query getSorted(@NotNull Query ref) {

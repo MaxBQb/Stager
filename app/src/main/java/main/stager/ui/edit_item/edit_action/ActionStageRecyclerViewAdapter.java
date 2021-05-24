@@ -15,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import main.stager.R;
 import main.stager.linkers.LStatus;
 import main.stager.list.StagerListAdapter;
+import main.stager.list.StagerViewHolder;
 import main.stager.model.Stage;
 import main.stager.model.Status;
 import main.stager.utils.Utilits;
@@ -68,15 +69,12 @@ public class ActionStageRecyclerViewAdapter
         bindOnItemClickListener(holder.mView, holder.mItem, position);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
+    public static class ViewHolder extends StagerViewHolder<Stage> {
         public final TextView mContentView;
         public final ImageView mStatusView;
-        public Stage mItem;
 
         public ViewHolder(View view) {
             super(view);
-            mView = view;
             mContentView = view.findViewById(R.id.item_name);
             mStatusView = view.findViewById(R.id.item_icon);
         }

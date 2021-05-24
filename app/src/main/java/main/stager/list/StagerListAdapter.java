@@ -1,17 +1,14 @@
 package main.stager.list;
 
 import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
-
 import main.stager.model.FBModel;
 
-public abstract class StagerListAdapter<T, VH extends RecyclerView.ViewHolder>
+public abstract class StagerListAdapter<T, VH extends StagerViewHolder<T>>
         extends ListAdapter<T, VH> {
     protected OnItemClickListener<T> onItemClickListener;
 

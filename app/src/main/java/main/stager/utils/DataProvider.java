@@ -20,6 +20,8 @@ import main.stager.model.FBModel;
 import main.stager.model.Stage;
 import main.stager.model.Status;
 import main.stager.model.UserAction;
+import main.stager.utils.BroadcasterHolders.TasksHolder;
+import main.stager.utils.BroadcasterHolders.TaskVHolder;
 import main.stager.utils.ChangeListeners.firebase.OnValueGet;
 import main.stager.utils.pushNotifications.EventNotificationBuilder;
 import main.stager.utils.pushNotifications.EventType;
@@ -86,6 +88,19 @@ public class DataProvider {
 
         // Monitored
         public static final String MONITORED = "monitored";
+    }
+
+    public static final class CBN {
+        public static final class SetStageStatus {
+            public static final String UPDATE_STAGES = "update_stages";
+            public static final String UPDATE_ACTION = "update_action";
+        }
+        public static final String RESET_STAGE_STATUS = "reset_stage_status";
+
+        public static final String INIT_POS = "init_pos";
+        public static final String ADD_ACTION = "add_action";
+        public static final String ADD_STAGE = "add_stage";
+
     }
 
     //endregion INIT
@@ -321,10 +336,12 @@ public class DataProvider {
         return getActions().child(key).child(PATH.ACTION_NAME);
     }
 
-    public String addAction(UserAction ua) {
+    public String addAction(UserAction ua,
+                            @NonNull TaskVHolder bholder) {
         String key = getActions().push().getKey();
-        getAction(key).setValue(ua);
-        initPositions(getActions());
+        Task<Void> task = getAction(key).setValue(ua);
+        bholder.postBroadcaster(CBN.ADD_ACTION, task);
+        initPositions(getActions(), bholder);
         return key;
     }
 
@@ -349,11 +366,14 @@ public class DataProvider {
 
     //region Stages of action
 
-    public String addStage(@NotNull String actionKey, Stage stage) {
+    public String addStage(@NotNull String actionKey,
+                           Stage stage,
+                           @NonNull TaskVHolder bholder) {
         String key = getStages(actionKey).push().getKey();
-        getStage(actionKey, key).setValue(stage);
-        initPositions(getStages(actionKey));
-        resetActionStatus(actionKey);
+        Task<Void> task = getStage(actionKey, key).setValue(stage);
+        bholder.postBroadcaster(CBN.ADD_STAGE, task);
+        initPositions(getStages(actionKey), bholder);
+        resetActionStatus(actionKey, bholder);
         return key;
     }
 
@@ -382,6 +402,11 @@ public class DataProvider {
     }
 
     public void resetActionStatus(@NotNull String actionKey) {
+        resetActionStatus(actionKey, new TaskVHolder());
+    }
+
+    public void resetActionStatus(@NotNull String actionKey,
+                                  @NonNull TaskVHolder bholder) {
         BatchUpdate batch = batchedFromRoot();
         getStages(actionKey).addListenerForSingleValueEvent(new OnValueGet(snapshot -> {
             if (!snapshot.exists() || !snapshot.hasChildren())
@@ -392,12 +417,18 @@ public class DataProvider {
                           Status.WAITING);
 
             batch.set(getActionStatus(actionKey), Status.WAITING);
-            batch.apply();
+            bholder.postBroadcaster(CBN.RESET_STAGE_STATUS, batch.apply());
         }));
     }
 
     public void setStageStatusSucceed(@NotNull String actionKey,
                                       @NotNull String stageKey) {
+         setStageStatusSucceed(actionKey, stageKey, new TaskVHolder());
+    }
+
+    public void setStageStatusSucceed(@NotNull String actionKey,
+                                      @NotNull String stageKey,
+                                      @NonNull TasksHolder<Void> bholder) {
         DatabaseReference ref = getStages(actionKey);
         BatchUpdate batch = BatchUpdate.init(ref);
         ref.addListenerForSingleValueEvent(new OnValueGet(snapshot -> {
@@ -432,13 +463,27 @@ public class DataProvider {
             if (unfinishedCount == 0) return;
 
             Task<Void> task = batch.apply();
-            if (unfinishedCount == 1)
-                task.addOnSuccessListener(t -> getActionStatus(actionKey)
-                                               .setValue(Status.SUCCEED));
+            bholder.postBroadcaster(CBN.SetStageStatus.UPDATE_STAGES, task);
+
+            if (unfinishedCount != 1) return;
+
+            task.addOnSuccessListener(t ->
+                bholder.postBroadcaster(
+                        CBN.SetStageStatus.UPDATE_ACTION,
+                        getActionStatus(actionKey)
+                        .setValue(Status.SUCCEED))
+            );
         }));
     }
 
-    public void setStageStatusAborted(@NotNull String actionKey, @NotNull String stageKey) {
+    public void setStageStatusAborted(@NotNull String actionKey,
+                                      @NotNull String stageKey) {
+        setStageStatusAborted(actionKey, stageKey, new TaskVHolder());
+    }
+
+    public void setStageStatusAborted(@NotNull String actionKey,
+                                      @NotNull String stageKey,
+                                      @NonNull TasksHolder<Void> bholder) {
         DatabaseReference ref = getStages(actionKey);
         BatchUpdate batch = BatchUpdate.init(ref);
         ref.addListenerForSingleValueEvent(new OnValueGet(snapshot -> {
@@ -482,8 +527,13 @@ public class DataProvider {
                                      .child(PATH.STAGE_STATUS)
                                      .getRef(), Status.LOCKED);
 
-            batch.apply().addOnSuccessListener(t -> getActionStatus(actionKey)
-                                                    .setValue(Status.ABORTED));
+            Task<Void> task = batch.apply();
+            bholder.postBroadcaster(CBN.SetStageStatus.UPDATE_STAGES, task);
+            task.addOnSuccessListener(t ->
+                bholder.postBroadcaster(CBN.SetStageStatus.UPDATE_ACTION,
+                    getActionStatus(actionKey)
+                    .setValue(Status.ABORTED))
+            );
         }));
     }
 
@@ -621,6 +671,11 @@ public class DataProvider {
     }
 
     public static void initPositions(@NotNull DatabaseReference ref) {
+        initPositions(ref, new TaskVHolder());
+    }
+
+    public static void initPositions(@NotNull DatabaseReference ref,
+                                     @NonNull TasksHolder<Void> bholder) {
         BatchUpdate batch = BatchUpdate.init(ref);
         ref.addListenerForSingleValueEvent(new OnValueGet(snapshot -> {
             if (!snapshot.exists() || !snapshot.hasChildren())
@@ -640,7 +695,7 @@ public class DataProvider {
                 if (i == null || i == Integer.MAX_VALUE)
                     batch.set(item.child(PATH.FB_POS).getRef(), ++max_pos);
             }
-            batch.apply();
+            bholder.postBroadcaster(CBN.INIT_POS, batch.apply());
         }));
     }
 

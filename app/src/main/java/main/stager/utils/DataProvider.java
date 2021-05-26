@@ -13,6 +13,11 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.messaging.FirebaseMessaging;
 import org.jetbrains.annotations.NotNull;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,12 +105,11 @@ public class DataProvider {
             public static final String UPDATE_STAGES = "update_stages";
             public static final String UPDATE_ACTION = "update_action";
         }
-        public static final String RESET_STAGE_STATUS = "reset_stage_status";
+        public static final String RESET_ACTION_STATUS = "reset_action_status";
 
         public static final String INIT_POS = "init_pos";
         public static final String ADD_ACTION = "add_action";
         public static final String ADD_STAGE = "add_stage";
-
     }
 
     //endregion INIT
@@ -347,6 +351,7 @@ public class DataProvider {
         return getActions().child(key).child(PATH.ACTION_NAME);
     }
 
+    @Trackable(keys = {CBN.ADD_ACTION, CBN.INIT_POS})
     public String addAction(UserAction ua) {
         String key = getActions().push().getKey();
         Task<Void> task = getAction(key).setValue(ua);
@@ -376,6 +381,7 @@ public class DataProvider {
 
     //region Stages of action
 
+    @Trackable(keys = {CBN.ADD_STAGE, CBN.INIT_POS, CBN.RESET_ACTION_STATUS})
     public String addStage(@NotNull String actionKey,
                            Stage stage) {
         String key = getStages(actionKey).push().getKey();
@@ -410,7 +416,7 @@ public class DataProvider {
         return getStage(actionName, stageKey).child(PATH.STAGE_STATUS);
     }
 
-
+    @Trackable(keys = {CBN.RESET_ACTION_STATUS})
     public void resetActionStatus(@NotNull String actionKey) {
         BatchUpdate batch = batchedFromRoot();
         getStages(actionKey).addListenerForSingleValueEvent(new OnValueGet(snapshot -> {
@@ -422,10 +428,12 @@ public class DataProvider {
                           Status.WAITING);
 
             batch.set(getActionStatus(actionKey), Status.WAITING);
-            requestTracker.postItem(CBN.RESET_STAGE_STATUS, batch.apply());
+            requestTracker.postItem(CBN.RESET_ACTION_STATUS, batch.apply());
         }));
     }
 
+    @Trackable(keys = {CBN.SetStageStatus.UPDATE_ACTION,
+                       CBN.SetStageStatus.UPDATE_STAGES})
     public void setStageStatusSucceed(@NotNull String actionKey,
                                       @NotNull String stageKey) {
         DatabaseReference ref = getStages(actionKey);
@@ -475,6 +483,8 @@ public class DataProvider {
         }));
     }
 
+    @Trackable(keys = {CBN.SetStageStatus.UPDATE_ACTION,
+                       CBN.SetStageStatus.UPDATE_STAGES})
     public void setStageStatusAborted(@NotNull String actionKey,
                                       @NotNull String stageKey) {
         DatabaseReference ref = getStages(actionKey);
@@ -663,6 +673,7 @@ public class DataProvider {
         }));
     }
 
+    @Trackable(keys = {CBN.INIT_POS})
     public void initPositions(@NotNull DatabaseReference ref) {
         BatchUpdate batch = BatchUpdate.init(ref);
         ref.addListenerForSingleValueEvent(new OnValueGet(snapshot -> {
@@ -704,4 +715,15 @@ public class DataProvider {
     }
 
     //endregion Other
+
+    //region Annotations
+
+    @Documented
+    @Target(ElementType.METHOD)
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface Trackable {
+        String[] keys();
+    }
+
+    //endregion Annotations
 }

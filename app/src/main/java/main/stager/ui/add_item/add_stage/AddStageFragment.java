@@ -5,8 +5,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 
+import com.google.android.gms.tasks.Task;
+
 import main.stager.list.feature.AddItemFragment;
-import main.stager.utils.BroadcasterHolders.TaskVHolder;
+import main.stager.utils.BroadcasterHolders.GainedObservable;
 import main.stager.utils.DataProvider;
 import main.stager.R;
 import main.stager.model.Stage;
@@ -53,11 +55,12 @@ public class AddStageFragment extends AddItemFragment {
                     ), Toast.LENGTH_LONG).show();
             return;
         }
-        dataProvider.addStage(mActionKey,
-            new Stage(Status.WAITING, name, TriggerType.MANUAL),
-            (TaskVHolder) new TaskVHolder().addOnBroadcastGainListener(
-                DataProvider.CBN.ADD_STAGE,
-                t -> t.addOnSuccessListener(e -> close())
+        dataProvider.withRequestTracker(new GainedObservable()
+                    .addOnItemGainListener(
+            DataProvider.CBN.ADD_STAGE,
+            t -> ((Task<Void>)t).addOnSuccessListener(e -> close())
+        )).addStage(mActionKey, new Stage(
+            Status.WAITING, name, TriggerType.MANUAL
         ));
     }
 }

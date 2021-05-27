@@ -276,7 +276,7 @@ public class DataProvider {
     public DatabaseReference getMonitoredAction(@NonNull String uid,
                                                 @NonNull String actionOwner,
                                                 @NonNull String actionKey) {
-        return getMonitoredAction(uid, actionOwner).child(actionKey);
+        return getMonitoredActions(uid, actionOwner).child(actionKey);
     }
 
     public DatabaseReference getMonitoredAction(@NonNull String actionOwner,

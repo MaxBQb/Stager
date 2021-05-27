@@ -24,7 +24,13 @@ public class ContactRecyclerViewAdapter
     private static DiffUtil.ItemCallback<Contact> DIFF_CALLBACK = new FBItemCallback<Contact>() {
         @Override
         public boolean areContentsTheSame(@NonNull Contact oldItem, @NonNull Contact newItem) {
-            return oldItem.getName().equals(newItem.getName());
+        return Utilits.getDefaultOnNullOrBlank(oldItem.getName(), "")
+                      .equals(
+               Utilits.getDefaultOnNullOrBlank(newItem.getName(), ""))
+               &&
+               Utilits.getDefaultOnNullOrBlank(oldItem.getEmail(), "")
+                      .equals(
+               Utilits.getDefaultOnNullOrBlank(newItem.getEmail(), ""));
         }
     };
 

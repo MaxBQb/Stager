@@ -114,10 +114,11 @@ public class ContactInfoFragment extends
     }
 
     private void updateTitle(String text) {
-        getActionBar().setTitle(getString(R.string.ContactInfoFragment_title,
+        if (getActionBar() != null)
+            getActionBar().setTitle(getString(R.string.ContactInfoFragment_title,
             Utilits.getDefaultOnNullOrBlank(text,
                 getString(R.string.ContactInfoFragment_message_AnonymousUser
-        ))));
+            ))));
     }
 
     @Override

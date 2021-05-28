@@ -134,8 +134,11 @@ public class ContactInfoFragment extends
                         view.findViewById(R.id.contact_email),
                         contact.getEmail());
 
-            updateField(view.findViewById(R.id.LinearLayout_description),
-                        descriptionView, contact.getDescription());
+            if (contact.getDescription() != null)
+                updateField(view.findViewById(R.id.LinearLayout_description),
+                            descriptionView,
+                        getString(R.string.ContactInfoFragment_TextView_label_Description) +
+                                " " + contact.getDescription());
 
             updateTitle(name);
         });

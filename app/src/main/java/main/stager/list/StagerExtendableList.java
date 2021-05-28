@@ -21,6 +21,7 @@ public abstract class StagerExtendableList<TVM extends StagerListViewModel<T>,
     public void onItemSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int pos, int direction) {
         super.onItemSwiped(viewHolder, pos, direction);
         viewModel.deleteItem(adapter.get(pos));
+        adapter.removeItem(pos);
     }
 
     protected void setEventListeners() {

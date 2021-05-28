@@ -56,6 +56,12 @@ public abstract class StagerListAdapter<T, VH extends StagerViewHolder<T>>
         submitList(list);
     }
 
+    public void removeItem(int index) {
+        ArrayList<T> list = new ArrayList<T>(getCurrentList());
+        list.remove(index);
+        submitList(list);
+    }
+
     protected void bindOnItemClickListener(View view, T item, int pos){
         if (onItemClickListener != null)
             view.setOnClickListener(v -> onItemClickListener

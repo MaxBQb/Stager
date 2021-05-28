@@ -16,4 +16,7 @@
     <string name="Settings__HideEmail" translatable="false">
         Stager.main.settings.privacy.hide_email
     </string>
+    <string name="Settings__NotifyFriendshipRequest" translatable="false">
+        Stager.main.settings.notifications.friendship.request
+    </string>
 </resources>

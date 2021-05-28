@@ -578,9 +578,12 @@ public class DataProvider {
 
         //region EventNames
 
-    public List<String> getInitialEventNames() {
+    public List<String> getInitialEventNames(boolean showAll) {
         List<String> list = new ArrayList<>();
-        list.add(getFriendshipRequestEventName(getUID()));
+        if (StagerApplication.getSettings()
+                             .isNotifyFriendshipRequestAllowed(true)
+            || showAll)
+            list.add(getFriendshipRequestEventName(getUID()));
         return list;
     }
 
@@ -593,20 +596,20 @@ public class DataProvider {
         //region Subscribe
 
     public void subscribeInitial() {
-        for (String eventName: getInitialEventNames())
+        for (String eventName: getInitialEventNames(false))
             subscribe(eventName);
     }
 
     public void unsubscribeInitial() {
-        for (String eventName: getInitialEventNames())
+        for (String eventName: getInitialEventNames(true))
             unsubscribe(eventName);
     }
 
-    private void subscribe(@NonNull String eventName) {
+    public void subscribe(@NonNull String eventName) {
         mMes.subscribeToTopic(eventName);
     }
 
-    private void unsubscribe(@NonNull String eventName) {
+    public void unsubscribe(@NonNull String eventName) {
         mMes.unsubscribeFromTopic(eventName);
     }
 

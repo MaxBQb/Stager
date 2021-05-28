@@ -12,6 +12,7 @@ import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreferenceCompat;
 import java.util.HashSet;
 import java.util.Set;
+import main.stager.utils.DataProvider;
 import main.stager.utils.LocaleController;
 import main.stager.utils.SettingsWrapper;
 import main.stager.utils.ThemeController;
@@ -19,6 +20,7 @@ import main.stager.utils.ThemeController;
 public class SettingsFragment extends PreferenceFragmentCompat
 implements SharedPreferences.OnSharedPreferenceChangeListener {
     private final SettingsWrapper S;
+    private final DataProvider dataProvider;
     private final Set<String> requireRelaunchActivity;
     private final Set<String> requireRestartApp;
 
@@ -26,16 +28,19 @@ implements SharedPreferences.OnSharedPreferenceChangeListener {
     private ListPreference P_LOCALE;
     private SwitchPreferenceCompat P_AUTO_TUNE;
     private SwitchPreferenceCompat P_HIDE_EMAIL;
+    private SwitchPreferenceCompat P_NOTIFY_FRIENDSHIP_REQUEST;
 
     private void initPrefRefs() {
         P_AUTO_TUNE = findPreference(S.AUTO_TUNE);
         P_HIDE_EMAIL = findPreference(S.HIDE_EMAIL);
         P_LOCALE = findPreference(S.LOCALE);
         P_THEME = findPreference(S.THEME);
+        P_NOTIFY_FRIENDSHIP_REQUEST = findPreference(S.NOTIFY_FRIENDSHIP_REQUEST);
     }
 
     public SettingsFragment() {
         super();
+        dataProvider = StagerApplication.getDataProvider();
         S = StagerApplication.getSettings();
         requireRelaunchActivity = new HashSet<String>() {{
            add(S.THEME);
@@ -62,9 +67,18 @@ implements SharedPreferences.OnSharedPreferenceChangeListener {
     private void setPreferenceChangeListeners() {
         P_HIDE_EMAIL.setOnPreferenceChangeListener((preference, newValue) -> {
             if ((Boolean) newValue)
-                StagerApplication.getDataProvider().deleteEmail();
+                dataProvider.deleteEmail();
             else
-                StagerApplication.getDataProvider().saveEmail();
+                dataProvider.saveEmail();
+            return true;
+        });
+
+        P_NOTIFY_FRIENDSHIP_REQUEST.setOnPreferenceChangeListener((preference, newValue) -> {
+            String topic = dataProvider.getFriendshipRequestEventName(dataProvider.getUID());
+            if ((Boolean) newValue)
+                dataProvider.subscribe(topic);
+            else
+                dataProvider.unsubscribe(topic);
             return true;
         });
     }

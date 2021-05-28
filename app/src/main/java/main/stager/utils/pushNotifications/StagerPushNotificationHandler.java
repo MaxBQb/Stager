@@ -17,6 +17,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.google.firebase.messaging.RemoteMessage;
 import main.stager.MainActivity;
 import main.stager.R;
+import main.stager.StagerApplication;
 import main.stager.model.ContactType;
 import main.stager.ui.contact_info.ContactInfoFragment;
 import main.stager.utils.Utilits;
@@ -79,6 +80,10 @@ public class StagerPushNotificationHandler {
     public boolean handleFriendshipRequest(NotificationCompat.Builder builder,
                                            RemoteMessage message,
                                            @NonNull EventType selfEvent) {
+        if (!StagerApplication.getSettings()
+            .isNotifyFriendshipRequestAllowed(true))
+            return false;
+
         Bundle args = new Bundle();
         args.putString(ContactInfoFragment.ARG_CONTACT_TYPE,
                        ContactType.INCOMING.name());

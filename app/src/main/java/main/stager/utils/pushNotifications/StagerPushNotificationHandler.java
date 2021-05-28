@@ -5,17 +5,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDeepLinkBuilder;
+import androidx.navigation.NavDeepLinkRequest;
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.google.firebase.messaging.RemoteMessage;
 import main.stager.MainActivity;
 import main.stager.R;
+import main.stager.model.ContactType;
+import main.stager.ui.contact_info.ContactInfoFragment;
 import main.stager.utils.Utilits;
 
 public class StagerPushNotificationHandler {
     private Context context;
     private final Bitmap largeIcon;
-    private final PendingIntent openAppIntent;
 
     public static final String EVENT_DETAILS = "event_details";
     private static final String SEP = ".";
@@ -27,12 +35,6 @@ public class StagerPushNotificationHandler {
         largeIcon = BitmapFactory.decodeResource(
             context.getResources(),
             R.mipmap.ic_launcher_round
-        );
-        final Intent intent = new Intent(context, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        openAppIntent = PendingIntent.getActivity(
-            context, 0, intent,
-            PendingIntent.FLAG_ONE_SHOT
         );
     }
 
@@ -51,7 +53,9 @@ public class StagerPushNotificationHandler {
         builder.setSmallIcon(R.mipmap.ic_launcher)
                .setLargeIcon(largeIcon)
                .setAutoCancel(true)
-               .setContentIntent(openAppIntent);
+               .setContentIntent(PendingIntent.getActivity(
+                   context, 0, new Intent(context, MainActivity.class), PendingIntent.FLAG_ONE_SHOT
+               ));
 
         String title = message.getData().get(PushNotification.TITLE);
         if (!Utilits.isNullOrBlank(title))
@@ -75,7 +79,20 @@ public class StagerPushNotificationHandler {
     public boolean handleFriendshipRequest(NotificationCompat.Builder builder,
                                            RemoteMessage message,
                                            @NonNull EventType selfEvent) {
-        builder.setGroup(selfEvent.name());
+        Bundle args = new Bundle();
+        args.putString(ContactInfoFragment.ARG_CONTACT_TYPE,
+                       ContactType.INCOMING.name());
+        args.putString(ContactInfoFragment.ARG_CONTACT_KEY,
+                       message.getData().get(SENDER));
+
+        builder.setGroup(selfEvent.name())
+                .setContentIntent(new NavDeepLinkBuilder(context)
+                    .setComponentName(MainActivity.class)
+                    .setGraph(R.navigation.mobile_navigation)
+                    .setDestination(R.id.contact_info)
+                    .setArguments(args)
+                    .createPendingIntent()
+                );
         return true;
     }
 }

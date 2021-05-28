@@ -1,4 +1,4 @@
-package main.stager.utils.BroadcasterHolders;
+package main.stager.utils.GainObservers;
 
 @FunctionalInterface
 public interface OnItemGained {

@@ -6,7 +6,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.Task;
 
 import main.stager.list.feature.AddItemFragment;
-import main.stager.utils.BroadcasterHolders.GainedObservable;
+import main.stager.utils.GainObservers.GainedObservable;
 import main.stager.utils.DataProvider;
 import main.stager.R;
 import main.stager.model.Status;

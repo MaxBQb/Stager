@@ -1,4 +1,4 @@
-package main.stager.utils.BroadcasterHolders;
+package main.stager.utils.GainObservers;
 
 public interface IGainedObservable {
     default IGainedObservable addOnItemGainListener(String key,

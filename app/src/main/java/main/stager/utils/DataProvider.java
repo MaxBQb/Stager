@@ -28,7 +28,7 @@ import main.stager.model.FBModel;
 import main.stager.model.Stage;
 import main.stager.model.Status;
 import main.stager.model.UserAction;
-import main.stager.utils.BroadcasterHolders.IGainedObservable;
+import main.stager.utils.GainObservers.IGainedObservable;
 import main.stager.utils.ChangeListeners.firebase.OnValueGet;
 import main.stager.utils.pushNotifications.EventNotificationBuilder;
 import main.stager.utils.pushNotifications.EventType;

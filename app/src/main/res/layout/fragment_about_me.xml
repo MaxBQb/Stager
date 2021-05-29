@@ -16,7 +16,7 @@
             android:gravity="center"
             android:layout_marginTop="10dp"
             android:text="@string/AboutMeFragment_TextView_title_MyAccount"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <EditText
             android:id="@+id/personName"
@@ -24,9 +24,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/title_aboutMe"
             android:layout_margin="10dp"
+            android:maxLength="12"
             android:inputType="textPersonName"
-            android:hint="@string/AboutMeFragment_EditText_hint_contextName"
-            android:nextFocusForward="@+id/personDescription"/>
+            android:hint="@string/AboutMeFragment_EditText_hint_contextName"/>
 
         <EditText
             android:id="@+id/personDescription"

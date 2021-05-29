@@ -1,8 +1,11 @@
 package main.stager.Base;
 
 
+import android.content.Context;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,5 +39,14 @@ public abstract class SmartActivity extends AppCompatActivity {
     public void hideLoadingScreen() {
         progressBarHolder = findViewById(R.id.loading_overlay);
         progressBarHolder.setVisibility(View.GONE);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (getCurrentFocus() != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+        return super.dispatchTouchEvent(ev);
     }
 }

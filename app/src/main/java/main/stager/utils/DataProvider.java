@@ -337,7 +337,15 @@ public class DataProvider {
     }
 
     public DatabaseReference getActions() {
-        return getAllActions().child(getUID());
+        return getActions(getUID());
+    }
+
+    public DatabaseReference getActions(@NotNull String uid) {
+        return getAllActions().child(uid);
+    }
+
+    public DatabaseReference getAction(@NotNull String uid, @NotNull String key) {
+        return getActions(uid).child(key);
     }
 
     public DatabaseReference getAction(@NotNull String key) {

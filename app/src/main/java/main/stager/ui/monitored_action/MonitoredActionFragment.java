@@ -47,6 +47,7 @@ public class MonitoredActionFragment
         super.setDependencies();
         dependencies.add(dataProvider.getMonitoredAction(mActionOwner,
                                                          mActionKey));
+        dependencies.add(dataProvider.getAction(mActionOwner, mActionKey));
     }
 
     @Override

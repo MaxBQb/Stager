@@ -33,18 +33,18 @@ public class Registration extends SmartActivity {
     }
 
     private void init() {
-        edNickname = findViewById(R.id.nickname);
-        edEmail = findViewById(R.id.email);
-        edPassword = findViewById(R.id.password);
-        edPasswordCheck = findViewById(R.id.check_password);
+        edNickname = findViewById(R.id.input_nickname);
+        edEmail = findViewById(R.id.input_email_registration);
+        edPassword = findViewById(R.id.input_password_registration);
+        edPasswordCheck = findViewById(R.id.input_password_check);
 
         // Регистрация аккаунта
-        findViewById(R.id.success_btn).setOnFocusChangeListener(
+        findViewById(R.id.btn_sign_in).setOnFocusChangeListener(
                 (v, hasFocus) -> onClickRegistration()
         );
 
         // Переход на вход
-        findViewById(R.id.sign_in).setOnClickListener(
+        findViewById(R.id.btn_back_to_log_in).setOnClickListener(
                 v -> {
                     Intent intent = new Intent(this, Authorization.class);
                     startActivity(intent);

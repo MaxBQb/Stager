@@ -8,7 +8,7 @@
     <string name="RegistrationActivity_EditText_label_UserPassword">Password</string>
     <string name="RegistrationActivity_EditText_label_UserPasswordCheck">Repeat your password</string>
     <string name="RegistrationActivity_Button_Register">Continue</string>
-    <string name="RegistrationActivity_Button_SignIn">Sign in</string>
+    <string name="RegistrationActivity_Button_Log_In">Log in</string>
 
     <!-- Authorization -->
     <string name="AuthorizationActivity_TextView_title_Greeting">Welcome!</string>

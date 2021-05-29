@@ -13,8 +13,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <TextView
-                android:id="@+id/welcome_at_registration"
+                android:id="@+id/title_registration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -24,10 +25,10 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <EditText
-                android:id="@+id/nickname"
+                android:id="@+id/input_nickname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/welcome_at_registration"
+                android:layout_below="@id/title_registration"
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginEnd="10dp"
@@ -35,13 +36,13 @@
                 android:layout_marginBottom="20dp"
                 android:hint="@string/RegistrationActivity_EditText_label_UserName"
                 android:inputType="textPersonName"
-                android:nextFocusForward="@+id/email"/>
+                android:nextFocusForward="@+id/input_email_registration"/>
 
             <EditText
-                android:id="@+id/email"
+                android:id="@+id/input_email_registration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/nickname"
+                android:layout_below="@id/input_nickname"
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginEnd="10dp"
@@ -49,13 +50,13 @@
                 android:layout_marginBottom="20dp"
                 android:hint="@string/RegistrationActivity_EditText_label_UserEmail"
                 android:inputType="textWebEmailAddress"
-                android:nextFocusForward="@+id/password"/>
+                android:nextFocusForward="@+id/input_password_registration"/>
 
             <EditText
-                android:id="@+id/password"
+                android:id="@+id/input_password_registration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/email"
+                android:layout_below="@id/input_email_registration"
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginEnd="10dp"
@@ -63,13 +64,13 @@
                 android:layout_marginBottom="20dp"
                 android:hint="@string/RegistrationActivity_EditText_label_UserPassword"
                 android:inputType="textPassword"
-                android:nextFocusForward="@+id/check_password"/>
+                android:nextFocusForward="@+id/input_password_check"/>
 
             <EditText
-                android:id="@+id/check_password"
+                android:id="@+id/input_password_check"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/password"
+                android:layout_below="@+id/input_password_registration"
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginEnd="10dp"
@@ -77,7 +78,7 @@
                 android:layout_marginBottom="20dp"
                 android:hint="@string/RegistrationActivity_EditText_label_UserPasswordCheck"
                 android:inputType="textPassword"
-                android:nextFocusForward="@+id/success_btn"/>
+                android:nextFocusForward="@+id/btn_sign_in"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -85,10 +86,10 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:orientation="horizontal"
-                android:layout_below="@+id/check_password" >
+                android:layout_below="@+id/input_password_check" >
 
                 <Button
-                    android:id="@+id/sign_in"
+                    android:id="@+id/btn_back_to_log_in"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -96,10 +97,10 @@
                     android:layout_marginEnd="10dp"
                     android:drawableStart="@drawable/ic_baseline_arrow_back"
                     android:drawableLeft="@drawable/ic_baseline_arrow_back"
-                    android:text="@string/RegistrationActivity_Button_SignIn" />
+                    android:text="@string/RegistrationActivity_Button_Log_In" />
 
                 <Button
-                    android:id="@+id/success_btn"
+                    android:id="@+id/btn_sign_in"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

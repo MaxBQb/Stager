@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import main.stager.Base.SmartActivity;
-import main.stager.utils.DataProvider;
 
 public class Authorization extends SmartActivity {
 
@@ -30,15 +29,15 @@ public class Authorization extends SmartActivity {
 
         // Устанавливает название активности, вместо названия приложения
         if (getSupportActionBar() != null)
-            getSupportActionBar().setTitle(R.string.RegistrationActivity_Button_SignIn);
+            getSupportActionBar().setTitle(R.string.RegistrationActivity_Button_Log_In);
 
         init();
     }
 
     private void init() {
 
-        edEmail = findViewById(R.id.email);
-        edPassword = findViewById(R.id.password);
+        edEmail = findViewById(R.id.input_email_log_in);
+        edPassword = findViewById(R.id.input_password_log_in);
 
         // Переход на восстановления пароля
         findViewById(R.id.btn_restore_acc).setOnClickListener(v -> resetPassword());
@@ -49,7 +48,7 @@ public class Authorization extends SmartActivity {
             startActivity(intent);
         });
 
-        findViewById(R.id.success_btn).setOnFocusChangeListener((v, hasFocus) -> {
+        findViewById(R.id.btn_log_in).setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) signIn();
         });
     }

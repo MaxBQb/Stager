@@ -88,7 +88,7 @@ public class StagerPushNotificationHandler {
                        message.getData().get(SENDER));
 
         builder.setGroup(selfEvent.name());
-        addOnClickTransition(builder, R.id.contact_info, args);
+        addOnClickTransition(builder, R.id.nav_contact_info, args);
         return true;
     }
 
@@ -106,7 +106,7 @@ public class StagerPushNotificationHandler {
                 message.getData().get(SENDER));
 
         builder.setGroup(selfEvent.name());
-        addOnClickTransition(builder, R.id.contact_info, args);
+        addOnClickTransition(builder, R.id.nav_contact_info, args);
         return true;
     }
 

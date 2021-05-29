@@ -93,10 +93,10 @@ public class ContactInfoFragment extends
     @Override
     protected void prepareFragmentComponents() {
         super.prepareFragmentComponents();
-        mAvatar = view.findViewById(R.id.user_avatar);
+        mAvatar = view.findViewById(R.id.contact_user_avatar);
         mAvatar.setUserName(name);
-        nameView = view.findViewById(R.id.personName);
-        descriptionView = view.findViewById(R.id.description);
+        nameView = view.findViewById(R.id.contact_name);
+        descriptionView = view.findViewById(R.id.contact_description);
         descriptionView.setMovementMethod(new ScrollingMovementMethod());
 
         btnNO = view.findViewById(R.id.btn_NO);
@@ -108,7 +108,7 @@ public class ContactInfoFragment extends
         if (type == ContactType.IGNORED)
             view.findViewById(R.id.controls).setAlpha(0.7f);
 
-        ((TextView)view.findViewById(R.id.header_title)).setText(getHeaderTitle());
+        ((TextView)view.findViewById(R.id.contact_header_title)).setText(getHeaderTitle());
         updateTitle(name);
 
     }
@@ -131,12 +131,12 @@ public class ContactInfoFragment extends
             mAvatar.setEmail(contact.getEmail());
             mAvatar.setUserName(name);
 
-            updateField(view.findViewById(R.id.LinearLayout_email),
+            updateField(view.findViewById(R.id.linearLayout_email),
                         view.findViewById(R.id.contact_email),
                         contact.getEmail());
 
             if (contact.getDescription() != null)
-                updateField(view.findViewById(R.id.LinearLayout_description),
+                updateField(view.findViewById(R.id.linearLayout_description),
                             descriptionView,
                         getString(R.string.ContactInfoFragment_TextView_label_Description) +
                                 " " + contact.getDescription());

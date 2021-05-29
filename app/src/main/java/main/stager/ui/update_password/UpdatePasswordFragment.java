@@ -22,7 +22,7 @@ public class UpdatePasswordFragment extends StagerFragment {
     protected void setEventListeners() {
         super.setEventListeners();
 
-        view.findViewById(R.id.btn_NewPassword).setOnFocusChangeListener((v, hasFocus) -> {
+        view.findViewById(R.id.btn_confirm_oldPassword).setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
 
                 String oldPassword = edOldPassword.getText().toString();
@@ -48,8 +48,8 @@ public class UpdatePasswordFragment extends StagerFragment {
                         .addOnCompleteListener(task -> {
                             hideLoadingScreen();
                             if (task.isSuccessful()) {
-                                view.findViewById(R.id.layout_OldPassword).setVisibility(View.GONE);
-                                view.findViewById(R.id.layout_UpdatePassword).setVisibility(View.VISIBLE);
+                                view.findViewById(R.id.linearLayout_oldPassword).setVisibility(View.GONE);
+                                view.findViewById(R.id.layout_updatePassword).setVisibility(View.VISIBLE);
                             } else {
                                 edOldPassword.setError(getResources().
                                         getString(R.string.UpdatePasswordFragment_ErrorMessage_PasswordIsNotCorrect));
@@ -59,7 +59,7 @@ public class UpdatePasswordFragment extends StagerFragment {
             }
         });
 
-        view.findViewById(R.id.btn_ChangePassword).setOnFocusChangeListener((v, hasFocus) -> {
+        view.findViewById(R.id.btn_сhangePassword).setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) return;
 
             String newPassword = edNewPassword.getText().toString();
@@ -113,8 +113,8 @@ public class UpdatePasswordFragment extends StagerFragment {
     @Override
     protected void prepareFragmentComponents() {
         super.prepareFragmentComponents();
-        edOldPassword = view.findViewById(R.id.edit_OldPassword);
-        edNewPassword = view.findViewById(R.id.edit_text_new_password);
-        edNewPasswordConfirm = view.findViewById(R.id.edit_text_new_password_confirm);
+        edOldPassword = view.findViewById(R.id.input_oldPassword);
+        edNewPassword = view.findViewById(R.id.input_newPassword);
+        edNewPasswordConfirm = view.findViewById(R.id.input_confirm_newPassword);
     }
 }

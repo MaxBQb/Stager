@@ -32,6 +32,8 @@ import main.stager.utils.GainObservers.IGainedObservable;
 import main.stager.utils.ChangeListeners.firebase.OnValueGet;
 import main.stager.utils.pushNotifications.EventNotificationBuilder;
 import main.stager.utils.pushNotifications.EventType;
+import main.stager.utils.pushNotifications.ListenedEventsController;
+import main.stager.utils.pushNotifications.PushNotification;
 
 @AllArgsConstructor // Not recommended to use this constructor
 public class DataProvider {
@@ -39,6 +41,7 @@ public class DataProvider {
     //region INIT
     private FirebaseAuth mAuth;
     private FirebaseMessaging mMes;
+    private ListenedEventsController mEvents;
     private EventNotificationBuilder mNotyGen;
     private DatabaseReference mRef;
 
@@ -46,6 +49,7 @@ public class DataProvider {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
         mMes = FirebaseMessaging.getInstance();
+        mEvents = StagerApplication.getListenedEventsController();
         db.setPersistenceEnabled(true);
         mRef = db.getReference(PATH.MAIN_DB);
         mNotyGen = StagerApplication.getEventNotificationBuilder();
@@ -591,11 +595,10 @@ public class DataProvider {
 
         //region EventNames
 
-    public List<String> getInitialEventNames(boolean showAll) {
+    public List<String> getInitialEventNames() {
         List<String> list = new ArrayList<>();
         if (StagerApplication.getSettings()
-                             .isNotifyFriendshipRequestAllowed(true)
-            || showAll)
+                             .isNotifyFriendshipRequestAllowed(true))
             list.add(getFriendshipRequestEventName(getUID()));
         return list;
     }
@@ -613,13 +616,15 @@ public class DataProvider {
         //region Subscribe
 
     public void subscribeInitial() {
-        for (String eventName: getInitialEventNames(false))
+        mEvents.reset();
+        for (String eventName: getInitialEventNames())
             subscribe(eventName);
     }
 
-    public void unsubscribeInitial() {
-        for (String eventName: getInitialEventNames(true))
+    public void unsubscribeAll() {
+        for (String eventName: mEvents.getListenedEvents())
             unsubscribe(eventName);
+        mEvents.reset();
     }
 
     public void setSubscribe(@NonNull String eventName, boolean subscribe) {
@@ -631,10 +636,12 @@ public class DataProvider {
 
     public void subscribe(@NonNull String eventName) {
         mMes.subscribeToTopic(eventName);
+        mEvents.setEventListened(eventName);
     }
 
     public void unsubscribe(@NonNull String eventName) {
         mMes.unsubscribeFromTopic(eventName);
+        mEvents.setEventNotListened(eventName);
     }
 
         //endregion Subscribe

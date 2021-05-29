@@ -26,7 +26,7 @@ public class AboutMeFragment extends StagerVMFragment<AboutMeViewModel> {
                 v -> navigator.navigate(R.id.transition_about_me_to_update_password));
 
         view.findViewById(R.id.btn_exit_in_acc).setOnClickListener(v -> {
-            dataProvider.unsubscribeInitial();
+            dataProvider.unsubscribeAll();
 
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(this.getActivity(), MainActivity.class));

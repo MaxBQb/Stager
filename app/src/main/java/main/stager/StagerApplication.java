@@ -12,6 +12,7 @@ import androidx.multidex.MultiDexApplication;
 import lombok.Getter;
 import main.stager.utils.DataProvider;
 import main.stager.utils.pushNotifications.EventNotificationBuilder;
+import main.stager.utils.pushNotifications.ListenedEventsController;
 import main.stager.utils.pushNotifications.RequestQueueController;
 import main.stager.utils.LocaleController;
 import main.stager.utils.SettingsWrapper;
@@ -22,6 +23,7 @@ public class StagerApplication extends MultiDexApplication {
     @Getter private static RequestQueueController requestQueueController;
     @Getter private static EventNotificationBuilder eventNotificationBuilder;
     @Getter private static StagerPushNotificationHandler pushNotificationHandler;
+    @Getter private static ListenedEventsController listenedEventsController;
     @Getter private static DataProvider dataProvider;
 
     @Override
@@ -31,6 +33,7 @@ public class StagerApplication extends MultiDexApplication {
         requestQueueController = new RequestQueueController(this);
         eventNotificationBuilder = new EventNotificationBuilder(this);
         pushNotificationHandler = new StagerPushNotificationHandler(this);
+        listenedEventsController = new ListenedEventsController(this);
         dataProvider = new DataProvider();
         LocaleController.init(this);
         createNotificationChannel();

@@ -7,6 +7,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import main.stager.list.StagerListViewModel;
 import main.stager.model.UserAction;
 import main.stager.utils.ChangeListeners.firebase.OnError;
@@ -33,25 +37,33 @@ public class AllMonitoredActionsListViewModel extends StagerListViewModel<UserAc
     protected ValueListEventListener<UserAction> getListEventListener(OnError onError) {
         return new ValueJoinedListEventListener<UserAction>(mValues,
                 getItemType(), onError, dataProvider.getAllActions()){
-                private String currentActionHolder;
+            private String currentOwner;
+            private Map<String, String> owners = new HashMap<>();
 
-                @Override
-                protected void handleListItems(@NonNull DataSnapshot snapshot) {
+            @Override
+            protected void handleListItems(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-                        currentActionHolder = postSnapshot.getKey();
+                        currentOwner = postSnapshot.getKey();
                         super.handleListItems(postSnapshot);
                     }
                 }
 
-                @Override
+            @Override
+            protected void handleListItem(@NonNull @NotNull DataSnapshot snapshot, @NonNull @NotNull String key) {
+                super.handleListItem(snapshot, key);
+                owners.put(key, currentOwner);
+            }
+
+            @Override
                 protected UserAction modify(UserAction item, DataSnapshot snapshot) {
-                    item.setOwner(currentActionHolder);
-                    return super.modify(item, snapshot);
+                    item = super.modify(item, snapshot);
+                    item.setOwner(owners.get(item.getKey()));
+                    return item;
                 }
 
                 @Override
                 protected DatabaseReference handleListItemSource(@NotNull DataSnapshot snapshot) {
-                    return source.child(currentActionHolder);
+                    return source.child(currentOwner);
                 }
         };
     }

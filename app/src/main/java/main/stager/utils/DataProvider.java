@@ -107,11 +107,15 @@ public class DataProvider {
             public static final String UPDATE_STAGES = "update_stages";
             public static final String UPDATE_ACTION = "update_action";
         }
-        public static final String RESET_ACTION_STATUS = "reset_action_status";
 
+        public static final String RESET_ACTION_STATUS = "reset_action_status";
         public static final String INIT_POS = "init_pos";
         public static final String ADD_ACTION = "add_action";
         public static final String ADD_STAGE = "add_stage";
+        public static final class Notification {
+            public static final String FRIENDSHIP_REQUEST = "friendship_request";
+            public static final String FRIENDSHIP_REQUEST_ACCEPTED = "friendship_request_accepted";
+        }
     }
 
     @With private IGainedObservable requestTracker;
@@ -637,14 +641,20 @@ public class DataProvider {
 
         //region Send
 
+    @Trackable(keys = {CBN.Notification.FRIENDSHIP_REQUEST})
     public void sendFriendshipRequestNoty(@NonNull String uid) {
-        mNotyGen.getSimpleEventNotification(EventType.FRIENDSHIP_REQUEST)
-                .build().send(getFriendshipRequestEventName(uid));
+        PushNotification.PushNotificationBuilder builder =
+        mNotyGen.getSimpleEventNotification(EventType.FRIENDSHIP_REQUEST);
+        requestTracker.postItem(CBN.Notification.FRIENDSHIP_REQUEST, builder);
+        builder.build().send(getFriendshipRequestEventName(uid));
     }
 
+    @Trackable(keys = {CBN.Notification.FRIENDSHIP_REQUEST_ACCEPTED})
     public void sendFriendshipRequestAcceptedNoty(@NonNull String uid) {
-        mNotyGen.getSimpleEventNotification(EventType.FRIENDSHIP_REQUEST_ACCEPTED)
-                .build().send(getFriendshipRequestAcceptedEventName(uid));
+        PushNotification.PushNotificationBuilder builder =
+        mNotyGen.getSimpleEventNotification(EventType.FRIENDSHIP_REQUEST_ACCEPTED);
+        requestTracker.postItem(CBN.Notification.FRIENDSHIP_REQUEST, builder);
+        builder.build().send(getFriendshipRequestAcceptedEventName(uid));
     }
 
         //endregion Send

@@ -100,6 +100,8 @@ public class DataProvider {
         public static final String MONITORED = "monitored";
     }
 
+        //region EXTRA PARAMS
+
     public static final class CBN {
         public static final class SetStageStatus {
             public static final String UPDATE_STAGES = "update_stages";
@@ -112,13 +114,11 @@ public class DataProvider {
         public static final String ADD_STAGE = "add_stage";
     }
 
-    //endregion INIT
-
-    //region EXTRA PARAMS
-
     @With private IGainedObservable requestTracker;
 
-    //endregion EXTRA PARAMS
+        //endregion EXTRA PARAMS
+
+    //endregion INIT
 
     //region User data
 

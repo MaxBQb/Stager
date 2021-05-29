@@ -41,6 +41,7 @@
         <string name="Settings_Privacy_Switch_summary_HideEmail">Hides email from available contacts</string>
     <string name="Settings_Category_title_Notifications">Notifications</string>
         <string name="Settings_Notifications_label_FriendshipRequests">Friendship requests</string>
+        <string name="Settings_Notifications_label_FriendshipRequestsAccepted">Accepted friendship requests</string>
 
     <!-- Edit action -->
     <string name="EditActionFragment_title">Stages of \"%s\"</string>
@@ -160,4 +161,5 @@
     <!-- Notifications -->
     <string name="Notifications_group_Friendship">Friendship</string>
     <string name="Notifications_message_FriendshipRequest">You\'ve got new friendship request :)</string>
+    <string name="Notifications_message_FriendshipRequestAccepted">Your friendship request accepted</string>
 </resources>

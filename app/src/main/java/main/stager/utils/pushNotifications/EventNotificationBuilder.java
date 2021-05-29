@@ -36,13 +36,16 @@ public class EventNotificationBuilder {
     public static @StringRes int getMessage(@NonNull EventType event) {
         switch (event) {
             case FRIENDSHIP_REQUEST: return R.string.Notifications_message_FriendshipRequest;
+            case FRIENDSHIP_REQUEST_ACCEPTED: return R.string.Notifications_message_FriendshipRequestAccepted;
         }
         throw new IllegalStateException("Unsupported EventType");
     }
 
     public static @StringRes int getTitle(@NonNull EventType event) {
         switch (event) {
-            case FRIENDSHIP_REQUEST: return R.string.Notifications_group_Friendship;
+            case FRIENDSHIP_REQUEST:
+            case FRIENDSHIP_REQUEST_ACCEPTED:
+                return R.string.Notifications_group_Friendship;
         }
         throw new IllegalStateException("Unsupported EventType");
     }

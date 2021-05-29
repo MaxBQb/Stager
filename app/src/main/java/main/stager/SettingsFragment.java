@@ -29,6 +29,7 @@ implements SharedPreferences.OnSharedPreferenceChangeListener {
     private SwitchPreferenceCompat P_AUTO_TUNE;
     private SwitchPreferenceCompat P_HIDE_EMAIL;
     private SwitchPreferenceCompat P_NOTIFY_FRIENDSHIP_REQUEST;
+    private SwitchPreferenceCompat P_NOTIFY_FRIENDSHIP_REQUEST_ACCEPTED;
 
     private void initPrefRefs() {
         P_AUTO_TUNE = findPreference(S.AUTO_TUNE);
@@ -36,6 +37,7 @@ implements SharedPreferences.OnSharedPreferenceChangeListener {
         P_LOCALE = findPreference(S.LOCALE);
         P_THEME = findPreference(S.THEME);
         P_NOTIFY_FRIENDSHIP_REQUEST = findPreference(S.NOTIFY_FRIENDSHIP_REQUEST);
+        P_NOTIFY_FRIENDSHIP_REQUEST_ACCEPTED = findPreference(S.NOTIFY_FRIENDSHIP_REQUEST_ACCEPTED);
     }
 
     public SettingsFragment() {
@@ -75,10 +77,13 @@ implements SharedPreferences.OnSharedPreferenceChangeListener {
 
         P_NOTIFY_FRIENDSHIP_REQUEST.setOnPreferenceChangeListener((preference, newValue) -> {
             String topic = dataProvider.getFriendshipRequestEventName(dataProvider.getUID());
-            if ((Boolean) newValue)
-                dataProvider.subscribe(topic);
-            else
-                dataProvider.unsubscribe(topic);
+            dataProvider.setSubscribe(topic, (Boolean)newValue);
+            return true;
+        });
+
+        P_NOTIFY_FRIENDSHIP_REQUEST_ACCEPTED.setOnPreferenceChangeListener((preference, newValue) -> {
+            String topic = dataProvider.getFriendshipRequestAcceptedEventName(dataProvider.getUID());
+            dataProvider.setSubscribe(topic, (Boolean)newValue);
             return true;
         });
     }

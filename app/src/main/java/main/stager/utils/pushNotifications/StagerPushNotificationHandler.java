@@ -6,14 +6,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-
+import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
-import androidx.navigation.NavController;
 import androidx.navigation.NavDeepLinkBuilder;
-import androidx.navigation.NavDeepLinkRequest;
-import androidx.navigation.fragment.NavHostFragment;
-
 import com.google.firebase.messaging.RemoteMessage;
 import main.stager.MainActivity;
 import main.stager.R;
@@ -73,6 +69,7 @@ public class StagerPushNotificationHandler {
                .setContentText(context.getString(EventNotificationBuilder.getMessage(event)));
         switch (event) {
             case FRIENDSHIP_REQUEST: return handleFriendshipRequest(builder, message, event);
+            case FRIENDSHIP_REQUEST_ACCEPTED: return handleFriendshipRequestAccepted(builder, message, event);
         }
         return true;
     }
@@ -90,14 +87,38 @@ public class StagerPushNotificationHandler {
         args.putString(ContactInfoFragment.ARG_CONTACT_KEY,
                        message.getData().get(SENDER));
 
-        builder.setGroup(selfEvent.name())
-                .setContentIntent(new NavDeepLinkBuilder(context)
-                    .setComponentName(MainActivity.class)
-                    .setGraph(R.navigation.mobile_navigation)
-                    .setDestination(R.id.contact_info)
-                    .setArguments(args)
-                    .createPendingIntent()
-                );
+        builder.setGroup(selfEvent.name());
+        addOnClickTransition(builder, R.id.contact_info, args);
         return true;
+    }
+
+    public boolean handleFriendshipRequestAccepted(NotificationCompat.Builder builder,
+                                                   RemoteMessage message,
+                                                   @NonNull EventType selfEvent) {
+        if (!StagerApplication.getSettings()
+                .isNotifyFriendshipRequestAcceptedAllowed(false))
+            return false;
+
+        Bundle args = new Bundle();
+        args.putString(ContactInfoFragment.ARG_CONTACT_TYPE,
+                ContactType.ACCEPTED.name());
+        args.putString(ContactInfoFragment.ARG_CONTACT_KEY,
+                message.getData().get(SENDER));
+
+        builder.setGroup(selfEvent.name());
+        addOnClickTransition(builder, R.id.contact_info, args);
+        return true;
+    }
+
+    private void addOnClickTransition(NotificationCompat.Builder builder,
+                                      @IdRes int destination,
+                                      Bundle args) {
+        builder.setContentIntent(new NavDeepLinkBuilder(context)
+            .setComponentName(MainActivity.class)
+            .setGraph(R.navigation.mobile_navigation)
+            .setDestination(destination)
+            .setArguments(args)
+            .createPendingIntent()
+        );
     }
 }

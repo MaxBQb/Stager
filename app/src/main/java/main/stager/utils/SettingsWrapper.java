@@ -13,6 +13,7 @@ public class SettingsWrapper {
     public final String THEME;
     public final String HIDE_EMAIL;
     public final String NOTIFY_FRIENDSHIP_REQUEST;
+    public final String NOTIFY_FRIENDSHIP_REQUEST_ACCEPTED;
 
     public SettingsWrapper(Context c) {
         pref = PreferenceManager.getDefaultSharedPreferences(c.getApplicationContext());
@@ -21,6 +22,7 @@ public class SettingsWrapper {
         THEME = c.getString(R.string.Settings__Theme);
         HIDE_EMAIL = c.getString(R.string.Settings__HideEmail);
         NOTIFY_FRIENDSHIP_REQUEST = c.getString(R.string.Settings__NotifyFriendshipRequest);
+        NOTIFY_FRIENDSHIP_REQUEST_ACCEPTED = c.getString(R.string.Settings__NotifyFriendshipRequestAccepted);
     }
 
     public boolean isAutoTune(boolean unset) {
@@ -37,6 +39,10 @@ public class SettingsWrapper {
 
     public boolean isNotifyFriendshipRequestAllowed(boolean unset) {
         return pref.getBoolean(NOTIFY_FRIENDSHIP_REQUEST, unset);
+    }
+
+    public boolean isNotifyFriendshipRequestAcceptedAllowed(boolean unset) {
+        return pref.getBoolean(NOTIFY_FRIENDSHIP_REQUEST_ACCEPTED, unset);
     }
 
     public String getLocale(String unset) {

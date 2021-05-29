@@ -43,5 +43,9 @@
             app:title="@string/Settings_Notifications_label_FriendshipRequests"
             android:defaultValue="true"
             />
+        <SwitchPreferenceCompat
+            app:key="@string/Settings__NotifyFriendshipRequestAccepted"
+            app:title="@string/Settings_Notifications_label_FriendshipRequestsAccepted"
+            />
     </PreferenceCategory>
 </PreferenceScreen>

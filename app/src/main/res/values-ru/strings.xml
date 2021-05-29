@@ -44,6 +44,7 @@
         <string name="Settings_Privacy_Switch_summary_HideEmail">Скрывает почту из возможных контактов</string>
     <string name="Settings_Category_title_Notifications">Уведомления</string>
         <string name="Settings_Notifications_label_FriendshipRequests">Запросы дружбы</string>
+        <string name="Settings_Notifications_label_FriendshipRequestsAccepted">Принятые запросы дружбы</string>
 
     <!-- Список этапов -->
     <string name="EditActionFragment_title">Этапы \"%s\"</string>
@@ -162,4 +163,5 @@
     <!-- Уведомления -->
     <string name="Notifications_group_Friendship">Дружба</string>
     <string name="Notifications_message_FriendshipRequest">Вам пришёл новый запрос в друзья :)</string>
+    <string name="Notifications_message_FriendshipRequestAccepted">Ваш запрос в друзья принят</string>
 </resources>

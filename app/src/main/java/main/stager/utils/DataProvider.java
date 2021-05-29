@@ -237,6 +237,7 @@ public class DataProvider {
     }
 
     public Task<Void> acceptContactRequest(@NonNull String from) {
+        sendFriendshipRequestAcceptedNoty(from);
         return batchedFromRoot()
                 .setTrue(getContacts().child(from))
                 .setTrue(getContacts(from).child(getUID()))
@@ -591,6 +592,10 @@ public class DataProvider {
         return EventType.FRIENDSHIP_REQUEST +NT_SEP+ uid;
     }
 
+    public String getFriendshipRequestAcceptedEventName(@NonNull String uid) {
+        return EventType.FRIENDSHIP_REQUEST_ACCEPTED +NT_SEP+ uid;
+    }
+
         //endregion EventNames
 
         //region Subscribe
@@ -602,6 +607,13 @@ public class DataProvider {
 
     public void unsubscribeInitial() {
         for (String eventName: getInitialEventNames(true))
+            unsubscribe(eventName);
+    }
+
+    public void setSubscribe(@NonNull String eventName, boolean subscribe) {
+        if (subscribe)
+            subscribe(eventName);
+        else
             unsubscribe(eventName);
     }
 
@@ -620,6 +632,11 @@ public class DataProvider {
     public void sendFriendshipRequestNoty(@NonNull String uid) {
         mNotyGen.getSimpleEventNotification(EventType.FRIENDSHIP_REQUEST)
                 .build().send(getFriendshipRequestEventName(uid));
+    }
+
+    public void sendFriendshipRequestAcceptedNoty(@NonNull String uid) {
+        mNotyGen.getSimpleEventNotification(EventType.FRIENDSHIP_REQUEST_ACCEPTED)
+                .build().send(getFriendshipRequestAcceptedEventName(uid));
     }
 
         //endregion Send

@@ -81,7 +81,7 @@ public class ContactRecyclerViewAdapter
 
         public ViewHolder(View view) {
             super(view);
-            mNameView = view.findViewById(R.id.item_name);
+            mNameView = view.findViewById(R.id.contact_item_name);
             mEmailView = view.findViewById(R.id.item_email);
             mAvatar = view.findViewById(R.id.item_avatar);
         }

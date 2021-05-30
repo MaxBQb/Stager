@@ -8,9 +8,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
 import com.google.android.material.navigation.NavigationView;
-
 import main.stager.Base.AuthorizedOnlyActivity;
 
 public class MainActivity extends AuthorizedOnlyActivity {
@@ -28,16 +26,14 @@ public class MainActivity extends AuthorizedOnlyActivity {
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_about_me,
-                R.id.nav_my_contacts,
-                R.id.nav_contact_requests,
-                R.id.nav_monitored_actions,
-                R.id.nav_my_actions)
-                .setDrawerLayout(drawer)
-                .build();
+            R.id.nav_about_me,
+            R.id.nav_my_contacts,
+            R.id.nav_contact_requests,
+            R.id.nav_monitored_actions,
+            R.id.nav_my_actions
+        ).setOpenableLayout(drawer).build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);

@@ -160,6 +160,9 @@
 
     <!-- Notifications -->
     <string name="Notifications_group_Friendship">Friendship</string>
-    <string name="Notifications_message_FriendshipRequest">You\'ve got new friendship request :)</string>
-    <string name="Notifications_message_FriendshipRequestAccepted">Your friendship request accepted</string>
+        <string name="Notifications_message_FriendshipRequest">You\'ve got new friendship request :)</string>
+        <string name="Notifications_message_FriendshipRequestAccepted">Your friendship request accepted</string>
+    <string name="Notifications_group_ActionCompleted">Action completed</string>
+        <string name="Notifications_message_ActionCompletedSucceed">Action successfully completed</string>
+        <string name="Notifications_message_ActionCompletedAborted">Action aborted</string>
 </resources>

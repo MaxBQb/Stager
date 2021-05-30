@@ -5,7 +5,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import main.stager.R;
 import main.stager.StagerApplication;
-import main.stager.utils.DataProvider;
 
 public class EventNotificationBuilder {
     private Context context;
@@ -37,6 +36,8 @@ public class EventNotificationBuilder {
         switch (event) {
             case FRIENDSHIP_REQUEST: return R.string.Notifications_message_FriendshipRequest;
             case FRIENDSHIP_REQUEST_ACCEPTED: return R.string.Notifications_message_FriendshipRequestAccepted;
+            case ACTION_COMPLETED_ABORTED: return R.string.Notifications_message_ActionCompletedAborted;
+            case ACTION_COMPLETED_SUCCEED: return R.string.Notifications_message_ActionCompletedSucceed;
         }
         throw new IllegalStateException("Unsupported EventType");
     }
@@ -46,6 +47,9 @@ public class EventNotificationBuilder {
             case FRIENDSHIP_REQUEST:
             case FRIENDSHIP_REQUEST_ACCEPTED:
                 return R.string.Notifications_group_Friendship;
+            case ACTION_COMPLETED_SUCCEED:
+            case ACTION_COMPLETED_ABORTED:
+                return R.string.Notifications_group_ActionCompleted;
         }
         throw new IllegalStateException("Unsupported EventType");
     }

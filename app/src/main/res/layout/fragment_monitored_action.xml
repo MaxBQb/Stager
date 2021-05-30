@@ -4,13 +4,36 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_open_action_owner"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="4dp"
-        android:layout_marginHorizontal="8dp"
-        android:text="@string/MonitoredActionFragment_Button_text_Owner"/>
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_toggle_onSuccessListen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginVertical="4dp"
+            android:text="S" />
+
+        <Button
+            android:id="@+id/btn_open_action_owner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginVertical="4dp"
+            android:layout_weight="6"
+            android:text="@string/MonitoredActionFragment_Button_text_Owner" />
+
+        <Button
+            android:id="@+id/btn_toggle_onAbortedListen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginVertical="4dp"
+            android:text="A" />
+    </LinearLayout>
 
     <include layout="@layout/fragment_list"/>
 

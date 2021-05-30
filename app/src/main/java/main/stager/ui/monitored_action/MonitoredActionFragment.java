@@ -1,12 +1,15 @@
 package main.stager.ui.monitored_action;
 
 import android.os.Bundle;
+import android.widget.Toast;
 import main.stager.R;
+import main.stager.StagerApplication;
 import main.stager.list.StagerList;
 import main.stager.model.Stage;
 import main.stager.ui.contact_info.ContactInfoFragment;
 import main.stager.ui.edit_item.edit_action.ActionStageRecyclerViewAdapter;
 import main.stager.utils.Utilits;
+import main.stager.utils.pushNotifications.ListenedEventsController;
 
 public class MonitoredActionFragment
         extends StagerList<MonitoredActionViewModel, ActionStageRecyclerViewAdapter, Stage> {
@@ -64,6 +67,24 @@ public class MonitoredActionFragment
                     args.putString(ContactInfoFragment.ARG_CONTACT_KEY, mActionOwner);
                     navigator.navigate(R.id.transition_monitored_action_to_contact_info, args);
         });
+        final ListenedEventsController mEvents =
+                StagerApplication.getListenedEventsController();
+
+        view.findViewById(R.id.btn_toggle_onAbortedListen).setOnClickListener(e -> {
+            String eventName = dataProvider.getActionCompleteAbortedEventName(
+                                            mActionOwner, mActionKey);
+            boolean listenOnAborted = mEvents.isEventListened(eventName);
+            dataProvider.setSubscribe(eventName, !listenOnAborted);
+            Toast.makeText(getContext(), !listenOnAborted ? "+" : "-", Toast.LENGTH_SHORT).show();
+        });
+
+        view.findViewById(R.id.btn_toggle_onSuccessListen).setOnClickListener(e -> {
+            String eventName = dataProvider.getActionCompleteSucceedEventName(
+                                            mActionOwner, mActionKey);
+            boolean listenOnSucceed = mEvents.isEventListened(eventName);
+            dataProvider.setSubscribe(eventName, !listenOnSucceed);
+            Toast.makeText(getContext(), !listenOnSucceed ? "+" : "-", Toast.LENGTH_SHORT).show();
+        });
     }
 
     @Override
@@ -73,10 +94,11 @@ public class MonitoredActionFragment
     }
 
     private void updateTitle(String text) {
-        getActionBar().setTitle(getString(R.string.MonitoredActionFragment_title,
-            Utilits.getDefaultOnNullOrBlank(text,
-                getString(R.string.MonitoredActionFragment_message_UntitledAction
-        ))));
+        if (getActionBar() != null)
+            getActionBar().setTitle(getString(R.string.MonitoredActionFragment_title,
+                Utilits.getDefaultOnNullOrBlank(text,
+                getString(R.string.MonitoredActionFragment_message_UntitledAction)
+            )));
     }
 
     @Override

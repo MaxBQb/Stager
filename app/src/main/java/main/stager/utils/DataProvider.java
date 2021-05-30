@@ -34,6 +34,7 @@ import main.stager.utils.pushNotifications.EventNotificationBuilder;
 import main.stager.utils.pushNotifications.EventType;
 import main.stager.utils.pushNotifications.ListenedEventsController;
 import main.stager.utils.pushNotifications.PushNotification;
+import main.stager.utils.pushNotifications.StagerPushNotificationHandler;
 
 @AllArgsConstructor // Not recommended to use this constructor
 public class DataProvider {
@@ -119,6 +120,8 @@ public class DataProvider {
         public static final class Notification {
             public static final String FRIENDSHIP_REQUEST = "friendship_request";
             public static final String FRIENDSHIP_REQUEST_ACCEPTED = "friendship_request_accepted";
+            public static final String ACTION_COMPLETED_ABORTED = "action_completed_aborted";
+            public static final String ACTION_COMPLETED_SUCCEED = "action_completed_succeed";
         }
     }
 
@@ -230,6 +233,7 @@ public class DataProvider {
         return getIgnoredContactRequests().child(from);
     }
 
+    @Trackable(keys = {CBN.Notification.FRIENDSHIP_REQUEST})
     public Task<Void> makeContactRequest(@NonNull String receiver) {
         Task<Void> t = getAllContactRequests().child(receiver).child(getUID()).setValue(true);
         t.addOnSuccessListener(v -> sendFriendshipRequestNoty(receiver));
@@ -244,6 +248,7 @@ public class DataProvider {
         return getIgnoredContactRequest(from).removeValue();
     }
 
+    @Trackable(keys = {CBN.Notification.FRIENDSHIP_REQUEST_ACCEPTED})
     public Task<Void> acceptContactRequest(@NonNull String from) {
         sendFriendshipRequestAcceptedNoty(from);
         return batchedFromRoot()
@@ -450,7 +455,8 @@ public class DataProvider {
     }
 
     @Trackable(keys = {CBN.SetStageStatus.UPDATE_ACTION,
-                       CBN.SetStageStatus.UPDATE_STAGES})
+                       CBN.SetStageStatus.UPDATE_STAGES,
+                       CBN.Notification.ACTION_COMPLETED_SUCCEED})
     public void setStageStatusSucceed(@NotNull String actionKey,
                                       @NotNull String stageKey) {
         DatabaseReference ref = getStages(actionKey);
@@ -491,17 +497,19 @@ public class DataProvider {
 
             if (unfinishedCount != 1) return;
 
-            task.addOnSuccessListener(t ->
+            task.addOnSuccessListener(t -> {
                 requestTracker.postItem(
-                        CBN.SetStageStatus.UPDATE_ACTION,
-                        getActionStatus(actionKey)
-                        .setValue(Status.SUCCEED))
-            );
+                    CBN.SetStageStatus.UPDATE_ACTION,
+                    getActionStatus(actionKey)
+                    .setValue(Status.SUCCEED));
+                sendActionCompletedSucceedNoty(getUID(), actionKey);
+            });
         }));
     }
 
     @Trackable(keys = {CBN.SetStageStatus.UPDATE_ACTION,
-                       CBN.SetStageStatus.UPDATE_STAGES})
+                       CBN.SetStageStatus.UPDATE_STAGES,
+                       CBN.Notification.ACTION_COMPLETED_ABORTED})
     public void setStageStatusAborted(@NotNull String actionKey,
                                       @NotNull String stageKey) {
         DatabaseReference ref = getStages(actionKey);
@@ -549,11 +557,13 @@ public class DataProvider {
 
             Task<Void> task = batch.apply();
             requestTracker.postItem(CBN.SetStageStatus.UPDATE_STAGES, task);
-            task.addOnSuccessListener(t ->
-                requestTracker.postItem(CBN.SetStageStatus.UPDATE_ACTION,
+            task.addOnSuccessListener(t -> {
+                requestTracker.postItem(
+                    CBN.SetStageStatus.UPDATE_ACTION,
                     getActionStatus(actionKey)
-                    .setValue(Status.ABORTED))
-            );
+                    .setValue(Status.ABORTED));
+                sendActionCompletedAbortedNoty(getUID(), actionKey);
+            });
         }));
     }
 
@@ -611,6 +621,16 @@ public class DataProvider {
         return EventType.FRIENDSHIP_REQUEST_ACCEPTED +NT_SEP+ uid;
     }
 
+    public String getActionCompleteSucceedEventName(@NonNull String ownerUID,
+                                                    @NonNull String actionKey) {
+        return EventType.ACTION_COMPLETED_SUCCEED +NT_SEP+ ownerUID +NT_SEP+ actionKey;
+    }
+
+    public String getActionCompleteAbortedEventName(@NonNull String ownerUID,
+                                                    @NonNull String actionKey) {
+        return EventType.ACTION_COMPLETED_ABORTED +NT_SEP+ ownerUID +NT_SEP+ actionKey;
+    }
+
         //endregion EventNames
 
         //region Subscribe
@@ -663,6 +683,27 @@ public class DataProvider {
         requestTracker.postItem(CBN.Notification.FRIENDSHIP_REQUEST, builder);
         builder.build().send(getFriendshipRequestAcceptedEventName(uid));
     }
+
+    @Trackable(keys = {CBN.Notification.ACTION_COMPLETED_ABORTED})
+    public void sendActionCompletedAbortedNoty(@NonNull String uid,
+                                               @NonNull String actionKey) {
+        PushNotification.PushNotificationBuilder builder =
+        mNotyGen.getSimpleEventNotification(EventType.ACTION_COMPLETED_ABORTED)
+                .setExtra(StagerPushNotificationHandler.ACTION, actionKey);
+        requestTracker.postItem(CBN.Notification.ACTION_COMPLETED_ABORTED, builder);
+        builder.build().send(getActionCompleteAbortedEventName(uid, actionKey));
+    }
+
+    @Trackable(keys = {CBN.Notification.ACTION_COMPLETED_SUCCEED})
+    public void sendActionCompletedSucceedNoty(@NonNull String uid,
+                                               @NonNull String actionKey) {
+        PushNotification.PushNotificationBuilder builder =
+        mNotyGen.getSimpleEventNotification(EventType.ACTION_COMPLETED_SUCCEED)
+                .setExtra(StagerPushNotificationHandler.ACTION, actionKey);
+        requestTracker.postItem(CBN.Notification.ACTION_COMPLETED_SUCCEED, builder);
+        builder.build().send(getActionCompleteSucceedEventName(uid, actionKey));
+    }
+
 
         //endregion Send
 

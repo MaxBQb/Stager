@@ -162,6 +162,9 @@
 
     <!-- Уведомления -->
     <string name="Notifications_group_Friendship">Дружба</string>
-    <string name="Notifications_message_FriendshipRequest">Вам пришёл новый запрос в друзья :)</string>
-    <string name="Notifications_message_FriendshipRequestAccepted">Ваш запрос в друзья принят</string>
+        <string name="Notifications_message_FriendshipRequest">Вам пришёл новый запрос в друзья :)</string>
+        <string name="Notifications_message_FriendshipRequestAccepted">Ваш запрос в друзья принят</string>
+    <string name="Notifications_group_ActionCompleted">Мероприятие завершено</string>
+        <string name="Notifications_message_ActionCompletedSucceed">Мероприятие успешно завершено</string>
+        <string name="Notifications_message_ActionCompletedAborted">Мероприятие прервано</string>
 </resources>

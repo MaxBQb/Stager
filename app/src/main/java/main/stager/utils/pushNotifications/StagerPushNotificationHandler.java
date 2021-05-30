@@ -16,15 +16,19 @@ import main.stager.R;
 import main.stager.StagerApplication;
 import main.stager.model.ContactType;
 import main.stager.ui.contact_info.ContactInfoFragment;
+import main.stager.ui.monitored_action.MonitoredActionFragment;
+import main.stager.utils.SettingsWrapper;
 import main.stager.utils.Utilits;
 
 public class StagerPushNotificationHandler {
     private Context context;
     private final Bitmap largeIcon;
+    private final SettingsWrapper settings;
 
     public static final String EVENT_DETAILS = "event_details";
     private static final String SEP = ".";
     public static final String EVENT_TYPE = EVENT_DETAILS+SEP+"type";
+    public static final String ACTION = EVENT_DETAILS+SEP+"action_id";
     public static final String SENDER = EVENT_DETAILS+SEP+"sender";
 
     public StagerPushNotificationHandler(@NonNull Context ctx) {
@@ -33,6 +37,7 @@ public class StagerPushNotificationHandler {
             context.getResources(),
             R.mipmap.ic_launcher_round
         );
+        settings = StagerApplication.getSettings();
     }
 
     public boolean handleAny(NotificationCompat.Builder builder, RemoteMessage message) {
@@ -70,15 +75,18 @@ public class StagerPushNotificationHandler {
         switch (event) {
             case FRIENDSHIP_REQUEST: return handleFriendshipRequest(builder, message, event);
             case FRIENDSHIP_REQUEST_ACCEPTED: return handleFriendshipRequestAccepted(builder, message, event);
+            case ACTION_COMPLETED_SUCCEED:
+            case ACTION_COMPLETED_ABORTED: return handleActionCompleted(builder, message, event);
         }
         return true;
     }
 
+
+
     public boolean handleFriendshipRequest(NotificationCompat.Builder builder,
                                            RemoteMessage message,
                                            @NonNull EventType selfEvent) {
-        if (!StagerApplication.getSettings()
-            .isNotifyFriendshipRequestAllowed(true))
+        if (!settings.isNotifyFriendshipRequestAllowed(true))
             return false;
 
         Bundle args = new Bundle();
@@ -95,8 +103,7 @@ public class StagerPushNotificationHandler {
     public boolean handleFriendshipRequestAccepted(NotificationCompat.Builder builder,
                                                    RemoteMessage message,
                                                    @NonNull EventType selfEvent) {
-        if (!StagerApplication.getSettings()
-                .isNotifyFriendshipRequestAcceptedAllowed(false))
+        if (!settings.isNotifyFriendshipRequestAcceptedAllowed(false))
             return false;
 
         Bundle args = new Bundle();
@@ -107,6 +114,31 @@ public class StagerPushNotificationHandler {
 
         builder.setGroup(selfEvent.name());
         addOnClickTransition(builder, R.id.nav_contact_info, args);
+        return true;
+    }
+
+    public boolean handleActionCompleted(NotificationCompat.Builder builder,
+                                                RemoteMessage message,
+                                                @NonNull EventType selfEvent) {
+        String action = message.getData().get(ACTION);
+        String owner = message.getData().get(SENDER);
+        if (Utilits.isNullOrBlank(action) ||
+            Utilits.isNullOrBlank(owner))
+            return false;
+
+        if (!StagerApplication.getListenedEventsController().isEventListened(
+                selfEvent.equals(EventType.ACTION_COMPLETED_ABORTED)
+                ? StagerApplication.getDataProvider().getActionCompleteAbortedEventName(owner, action)
+                : StagerApplication.getDataProvider().getActionCompleteSucceedEventName(owner, action)
+            ))
+            return false;
+
+        Bundle args = new Bundle();
+        args.putString(MonitoredActionFragment.ARG_ACTION_KEY, action);
+        args.putString(MonitoredActionFragment.ARG_ACTION_OWNER, owner);
+
+        builder.setGroup(selfEvent.name());
+        addOnClickTransition(builder, R.id.nav_monitored_action, args);
         return true;
     }
 

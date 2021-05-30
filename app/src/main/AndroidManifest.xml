@@ -24,6 +24,7 @@
         </service>
 
         <activity android:name=".MainActivity"
+            android:launchMode="singleTop"
             android:configChanges="orientation|screenSize"/>
 
         <activity

@@ -8,9 +8,13 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
-import androidx.navigation.NavDeepLinkBuilder;
 import com.google.firebase.messaging.RemoteMessage;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import lombok.Getter;
 import main.stager.MainActivity;
 import main.stager.R;
 import main.stager.StagerApplication;
@@ -51,7 +55,7 @@ public class StagerPushNotificationHandler {
         return true;
     }
 
-    public void handleBasicNotification(NotificationCompat.Builder builder, RemoteMessage message) {
+    private void handleBasicNotification(NotificationCompat.Builder builder, RemoteMessage message) {
         builder.setSmallIcon(R.mipmap.ic_launcher)
                .setLargeIcon(largeIcon)
                .setAutoCancel(true)
@@ -68,7 +72,7 @@ public class StagerPushNotificationHandler {
             builder.setContentText(body);
     }
 
-    public boolean handleEvent(NotificationCompat.Builder builder, RemoteMessage message,
+    private boolean handleEvent(NotificationCompat.Builder builder, RemoteMessage message,
                                @NonNull EventType event) {
         builder.setContentTitle(context.getString(EventNotificationBuilder.getTitle(event)))
                .setContentText(context.getString(EventNotificationBuilder.getMessage(event)));
@@ -83,41 +87,53 @@ public class StagerPushNotificationHandler {
 
 
 
-    public boolean handleFriendshipRequest(NotificationCompat.Builder builder,
+    private boolean handleFriendshipRequest(NotificationCompat.Builder builder,
                                            RemoteMessage message,
                                            @NonNull EventType selfEvent) {
         if (!settings.isNotifyFriendshipRequestAllowed(true))
             return false;
 
+        String owner = message.getData().get(SENDER);
+        if (Utilits.isNullOrBlank(owner))
+            return false;
+
         Bundle args = new Bundle();
         args.putString(ContactInfoFragment.ARG_CONTACT_TYPE,
                        ContactType.INCOMING.name());
-        args.putString(ContactInfoFragment.ARG_CONTACT_KEY,
-                       message.getData().get(SENDER));
+        args.putString(ContactInfoFragment.ARG_CONTACT_KEY, owner);
 
         builder.setGroup(selfEvent.name());
-        addOnClickTransition(builder, R.id.nav_contact_info, args);
+        addOnClickTransition(builder, new FragmentsStack()
+            .addDestination(R.id.nav_contact_requests)
+            .addDestination(R.id.nav_contact_info, args)
+        );
         return true;
     }
 
-    public boolean handleFriendshipRequestAccepted(NotificationCompat.Builder builder,
+    private boolean handleFriendshipRequestAccepted(NotificationCompat.Builder builder,
                                                    RemoteMessage message,
                                                    @NonNull EventType selfEvent) {
         if (!settings.isNotifyFriendshipRequestAcceptedAllowed(false))
             return false;
 
+        String owner = message.getData().get(SENDER);
+        if (Utilits.isNullOrBlank(owner))
+            return false;
+
         Bundle args = new Bundle();
         args.putString(ContactInfoFragment.ARG_CONTACT_TYPE,
                 ContactType.ACCEPTED.name());
-        args.putString(ContactInfoFragment.ARG_CONTACT_KEY,
-                message.getData().get(SENDER));
+        args.putString(ContactInfoFragment.ARG_CONTACT_KEY, owner);
 
         builder.setGroup(selfEvent.name());
-        addOnClickTransition(builder, R.id.nav_contact_info, args);
+        addOnClickTransition(builder, new FragmentsStack()
+            .addDestination(R.id.nav_contact_requests)
+            .addDestination(R.id.nav_contact_info, args)
+        );
         return true;
     }
 
-    public boolean handleActionCompleted(NotificationCompat.Builder builder,
+    private boolean handleActionCompleted(NotificationCompat.Builder builder,
                                                 RemoteMessage message,
                                                 @NonNull EventType selfEvent) {
         String action = message.getData().get(ACTION);
@@ -138,19 +154,44 @@ public class StagerPushNotificationHandler {
         args.putString(MonitoredActionFragment.ARG_ACTION_OWNER, owner);
 
         builder.setGroup(selfEvent.name());
-        addOnClickTransition(builder, R.id.nav_monitored_action, args);
+        addOnClickTransition(builder, new FragmentsStack()
+            .addDestination(R.id.nav_monitored_actions)
+            .addDestination(R.id.nav_monitored_action, args)
+        );
         return true;
     }
 
     private void addOnClickTransition(NotificationCompat.Builder builder,
-                                      @IdRes int destination,
-                                      Bundle args) {
-        builder.setContentIntent(new NavDeepLinkBuilder(context)
-            .setComponentName(MainActivity.class)
-            .setGraph(R.navigation.mobile_navigation)
-            .setDestination(destination)
-            .setArguments(args)
-            .createPendingIntent()
-        );
+                                      FragmentsStack path) {
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.setAction(MainActivity.ACTION_OPEN_FRAGMENT);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra(MainActivity.ARG_FRAGMENT_ID_LIST,
+                        path.getFragments());
+
+        for (Map.Entry<Integer, Bundle> entry:
+                path.getFragmentArgs().entrySet())
+            intent.putExtra(MainActivity.ARG_FRAGMENT_ARGS_BY_ID_LIST
+                            + entry.getKey(), entry.getValue());
+
+        builder.setContentIntent(PendingIntent.getActivity(
+                context, 0, intent, PendingIntent.FLAG_ONE_SHOT
+        ));
+    }
+
+    private static class FragmentsStack {
+        @Getter private Map<Integer, Bundle> fragmentArgs = new HashMap<>();
+        @Getter private ArrayList<Integer> fragments = new ArrayList<>();
+
+
+        public FragmentsStack addDestination(@IdRes int fragment) {
+            return addDestination(fragment, null);
+        }
+
+        public FragmentsStack addDestination(@IdRes int fragment, @Nullable Bundle args) {
+            fragmentArgs.put(fragment, args);
+            fragments.add(fragment);
+            return this;
+        }
     }
 }

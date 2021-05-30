@@ -1,6 +1,7 @@
 package main.stager.ui.monitored_action;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 import main.stager.R;
 import main.stager.StagerApplication;
@@ -19,6 +20,12 @@ public class MonitoredActionFragment
     private String mActionName;
     private String mActionKey;
     private String mActionOwner;
+    private View btnToggleOnAbortedListen;
+    private View btnToggleOnSuccessListen;
+    private static final float offStateAlpha = 0.5f;
+    private final ListenedEventsController mEvents = StagerApplication.getListenedEventsController();
+    private String ACTION_ABORTED;
+    private String ACTION_SUCCEED;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,6 +40,10 @@ public class MonitoredActionFragment
             mActionKey = "";
             mActionOwner = "";
         }
+        ACTION_ABORTED = dataProvider.getActionCompleteAbortedEventName(
+                mActionOwner, mActionKey);
+        ACTION_SUCCEED = dataProvider.getActionCompleteSucceedEventName(
+                mActionOwner, mActionKey);
     }
 
     @Override
@@ -67,24 +78,22 @@ public class MonitoredActionFragment
                     args.putString(ContactInfoFragment.ARG_CONTACT_KEY, mActionOwner);
                     navigator.navigate(R.id.transition_monitored_action_to_contact_info, args);
         });
-        final ListenedEventsController mEvents =
-                StagerApplication.getListenedEventsController();
 
-        view.findViewById(R.id.btn_toggle_onAbortedListen).setOnClickListener(e -> {
-            String eventName = dataProvider.getActionCompleteAbortedEventName(
-                                            mActionOwner, mActionKey);
-            boolean listenOnAborted = mEvents.isEventListened(eventName);
-            dataProvider.setSubscribe(eventName, !listenOnAborted);
-            Toast.makeText(getContext(), !listenOnAborted ? "+" : "-", Toast.LENGTH_SHORT).show();
+        btnToggleOnAbortedListen.setOnClickListener(e -> {
+            boolean isEventListenedNow = !mEvents.isEventListened(ACTION_ABORTED);
+            dataProvider.setSubscribe(ACTION_ABORTED, isEventListenedNow);
+            setStateAlpha(btnToggleOnAbortedListen, isEventListenedNow);
         });
 
-        view.findViewById(R.id.btn_toggle_onSuccessListen).setOnClickListener(e -> {
-            String eventName = dataProvider.getActionCompleteSucceedEventName(
-                                            mActionOwner, mActionKey);
-            boolean listenOnSucceed = mEvents.isEventListened(eventName);
-            dataProvider.setSubscribe(eventName, !listenOnSucceed);
-            Toast.makeText(getContext(), !listenOnSucceed ? "+" : "-", Toast.LENGTH_SHORT).show();
+        btnToggleOnSuccessListen.setOnClickListener(e -> {
+            boolean isEventListenedNow = !mEvents.isEventListened(ACTION_SUCCEED);
+            dataProvider.setSubscribe(ACTION_SUCCEED, isEventListenedNow);
+            setStateAlpha(btnToggleOnSuccessListen, isEventListenedNow);
         });
+    }
+
+    private void setStateAlpha(View v, boolean full) {
+        v.setAlpha(full ? 1f : offStateAlpha);
     }
 
     @Override
@@ -104,6 +113,10 @@ public class MonitoredActionFragment
     @Override
     protected void prepareFragmentComponents() {
         super.prepareFragmentComponents();
+        btnToggleOnAbortedListen = view.findViewById(R.id.btn_toggle_onAbortedListen);
+        btnToggleOnSuccessListen = view.findViewById(R.id.btn_toggle_onSuccessListen);
+        setStateAlpha(btnToggleOnAbortedListen, mEvents.isEventListened(ACTION_ABORTED));
+        setStateAlpha(btnToggleOnSuccessListen, mEvents.isEventListened(ACTION_SUCCEED));
         updateTitle(mActionName);
     }
 

@@ -362,7 +362,7 @@ public class DataProvider {
     }
 
     public DatabaseReference getAction(@NotNull String key) {
-        return getActions().child(key);
+        return getAction(getUID(), key);
     }
 
     public DatabaseReference getActionStatus(@NotNull String key) {
@@ -370,7 +370,11 @@ public class DataProvider {
     }
 
     public DatabaseReference getActionName(@NotNull String key) {
-        return getActions().child(key).child(PATH.ACTION_NAME);
+        return getActionName(getUID(), key);
+    }
+    public DatabaseReference getActionName(@NotNull String owner,
+                                           @NotNull String key) {
+        return getAction(owner, key).child(PATH.ACTION_NAME);
     }
 
     @Trackable(keys = {CBN.ADD_ACTION, CBN.INIT_POS})

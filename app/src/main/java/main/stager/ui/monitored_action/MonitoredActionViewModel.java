@@ -38,6 +38,6 @@ public class MonitoredActionViewModel extends StagerListViewModel<Stage> {
     public void buildBackPath() {
         super.buildBackPath();
         backPath.put(actionName,
-                dataProvider.getActionName(actionKey));
+                dataProvider.getActionName(actionOwner, actionKey));
     }
 }

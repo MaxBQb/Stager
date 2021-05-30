@@ -19,7 +19,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import lombok.AllArgsConstructor;
 import lombok.With;
@@ -28,6 +30,7 @@ import main.stager.model.FBModel;
 import main.stager.model.Stage;
 import main.stager.model.Status;
 import main.stager.model.UserAction;
+import main.stager.utils.ChangeListeners.firebase.AKeySetEventListener;
 import main.stager.utils.GainObservers.IGainedObservable;
 import main.stager.utils.ChangeListeners.firebase.OnValueGet;
 import main.stager.utils.pushNotifications.EventNotificationBuilder;
@@ -666,6 +669,40 @@ public class DataProvider {
     public void unsubscribe(@NonNull String eventName) {
         mMes.unsubscribeFromTopic(eventName);
         mEvents.setEventNotListened(eventName);
+    }
+
+    public void setupAutoUnsubscribeUnavailable() {
+        getMonitoredActionHolders().addValueEventListener(
+            new AKeySetEventListener(null) {
+                @Override
+                public void onDataChangeFinished(Set<String> set) {
+                    if (set == null)
+                        set = new HashSet<>();
+                    Set<String> listened = mEvents.getListenedEvents();
+                    listened.removeAll(set);
+
+                    // Now work only with not listened or not ActionComplete event
+                    for (String event: listened)
+                        if (event.startsWith(EventType.ACTION_COMPLETED_ABORTED.name())
+                        ||  event.startsWith(EventType.ACTION_COMPLETED_SUCCEED.name()))
+                            unsubscribe(event);
+                    // unsubscribe action completed events of not monitored actions
+                }
+
+                @Override
+                protected void readKeys(@NonNull @NotNull DataSnapshot snapshot, Set<String> set) {
+                    for (DataSnapshot owner: snapshot.getChildren())
+                        if (owner.getKey() != null)
+                            for (DataSnapshot action: owner.getChildren())
+                                if (action.getKey() != null) {
+                                    set.add(getActionCompleteAbortedEventName(owner.getKey(),
+                                                                              action.getKey()));
+                                    set.add(getActionCompleteSucceedEventName(owner.getKey(),
+                                                                              action.getKey()));
+                                }
+                }
+            }
+        );
     }
 
         //endregion Subscribe

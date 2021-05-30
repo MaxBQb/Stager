@@ -63,7 +63,10 @@ public class MainActivity extends AuthorizedOnlyActivity {
             intent.getAction().equals(ACTION_OPEN_FRAGMENT))
             onOpenFragmentIntent(intent);
 
-        isCreated = true;
+        if (!isCreated) // Once per App creation
+            dataProvider.setupAutoUnsubscribeUnavailable();
+
+        isCreated = true; // Count created only if authorized
     }
 
     @Override

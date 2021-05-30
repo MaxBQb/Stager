@@ -20,19 +20,15 @@ public class ListenedEventsController {
     }
 
     public boolean isEventListened(String name) {
-        return events.getBoolean(name, false);
-    }
-
-    public void setEventListened(String name, boolean isListened) {
-        events.edit().putBoolean(name, isListened).apply();
+        return events.contains(name);
     }
 
     public void setEventListened(String name) {
-        setEventListened(name, true);
+        events.edit().putBoolean(name, true).apply();
     }
 
     public void setEventNotListened(String name) {
-        setEventListened(name, false);
+        events.edit().remove(name).apply();
     }
 
     public void reset() {

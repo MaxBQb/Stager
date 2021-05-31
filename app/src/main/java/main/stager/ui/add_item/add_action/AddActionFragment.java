@@ -11,6 +11,7 @@ import main.stager.utils.DataProvider;
 import main.stager.R;
 import main.stager.model.Status;
 import main.stager.model.UserAction;
+import main.stager.utils.validators.ActionNameValidator;
 
 public class AddActionFragment extends AddItemFragment {
 
@@ -30,13 +31,14 @@ public class AddActionFragment extends AddItemFragment {
     @Override
     protected void saveChanges() {
         String name = inputName.getText().toString().trim();
-        if (name.isEmpty()) {
-            Toast.makeText(getContext(),
-                    getString(R.string.AddActionFragment_ErrorMessage,
-                            getString(R.string.AddActionFragment_ErrorMessage_ReasonNoName)
-                    ), Toast.LENGTH_LONG).show();
+        ActionNameValidator actionNameValidator = new ActionNameValidator(getContext());
+
+        if (!actionNameValidator.isValid(name)) {
+            inputName.setError(actionNameValidator.getMessage());
+            inputName.requestFocus();
             return;
         }
+
         dataProvider.withRequestTracker(new GainedObservable()
                         .addOnItemGainListener(
                 DataProvider.CBN.ADD_ACTION,

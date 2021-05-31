@@ -27,18 +27,21 @@
 
     <!-- Validation -->
     <string name="Validator_ErrorMessage_NoName">Name is empty</string>
-    <string name="Validator_ErrorMessage_MinLengthName">Minimum length of name should be 2</string>
-    <string name="Validator_ErrorMessage_MaxLengthName">Maximum length of name should be 12</string>
-    <string name="Validator_ErrorMessage_WrongName">Your name contains unsupported
+    <string name="Validator_ErrorMessage_MinLengthName">Minimum name length 2</string>
+    <string name="Validator_ErrorMessage_MaxLengthName">Maximum name length 12</string>
+    <string name="Validator_ErrorMessage_WrongName">Name contains unsupported
         symbols ( Allowed: Rus, Eng )</string>
     <string name="Validator_ErrorMessage_Spaces">Spaces before the name</string>
     <string name="Validator_ErrorMessage_NoEmail">Email is empty</string>
-    <string name="Validator_ErrorMessage_MinLengthEmail">Minimum length of email should be 5</string>
-    <string name="Validator_ErrorMessage_MaxLengthEmail">Maximum length of email should be 60</string>
+    <string name="Validator_ErrorMessage_MinLengthEmail">Minimum email length 5</string>
+    <string name="Validator_ErrorMessage_MaxLengthEmail">Maximum email length 60</string>
     <string name="Validator_ErrorMessage_IncorrectEmail">Incorrect email format</string>
     <string name="Validator_ErrorMessage_NoPassword">Password is empty</string>
-    <string name="Validator_ErrorMessage_MinLengthPassword">Minimum length of password should be 6</string>
-    <string name="Validator_ErrorMessage_MaxLengthPassword">Maximum length of password should be 100</string>
+    <string name="Validator_ErrorMessage_MinLengthPassword">Minimum password length 6</string>
+    <string name="Validator_ErrorMessage_MaxLengthPassword">Maximum password length 100</string>
+    <string name="Validator_ErrorMessage_NullDescription">Invalid value in the description</string>
+    <string name="Validator_ErrorMessage_MaxLengthDescription">Maximum description length 255</string>
+    <string name="Validator_ErrorMessage_MaxLengthActionName">Maximum name length 24</string>
 
     <!-- Settings -->
     <string name="Settings_title">Settings</string>

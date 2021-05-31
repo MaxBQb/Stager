@@ -3,10 +3,7 @@ package main.stager.Base;
 import android.widget.EditText;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
-import lombok.SneakyThrows;
-import main.stager.utils.ChangeListeners.firebase.front.FBFrontListener;
 import main.stager.utils.ChangeListeners.firebase.front.OnLostFocusDBUpdater;
 
 public abstract class StagerVMFragment<TVM extends StagerViewModel> extends StagerFragment {
@@ -38,45 +35,38 @@ public abstract class StagerVMFragment<TVM extends StagerViewModel> extends Stag
     }
 
     @FunctionalInterface
-    public interface BindDataTwoWayListenerSetter<T> {
-        void setListener(T listener);
+    public interface BindDataTwoWayListenerSetter {
+        void setListener(Query ref);
     }
 
-    protected <T> void bindData(LiveData<T> data, BindDataCallback<T> callback) {
+    protected <T> void bindData(LiveData<T> data,
+                                BindDataCallback<T> callback) {
         data.observe(getViewLifecycleOwner(), callback::run);
     }
 
-    protected <T, L> void bindDataTwoWay(LiveData<T> data, BindDataCallback<T> callback,
-                                         BindDataTwoWayListenerSetter<L> listenerSetter,
-                                         L listener) {
+    protected <T> void bindFBDataTwoWay(LiveData<T> data,
+                                        BindDataCallback<T> callback,
+                                        BindDataTwoWayListenerSetter listenerSetter) {
         bindData(data, callback);
-        listenerSetter.setListener(listener);
+        listenerSetter.setListener(viewModel.getBackPathTo(data));
     }
 
-    @SneakyThrows
-    protected <T, L extends FBFrontListener> void bindFBDataTwoWay(LiveData<T> data, BindDataCallback<T> callback,
-                                                                   BindDataTwoWayListenerSetter<L> listenerSetter,
-                                                                   Class<L> listenerType, boolean updateOnly) {
-        bindData(data, callback);
-        Query ref = viewModel.getBackPathTo(data);
-        assert ref != null;
-        listenerSetter.setListener(listenerType.getConstructor(DatabaseReference.class,
-                boolean.class).newInstance(ref, updateOnly));
+    protected void bindDataTwoWay(LiveData<String> data,
+                                  EditText edit,
+                                  BindDataTwoWayListenerSetter listenerSetter) {
+        bindFBDataTwoWay(data, edit::setText, listenerSetter);
     }
 
-    protected <T, L extends FBFrontListener> void bindFBDataTwoWay(LiveData<T> data, BindDataCallback<T> callback,
-                                                                   BindDataTwoWayListenerSetter<L> listenerSetter,
-                                                                   Class<L> listenerType) {
-        bindFBDataTwoWay(data, callback, listenerSetter, listenerType, true);
+    protected void bindDataTwoWay(LiveData<String> data,
+                                  EditText edit,
+                                  boolean updateOnly) {
+        bindDataTwoWay(data, edit, r -> edit.setOnFocusChangeListener(
+            new OnLostFocusDBUpdater(r.getRef(), updateOnly)
+        ));
     }
 
-    protected void bindDataTwoWay(LiveData<String> data, EditText edit, boolean updateOnly) {
-        bindFBDataTwoWay(data, edit::setText, edit::setOnFocusChangeListener,
-                OnLostFocusDBUpdater.class, updateOnly);
-    }
-
-    protected void bindDataTwoWay(LiveData<String> data, EditText edit) {
-        bindFBDataTwoWay(data, edit::setText, edit::setOnFocusChangeListener,
-                OnLostFocusDBUpdater.class);
+    protected void bindDataTwoWay(LiveData<String> data,
+                                  EditText edit) {
+        bindDataTwoWay(data, edit, true);
     }
 }

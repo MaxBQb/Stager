@@ -11,18 +11,21 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(
-            this,
-            getString(R.string.Notification__channel_id)
+        StagerApplication.getPushNotificationHandler().handleAny(
+            new NotificationCompat.Builder(
+                getApplicationContext(),
+                getString(R.string.Notification__channel_id)
+            ), remoteMessage, this::notify
         );
+    }
 
-        if (!StagerApplication.getPushNotificationHandler()
-                              .handleAny(builder, remoteMessage))
-            return;
-
+    public void notify(android.app.Notification noty) {
         NotificationManagerCompat.from(getApplicationContext()).notify(
-            new Random().nextInt(3000),
-            builder.build()
+                new Random().nextInt(3000), noty
         );
+    }
+
+    @FunctionalInterface public interface Callback {
+        void notify(android.app.Notification noty);
     }
 }

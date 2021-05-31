@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import lombok.Getter;
 import main.stager.MainActivity;
+import main.stager.MyFirebaseMessagingService.Callback;
 import main.stager.R;
 import main.stager.StagerApplication;
 import main.stager.model.ContactType;
@@ -44,15 +45,21 @@ public class StagerPushNotificationHandler {
         settings = StagerApplication.getSettings();
     }
 
-    public boolean handleAny(NotificationCompat.Builder builder, RemoteMessage message) {
+    public void handleAny(NotificationCompat.Builder builder,
+                          RemoteMessage message,
+                          Callback callback) {
         handleBasicNotification(builder, message);
         try {
             String event = message.getData().get(EVENT_TYPE);
-            if (event == null) return true;
+            if (event == null) {
+                callback.notify(builder.build());
+                return;
+            }
             EventType eventType = EventType.valueOf(event);
-            return handleEvent(builder, message, eventType);
+            if (!handleEvent(builder, message, eventType, callback))
+                return;
         } catch (IllegalArgumentException ignore) {}
-        return true;
+        callback.notify(builder.build());
     }
 
     private void handleBasicNotification(NotificationCompat.Builder builder, RemoteMessage message) {
@@ -72,24 +79,28 @@ public class StagerPushNotificationHandler {
             builder.setContentText(body);
     }
 
-    private boolean handleEvent(NotificationCompat.Builder builder, RemoteMessage message,
-                               @NonNull EventType event) {
+    private boolean handleEvent(NotificationCompat.Builder builder,
+                                RemoteMessage message,
+                                @NonNull EventType event,
+                                Callback callback) {
         builder.setContentTitle(context.getString(EventNotificationBuilder.getTitle(event)))
                .setContentText(context.getString(EventNotificationBuilder.getMessage(event)));
         switch (event) {
-            case FRIENDSHIP_REQUEST: return handleFriendshipRequest(builder, message, event);
-            case FRIENDSHIP_REQUEST_ACCEPTED: return handleFriendshipRequestAccepted(builder, message, event);
+            case FRIENDSHIP_REQUEST:
+                return handleFriendshipRequest(builder, message, event, callback);
+            case FRIENDSHIP_REQUEST_ACCEPTED:
+                return handleFriendshipRequestAccepted(builder, message, event, callback);
             case ACTION_COMPLETED_SUCCEED:
-            case ACTION_COMPLETED_ABORTED: return handleActionCompleted(builder, message, event);
+            case ACTION_COMPLETED_ABORTED:
+                return handleActionCompleted(builder, message, event, callback);
         }
         return true;
     }
 
-
-
     private boolean handleFriendshipRequest(NotificationCompat.Builder builder,
-                                           RemoteMessage message,
-                                           @NonNull EventType selfEvent) {
+                                            RemoteMessage message,
+                                            @NonNull EventType selfEvent,
+                                            Callback callback) {
         if (!settings.isNotifyFriendshipRequestAllowed(true))
             return false;
 
@@ -97,12 +108,12 @@ public class StagerPushNotificationHandler {
         if (Utilits.isNullOrBlank(owner))
             return false;
 
+        builder.setGroup(selfEvent.name());
+
         Bundle args = new Bundle();
         args.putString(ContactInfoFragment.ARG_CONTACT_TYPE,
                        ContactType.INCOMING.name());
         args.putString(ContactInfoFragment.ARG_CONTACT_KEY, owner);
-
-        builder.setGroup(selfEvent.name());
         addOnClickTransition(builder, new FragmentsStack()
             .addDestination(R.id.nav_contact_requests)
             .addDestination(R.id.nav_contact_info, args)
@@ -111,8 +122,9 @@ public class StagerPushNotificationHandler {
     }
 
     private boolean handleFriendshipRequestAccepted(NotificationCompat.Builder builder,
-                                                   RemoteMessage message,
-                                                   @NonNull EventType selfEvent) {
+                                                    RemoteMessage message,
+                                                    @NonNull EventType selfEvent,
+                                                    Callback callback) {
         if (!settings.isNotifyFriendshipRequestAcceptedAllowed(false))
             return false;
 
@@ -120,12 +132,11 @@ public class StagerPushNotificationHandler {
         if (Utilits.isNullOrBlank(owner))
             return false;
 
+        builder.setGroup(selfEvent.name());
         Bundle args = new Bundle();
         args.putString(ContactInfoFragment.ARG_CONTACT_TYPE,
-                ContactType.ACCEPTED.name());
+                       ContactType.ACCEPTED.name());
         args.putString(ContactInfoFragment.ARG_CONTACT_KEY, owner);
-
-        builder.setGroup(selfEvent.name());
         addOnClickTransition(builder, new FragmentsStack()
             .addDestination(R.id.nav_contact_requests)
             .addDestination(R.id.nav_contact_info, args)
@@ -134,8 +145,9 @@ public class StagerPushNotificationHandler {
     }
 
     private boolean handleActionCompleted(NotificationCompat.Builder builder,
-                                                RemoteMessage message,
-                                                @NonNull EventType selfEvent) {
+                                          RemoteMessage message,
+                                          @NonNull EventType selfEvent,
+                                          Callback callback) {
         String action = message.getData().get(ACTION);
         String owner = message.getData().get(SENDER);
         if (Utilits.isNullOrBlank(action) ||
@@ -149,11 +161,10 @@ public class StagerPushNotificationHandler {
             ))
             return false;
 
+        builder.setGroup(selfEvent.name());
         Bundle args = new Bundle();
         args.putString(MonitoredActionFragment.ARG_ACTION_KEY, action);
         args.putString(MonitoredActionFragment.ARG_ACTION_OWNER, owner);
-
-        builder.setGroup(selfEvent.name());
         addOnClickTransition(builder, new FragmentsStack()
             .addDestination(R.id.nav_monitored_actions)
             .addDestination(R.id.nav_monitored_action, args)
@@ -175,14 +186,13 @@ public class StagerPushNotificationHandler {
                             + entry.getKey(), entry.getValue());
 
         builder.setContentIntent(PendingIntent.getActivity(
-                context, 0, intent, PendingIntent.FLAG_ONE_SHOT
+            context, 0, intent, PendingIntent.FLAG_ONE_SHOT
         ));
     }
 
     private static class FragmentsStack {
         @Getter private Map<Integer, Bundle> fragmentArgs = new HashMap<>();
         @Getter private ArrayList<Integer> fragments = new ArrayList<>();
-
 
         public FragmentsStack addDestination(@IdRes int fragment) {
             return addDestination(fragment, null);

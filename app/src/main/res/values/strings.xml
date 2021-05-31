@@ -41,23 +41,75 @@
 
     <!-- Settings -->
     <string name="Settings_title">Settings</string>
-    <string name="Settings_summary_AppRestartRequired">(App restart required)</string>
     <string name="Settings_Category_title_Appearance">Appearance</string>
         <string name="Settings_Appearance_label_AutoTune">Use system defaults</string>
+            <string name="Settings_Appearance_Switch_summaryOn_AutoTune">
+                Setup theme and language according with system ones\n
+                (Toggle this option will restart entire app)\n
+                State: Enabled
+            </string>
+            <string name="Settings_Appearance_Switch_summaryOff_AutoTune">
+                Setup theme and language according with system ones\n
+                (Toggle this option will restart entire app)\n
+                State: Disabled
+            </string>
         <string name="Settings_Appearance_label_Theme">Dark theme</string>
-        <string name="Settings_Appearance_Switch_summaryOn_DarkMode">Current theme: Dark</string>
-        <string name="Settings_Appearance_Switch_summaryOff_LightMode">Current theme: Light</string>
+            <string name="Settings_Appearance_Switch_summaryOn_DarkMode">Current theme: Dark</string>
+            <string name="Settings_Appearance_Switch_summaryOff_LightMode">Current theme: Light</string>
         <string name="Settings_Appearance_List_label_Locale">Language</string>
-        <string name="Settings_Appearance_List_summary_Locale">Current language: %1$s</string>
+            <string name="Settings_Appearance_List_summary_Locale">Current language: %s</string>
     <string name="Settings_Category_title_Privacy">Privacy</string>
         <string name="Settings_Privacy_label_HideEmail">Hide email</string>
-        <string name="Settings_Privacy_Switch_summary_HideEmail">Hides email from available contacts</string>
+            <string name="Settings_Privacy_Switch_summaryOn_HideEmail">
+                Your email is hidden from other users\n
+                No one can send you friendship request
+            </string>
+            <string name="Settings_Privacy_Switch_summaryOff_HideEmail">
+                Your email is shown for other users\n
+                Everyone can send you friendship request
+            </string>
     <string name="Settings_Category_title_Notifications">Notifications</string>
         <string name="Settings_Notifications_label_FriendshipRequests">Friendship requests</string>
+            <string name="Settings_Notifications_Switch_summaryOn_FriendshipRequests">
+                You will receive a notification\n
+                When someone sends you friendship request
+            </string>
+            <string name="Settings_Notifications_Switch_summaryOff_FriendshipRequests">
+                Nothing will happen\n
+                When someone sends you friendship request
+            </string>
         <string name="Settings_Notifications_label_FriendshipRequestsAccepted">Accepted friendship requests</string>
+            <string name="Settings_Notifications_Switch_summaryOn_FriendshipRequestsAccepted">
+                You will receive a notification\n
+                When someone accepts your friendship request
+            </string>
+            <string name="Settings_Notifications_Switch_summaryOff_FriendshipRequestsAccepted">
+                Nothing will happen\n
+                When someone accepts your friendship request
+            </string>
     <string name="Settings_Category_title_Notifications_AutoSubscribe">Automatically subscribe on</string>
         <string name="Settings_Notifications_label_ListenActionOnCompleteAbortedDefault">Action aborted</string>
+            <string name="Settings_Notifications_Switch_summaryOn_ListenActionOnCompleteAbortedDefault">
+                After new action shared for you\n
+                You will been notified each time this action aborted\n
+                (You can customize this behaviour individually)
+            </string>
+            <string name="Settings_Notifications_Switch_summaryOff_ListenActionOnCompleteAbortedDefault">
+                After new action shared for you\n
+                Nothing will happen if this action aborted\n
+                (You can customize this behaviour individually)
+            </string>
         <string name="Settings_Notifications_label_ListenActionOnCompleteSucceedDefault">Action successfully completed</string>
+            <string name="Settings_Notifications_Switch_summaryOn_ListenActionOnCompleteSucceedDefault">
+                After new action shared for you\n
+                You will been notified each time this action completed successfully\n
+                (You can customize this behaviour individually)
+            </string>
+            <string name="Settings_Notifications_Switch_summaryOff_ListenActionOnCompleteSucceedDefault">
+                After new action shared for you\n
+                Nothing will happen if this action completed successfully\n
+                (You can customize this behaviour individually)
+            </string>
 
     <!-- Edit action -->
     <string name="EditActionFragment_title">Stages of \"%s\"</string>

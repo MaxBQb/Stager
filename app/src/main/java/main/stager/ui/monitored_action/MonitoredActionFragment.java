@@ -22,7 +22,7 @@ public class MonitoredActionFragment
     private String mActionOwner;
     private View btnToggleOnAbortedListen;
     private View btnToggleOnSuccessListen;
-    private static final float offStateAlpha = 0.5f;
+    private static final float offStateAlpha = 0.2f;
     private final ListenedEventsController mEvents = StagerApplication.getListenedEventsController();
     private String ACTION_ABORTED;
     private String ACTION_SUCCEED;

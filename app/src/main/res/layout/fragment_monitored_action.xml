@@ -7,32 +7,37 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal" >
 
-        <Button
+        <ImageButton
             android:id="@+id/btn_toggle_onSuccessListen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="4dp"
-            android:layout_marginVertical="4dp"
-            android:text="S" />
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:src="@drawable/ic_listen_on_action_succeed" />
 
         <Button
             android:id="@+id/btn_open_action_owner"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="4dp"
             android:layout_marginVertical="4dp"
             android:layout_weight="6"
             android:text="@string/MonitoredActionFragment_Button_text_Owner" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btn_toggle_onAbortedListen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="4dp"
-            android:layout_marginVertical="4dp"
-            android:text="A" />
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:src="@drawable/ic_listen_on_action_aborted" />
+
     </LinearLayout>
 
     <include layout="@layout/fragment_list"/>

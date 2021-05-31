@@ -2,7 +2,7 @@ package main.stager.ui.about_me;
 
 import android.content.Intent;
 import com.google.firebase.auth.FirebaseAuth;
-import main.stager.MainActivity;
+import main.stager.Authorization;
 import main.stager.R;
 import main.stager.Base.StagerVMFragment;
 
@@ -29,7 +29,7 @@ public class AboutMeFragment extends StagerVMFragment<AboutMeViewModel> {
             dataProvider.unsubscribeAll();
 
             FirebaseAuth.getInstance().signOut();
-            startActivity(new Intent(this.getActivity(), MainActivity.class));
+            startActivity(new Intent(this.getActivity(), Authorization.class));
             this.getActivity().finish();
         });
     }

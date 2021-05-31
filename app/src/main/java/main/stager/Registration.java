@@ -11,6 +11,9 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import main.stager.Base.SmartActivity;
 import main.stager.utils.DataProvider;
+import main.stager.utils.validators.EmailValidator;
+import main.stager.utils.validators.NameValidator;
+import main.stager.utils.validators.PasswordValidator;
 
 
 public class Registration extends SmartActivity {
@@ -66,44 +69,23 @@ public class Registration extends SmartActivity {
             return;
         }
 
-        // Пустое поле имени
-        if (name.isEmpty()) {
-            edNickname.setError("Name is required");
+        NameValidator nameValidator = new NameValidator(getApplicationContext());
+        if (!nameValidator.isValid(name)) {
+            edNickname.setError(nameValidator.getMessage());
             edNickname.requestFocus();
             return;
         }
 
-        // Длина имени меньше 5
-        if (name.length() < 5) {
-            edNickname.setError("Minimum length of name should be 5");
-            edNickname.requestFocus();
-            return;
-        }
-
-        // Пустое поле email
-        if (email.isEmpty()) {
-            edEmail.setError("Email is required");
+        EmailValidator emailValidator = new EmailValidator(getApplicationContext());
+        if (!emailValidator.isValid(email)) {
+            edEmail.setError(emailValidator.getMessage());
             edEmail.requestFocus();
             return;
         }
 
-        // Некорректный ввод логина
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            edEmail.setError("Please enter a valid email");
-            edEmail.requestFocus();
-            return;
-        }
-
-        // Пустое поле пароля
-        if (password.isEmpty()) {
-            edPassword.setError("Password is required");
-            edPassword.requestFocus();
-            return;
-        }
-
-        // Некорректная длина пароля
-        if (password.length() < 6) {
-            edPassword.setError("Minimum length of password should be 6");
+        PasswordValidator passwordValidator = new PasswordValidator(getApplicationContext());
+        if (!passwordValidator.isValid(password)) {
+            edPassword.setError(passwordValidator.getMessage());
             edPassword.requestFocus();
             return;
         }

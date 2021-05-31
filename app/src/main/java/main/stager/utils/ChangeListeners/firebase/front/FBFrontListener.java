@@ -1,7 +1,6 @@
 package main.stager.utils.ChangeListeners.firebase.front;
 
 import com.google.firebase.database.DatabaseReference;
-
 import main.stager.utils.DataProvider;
 
 // Update DB <- info
@@ -16,9 +15,16 @@ public abstract class FBFrontListener {
     }
 
     protected void send(Object value) {
+        if (!isValid(value))
+            return;
+
         if (mUpdateOnly)
             DataProvider.trySetValue(mRef, value);
         else
             mRef.setValue(value);
+    }
+
+    protected boolean isValid(Object value) {
+        return true;
     }
 }

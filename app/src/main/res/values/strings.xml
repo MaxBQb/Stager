@@ -17,28 +17,27 @@
     <string name="AuthorizationActivity_Button_RestoreAccount">Restore account</string>
     <string name="AuthorizationActivity_Button_Register">Registration</string>
     <string name="AuthorizationActivity_ErrorMessage_NoInternet">No internet connection</string>
-    <string name="AuthorizationActivity_ErrorMessage_NoEmail">E-mail is required</string>
-    <string name="AuthorizationActivity_ErrorMessage_NoValidEmail">Please enter a valid E-mail</string>
-    <string name="AuthorizationActivity_ErrorMessage_NoPassword">Password is required</string>
-    <string name="AuthorizationActivity_ErrorMessage_MinLengthPassword">Minimum length of password should be 6</string>
     <string name="AuthorizationActivity_Toast_CheckEmail">Check your E-mail</string>
     <string name="AuthorizationActivity_Toast_ErrorRestore">You can`t restore your account</string>
     <string name="AuthorizationActivity_Toast_ErrorAuthorization">Authorization error</string>
 
     <!-- Validation -->
     <string name="Validator_ErrorMessage_NoName">Name is empty</string>
-    <string name="Validator_ErrorMessage_MinLengthName">Minimum length of name should be 2</string>
-    <string name="Validator_ErrorMessage_MaxLengthName">Maximum length of name should be 12</string>
-    <string name="Validator_ErrorMessage_WrongName">Your name contains unsupported
+    <string name="Validator_ErrorMessage_MinLengthName">Minimum name length 2</string>
+    <string name="Validator_ErrorMessage_MaxLengthName">Maximum name length 12</string>
+    <string name="Validator_ErrorMessage_WrongName">Name contains unsupported
         symbols ( Allowed: Rus, Eng )</string>
     <string name="Validator_ErrorMessage_Spaces">Spaces before the name</string>
     <string name="Validator_ErrorMessage_NoEmail">Email is empty</string>
-    <string name="Validator_ErrorMessage_MinLengthEmail">Minimum length of email should be 5</string>
-    <string name="Validator_ErrorMessage_MaxLengthEmail">Maximum length of email should be 60</string>
+    <string name="Validator_ErrorMessage_MinLengthEmail">Minimum email length 5</string>
+    <string name="Validator_ErrorMessage_MaxLengthEmail">Maximum email length 60</string>
     <string name="Validator_ErrorMessage_IncorrectEmail">Incorrect email format</string>
     <string name="Validator_ErrorMessage_NoPassword">Password is empty</string>
-    <string name="Validator_ErrorMessage_MinLengthPassword">Minimum length of password should be 6</string>
-    <string name="Validator_ErrorMessage_MaxLengthPassword">Maximum length of password should be 100</string>
+    <string name="Validator_ErrorMessage_MinLengthPassword">Minimum password length 6</string>
+    <string name="Validator_ErrorMessage_MaxLengthPassword">Maximum password length 100</string>
+    <string name="Validator_ErrorMessage_NullDescription">Invalid value in the description</string>
+    <string name="Validator_ErrorMessage_MaxLengthDescription">Maximum description length 255</string>
+    <string name="Validator_ErrorMessage_MaxLengthActionName">Maximum name length 24</string>
 
     <!-- Settings -->
     <string name="Settings_title">Settings</string>
@@ -95,8 +94,6 @@
     <string name="UpdatePasswordFragment_TextView_label_Info">To change your password,
         enter the current one</string>
     <string name="UpdatePasswordFragment_EditText_hint_context">Enter your old password</string>
-    <string name="UpdatePasswordFragment_ErrorMessage_MinLengthPassword">Minimum length of
-        password should be 6</string>
     <string name="UpdatePasswordFragment_ErrorMessage_PasswordIsNotCorrect">Password isn`t correct</string>
     <string name="UpdatePasswordFragment_Button_ConfirmOldPassword">Confirm old password</string>
     <string name="UpdatePasswordFragment_TextView_title_ChangePassword">Change password</string>

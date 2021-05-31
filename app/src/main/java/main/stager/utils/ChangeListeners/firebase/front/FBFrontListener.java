@@ -18,6 +18,8 @@ public abstract class FBFrontListener {
         if (!isValid(value))
             return;
 
+        value = modify(value);
+
         if (mUpdateOnly)
             DataProvider.trySetValue(mRef, value);
         else
@@ -26,5 +28,9 @@ public abstract class FBFrontListener {
 
     protected boolean isValid(Object value) {
         return true;
+    }
+
+    protected Object modify(Object value) {
+        return value;
     }
 }

@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.util.Patterns;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
+
 import main.stager.Base.SmartActivity;
+import main.stager.utils.validators.EmailValidator;
+import main.stager.utils.validators.PasswordValidator;
 
 public class Authorization extends SmartActivity {
 
@@ -64,13 +66,13 @@ public class Authorization extends SmartActivity {
             return;
         }
 
-        // Пустое поле email
-        if (email.isEmpty()) {
-            edEmail.setError(getResources().getString(
-                    R.string.AuthorizationActivity_ErrorMessage_NoEmail));
+        EmailValidator emailValidator = new EmailValidator(getApplicationContext());
+        if (!emailValidator.isValid(email)) {
+            edEmail.setError(emailValidator.getMessage());
             edEmail.requestFocus();
             return;
         }
+
 
         fbAuth.sendPasswordResetEmail(email).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -100,34 +102,16 @@ public class Authorization extends SmartActivity {
             return;
         }
 
-        // Пустое поле email
-        if (email.isEmpty()) {
-            edEmail.setError(getResources().
-                    getString(R.string.AuthorizationActivity_ErrorMessage_NoEmail));
+        EmailValidator emailValidator = new EmailValidator(getApplicationContext());
+        if (!emailValidator.isValid(email)) {
+            edEmail.setError(emailValidator.getMessage());
             edEmail.requestFocus();
             return;
         }
 
-        // Некорректный ввод логина
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            edEmail.setError(getResources().
-                    getString(R.string.AuthorizationActivity_ErrorMessage_NoValidEmail));
-            edEmail.requestFocus();
-            return;
-        }
-
-        // Пустое поле пароля
-        if (password.isEmpty()) {
-            edPassword.setError(getResources().
-                    getString(R.string.AuthorizationActivity_ErrorMessage_NoPassword));
-            edPassword.requestFocus();
-            return;
-        }
-
-        // Некорректная длина пароля
-        if (password.length() < 6) {
-            edPassword.setError(getResources().
-                    getString(R.string.AuthorizationActivity_ErrorMessage_MinLengthPassword));
+        PasswordValidator passwordValidator = new PasswordValidator(getApplicationContext());
+        if (!passwordValidator.isValid(password)) {
+            edPassword.setError(passwordValidator.getMessage());
             edPassword.requestFocus();
             return;
         }

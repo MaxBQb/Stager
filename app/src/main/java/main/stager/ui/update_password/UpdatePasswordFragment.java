@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import main.stager.Base.StagerFragment;
 import main.stager.R;
+import main.stager.utils.validators.PasswordValidator;
 
 public class UpdatePasswordFragment extends StagerFragment {
 
@@ -25,19 +26,19 @@ public class UpdatePasswordFragment extends StagerFragment {
         view.findViewById(R.id.btn_confirm_oldPassword).setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
 
-                String oldPassword = edOldPassword.getText().toString();
-
-                if (oldPassword.isEmpty() || oldPassword.length() < 6) {
-                    edOldPassword.setError(getResources().getString(
-                            R.string.UpdatePasswordFragment_ErrorMessage_MinLengthPassword));
-                    edOldPassword.requestFocus();
-                    return;
-                }
-
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                 if (user == null || user.getEmail() == null)
                     return;
+
+                String oldPassword = edOldPassword.getText().toString();
+
+                PasswordValidator passwordValidator = new PasswordValidator(getContext());
+                if (!passwordValidator.isValid(oldPassword)) {
+                    edOldPassword.setError(passwordValidator.getMessage());
+                    edOldPassword.requestFocus();
+                    return;
+                }
 
                 showLoadingScreen();
 
@@ -62,12 +63,17 @@ public class UpdatePasswordFragment extends StagerFragment {
         view.findViewById(R.id.btn_сhangePassword).setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) return;
 
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+            if (user == null)
+                return;
+
             String newPassword = edNewPassword.getText().toString();
             String newPasswordConfirm = edNewPasswordConfirm.getText().toString();
 
-            if (newPassword.isEmpty() || newPassword.length() < 6) {
-                edNewPassword.setError(getResources().getString(
-                        R.string.UpdatePasswordFragment_ErrorMessage_MinLengthPassword));
+            PasswordValidator passwordValidator = new PasswordValidator(getContext());
+            if (!passwordValidator.isValid(newPassword)) {
+                edNewPassword.setError(passwordValidator.getMessage());
                 edNewPassword.requestFocus();
                 return;
             }
@@ -80,11 +86,6 @@ public class UpdatePasswordFragment extends StagerFragment {
                 edNewPasswordConfirm.requestFocus();
                 return;
             }
-
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-            if (user == null)
-                return;
 
             showLoadingScreen();
 

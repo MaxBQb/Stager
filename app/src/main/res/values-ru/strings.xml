@@ -59,6 +59,9 @@
     <string name="Settings_Category_title_Notifications">Уведомления</string>
         <string name="Settings_Notifications_label_FriendshipRequests">Запросы дружбы</string>
         <string name="Settings_Notifications_label_FriendshipRequestsAccepted">Принятые запросы дружбы</string>
+    <string name="Settings_Category_title_Notifications_AutoSubscribe">Автоматически подписываться на</string>
+        <string name="Settings_Notifications_label_ListenActionOnCompleteAbortedDefault">Прерывание мероприятия</string>
+        <string name="Settings_Notifications_label_ListenActionOnCompleteSucceedDefault">Успех мероприятия</string>
 
     <!-- Список этапов -->
     <string name="EditActionFragment_title">Этапы \"%s\"</string>

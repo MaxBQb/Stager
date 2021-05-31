@@ -47,5 +47,16 @@
             app:key="@string/Settings__NotifyFriendshipRequestAccepted"
             app:title="@string/Settings_Notifications_label_FriendshipRequestsAccepted"
             />
+        <PreferenceCategory app:title="@string/Settings_Category_title_Notifications_AutoSubscribe">
+            <SwitchPreferenceCompat
+                app:key="@string/Settings__ListenActionOnCompleteSucceedDefault"
+                app:title="@string/Settings_Notifications_label_ListenActionOnCompleteSucceedDefault"
+                app:singleLineTitle="false"
+                />
+            <SwitchPreferenceCompat
+                app:key="@string/Settings__ListenActionOnCompleteAbortedDefault"
+                app:title="@string/Settings_Notifications_label_ListenActionOnCompleteAbortedDefault"
+                />
+        </PreferenceCategory>
     </PreferenceCategory>
 </PreferenceScreen>

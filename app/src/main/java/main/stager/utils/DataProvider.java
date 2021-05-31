@@ -22,9 +22,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import lombok.AllArgsConstructor;
 import lombok.With;
+import main.stager.utils.Utilits.IPredicate;
 import main.stager.StagerApplication;
 import main.stager.model.FBModel;
 import main.stager.model.Stage;
@@ -679,14 +679,39 @@ public class DataProvider {
                     if (set == null)
                         set = new HashSet<>();
                     Set<String> listened = mEvents.getListenedEvents();
+                    Set<String> listened_dup = new HashSet<>(listened);
                     listened.removeAll(set);
+
+                    IPredicate<String> isAborted = e -> e.startsWith(
+                        EventType.ACTION_COMPLETED_ABORTED.name()
+                    );
+
+                    IPredicate<String> isSucceed = e -> e.startsWith(
+                        EventType.ACTION_COMPLETED_SUCCEED.name()
+                    );
+
+                    IPredicate<String> isCompletedAction = e ->
+                            isAborted.apply(e) || isSucceed.apply(e);
 
                     // Now work only with not listened or not ActionComplete event
                     for (String event: listened)
-                        if (event.startsWith(EventType.ACTION_COMPLETED_ABORTED.name())
-                        ||  event.startsWith(EventType.ACTION_COMPLETED_SUCCEED.name()))
+                        if (isCompletedAction.apply(event))
                             unsubscribe(event);
                     // unsubscribe action completed events of not monitored actions
+
+                    SettingsWrapper settings = StagerApplication.getSettings();
+                    boolean listenS = settings.isActionOnCompleteSucceedListenedByDefault(false);
+                    boolean listenA = settings.isActionOnCompleteAbortedListenedByDefault(false);
+                    if (!listenA && !listenS)
+                        return;
+
+                    set.removeAll(listened_dup);
+                    // Now work only with new ActionComplete events
+                    for (String event: set)
+                        if (listenA && isAborted.apply(event) ||
+                            listenS && isSucceed.apply(event))
+                            subscribe(event);
+                    // subscribe on new action completed events
                 }
 
                 @Override

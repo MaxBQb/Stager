@@ -56,6 +56,9 @@
     <string name="Settings_Category_title_Notifications">Notifications</string>
         <string name="Settings_Notifications_label_FriendshipRequests">Friendship requests</string>
         <string name="Settings_Notifications_label_FriendshipRequestsAccepted">Accepted friendship requests</string>
+    <string name="Settings_Category_title_Notifications_AutoSubscribe">Automatically subscribe on</string>
+        <string name="Settings_Notifications_label_ListenActionOnCompleteAbortedDefault">Action aborted</string>
+        <string name="Settings_Notifications_label_ListenActionOnCompleteSucceedDefault">Action successfully completed</string>
 
     <!-- Edit action -->
     <string name="EditActionFragment_title">Stages of \"%s\"</string>

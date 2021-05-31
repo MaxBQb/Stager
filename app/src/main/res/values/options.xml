@@ -22,4 +22,10 @@
     <string name="Settings__NotifyFriendshipRequestAccepted" translatable="false">
         Stager.main.settings.notifications.friendship.request.accepted
     </string>
+    <string name="Settings__ListenActionOnCompleteSucceedDefault" translatable="false">
+        Stager.main.settings.notifications.actions.completed.succeed.default
+    </string>
+    <string name="Settings__ListenActionOnCompleteAbortedDefault" translatable="false">
+        Stager.main.settings.notifications.actions.completed.aborted.default
+    </string>
 </resources>

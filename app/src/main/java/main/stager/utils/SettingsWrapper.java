@@ -14,6 +14,8 @@ public class SettingsWrapper {
     public final String HIDE_EMAIL;
     public final String NOTIFY_FRIENDSHIP_REQUEST;
     public final String NOTIFY_FRIENDSHIP_REQUEST_ACCEPTED;
+    public final String LISTEN_ACTION_ON_COMPLETE_SUCCEED_DEFAULT;
+    public final String LISTEN_ACTION_ON_COMPLETE_ABORTED_DEFAULT;
 
     public SettingsWrapper(Context c) {
         pref = PreferenceManager.getDefaultSharedPreferences(c.getApplicationContext());
@@ -23,6 +25,8 @@ public class SettingsWrapper {
         HIDE_EMAIL = c.getString(R.string.Settings__HideEmail);
         NOTIFY_FRIENDSHIP_REQUEST = c.getString(R.string.Settings__NotifyFriendshipRequest);
         NOTIFY_FRIENDSHIP_REQUEST_ACCEPTED = c.getString(R.string.Settings__NotifyFriendshipRequestAccepted);
+        LISTEN_ACTION_ON_COMPLETE_SUCCEED_DEFAULT = c.getString(R.string.Settings__ListenActionOnCompleteSucceedDefault);
+        LISTEN_ACTION_ON_COMPLETE_ABORTED_DEFAULT = c.getString(R.string.Settings__ListenActionOnCompleteAbortedDefault);
     }
 
     public boolean isAutoTune(boolean unset) {
@@ -43,6 +47,14 @@ public class SettingsWrapper {
 
     public boolean isNotifyFriendshipRequestAcceptedAllowed(boolean unset) {
         return pref.getBoolean(NOTIFY_FRIENDSHIP_REQUEST_ACCEPTED, unset);
+    }
+
+    public boolean isActionOnCompleteSucceedListenedByDefault(boolean unset) {
+        return pref.getBoolean(LISTEN_ACTION_ON_COMPLETE_SUCCEED_DEFAULT, unset);
+    }
+
+    public boolean isActionOnCompleteAbortedListenedByDefault(boolean unset) {
+        return pref.getBoolean(LISTEN_ACTION_ON_COMPLETE_ABORTED_DEFAULT, unset);
     }
 
     public String getLocale(String unset) {

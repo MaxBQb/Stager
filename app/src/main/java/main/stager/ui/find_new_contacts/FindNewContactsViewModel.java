@@ -19,6 +19,7 @@ public class FindNewContactsViewModel extends StagerSearchResultsListViewModel<C
 
     protected MutableLiveData<Set<String>> mContacts;
     protected MutableLiveData<Set<String>> mOutgoingRequests;
+    protected MutableLiveData<Set<String>> mIncomingRequests;
     protected MutableLiveData<Set<String>> mIgnoredRequests;
 
     @Override
@@ -30,6 +31,7 @@ public class FindNewContactsViewModel extends StagerSearchResultsListViewModel<C
         super(application);
         mContacts = new MutableLiveData<>();
         mOutgoingRequests = new MutableLiveData<>();
+        mIncomingRequests = new MutableLiveData<>();
         mIgnoredRequests = new MutableLiveData<>();
     }
 
@@ -86,6 +88,17 @@ public class FindNewContactsViewModel extends StagerSearchResultsListViewModel<C
                 return x;
             }));
         });
+
+        mValues.addSource(getFBKeySet(mIncomingRequests), keys -> {
+            if (keys == null)
+                keys = new HashSet<>();
+            ((FoundContactsListEventListener)mListEventListener).setStateIncomingKeys(keys);
+            Set<String> finalKeys = keys;
+            mValues.postValue(Utilits.map(mValues.getValue(), x -> {
+                x.setIncoming(finalKeys.contains(x.getKey()));
+                return x;
+            }));
+        });
     }
 
     @Override
@@ -93,11 +106,13 @@ public class FindNewContactsViewModel extends StagerSearchResultsListViewModel<C
         super.buildBackPath();
         backPath.put(mContacts, dataProvider.getContacts());
         backPath.put(mOutgoingRequests, dataProvider.getOutgoingContactRequests());
+        backPath.put(mIncomingRequests, dataProvider.getContactRequests());
         backPath.put(mIgnoredRequests, dataProvider.getIgnoringContacts());
     }
 
     static class FoundContactsListEventListener extends ValueListEventListener<Contact> {
         @Getter private Set<String> stateOutgoingKeys = new HashSet<>();
+        @Getter private Set<String> stateIncomingKeys = new HashSet<>();
         @Getter private Set<String> stateIgnoredKeys = new HashSet<>();
 
         public void setStateOutgoingKeys(Set<String> stateOutgoingKeys) {
@@ -105,6 +120,13 @@ public class FindNewContactsViewModel extends StagerSearchResultsListViewModel<C
                 this.stateOutgoingKeys.clear();
             else
                 this.stateOutgoingKeys = stateOutgoingKeys;
+        }
+
+        public void setStateIncomingKeys(Set<String> stateIncomingKeys) {
+            if (stateIgnoredKeys == null)
+                this.stateIncomingKeys.clear();
+            else
+                this.stateIncomingKeys = stateIncomingKeys;
         }
 
         public void setStateIgnoredKeys(Set<String> stateIgnoredKeys) {
@@ -128,6 +150,9 @@ public class FindNewContactsViewModel extends StagerSearchResultsListViewModel<C
 
             if (stateOutgoingKeys.contains(item.getKey()))
                 item.setOutgoing(true);
+
+            if (stateIncomingKeys.contains(item.getKey()))
+                item.setIncoming(true);
 
             if (stateIgnoredKeys.contains(item.getKey()))
                 item.setIgnored(true);

@@ -193,6 +193,7 @@
     <string name="FindNewContactsFragment_message_revoke">Отменён запрос к \"%s\"</string>
     <string name="FindNewContactsFragment_message_success">Запрос отправлен \"%s\"</string>
     <string name="FindNewContactsFragment_message_denied">Запрос отклонён</string>
+    <string name="FindNewContactsFragment_message_accepted">Принят запрос от \"%s\"</string>
     <string name="FindNewContactsFragment_message_queryHint">Введите адрес эл.почты</string>
 
     <!-- Найти контакты -->

@@ -18,12 +18,6 @@
     <string name="AuthorizationActivity_TextView_title_Register">Еще нет аккаунта?</string>
     <string name="AuthorizationActivity_Button_Register">Регистрация</string>
     <string name="AuthorizationActivity_ErrorMessage_NoInternet">Нет подключения к интернету</string>
-    <string name="AuthorizationActivity_ErrorMessage_NoEmail">Требуется электронная почта</string>
-    <string name="AuthorizationActivity_ErrorMessage_NoValidEmail">Пожалуйста,
-        введите действительный адрес электронной почты</string>
-    <string name="AuthorizationActivity_ErrorMessage_NoPassword">Требуется пароль</string>
-    <string name="AuthorizationActivity_ErrorMessage_MinLengthPassword">Минимальная длина пароля
-        должна быть 6</string>
     <string name="AuthorizationActivity_Toast_CheckEmail">Проверьте свою электронную почту</string>
     <string name="AuthorizationActivity_Toast_ErrorRestore">Вы не можете восстановить
         свою учетную запись</string>
@@ -33,7 +27,7 @@
     <string name="Validator_ErrorMessage_NoName">Отсутствует имя</string>
     <string name="Validator_ErrorMessage_MinLengthName">Минимальная длина имени 2</string>
     <string name="Validator_ErrorMessage_MaxLengthName">Максимальная длина имени 12</string>
-    <string name="Validator_ErrorMessage_WrongName">Имя содержит неподдерживаемое
+    <string name="Validator_ErrorMessage_WrongName">Имя содержит неподдерживаемые
         символы ( Разрешены: Rus, Eng )</string>
     <string name="Validator_ErrorMessage_Spaces">Пробелы перед именем неразрешены</string>
     <string name="Validator_ErrorMessage_NoEmail">Отсутствует почта</string>
@@ -99,8 +93,6 @@
     <string name="UpdatePasswordFragment_TextView_label_Info">Чтобы сменить пароль, введите текущий</string>
     <string name="UpdatePasswordFragment_TextView_title_ConfirmOldPassword">Подтверждение пароля</string>
     <string name="UpdatePasswordFragment_EditText_hint_context">Введите старый пароль</string>
-    <string name="UpdatePasswordFragment_ErrorMessage_MinLengthPassword">Минимальная длина пароля
-        6 символов</string>
     <string name="UpdatePasswordFragment_ErrorMessage_PasswordIsNotCorrect">Пароль неправильный</string>
     <string name="UpdatePasswordFragment_Button_ConfirmOldPassword">Подтвердить старый пароль</string>
     <string name="UpdatePasswordFragment_EditText_hint_NewPassword">Новый пароль</string>

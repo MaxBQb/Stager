@@ -17,10 +17,6 @@
     <string name="AuthorizationActivity_Button_RestoreAccount">Restore account</string>
     <string name="AuthorizationActivity_Button_Register">Registration</string>
     <string name="AuthorizationActivity_ErrorMessage_NoInternet">No internet connection</string>
-    <string name="AuthorizationActivity_ErrorMessage_NoEmail">E-mail is required</string>
-    <string name="AuthorizationActivity_ErrorMessage_NoValidEmail">Please enter a valid E-mail</string>
-    <string name="AuthorizationActivity_ErrorMessage_NoPassword">Password is required</string>
-    <string name="AuthorizationActivity_ErrorMessage_MinLengthPassword">Minimum length of password should be 6</string>
     <string name="AuthorizationActivity_Toast_CheckEmail">Check your E-mail</string>
     <string name="AuthorizationActivity_Toast_ErrorRestore">You can`t restore your account</string>
     <string name="AuthorizationActivity_Toast_ErrorAuthorization">Authorization error</string>
@@ -95,8 +91,6 @@
     <string name="UpdatePasswordFragment_TextView_label_Info">To change your password,
         enter the current one</string>
     <string name="UpdatePasswordFragment_EditText_hint_context">Enter your old password</string>
-    <string name="UpdatePasswordFragment_ErrorMessage_MinLengthPassword">Minimum length of
-        password should be 6</string>
     <string name="UpdatePasswordFragment_ErrorMessage_PasswordIsNotCorrect">Password isn`t correct</string>
     <string name="UpdatePasswordFragment_Button_ConfirmOldPassword">Confirm old password</string>
     <string name="UpdatePasswordFragment_TextView_title_ChangePassword">Change password</string>

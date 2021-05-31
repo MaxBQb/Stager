@@ -314,8 +314,11 @@ public class DataProvider {
         return mRef.child(PATH.SHARED);
     }
 
+    public DatabaseReference getSubscribers(@NonNull String uid) {
+        return getShared().child(uid);
+    }
     public DatabaseReference getSubscribers() {
-        return getShared().child(getUID());
+        return getSubscribers(getUID());
     }
 
     public Query getSubscribersOfAction(@NonNull String actionKey) {
@@ -324,6 +327,10 @@ public class DataProvider {
 
     public DatabaseReference getSharedActions(@NonNull String sharedTo) {
         return getSubscribers().child(sharedTo);
+    }
+
+    public DatabaseReference getSharedMeActions(@NonNull String sharedFrom) {
+        return getSubscribers(sharedFrom).child(getUID());
     }
 
     public DatabaseReference getSharedAction(@NonNull String sharedTo, @NonNull String key) {
@@ -600,7 +607,9 @@ public class DataProvider {
                 .remove(getContacts().child(uid))
                 .remove(getContacts(uid).child(getUID()))
                 .remove(getSharedActions(uid))
+                .remove(getSharedMeActions(uid))
                 .remove(getMonitoredActions(uid, getUID()))
+                .remove(getMonitoredActions(getUID(), uid))
                 .apply();
     }
 

@@ -29,6 +29,20 @@
         свою учетную запись</string>
     <string name="AuthorizationActivity_Toast_ErrorAuthorization">Ошибка авторизации</string>
 
+    <!-- Валидация -->
+    <string name="Validator_ErrorMessage_NoName">Отсутствует ваше имя</string>
+    <string name="Validator_ErrorMessage_MinLengthName">Минимальная длина имени должна быть 2</string>
+    <string name="Validator_ErrorMessage_MaxLengthName">Максимальная длина имени должна быть 12</string>
+    <string name="Validator_ErrorMessage_WrongName">Неправильное имя</string>
+    <string name="Validator_ErrorMessage_Spaces">Spaces before the name</string>
+    <string name="Validator_ErrorMessage_NoEmail">Отсутствует почта</string>
+    <string name="Validator_ErrorMessage_MinLengthEmail">Минимальная длина почты должна быть 5</string>
+    <string name="Validator_ErrorMessage_MaxLengthEmail">Максимальная длина почты должна быть 60</string>
+    <string name="Validator_ErrorMessage_IncorrectEmail">Некорректный формат почты</string>
+    <string name="Validator_ErrorMessage_NoPassword">Отсутствует пароль</string>
+    <string name="Validator_ErrorMessage_MinLengthPassword">Минимальная длина пароля должна быть 6</string>
+    <string name="Validator_ErrorMessage_MaxLengthPassword">Максимальная длина пароля должна быть 100</string>
+
     <!-- Настройки -->
     <string name="Settings_title">Настройки</string>
     <string name="Settings_summary_AppRestartRequired">(Требуется перезапуск приложения)</string>

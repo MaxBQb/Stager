@@ -25,6 +25,20 @@
     <string name="AuthorizationActivity_Toast_ErrorRestore">You can`t restore your account</string>
     <string name="AuthorizationActivity_Toast_ErrorAuthorization">Authorization error</string>
 
+    <!-- Validation -->
+    <string name="Validator_ErrorMessage_NoName">Name is empty</string>
+    <string name="Validator_ErrorMessage_MinLengthName">Minimum length of name should be 2</string>
+    <string name="Validator_ErrorMessage_MaxLengthName">Maximum length of name should be 12</string>
+    <string name="Validator_ErrorMessage_WrongName">Your name contains unsupported
+        symbols ( Allowed: Rus, Eng )</string>
+    <string name="Validator_ErrorMessage_Spaces">Spaces before the name</string>
+    <string name="Validator_ErrorMessage_NoEmail">Email is empty</string>
+    <string name="Validator_ErrorMessage_MinLengthEmail">Minimum length of email should be 5</string>
+    <string name="Validator_ErrorMessage_MaxLengthEmail">Maximum length of email should be 60</string>
+    <string name="Validator_ErrorMessage_IncorrectEmail">Incorrect email format</string>
+    <string name="Validator_ErrorMessage_NoPassword">Password is empty</string>
+    <string name="Validator_ErrorMessage_MinLengthPassword">Minimum length of password should be 6</string>
+    <string name="Validator_ErrorMessage_MaxLengthPassword">Maximum length of password should be 100</string>
 
     <!-- Settings -->
     <string name="Settings_title">Settings</string>

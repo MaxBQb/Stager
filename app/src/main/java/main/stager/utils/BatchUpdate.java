@@ -49,17 +49,8 @@ class BatchUpdate {
         return root.getRef().updateChildren(trimPath(map, rootPath));
     }
 
-    public void apply(DatabaseReference.CompletionListener callback) {
-        root.getRef().updateChildren(trimPath(map, rootPath), callback);
-    }
-
     public Task<Void> apply(@NonNull Query root) {
         return root.getRef().updateChildren(trimPath(map, getPath(root)));
-    }
-
-    public void apply(@NonNull Query root,
-                      DatabaseReference.CompletionListener callback) {
-        root.getRef().updateChildren(trimPath(map, getPath(root)), callback);
     }
 
     @NonNull

@@ -63,7 +63,8 @@ public class EditStageFragment extends StagerVMFragment<EditStageViewModel> {
         bindDataTwoWay(viewModel.getStageName(), editStageName);
         bindData(viewModel.getStageStatus(), status ->
             view.findViewById(R.id.edit_stage_layout_controls)
-                    .setVisibility(status == Status.WAITING ? View.VISIBLE : View.GONE)
+                .setVisibility(status == Status.EVALUATING
+                               ? View.VISIBLE : View.GONE)
         );
     }
 

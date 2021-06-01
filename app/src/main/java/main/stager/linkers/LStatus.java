@@ -10,6 +10,7 @@ public class LStatus {
         switch (status) {
             case ABORTED: return R.drawable.ic_status_aborted;
             case SUCCEED: return R.drawable.ic_status_succed;
+            case EVALUATING:
             case WAITING: return R.drawable.ic_status_waiting;
             case LOCKED:  return R.drawable.ic_status_locked;
             default: throw new IllegalArgumentException();

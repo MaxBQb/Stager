@@ -461,14 +461,18 @@ public class DataProvider {
     @Trackable(keys = {CBN.RESET_ACTION_STATUS})
     public void resetActionStatus(@NotNull String actionKey) {
         BatchUpdate batch = batchedFromRoot();
-        getStages(actionKey).addListenerForSingleValueEvent(new OnValueGet(snapshot -> {
+        getSorted(getStages(actionKey)).addListenerForSingleValueEvent(new OnValueGet(snapshot -> {
             if (!snapshot.exists() || !snapshot.hasChildren())
                 return;
 
+            boolean first = true;
             for (DataSnapshot item: snapshot.getChildren())
-                batch.set(item.child(PATH.STAGE_STATUS).getRef(),
-                          Status.WAITING);
-
+                if (first) {
+                    first = false;
+                    batch.set(item.child(PATH.STAGE_STATUS).getRef(),
+                              Status.EVALUATING);
+                } else batch.set(item.child(PATH.STAGE_STATUS).getRef(),
+                                 Status.WAITING);
             batch.set(getActionStatus(actionKey), Status.WAITING);
             requestTracker.postItem(CBN.RESET_ACTION_STATUS, batch.apply());
         }));
@@ -481,7 +485,7 @@ public class DataProvider {
                                       @NotNull String stageKey) {
         DatabaseReference ref = getStages(actionKey);
         BatchUpdate batch = BatchUpdate.init(ref);
-        ref.addListenerForSingleValueEvent(new OnValueGet(snapshot -> {
+        getSorted(ref).addListenerForSingleValueEvent(new OnValueGet(snapshot -> {
             if (!snapshot.exists() || !snapshot.hasChildren())
                 return;
 
@@ -489,33 +493,47 @@ public class DataProvider {
             if (target == null)
                 return;
 
-            int pos = target.getPos();
-            if (pos == Integer.MAX_VALUE)
+            if (target.getCurrentStatus() != Status.EVALUATING)
                 return;
 
+            boolean targetFound = false;
             Stage stage;
-            int unfinishedCount = 0;
+            String nextEval = null;
             for (DataSnapshot item: snapshot.getChildren()) {
                 stage = item.getValue(Stage.class);
+
                 if (stage == null)
                     return;
 
-                if (stage.getCurrentStatus() != Status.SUCCEED) {
-                    if (stage.getPos() < pos) return;
-                    unfinishedCount++;
+                if (stage.getCurrentStatus() == Status.EVALUATING) {
+                    targetFound = true;
+                    continue;
                 }
+
+                if (targetFound
+                    ? stage.getCurrentStatus() != Status.WAITING
+                    : stage.getCurrentStatus() != Status.SUCCEED)
+                    return;
+
+                if (nextEval == null && targetFound)
+                    nextEval = item.getKey();
             }
+            if (!targetFound) return;
 
             batch.set(snapshot.child(stageKey)
                     .child(PATH.STAGE_STATUS)
                     .getRef(), Status.SUCCEED);
 
-            if (unfinishedCount == 0) return;
+            if (nextEval != null)
+                batch.set(snapshot.child(nextEval)
+                        .child(PATH.STAGE_STATUS)
+                        .getRef(), Status.EVALUATING);
 
             Task<Void> task = batch.apply();
             requestTracker.postItem(CBN.SetStageStatus.UPDATE_STAGES, task);
 
-            if (unfinishedCount != 1) return;
+            if (nextEval != null)
+                return;
 
             task.addOnSuccessListener(t -> {
                 requestTracker.postItem(
@@ -534,7 +552,7 @@ public class DataProvider {
                                       @NotNull String stageKey) {
         DatabaseReference ref = getStages(actionKey);
         BatchUpdate batch = BatchUpdate.init(ref);
-        ref.addListenerForSingleValueEvent(new OnValueGet(snapshot -> {
+        getSorted(ref).addListenerForSingleValueEvent(new OnValueGet(snapshot -> {
             if (!snapshot.exists())
                 return;
 
@@ -542,38 +560,37 @@ public class DataProvider {
             if (target == null)
                 return;
 
-            int pos = target.getPos();
-            if (pos == Integer.MAX_VALUE)
+            if (target.getCurrentStatus() != Status.EVALUATING)
                 return;
 
-            List<String> lockList = new ArrayList<>();
-
+            boolean targetFound = false;
             Stage stage;
             for (DataSnapshot item: snapshot.getChildren()) {
                 stage = item.getValue(Stage.class);
-                if (stage == null)
+
+                if (stage == null || item.getKey() == null)
                     return;
 
-                if (stage.getPos() < pos &&
-                    stage.getCurrentStatus() != Status.SUCCEED)
-                    return;
-
-                if (stage.getPos() > pos) {
-                    if (stage.getCurrentStatus() != Status.WAITING &&
-                        stage.getCurrentStatus() != Status.LOCKED)
-                        return;
-                    lockList.add(item.getKey());
+                if (stage.getCurrentStatus() == Status.EVALUATING) {
+                    targetFound = true;
+                    continue;
                 }
+
+                if (targetFound
+                    ? stage.getCurrentStatus() != Status.WAITING
+                    : stage.getCurrentStatus() != Status.SUCCEED)
+                    return;
+
+                if (targetFound)
+                    batch.set(snapshot.child(item.getKey())
+                                      .child(PATH.STAGE_STATUS)
+                                      .getRef(), Status.LOCKED);
             }
+            if (!targetFound) return;
 
             batch.set(snapshot.child(stageKey)
-                                 .child(PATH.STAGE_STATUS)
-                                 .getRef(), Status.ABORTED);
-
-            for (String lock_key: lockList)
-                batch.set(snapshot.child(lock_key)
-                                     .child(PATH.STAGE_STATUS)
-                                     .getRef(), Status.LOCKED);
+                              .child(PATH.STAGE_STATUS)
+                              .getRef(), Status.ABORTED);
 
             Task<Void> task = batch.apply();
             requestTracker.postItem(CBN.SetStageStatus.UPDATE_STAGES, task);

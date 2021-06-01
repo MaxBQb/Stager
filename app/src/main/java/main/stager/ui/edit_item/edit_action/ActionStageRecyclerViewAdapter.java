@@ -22,7 +22,8 @@ import main.stager.utils.Utilits;
 public class ActionStageRecyclerViewAdapter
         extends StagerListAdapter<Stage, ActionStageRecyclerViewAdapter.ViewHolder> {
 
-    private Animation rotateAnimation;
+    private Animation slowRotateAnimation;
+    private Animation quickRotateAnimation;
 
     private static DiffUtil.ItemCallback<Stage> DIFF_CALLBACK = new FBItemCallback<Stage>() {
         @Override
@@ -44,8 +45,14 @@ public class ActionStageRecyclerViewAdapter
     @Override
     protected void onViewHolderCreated(View view, ViewHolder holder) {
         super.onViewHolderCreated(view, holder);
-        if (rotateAnimation == null)
-            rotateAnimation = AnimationUtils.loadAnimation(view.getContext(), R.anim.rotation);
+        if (slowRotateAnimation == null)
+            slowRotateAnimation = AnimationUtils.loadAnimation(view.getContext(), R.anim.rotation);
+
+        if (quickRotateAnimation == null) {
+            quickRotateAnimation = AnimationUtils.loadAnimation(view.getContext(), R.anim.rotation);
+            long duration = quickRotateAnimation.getDuration();
+            quickRotateAnimation.setDuration(duration/2);
+        }
     }
 
     @Override
@@ -58,8 +65,14 @@ public class ActionStageRecyclerViewAdapter
         holder.mStatusView.setImageResource(LStatus.toIcon(
                 holder.mItem.getCurrentStatus()));
 
-        if (holder.mItem.getCurrentStatus() == Status.WAITING)
-            holder.mStatusView.startAnimation(rotateAnimation);
+        if (holder.mItem.getCurrentStatus() == Status.WAITING) {
+            holder.mStatusView.startAnimation(slowRotateAnimation);
+            holder.mStatusView.setAlpha(0.7f);
+        } else
+            holder.mStatusView.setAlpha(1f);
+
+        if (holder.mItem.getCurrentStatus() == Status.EVALUATING)
+            holder.mStatusView.startAnimation(quickRotateAnimation);
     }
 
     public static class ViewHolder extends StagerViewHolder<Stage> {

@@ -43,20 +43,79 @@
 
     <!-- Настройки -->
     <string name="Settings_title">Настройки</string>
-    <string name="Settings_summary_AppRestartRequired">(Требуется перезапуск приложения)</string>
     <string name="Settings_Category_title_Appearance">Внешний вид</string>
         <string name="Settings_Appearance_label_AutoTune">Системные значения</string>
+            <string name="Settings_Appearance_Switch_summaryOn_AutoTune">
+                Устанавливает тему и язык в соответствии с системными значениями\n
+                (Изменение этого параметра перезагрузит приложение)\n
+                Состояние: Включено
+            </string>
+            <string name="Settings_Appearance_Switch_summaryOff_AutoTune">
+                Устанавливает тему и язык в соответствии с системными значениями\n
+                (Изменение этого параметра перезагрузит приложение)\n
+                Состояние: Отключено
+            </string>
         <string name="Settings_Appearance_label_Theme">Тёмная тема</string>
-        <string name="Settings_Appearance_Switch_summaryOn_DarkMode">Текущая тема: Тёмная</string>
-        <string name="Settings_Appearance_Switch_summaryOff_LightMode">Текущая тема: Светлая</string>
+            <string name="Settings_Appearance_Switch_summaryOn_DarkMode">Текущая тема: Тёмная</string>
+            <string name="Settings_Appearance_Switch_summaryOff_LightMode">Текущая тема: Светлая</string>
         <string name="Settings_Appearance_List_label_Locale">Язык</string>
-        <string name="Settings_Appearance_List_summary_Locale">Текущий язык: %1$s</string>
+            <string name="Settings_Appearance_List_summary_Locale">Текущий язык: %s</string>
     <string name="Settings_Category_title_Privacy">Приватность</string>
         <string name="Settings_Privacy_label_HideEmail">Скрывать почту</string>
-        <string name="Settings_Privacy_Switch_summary_HideEmail">Скрывает почту из возможных контактов</string>
+            <string name="Settings_Privacy_Switch_summaryOn_HideEmail">
+                Ваша почта скрыта от других пользователей\n
+                Никто не может послать Вам запрос дружбы
+            </string>
+            <string name="Settings_Privacy_Switch_summaryOff_HideEmail">
+                Ваша почта видна другим пользователям\n
+                Любой может послать Вам запрос дружбы
+            </string>
     <string name="Settings_Category_title_Notifications">Уведомления</string>
         <string name="Settings_Notifications_label_FriendshipRequests">Запросы дружбы</string>
+            <string name="Settings_Notifications_Switch_summaryOn_FriendshipRequests">
+                Когда кто-то пошлёт Вам запрос дружбы\n
+                Вам придёт уведомление
+            </string>
+            <string name="Settings_Notifications_Switch_summaryOff_FriendshipRequests">
+                Когда кто-то пошлёт Вам запрос дружбы\n
+                Ничего не произойдёт
+            </string>
         <string name="Settings_Notifications_label_FriendshipRequestsAccepted">Принятые запросы дружбы</string>
+            <string name="Settings_Notifications_Switch_summaryOn_FriendshipRequestsAccepted">
+                Когда кто-то примет Ваш запрос дружбы\n
+                Вам придёт уведомление
+            </string>
+            <string name="Settings_Notifications_Switch_summaryOff_FriendshipRequestsAccepted">
+                Когда кто-то примет Ваш запрос дружбы\n
+                Ничего не произойдёт
+            </string>
+    <string name="Settings_Category_title_Notifications_AutoSubscribe">Автоматически подписываться на</string>
+        <string name="Settings_Notifications_label_ListenActionOnCompleteAbortedDefault">Прерывание мероприятия</string>
+            <string name="Settings_Notifications_Switch_summaryOn_ListenActionOnCompleteAbortedDefault">
+                После предоставления Вам доступа к новому мероприятию\n
+                Вы будете получать уведомления, всякий раз,
+                когда это мероприятие будет завершено досрочно (прервано)\n
+                (Это поведение можно настраивать индивидуально)
+            </string>
+            <string name="Settings_Notifications_Switch_summaryOff_ListenActionOnCompleteAbortedDefault">
+                После предоставления Вам доступа к новому мероприятию\n
+                Ничего не случится,
+                если это мероприятие будет завершено досрочно (прервано)\n
+                (Это поведение можно настраивать индивидуально)
+            </string>
+        <string name="Settings_Notifications_label_ListenActionOnCompleteSucceedDefault">Успех мероприятия</string>
+            <string name="Settings_Notifications_Switch_summaryOn_ListenActionOnCompleteSucceedDefault">
+                После предоставления Вам доступа к новому мероприятию\n
+                Вы будете получать уведомления, всякий раз,
+                когда это мероприятие будет завершено успешно\n
+                (Это поведение можно настраивать индивидуально)
+            </string>
+            <string name="Settings_Notifications_Switch_summaryOff_ListenActionOnCompleteSucceedDefault">
+                После предоставления Вам доступа к новому мероприятию\n
+                Ничего не случится,
+                если это мероприятие будет завершено успешно\n
+                (Это поведение можно настраивать индивидуально)
+            </string>
 
     <!-- Список этапов -->
     <string name="EditActionFragment_title">Этапы \"%s\"</string>
@@ -134,6 +193,7 @@
     <string name="FindNewContactsFragment_message_revoke">Отменён запрос к \"%s\"</string>
     <string name="FindNewContactsFragment_message_success">Запрос отправлен \"%s\"</string>
     <string name="FindNewContactsFragment_message_denied">Запрос отклонён</string>
+    <string name="FindNewContactsFragment_message_accepted">Принят запрос от \"%s\"</string>
     <string name="FindNewContactsFragment_message_queryHint">Введите адрес эл.почты</string>
 
     <!-- Найти контакты -->
@@ -146,7 +206,7 @@
     <string name="EditSubscribersFragment_title">Следят за \"%s\"</string>
 
     <!-- Информация о контакте -->
-    <string name="ContactInfoFragment_title">Сведения о \"%s\"</string>
+    <string name="ContactInfoFragment_title">О \"%s\"</string>
     <string name="ContactInfoFragment_TextView_label_UserName">Имя:</string>
     <string name="ContactInfoFragment_TextView_label_UserEmail">Почта:</string>
     <string name="ContactInfoFragment_TextView_label_Description">Описание:</string>

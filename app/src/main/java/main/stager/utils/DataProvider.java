@@ -22,9 +22,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import lombok.AllArgsConstructor;
 import lombok.With;
+import main.stager.utils.Utilits.IPredicate;
 import main.stager.StagerApplication;
 import main.stager.model.FBModel;
 import main.stager.model.Stage;
@@ -73,6 +73,12 @@ public class DataProvider {
     }
 
     // CONSTANTS
+    public static final String INVALID_UID = "__INVALID_UID_HERE__";
+    public static final String INVALID_EMAIL = "__INVALID_EMAIL_HERE__";
+    public static final String INVALID_STAGE_KEY = "__INVALID_STAGE_KEY_HERE__";
+    public static final String INVALID_ACTION_KEY = "__INVALID_ACTION_KEY_HERE__";
+    public static final String INVALID_CONTACT_KEY = "__INVALID_CONTACT_KEY_HERE__";
+
     private static final class PATH {
         // Common
         public static final String MAIN_DB = "stager-main-db";
@@ -141,13 +147,13 @@ public class DataProvider {
      */
     public @NotNull String getUID() {
         String uid = mAuth.getUid();
-        return uid == null ? "" : uid;
+        return uid == null ? INVALID_UID : uid;
     }
 
     public @NotNull String getEmail() {
-        if (mAuth.getCurrentUser() == null) return "";
+        if (mAuth.getCurrentUser() == null) return INVALID_EMAIL;
         String email = mAuth.getCurrentUser().getEmail();
-        return email != null ? email : "";
+        return email != null ? email : INVALID_EMAIL;
     }
 
     public boolean isAuthorized() {
@@ -314,8 +320,11 @@ public class DataProvider {
         return mRef.child(PATH.SHARED);
     }
 
+    public DatabaseReference getSubscribers(@NonNull String uid) {
+        return getShared().child(uid);
+    }
     public DatabaseReference getSubscribers() {
-        return getShared().child(getUID());
+        return getSubscribers(getUID());
     }
 
     public Query getSubscribersOfAction(@NonNull String actionKey) {
@@ -324,6 +333,10 @@ public class DataProvider {
 
     public DatabaseReference getSharedActions(@NonNull String sharedTo) {
         return getSubscribers().child(sharedTo);
+    }
+
+    public DatabaseReference getSharedMeActions(@NonNull String sharedFrom) {
+        return getSubscribers(sharedFrom).child(getUID());
     }
 
     public DatabaseReference getSharedAction(@NonNull String sharedTo, @NonNull String key) {
@@ -600,7 +613,9 @@ public class DataProvider {
                 .remove(getContacts().child(uid))
                 .remove(getContacts(uid).child(getUID()))
                 .remove(getSharedActions(uid))
+                .remove(getSharedMeActions(uid))
                 .remove(getMonitoredActions(uid, getUID()))
+                .remove(getMonitoredActions(getUID(), uid))
                 .apply();
     }
 
@@ -679,14 +694,39 @@ public class DataProvider {
                     if (set == null)
                         set = new HashSet<>();
                     Set<String> listened = mEvents.getListenedEvents();
+                    Set<String> listened_dup = new HashSet<>(listened);
                     listened.removeAll(set);
+
+                    IPredicate<String> isAborted = e -> e.startsWith(
+                        EventType.ACTION_COMPLETED_ABORTED.name()
+                    );
+
+                    IPredicate<String> isSucceed = e -> e.startsWith(
+                        EventType.ACTION_COMPLETED_SUCCEED.name()
+                    );
+
+                    IPredicate<String> isCompletedAction = e ->
+                            isAborted.apply(e) || isSucceed.apply(e);
 
                     // Now work only with not listened or not ActionComplete event
                     for (String event: listened)
-                        if (event.startsWith(EventType.ACTION_COMPLETED_ABORTED.name())
-                        ||  event.startsWith(EventType.ACTION_COMPLETED_SUCCEED.name()))
+                        if (isCompletedAction.apply(event))
                             unsubscribe(event);
                     // unsubscribe action completed events of not monitored actions
+
+                    SettingsWrapper settings = StagerApplication.getSettings();
+                    boolean listenS = settings.isActionOnCompleteSucceedListenedByDefault(false);
+                    boolean listenA = settings.isActionOnCompleteAbortedListenedByDefault(false);
+                    if (!listenA && !listenS)
+                        return;
+
+                    set.removeAll(listened_dup);
+                    // Now work only with new ActionComplete events
+                    for (String event: set)
+                        if (listenA && isAborted.apply(event) ||
+                            listenS && isSucceed.apply(event))
+                            subscribe(event);
+                    // subscribe on new action completed events
                 }
 
                 @Override
@@ -760,8 +800,7 @@ public class DataProvider {
             @NonNull
             @Override
             public Transaction.Result doTransaction(@NotNull MutableData currentData) {
-                if (currentData == null ||
-                    !currentData.hasChild(key))
+                if (!currentData.hasChild(key))
                     return Transaction.success(currentData);
                 currentData.child(key).setValue(value);
                 return Transaction.success(currentData);

@@ -2,7 +2,8 @@ package main.stager.ui.monitored_action;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
+import static main.stager.utils.DataProvider.INVALID_ACTION_KEY;
+import static main.stager.utils.DataProvider.INVALID_CONTACT_KEY;
 import main.stager.R;
 import main.stager.StagerApplication;
 import main.stager.list.StagerList;
@@ -33,12 +34,18 @@ public class MonitoredActionFragment
         if (getArguments() != null) {
             mActionName = Utilits.getDefaultOnNullOrBlank(getArguments().getString(ARG_ACTION_NAME),
                     getString(R.string.MonitoredActionFragment_message_UntitledAction));
-            mActionKey = getArguments().getString(ARG_ACTION_KEY);
-            mActionOwner = getArguments().getString(ARG_ACTION_OWNER);
+            mActionKey = Utilits.getDefaultOnNullOrBlank(
+                getArguments().getString(ARG_ACTION_KEY),
+                INVALID_ACTION_KEY
+            );
+            mActionOwner = Utilits.getDefaultOnNullOrBlank(
+                getArguments().getString(ARG_ACTION_OWNER),
+                INVALID_CONTACT_KEY
+            );
         } else {
             mActionName = getString(R.string.MonitoredActionFragment_message_UntitledAction);
-            mActionKey = "";
-            mActionOwner = "";
+            mActionKey = INVALID_ACTION_KEY;
+            mActionOwner = INVALID_CONTACT_KEY;
         }
         ACTION_ABORTED = dataProvider.getActionCompleteAbortedEventName(
                 mActionOwner, mActionKey);

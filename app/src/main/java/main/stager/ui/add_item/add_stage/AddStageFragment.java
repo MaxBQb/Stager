@@ -14,6 +14,7 @@ import main.stager.R;
 import main.stager.model.Stage;
 import main.stager.model.Status;
 import main.stager.model.TriggerType;
+import main.stager.utils.Utilits;
 import main.stager.utils.validators.ActionNameValidator;
 import main.stager.utils.validators.StageNameValidator;
 
@@ -25,9 +26,13 @@ public class AddStageFragment extends AddItemFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mActionKey = getArguments() != null
-                   ? getArguments().getString(ARG_ACTION_KEY)
-                   : "";
+        if (getArguments() != null)
+            mActionKey = Utilits.getDefaultOnNullOrBlank(
+                getArguments().getString(ARG_ACTION_KEY),
+                DataProvider.INVALID_ACTION_KEY
+            );
+        else
+            mActionKey = DataProvider.INVALID_ACTION_KEY;
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import main.stager.R;
 import main.stager.list.StagerExtendableList;
+import static main.stager.utils.DataProvider.INVALID_ACTION_KEY;
 import main.stager.model.Contact;
 import main.stager.ui.contact_info.ContactInfoFragment;
 import main.stager.ui.find_contacts.FindContactsFragment;
@@ -26,10 +27,13 @@ public class EditSubscribersFragment
         if (getArguments() != null) {
             mActionName = Utilits.getDefaultOnNullOrBlank(getArguments().getString(ARG_ACTION_NAME),
                     getString(R.string.EditActionFragment_message_UntitledAction));
-            mActionKey = getArguments().getString(ARG_ACTION_KEY);
+            mActionKey = Utilits.getDefaultOnNullOrBlank(
+                getArguments().getString(ARG_ACTION_KEY),
+                INVALID_ACTION_KEY
+            );
         } else {
             mActionName = getString(R.string.EditActionFragment_message_UntitledAction);
-            mActionKey = "";
+            mActionKey = INVALID_ACTION_KEY;
         }
     }
 

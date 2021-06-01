@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import static main.stager.utils.DataProvider.INVALID_CONTACT_KEY;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -44,10 +44,13 @@ public class ContactInfoFragment extends
             type = ContactType.valueOf(Utilits.getDefaultOnNullOrBlank(
                     getArguments().getString(ARG_CONTACT_TYPE),
                     ContactType.ACCEPTED.toString()));
-            key = getArguments().getString(ARG_CONTACT_KEY);
+            key = Utilits.getDefaultOnNullOrBlank(
+                getArguments().getString(ARG_CONTACT_KEY),
+                INVALID_CONTACT_KEY
+            );
         } else {
             name = getString(R.string.ContactInfoFragment_message_AnonymousUser);
-            key = "";
+            key = INVALID_CONTACT_KEY;
             type = ContactType.ACCEPTED;
         }
     }

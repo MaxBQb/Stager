@@ -3,10 +3,8 @@ package main.stager.ui.edit_item.edit_stage;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import main.stager.Base.SmartActivity;
+import static main.stager.utils.DataProvider.INVALID_ACTION_KEY;
+import static main.stager.utils.DataProvider.INVALID_STAGE_KEY;
 import main.stager.Base.StagerVMFragment;
 import main.stager.R;
 import main.stager.model.Status;
@@ -27,12 +25,18 @@ public class EditStageFragment extends StagerVMFragment<EditStageViewModel> {
         if (getArguments() != null) {
             mStageName = Utilits.getDefaultOnNullOrBlank(getArguments().getString(ARG_STAGE_NAME),
                     getString(R.string.EditStageFragment_message_UntitledStage));
-            mActionKey = getArguments().getString(ARG_ACTION_KEY);
-            mStageKey = getArguments().getString(ARG_STAGE_KEY);
+            mActionKey = Utilits.getDefaultOnNullOrBlank(
+                getArguments().getString(ARG_ACTION_KEY),
+                INVALID_ACTION_KEY
+            );
+            mStageKey = Utilits.getDefaultOnNullOrBlank(
+                getArguments().getString(ARG_STAGE_KEY),
+                INVALID_STAGE_KEY
+            );
         } else {
             mStageName = getString(R.string.EditStageFragment_message_UntitledStage);
-            mActionKey = "";
-            mStageKey = "";
+            mActionKey = INVALID_ACTION_KEY;
+            mStageKey = INVALID_STAGE_KEY;
         }
     }
 
@@ -57,21 +61,21 @@ public class EditStageFragment extends StagerVMFragment<EditStageViewModel> {
         super.setObservers();
         bindData(viewModel.getStageName(), this::updateTitle);
         bindDataTwoWay(viewModel.getStageName(), editStageName);
-        bindData(viewModel.getStageStatus(), (status) -> {
+        bindData(viewModel.getStageStatus(), status ->
             view.findViewById(R.id.edit_stage_layout_controls)
-                    .setVisibility(status == Status.WAITING ? View.VISIBLE : View.GONE);
-        });
+                    .setVisibility(status == Status.WAITING ? View.VISIBLE : View.GONE)
+        );
     }
 
     @Override
     protected void setEventListeners() {
         super.setEventListeners();
-        view.findViewById(R.id.edit_stage_button_abort).setOnClickListener((l) -> {
-            dataProvider.setStageStatusAborted(mActionKey, mStageKey);
-        });
-        view.findViewById(R.id.edit_stage_button_success).setOnClickListener((l) -> {
-            dataProvider.setStageStatusSucceed(mActionKey, mStageKey);
-        });
+        view.findViewById(R.id.edit_stage_button_abort).setOnClickListener(l ->
+            dataProvider.setStageStatusAborted(mActionKey, mStageKey)
+        );
+        view.findViewById(R.id.edit_stage_button_success).setOnClickListener(l ->
+            dataProvider.setStageStatusSucceed(mActionKey, mStageKey)
+        );
     }
 
     @Override

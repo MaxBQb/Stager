@@ -40,6 +40,14 @@ public class FindNewContactsFragment extends
             });
             return;
         }
+        if (item.isIncoming()) {
+            dataProvider.acceptContactRequest(item.getKey()).addOnCompleteListener(e -> {
+                Toast.makeText(getContext(),
+                        getString(R.string.FindNewContactsFragment_message_accepted, item.getName()),
+                        Toast.LENGTH_SHORT).show();
+            });
+            return;
+        }
         dataProvider.makeContactRequest(item.getKey()).addOnSuccessListener(e -> {
             Toast.makeText(getContext(),
                     getString(R.string.FindNewContactsFragment_message_success, item.getName()),

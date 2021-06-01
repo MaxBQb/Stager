@@ -5,16 +5,15 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.database.Query;
-
 import java.util.List;
-
 import lombok.Setter;
 import main.stager.list.StagerListViewModel;
 import main.stager.model.Stage;
+import static main.stager.utils.DataProvider.INVALID_ACTION_KEY;
 
 public class EditActionViewModel extends StagerListViewModel<Stage> {
     private MutableLiveData<String> actionName;
-    @Setter private String actionKey = "";
+    @Setter private String actionKey = INVALID_ACTION_KEY;
 
     public EditActionViewModel(@NonNull Application application) {
         super(application);

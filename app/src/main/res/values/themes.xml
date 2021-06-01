@@ -7,4 +7,17 @@
         <item name="colorAccent">@color/teal_200</item>
         <!-- Customize your theme here. -->
     </style>
+
+
+    <style name="Theme.Stager.Light.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/purple_500</item>
+    </style>
+
+    <style name="Theme.Stager.Light.DarkActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/purple_500</item>
+    </style>
+
+    <style name="Theme.Stager.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Stager.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

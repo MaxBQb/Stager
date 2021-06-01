@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
-
+import static main.stager.utils.DataProvider.INVALID_ACTION_KEY;
 import lombok.Setter;
 import main.stager.list.StagerListViewModel;
 import main.stager.model.Contact;
@@ -17,7 +17,7 @@ import main.stager.utils.ChangeListeners.firebase.ValueListEventListener;
 
 public class EditSubscribersViewModel extends StagerListViewModel<Contact> {
     private MutableLiveData<String> actionName;
-    @Setter private String actionKey = "";
+    @Setter private String actionKey = INVALID_ACTION_KEY;
 
     public EditSubscribersViewModel(@NonNull Application application) {
         super(application);

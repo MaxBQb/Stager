@@ -7,6 +7,9 @@ import main.stager.R;
 import main.stager.list.feature.StagerSearchResultsListFragment;
 import main.stager.model.Contact;
 import main.stager.ui.my_contacts.ContactRecyclerViewAdapter;
+import main.stager.utils.Utilits;
+
+import static main.stager.utils.DataProvider.INVALID_ACTION_KEY;
 
 public class FindContactsFragment extends
         StagerSearchResultsListFragment<FindContactsViewModel, ContactRecyclerViewAdapter, Contact> {
@@ -17,9 +20,12 @@ public class FindContactsFragment extends
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mActionKey = getArguments().getString(ARG_ACTION_KEY);
+            mActionKey = Utilits.getDefaultOnNullOrBlank(
+                getArguments().getString(ARG_ACTION_KEY),
+                INVALID_ACTION_KEY
+            );
         } else {
-            mActionKey = "";
+            mActionKey = INVALID_ACTION_KEY;
         }
     }
 

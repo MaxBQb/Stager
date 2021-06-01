@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.EditText;
 import main.stager.R;
 import main.stager.list.StagerExtendableList;
+import static main.stager.utils.DataProvider.INVALID_ACTION_KEY;
 import main.stager.model.Stage;
 import main.stager.ui.add_item.add_stage.AddStageFragment;
 import main.stager.ui.edit_item.edit_stage.EditStageFragment;
@@ -25,10 +26,13 @@ public class EditActionFragment
         if (getArguments() != null) {
             mActionName = Utilits.getDefaultOnNullOrBlank(getArguments().getString(ARG_ACTION_NAME),
                     getString(R.string.EditActionFragment_message_UntitledAction));
-            mActionKey = getArguments().getString(ARG_ACTION_KEY);
+            mActionKey = Utilits.getDefaultOnNullOrBlank(
+                getArguments().getString(ARG_ACTION_KEY),
+                INVALID_ACTION_KEY
+            );
         } else {
             mActionName = getString(R.string.EditActionFragment_message_UntitledAction);
-            mActionKey = "";
+            mActionKey = INVALID_ACTION_KEY;
         }
     }
 

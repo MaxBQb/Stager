@@ -73,6 +73,12 @@ public class DataProvider {
     }
 
     // CONSTANTS
+    public static final String INVALID_UID = "__INVALID_UID_HERE__";
+    public static final String INVALID_EMAIL = "__INVALID_EMAIL_HERE__";
+    public static final String INVALID_STAGE_KEY = "__INVALID_STAGE_KEY_HERE__";
+    public static final String INVALID_ACTION_KEY = "__INVALID_ACTION_KEY_HERE__";
+    public static final String INVALID_CONTACT_KEY = "__INVALID_CONTACT_KEY_HERE__";
+
     private static final class PATH {
         // Common
         public static final String MAIN_DB = "stager-main-db";
@@ -141,13 +147,13 @@ public class DataProvider {
      */
     public @NotNull String getUID() {
         String uid = mAuth.getUid();
-        return uid == null ? "" : uid;
+        return uid == null ? INVALID_UID : uid;
     }
 
     public @NotNull String getEmail() {
-        if (mAuth.getCurrentUser() == null) return "";
+        if (mAuth.getCurrentUser() == null) return INVALID_EMAIL;
         String email = mAuth.getCurrentUser().getEmail();
-        return email != null ? email : "";
+        return email != null ? email : INVALID_EMAIL;
     }
 
     public boolean isAuthorized() {
@@ -794,8 +800,7 @@ public class DataProvider {
             @NonNull
             @Override
             public Transaction.Result doTransaction(@NotNull MutableData currentData) {
-                if (currentData == null ||
-                    !currentData.hasChild(key))
+                if (!currentData.hasChild(key))
                     return Transaction.success(currentData);
                 currentData.child(key).setValue(value);
                 return Transaction.success(currentData);

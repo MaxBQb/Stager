@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import static main.stager.utils.DataProvider.INVALID_CONTACT_KEY;
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ public class ContactInfoFragment extends
     static public final String ARG_CONTACT_NAME = "Stager.contact_info.param_contact_name";
     static public final String ARG_CONTACT_KEY = "Stager.contact_info.param_contact_key";
     static public final String ARG_CONTACT_TYPE = "Stager.contact_info.param_contact_type";
+    static public final int DESCRIPTION_ONE_LINE_LIMIT = 20;
 
     private String key;
     private String name;
@@ -138,11 +140,12 @@ public class ContactInfoFragment extends
                         view.findViewById(R.id.contact_email),
                         contact.getEmail());
 
-            if (contact.getDescription() != null)
-                updateField(view.findViewById(R.id.linearLayout_description),
-                            descriptionView,
-                        getString(R.string.ContactInfoFragment_TextView_label_Description) +
-                                " " + contact.getDescription());
+            if (contact.getDescription() != null) {
+                LinearLayout linearLayoutDescription = view.findViewById(R.id.linearLayout_description);
+                if (contact.getDescription().trim().length() > DESCRIPTION_ONE_LINE_LIMIT)
+                    linearLayoutDescription.setOrientation(LinearLayout.VERTICAL);
+                updateField(linearLayoutDescription, descriptionView, contact.getDescription());
+            }
 
             updateTitle(name);
         });

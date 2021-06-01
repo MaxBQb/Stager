@@ -2,6 +2,9 @@ package main.stager.ui.monitored_action;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+
 import static main.stager.utils.DataProvider.INVALID_ACTION_KEY;
 import static main.stager.utils.DataProvider.INVALID_CONTACT_KEY;
 import main.stager.R;
@@ -18,12 +21,16 @@ public class MonitoredActionFragment
     static public final String ARG_ACTION_NAME = "Stager.monitored_action.param_action_name";
     static public final String ARG_ACTION_KEY = "Stager.monitored_action.param_action_key";
     static public final String ARG_ACTION_OWNER = "Stager.monitored_action.param_action_owner";
+    private Animation animEnablingBtnAborted;
+    private Animation animDisablingBtnAborted;
+    private Animation animEnablingBtnSucceed;
+    private Animation animDisablingBtnSucceed;
     private String mActionName;
     private String mActionKey;
     private String mActionOwner;
     private View btnToggleOnAbortedListen;
     private View btnToggleOnSuccessListen;
-    private static final float offStateAlpha = 0.2f;
+    private static final float OFF_STATE_ALPHA = 0.2f;
     private final ListenedEventsController mEvents = StagerApplication.getListenedEventsController();
     private String ACTION_ABORTED;
     private String ACTION_SUCCEED;
@@ -51,6 +58,12 @@ public class MonitoredActionFragment
                 mActionOwner, mActionKey);
         ACTION_SUCCEED = dataProvider.getActionCompleteSucceedEventName(
                 mActionOwner, mActionKey);
+
+        animEnablingBtnAborted = AnimationUtils.loadAnimation(getContext(), R.anim.enable_aborted);
+        animDisablingBtnAborted = AnimationUtils.loadAnimation(getContext(), R.anim.disable_aborted);
+
+        animEnablingBtnSucceed = AnimationUtils.loadAnimation(getContext(), R.anim.enable_succeed);
+        animDisablingBtnSucceed = AnimationUtils.loadAnimation(getContext(), R.anim.disable_succeed);
     }
 
     @Override
@@ -86,6 +99,34 @@ public class MonitoredActionFragment
                     navigator.navigate(R.id.transition_monitored_action_to_contact_info, args);
         });
 
+        animEnablingBtnAborted.setAnimationListener(new OnAnimationEnded() {
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                btnToggleOnAbortedListen.setAlpha(1f);
+            }
+        });
+
+        animDisablingBtnAborted.setAnimationListener(new OnAnimationEnded() {
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                btnToggleOnAbortedListen.setAlpha(OFF_STATE_ALPHA);
+            }
+        });
+
+        animEnablingBtnSucceed.setAnimationListener(new OnAnimationEnded() {
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                btnToggleOnSuccessListen.setAlpha(1f);
+            }
+        });
+
+        animDisablingBtnSucceed.setAnimationListener(new OnAnimationEnded() {
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                btnToggleOnSuccessListen.setAlpha(OFF_STATE_ALPHA);
+            }
+        });
+
         btnToggleOnAbortedListen.setOnClickListener(e -> {
             boolean isEventListenedNow = !mEvents.isEventListened(ACTION_ABORTED);
             dataProvider.setSubscribe(ACTION_ABORTED, isEventListenedNow);
@@ -100,7 +141,15 @@ public class MonitoredActionFragment
     }
 
     private void setStateAlpha(View v, boolean full) {
-        v.setAlpha(full ? 1f : offStateAlpha);
+        Animation animEnabling = null, animDisabling = null;
+        if (v == btnToggleOnAbortedListen) {
+            animEnabling = animEnablingBtnAborted;
+            animDisabling = animDisablingBtnAborted;
+        } else if (v == btnToggleOnSuccessListen) {
+            animEnabling = animEnablingBtnSucceed;
+            animDisabling = animDisablingBtnSucceed;
+        }
+        v.startAnimation(full ? animEnabling : animDisabling);
     }
 
     @Override
@@ -121,9 +170,11 @@ public class MonitoredActionFragment
     protected void prepareFragmentComponents() {
         super.prepareFragmentComponents();
         btnToggleOnAbortedListen = view.findViewById(R.id.btn_toggle_onAbortedListen);
+        btnToggleOnAbortedListen.setAlpha(mEvents.isEventListened(ACTION_ABORTED) ? 1f : OFF_STATE_ALPHA);
+
         btnToggleOnSuccessListen = view.findViewById(R.id.btn_toggle_onSuccessListen);
-        setStateAlpha(btnToggleOnAbortedListen, mEvents.isEventListened(ACTION_ABORTED));
-        setStateAlpha(btnToggleOnSuccessListen, mEvents.isEventListened(ACTION_SUCCEED));
+        btnToggleOnSuccessListen.setAlpha(mEvents.isEventListened(ACTION_SUCCEED) ? 1f : OFF_STATE_ALPHA);
+
         updateTitle(mActionName);
     }
 
@@ -132,5 +183,18 @@ public class MonitoredActionFragment
         super.setViewModelData();
         viewModel.setActionKey(mActionKey);
         viewModel.setActionOwner(mActionOwner);
+    }
+
+    static abstract class OnAnimationEnded implements Animation.AnimationListener {
+
+        @Override
+        public void onAnimationStart(Animation animation) {
+
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+
+        }
     }
 }

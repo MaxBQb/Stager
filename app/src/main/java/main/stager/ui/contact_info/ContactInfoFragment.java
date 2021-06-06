@@ -115,7 +115,6 @@ public class ContactInfoFragment extends
 
         ((TextView)view.findViewById(R.id.contact_header_title)).setText(getHeaderTitle());
         updateTitle(name);
-
     }
 
     private void updateTitle(String text) {
@@ -140,21 +139,24 @@ public class ContactInfoFragment extends
                         view.findViewById(R.id.contact_email),
                         contact.getEmail());
 
-            if (contact.getDescription() != null) {
-                LinearLayout linearLayoutDescription = view.findViewById(R.id.linearLayout_description);
-                if (contact.getDescription().trim().length() > DESCRIPTION_ONE_LINE_LIMIT)
-                    linearLayoutDescription.setOrientation(LinearLayout.VERTICAL);
-                updateField(linearLayoutDescription, descriptionView, contact.getDescription());
-            }
+            String description = contact.getDescription();
+            LinearLayout descriptionLayout = view.findViewById(R.id.linearLayout_description);
+            if (updateField(descriptionLayout, descriptionView, description))
+                descriptionLayout.setOrientation(
+                    description.trim().length() > DESCRIPTION_ONE_LINE_LIMIT
+                    ? LinearLayout.VERTICAL
+                    : LinearLayout.HORIZONTAL
+                );
 
             updateTitle(name);
         });
     }
 
-    private void updateField(@NonNull ViewGroup holder, TextView field, String text) {
+    private boolean updateField(@NonNull ViewGroup holder, TextView field, String text) {
         boolean isEmpty = Utilits.isNullOrBlank(text);
         holder.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
-        if (!isEmpty) field.setText(text);
+        if (!isEmpty) field.setText(text.trim());
+        return !isEmpty;
     }
 
     @Override

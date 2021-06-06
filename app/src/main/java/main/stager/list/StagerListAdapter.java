@@ -16,6 +16,7 @@ import main.stager.model.FBModel;
 public abstract class StagerListAdapter<T, VH extends StagerViewHolder<T>>
         extends ListAdapter<T, VH> {
     protected OnItemClickListener<T> onItemClickListener;
+    protected OnItemLongClickListener<T> onItemLongClickListener;
 
     protected abstract Class<VH> getViewHolderType();
 
@@ -46,8 +47,17 @@ public abstract class StagerListAdapter<T, VH extends StagerViewHolder<T>>
         void onItemClick(T item, int pos, View view);
     }
 
+    @FunctionalInterface
+    public interface OnItemLongClickListener<T> {
+        void onItemLongClick(T item, int pos, View view);
+    }
+
     public void setOnItemClickListener(OnItemClickListener<T> onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
+    }
+
+    public void setOnItemLongClickListener(OnItemLongClickListener<T> onItemLongClickListener) {
+        this.onItemLongClickListener = onItemLongClickListener;
     }
 
     public void moveItem(int from, int to) {
@@ -66,6 +76,12 @@ public abstract class StagerListAdapter<T, VH extends StagerViewHolder<T>>
         if (onItemClickListener != null)
             view.setOnClickListener(v -> onItemClickListener
                     .onItemClick(item, pos, view));
+
+        if (onItemLongClickListener != null)
+            view.setOnLongClickListener(v -> {
+                onItemLongClickListener.onItemLongClick(item, pos, view);
+                return false;
+            });
     }
 
     protected abstract static class FBItemCallback<U extends FBModel> extends DiffUtil.ItemCallback<U> {

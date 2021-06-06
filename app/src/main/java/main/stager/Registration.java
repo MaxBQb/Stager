@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.util.Patterns;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,6 +32,12 @@ public class Registration extends SmartActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registr_form);
         init();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setFocusAtInput(edNickname);
     }
 
     private void init() {

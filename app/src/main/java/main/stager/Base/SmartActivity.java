@@ -6,10 +6,9 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.FrameLayout;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import main.stager.R;
 import main.stager.utils.LocaleController;
 import main.stager.utils.ThemeController;
@@ -48,5 +47,16 @@ public abstract class SmartActivity extends AppCompatActivity {
             imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
         return super.dispatchTouchEvent(ev);
+    }
+
+    protected void setFocusAtInput(EditText editText) {
+        if (editText == null) return;
+        editText.requestFocus();
+        InputMethodManager inputMethodManager = (InputMethodManager)
+                      getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+        editText.postDelayed(() ->
+            inputMethodManager.showSoftInput(editText,
+                    InputMethodManager.SHOW_IMPLICIT), 1000);
     }
 }

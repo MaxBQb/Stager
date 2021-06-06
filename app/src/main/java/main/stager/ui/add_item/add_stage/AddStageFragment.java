@@ -70,4 +70,9 @@ public class AddStageFragment extends AddItemFragment {
             Status.WAITING, name, TriggerType.MANUAL
         ));
     }
+
+    @Override
+    protected EditText getAutoFocusedView() {
+        return inputName;
+    }
 }

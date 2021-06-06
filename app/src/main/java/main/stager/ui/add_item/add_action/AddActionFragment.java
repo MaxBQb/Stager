@@ -45,4 +45,9 @@ public class AddActionFragment extends AddItemFragment {
                 t -> ((Task<Void>)t).addOnSuccessListener(e -> close())))
                 .addAction(new UserAction(Status.WAITING, name));
     }
+
+    @Override
+    protected EditText getAutoFocusedView() {
+        return inputName;
+    }
 }

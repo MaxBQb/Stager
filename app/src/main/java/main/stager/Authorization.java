@@ -36,8 +36,13 @@ public class Authorization extends SmartActivity {
         init();
     }
 
-    private void init() {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setFocusAtInput(edEmail);
+    }
 
+    private void init() {
         edEmail = findViewById(R.id.input_email_log_in);
         edPassword = findViewById(R.id.input_password_log_in);
 

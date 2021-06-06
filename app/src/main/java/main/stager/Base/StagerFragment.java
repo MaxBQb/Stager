@@ -4,13 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +54,12 @@ public abstract class StagerFragment extends Fragment {
         prepareFragmentComponents();
         setEventListeners();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((SmartActivity)getActivity()).setFocusAtInput(getAutoFocusedView());
     }
 
     @Override
@@ -113,5 +120,16 @@ public abstract class StagerFragment extends Fragment {
             ((SmartActivity) getActivity()).hideLoadingScreen();
         } catch (Throwable ignore) {
         }
+    }
+
+    protected Integer getAutoFocusedViewById() {
+        return null;
+    }
+
+    protected EditText getAutoFocusedView() {
+        Integer nullableId = getAutoFocusedViewById();
+        if (nullableId == null) return null;
+        @IdRes int id = nullableId;
+        return (EditText) view.findViewById(id);
     }
 }

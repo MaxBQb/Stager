@@ -1,5 +1,6 @@
 package main.stager.list;
 
+import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,6 +38,8 @@ abstract class ItemDragAndDropCallback extends ItemTouchHelper.Callback {
 
     protected abstract void onDrop(int from, int to);
 
+    protected void onCompleted(View v, boolean isMoved) {}
+
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
     }
@@ -47,8 +50,10 @@ abstract class ItemDragAndDropCallback extends ItemTouchHelper.Callback {
 
         viewHolder.itemView.setAlpha(ALPHA_FULL);
 
-        if (mFrom != null && mTo != null)
+        boolean isMoved = mFrom != null && mTo != null;
+        if (isMoved)
             onDrop(mFrom, mTo);
+        onCompleted(viewHolder.itemView, isMoved);
 
         // clear saved positions
         mFrom = mTo = null;

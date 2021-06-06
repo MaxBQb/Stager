@@ -16,9 +16,7 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import com.rockerhieu.rvadapter.states.StatesRecyclerViewAdapter;
-
 import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
 import main.stager.model.FBModel;
 import main.stager.R;
@@ -52,6 +50,14 @@ public abstract class StagerList<TVM extends StagerListViewModel<T>,
 
     // Listeners
     protected void onItemClick(T item, int pos, View view) {}
+    protected void onItemLongClick(T item, int pos, View view) {
+        if (ALLOW_DRAG_AND_DROP())
+            animateItemDrag(view);
+    }
+    protected void onItemLongClickFinished(T item, int pos, View view) {
+        if (!ALLOW_DRAG_AND_DROP())
+            onItemClick(item, pos, view);
+    }
     public void onItemSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int pos, int direction) {}
     public void onSearchQuerySubmit(String query) {}
     public void onSearchQueryChange(String query) {}
@@ -61,6 +67,8 @@ public abstract class StagerList<TVM extends StagerListViewModel<T>,
     protected void onItemDropped(int from, int to) {
         viewModel.pushItemsPositions(adapter.getCurrentList());
     }
+
+    private boolean isLastClickLong = false;
 
     protected TA createAdapter() {
         try {
@@ -198,6 +206,12 @@ public abstract class StagerList<TVM extends StagerListViewModel<T>,
             }
 
             @Override
+            protected void onCompleted(View v, boolean isMoved) {
+                super.onCompleted(v, isMoved);
+                animateItemDrop(v, isMoved);
+            }
+
+            @Override
             public int getMovementFlags(@NonNull @NotNull RecyclerView recyclerView, @NonNull @NotNull RecyclerView.ViewHolder viewHolder) {
                 if (srvAdapter.getState() != StatesRecyclerViewAdapter.STATE_NORMAL)
                     return 0;
@@ -209,7 +223,17 @@ public abstract class StagerList<TVM extends StagerListViewModel<T>,
     @Override
     protected void setEventListeners() {
         super.setEventListeners();
-        adapter.setOnItemClickListener(this::onItemClick);
+        adapter.setOnItemClickListener((item, pos, view) -> {
+            if (isLastClickLong)
+                onItemLongClickFinished(item, pos, view);
+            else
+                onItemClick(item, pos, view);
+            isLastClickLong = false;
+        });
+        adapter.setOnItemLongClickListener((item, pos, view) -> {
+            isLastClickLong = true;
+            onItemLongClick(item, pos, view);
+        });
         if (ALLOW_SWIPE()) bindOnSwipeListener();
         if (ALLOW_DRAG_AND_DROP()) bindOnDragAndDropListener();
     }
@@ -255,5 +279,14 @@ public abstract class StagerList<TVM extends StagerListViewModel<T>,
         super.onCreate(savedInstanceState);
         if (ALLOW_SEARCH())
             setHasOptionsMenu(true);
+    }
+
+    // Animation support
+    protected void animateItemDrag(View view) {
+        view.setRotation(5f);
+    }
+
+    protected void animateItemDrop(View view, boolean isMoved) {
+        view.setRotation(0f);
     }
 }

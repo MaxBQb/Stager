@@ -8,6 +8,7 @@
     <string name="RegistrationActivity_EditText_label_UserEmail">Почта</string>
     <string name="RegistrationActivity_EditText_label_UserPassword">Пароль</string>
     <string name="RegistrationActivity_EditText_label_UserPasswordCheck">Повторите пароль</string>
+    <string name="RegistrationActivity_ErrorMessage_PasswordNotMatch">Пароли не совпадают</string>
     <string name="RegistrationActivity_Button_Register">Продолжить</string>
     <string name="RegistrationActivity_Button_Log_In">Вход</string>
 

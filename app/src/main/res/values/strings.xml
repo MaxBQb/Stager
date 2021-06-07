@@ -7,6 +7,7 @@
     <string name="RegistrationActivity_EditText_label_UserEmail">E-mail</string>
     <string name="RegistrationActivity_EditText_label_UserPassword">Password</string>
     <string name="RegistrationActivity_EditText_label_UserPasswordCheck">Repeat your password</string>
+    <string name="RegistrationActivity_ErrorMessage_PasswordNotMatch">Passwords don`t match</string>
     <string name="RegistrationActivity_Button_Register">Continue</string>
     <string name="RegistrationActivity_Button_Log_In">Log in</string>
 

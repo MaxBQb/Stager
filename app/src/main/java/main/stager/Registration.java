@@ -97,10 +97,11 @@ public class Registration extends SmartActivity {
 
         // Пароли не совпадают
         if (!password.equals(passwordCheck)) {
-             edPassword.setError("Passwords don't match");
-             edPasswordCheck.setError("Passwords don't match");
+             edPassword.setError(getString(
+                     R.string.RegistrationActivity_ErrorMessage_PasswordNotMatch));
+             edPasswordCheck.setError(getString(
+                     R.string.RegistrationActivity_ErrorMessage_PasswordNotMatch));
              edPassword.requestFocus();
-             edPasswordCheck.requestFocus();
              return;
         }
 

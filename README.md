@@ -79,3 +79,16 @@
     docker run --rm -v "$PWD":/home/gradle/ dedicated407/androidstager sh /home/makeapk
     ```
  6. После работы контейнера в вашей папке появится папка `release`, в ней содержится `stager.apk`, файл с приложением
+
+
+## Технологический стек и немного деталей
+- Вёрстка: XML
+- Кратко об архитектуре: MVVM (один из первых проектов под Android, архитектура может содержать следы начинающего разработчика)
+- DI: Отсутствует (ручной)
+- Навигация: Fragment Navigation API
+- Локальное хранение данных: SharedPreferences & Firebase (встроенный offline режим)
+- Работа с сетью: Volley & Firebase (Работа с удалйнной NOSQL БД)
+- Реактивность: LiveData
+- Специфичные для Java: Project Lombok
+- Пагинация: Присутствует (paging lib)
+- Поддержка версий Android 5.0+ (API 21+)
